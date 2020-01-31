@@ -18,6 +18,8 @@
     "build:staging:static": "cross-env BUILD_ENV=staging next build && next export",
     "start": "next start",
     "\n ######################  Support Development Tools  ######################": "",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build-storybook": "build-storybook",
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "component": "node scripts/component.js",
     "page": "node scripts/component.js --page"
@@ -40,9 +42,16 @@
     "react-dom": "16.12.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
     "@jam3/stats": "1.0.1",
     "@next/bundle-analyzer": "9.2.1",
+    "@storybook/addon-actions": "^5.3.9",
+    "@storybook/addon-links": "^5.3.9",
+    "@storybook/addons": "^5.3.9",
+    "@storybook/react": "^5.3.9",
     "babel-eslint": "10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-react-app": "^9.1.1",
     "chalk": "^3.0.0",
     "cross-env": "^7.0.0",
     "dotenv": "8.2.0",
