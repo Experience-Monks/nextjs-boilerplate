@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useLayoutEffect, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import { gsap } from 'gsap';
 
@@ -10,21 +10,19 @@ function Landing() {
   const containerRef = useRef();
   const animateInInit = useCallback(() => {
     gsap.set(containerRef.current, { autoAlpha: 0 });
-  });
+  }, []);
 
   const animateIn = useCallback(() => {
     gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
-  });
+  }, []);
 
-  if (typeof window !== 'undefined') {
-    useLayoutEffect(() => {
-      animateInInit();
-    }, []);
-  }
+  useEffect(() => {
+    animateInInit();
+  }, [animateInInit]);
 
   useEffect(() => {
     animateIn();
-  }, []);
+  }, [animateIn]);
 
   return (
     <section className="Landing">

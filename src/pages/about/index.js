@@ -7,7 +7,7 @@ import Nav from '../../components/Nav/Nav';
 
 function About() {
   return (
-    <section className={'About'}>
+    <section className="About">
       <Head>
         <title>About | Jam3 generator</title>
         <link rel="icon" href="/favicons/favicon.ico" />
