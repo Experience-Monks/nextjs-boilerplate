@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import 'normalize.css';
 import 'default-passive-events';
 
@@ -11,18 +12,27 @@ import Layout from '../components/Layout/Layout';
 export default function MyApp({ Component, pageProps }) {
   // TODO: isBrowser
   if (typeof window !== `undefined`) {
-    if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
-      require('@jam3/stats')();
+    const unsupportedUtil = require('../utils/unsupported-utils');
+
+    if (unsupportedUtil.isSupported()) {
+      if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
+        require('@jam3/stats')();
+      }
+
+      const { device } = require('@jam3/detect');
+      const { browser } = require('@jam3/detect');
+
+      const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
+        Boolean(className)
+      );
+
+      document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
+    } else {
+      const Unsupported = dynamic(() =>
+        import(/* webpackChunkName: "Unsupported" */ '../components/Unsupported/Unsupported')
+      );
+      return <Unsupported />;
     }
-
-    const { device } = require('@jam3/detect');
-    const { browser } = require('@jam3/detect');
-
-    const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
-      Boolean(className)
-    );
-
-    document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
   }
 
   return (
