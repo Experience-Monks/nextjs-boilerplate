@@ -1,13 +1,14 @@
 const path = require('path');
 
-require('dotenv').config({ path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`) });
+require('dotenv').config({
+  path: path.resolve(process.cwd(), `.env.${process.env.BUILD_ENV || process.env.NODE_ENV}`)
+});
 
 // const fetch = require('isomorphic-unfetch');
 const withPlugins = require('next-compose-plugins');
 const { PHASE_PRODUCTION_BUILD } = require('next-server/constants');
 const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
-// const withImages = require('next-images');
 const optimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
 const withOffline = require('next-offline');
@@ -119,7 +120,6 @@ module.exports = withPlugins(
   [
     [withSass, withSassConfig],
     [withCSS],
-    // [withImages],
     [withFonts],
     [withOffline, withOfflineSW],
     [optimizedImages, optimizedImagesConfig],
