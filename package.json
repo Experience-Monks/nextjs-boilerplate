@@ -1,0 +1,83 @@
+{
+  "name": "jam3-dev",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jam3/nyg-jam3.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jam3/nyg-jam3/issues"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:static": "next build && next export",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@jam3/detect": "1.0.2",
+    "@jam3/react-hooks": "1.0.0",
+    "@svgr/webpack": "^5.1.0",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "classnames": "2.2.6",
+    "default-passive-events": "1.0.10",
+    "gsap": "3.1.1",
+    "next": "9.2.1",
+    "no-op": "1.0.3",
+    "normalize.css": "^8.0.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  },
+  "devDependencies": {
+    "@jam3/stats": "1.0.1",
+    "@next/bundle-analyzer": "9.2.1",
+    "babel-eslint": "10.0.3",
+    "dotenv": "8.2.0",
+    "eslint": "6.8.0",
+    "eslint-config-postcss": "3.0.7",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-config-react-app": "5.1.0",
+    "eslint-config-react-jam3": "1.1.0",
+    "eslint-plugin-import": "2.20.0",
+    "eslint-plugin-jam3": "0.2.3",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.18.0",
+    "eslint-plugin-standard": "4.0.1",
+    "imagemin-gifsicle": "7.0.0",
+    "imagemin-mozjpeg": "8.0.0",
+    "imagemin-optipng": "7.1.0",
+    "imagemin-pngquant": "8.0.0",
+    "imagemin-svgo": "7.0.0",
+    "isomorphic-unfetch": "3.0.0",
+    "next-compose-plugins": "2.2.0",
+    "next-optimized-images": "2.5.4",
+    "next-fonts": "1.0.3",
+    "next-images": "^1.3.0",
+    "next-offline": "4.0.6",
+    "next-server": "^9.0.5",
+    "node-sass": "^4.13.1",
+    "prettier": "1.19.1",
+    "redux-devtools-extension": "2.13.8",
+    "stylelint": "13.0.0",
+    "stylelint-config-jam3": "0.1.3",
+    "webp-loader": "0.6.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "engines": {
+    "node": ">=10.15.0",
+    "npm": ">=6.5.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "chrome": 30,
+  "firefox": 40,
+  "safari": 9,
+  "internet explorer": 10,
+  "edge": 12,
+  "ios": 9,
+  "mac": 10.1,
+  "windows": 7
+}

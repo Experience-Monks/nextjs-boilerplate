@@ -1,0 +1,34 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Local env variables
+.env.local
+.env.*.local
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.vscode
+.DS_Store
+*.log*
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Documentation
+public/components
+public/styleguide
