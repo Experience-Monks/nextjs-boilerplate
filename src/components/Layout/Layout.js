@@ -17,4 +17,6 @@ Layout.propTypes = checkProps({
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
 });
 
+Layout.defaultProps = {};
+
 export default Layout;

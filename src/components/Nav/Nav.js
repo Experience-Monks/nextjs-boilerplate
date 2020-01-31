@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
+import classnames from 'classnames';
 import checkProps from '@jam3/react-check-extra-props';
 import Link from 'next/link';
 import { gsap } from 'gsap';
@@ -40,7 +41,7 @@ function Nav() {
   }, [animateIn]);
 
   return (
-    <nav className={styles.Nav}>
+    <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper} ref={containerRef}>
         <ul className={styles.routes}>
           <li>
@@ -71,5 +72,7 @@ function Nav() {
 }
 
 Nav.propTypes = checkProps({});
+
+Nav.defaultProps = {};
 
 export default Nav;

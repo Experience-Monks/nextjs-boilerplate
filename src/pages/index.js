@@ -28,7 +28,6 @@ function Landing() {
     <section className="Landing">
       <Head>
         <title>Home | Jam3 generator</title>
-        <link rel="icon" href="/favicons/favicon.ico" />
       </Head>
 
       <Nav />

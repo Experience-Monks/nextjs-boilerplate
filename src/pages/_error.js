@@ -8,7 +8,6 @@ function Error({ statusCode }) {
     <section className="Error">
       <Head>
         <title>404 | Jam3 generator</title>
-        <link rel="icon" href="/favicons/favicon.ico" />
       </Head>
 
       <Nav />
