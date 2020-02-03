@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import checkProps from '@jam3/react-check-extra-props';
 import Head from 'next/head';
 
 import styles from './{{name}}.module.scss';
+
+import { withRedux } from '../redux/withRedux';
 
 function {{name}}() {
   return (
@@ -18,8 +19,4 @@ function {{name}}() {
   );
 };
 
-{{name}}.propTypes = checkProps({});
-
-{{name}}.defaultProps = {};
-
-export default memo({{name}});
+export default withRedux({{name}});

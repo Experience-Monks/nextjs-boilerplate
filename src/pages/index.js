@@ -32,7 +32,7 @@ function Landing() {
   }, [animateIn]);
 
   return (
-    <section className="Landing">
+    <section className={styles.Landing}>
       <Head>
         <title>Home | Jam3 generator</title>
       </Head>
