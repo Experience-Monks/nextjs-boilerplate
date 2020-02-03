@@ -10,7 +10,7 @@ import Layout from '../components/Layout/Layout';
 import RotateScreen from '../components/RotateScreen/RotateScreen';
 
 // This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   // TODO: isBrowser
   if (typeof window !== `undefined`) {
     const unsupportedUtil = require('../utils/unsupported-utils');
@@ -77,3 +77,5 @@ export default function MyApp({ Component, pageProps }) {
     </Layout>
   );
 }
+
+export default App;
