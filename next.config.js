@@ -36,7 +36,7 @@ const optimizedImagesConfig = {
   inlineImageLimit: 1,
   imagesFolder: 'images',
   imagesName: '[name]-[hash:base64:8].[ext]',
-  handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif'],
+  handleImages: ['jpeg', 'png', 'webp', 'gif'],
   optimizeImages: true,
   optimizeImagesInDev: false,
   mozjpeg: {
@@ -87,9 +87,12 @@ const nextJSConfig = {
               cleanupIDs: true
             }
           }
-        }
+        },
+        'url-loader'
       ]
     });
+
+    // console.log(config.module.rules);
 
     return config;
   }

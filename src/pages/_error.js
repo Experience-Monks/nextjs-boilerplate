@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import Nav from '../components/Nav/Nav';
+import { ReactComponent as Cross } from '../assets/svgs/cross.svg';
 
 function Error({ statusCode }) {
   return (
@@ -12,6 +13,7 @@ function Error({ statusCode }) {
 
       <Nav />
 
+      <Cross />
       <h1>{statusCode ? `An error ${statusCode} occurred on server` : 'An error occurred on client'}</h1>
     </section>
   );
