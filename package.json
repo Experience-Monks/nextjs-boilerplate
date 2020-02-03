@@ -23,7 +23,11 @@
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "robots-txt-generator": "node scripts/robots-txt-generator.js",
     "component": "node scripts/component.js",
-    "page": "node scripts/component.js --page"
+    "page": "node scripts/component.js --page",
+    "\n ######################  Automation Tools  ######################": "",
+    "linters": "npm-run-all -p js-lint sass-lint",
+    "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
+    "sass-lint": "stylelint './src/**/*.scss'"
   },
   "dependencies": {
     "@jam3/detect": "1.0.2",
@@ -34,6 +38,8 @@
     "@zeit/next-sass": "^1.0.1",
     "classnames": "2.2.6",
     "default-passive-events": "1.0.10",
+    "dompurify": "^2.0.8",
+    "get-scroll": "^2.0.0",
     "gsap": "3.1.1",
     "next": "9.2.1",
     "no-op": "1.0.3",
@@ -45,6 +51,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@commitlint/cli": "^8.3.5",
     "@jam3/stats": "1.0.1",
     "@next/bundle-analyzer": "9.2.1",
     "@storybook/addon-actions": "^5.3.9",
@@ -72,6 +79,7 @@
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "4.0.1",
     "generate-robotstxt": "^8.0.0",
+    "husky": "^4.2.1",
     "imagemin-gifsicle": "7.0.0",
     "imagemin-mozjpeg": "8.0.0",
     "imagemin-optipng": "7.1.0",
@@ -102,6 +110,21 @@
   "engines": {
     "node": ">=10.15.0",
     "npm": ">=6.5.0"
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.{js,json,scss}": [
+        "prettier --write",
+        "git add"
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 'Pre-commit checks...' && lint-staged",
+      "pre-push": "echo 'Pre-push checks...' && npm run linters && npm run audit",
+      "commitmsg": "commitlint -e $GIT_PARAMS"
+    }
   },
   "browserslist": [
     ">0.2%",

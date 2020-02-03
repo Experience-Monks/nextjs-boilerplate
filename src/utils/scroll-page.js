@@ -1,6 +1,5 @@
 import noop from 'no-op';
-
-import animate from '../util/gsap-animate';
+import { gsap } from 'gsap';
 
 const defaultProps = {
   x: 0,
@@ -24,7 +23,7 @@ export default function scrollPage(props = {}, onComplete = noop) {
   timeoutId && clearTimeout(timeoutId);
   timeoutId = setTimeout(onComplete, duration * 1000);
 
-  animate.to(window, duration, {
+  gsap.to(window, duration, {
     scrollTo: { x, y, autoKill: false, ease }
   });
 }
