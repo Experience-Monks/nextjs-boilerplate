@@ -1,7 +1,10 @@
 import React from 'react';
 import App from 'next/app';
 import { Provider } from 'react-redux';
+
 import { initializeStore } from './index';
+
+import { isBrowser } from '../utils/detect';
 
 export const withRedux = (PageComponent, { ssr = true } = {}) => {
   const WithRedux = ({ initialReduxState, ...props }) => {
@@ -55,7 +58,7 @@ export const withRedux = (PageComponent, { ssr = true } = {}) => {
 let reduxStore;
 const getOrInitializeStore = initialState => {
   // Always make a new store if server, otherwise state is shared between requests
-  if (typeof window === 'undefined') {
+  if (!isBrowser) {
     return initializeStore(initialState);
   }
 

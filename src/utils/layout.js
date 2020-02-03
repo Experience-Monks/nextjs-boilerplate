@@ -1,5 +1,7 @@
+import { isBrowser } from './detect';
+
 function getLayout() {
-  if (typeof window === `undefined`) return {};
+  if (!isBrowser) return {};
 
   const TABLET_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
     '--layout-tablet'

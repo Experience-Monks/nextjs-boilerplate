@@ -9,10 +9,11 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 import RotateScreen from '../components/RotateScreen/RotateScreen';
 
+import detect, { isBrowser } from '../utils/detect';
+
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }) {
-  // TODO: isBrowser
-  if (typeof window !== `undefined`) {
+  if (isBrowser) {
     const unsupportedUtil = require('../utils/unsupported-utils');
 
     if (unsupportedUtil.isSupported()) {
@@ -20,8 +21,7 @@ function App({ Component, pageProps }) {
         require('@jam3/stats')();
       }
 
-      const { device } = require('@jam3/detect');
-      const { browser } = require('@jam3/detect');
+      const { device, browser } = detect;
 
       const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
         Boolean(className)
