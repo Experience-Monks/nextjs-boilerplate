@@ -1,20 +1,27 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import Head from 'next/head';
+import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 
 import styles from './index.module.scss';
 
 import Nav from '../components/Nav/Nav';
 
+import { withRedux } from '../redux/withRedux';
+import { setLandingLoaded } from '../redux/modules/app';
+
 function Landing() {
   const containerRef = useRef();
+  const dispatch = useDispatch();
+
   const animateInInit = useCallback(() => {
     gsap.set(containerRef.current, { autoAlpha: 0 });
   }, []);
 
-  const animateIn = useCallback(() => {
-    gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
-  }, []);
+  const animateIn = useCallback(async () => {
+    await gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
+    dispatch(setLandingLoaded(true));
+  }, [dispatch]);
 
   useEffect(() => {
     animateInInit();
@@ -58,4 +65,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default withRedux(Landing);

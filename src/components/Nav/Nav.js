@@ -1,8 +1,7 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import checkProps from '@jam3/react-check-extra-props';
 import Link from 'next/link';
-import { gsap } from 'gsap';
 
 import styles from './Nav.module.scss';
 
@@ -18,31 +17,9 @@ const LINKS = [
 }));
 
 function Nav() {
-  const containerRef = useRef();
-  const animateInInit = useCallback(() => {
-    gsap.set(Array.from(containerRef.current.querySelectorAll('li')), { autoAlpha: 0 });
-  }, []);
-
-  const animateIn = useCallback(() => {
-    gsap.to(Array.from(containerRef.current.querySelectorAll('li')), {
-      duration: 0.5,
-      autoAlpha: 1,
-      stagger: 0.167,
-      delay: 0.3
-    });
-  }, []);
-
-  useEffect(() => {
-    animateInInit();
-  }, [animateInInit]);
-
-  useEffect(() => {
-    animateIn();
-  }, [animateIn]);
-
   return (
     <nav className={classnames(styles.Nav)}>
-      <div className={styles.wrapper} ref={containerRef}>
+      <div className={styles.wrapper}>
         <ul className={styles.routes}>
           <li>
             <Link href="/">
