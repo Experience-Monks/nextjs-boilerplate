@@ -92,8 +92,6 @@ const nextJSConfig = {
       ]
     });
 
-    // console.log(config.module.rules);
-
     return config;
   }
   // // NOTE: remove comment if you need some special handle of static HTML

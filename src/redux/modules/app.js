@@ -8,7 +8,6 @@ const defaultState = {
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case keys.LANDING_LOADED:
-      console.log('LANDING_LOADED', action);
       return { ...state, loaded: action.loaded };
     default:
       return state;
