@@ -7,6 +7,7 @@ import 'default-passive-events';
 import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
+import RotateScreen from '../components/RotateScreen/RotateScreen';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
@@ -69,7 +70,10 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="canonical" href={process.env.WEBSITE_SITE_URL} />
         <link rel="dns-prefetch" href="//[NEXT-DNS-request.com]" />
       </Head>
+
       <Component {...pageProps} />
+
+      <RotateScreen />
     </Layout>
   );
 }

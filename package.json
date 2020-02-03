@@ -40,7 +40,8 @@
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-use": "^13.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
