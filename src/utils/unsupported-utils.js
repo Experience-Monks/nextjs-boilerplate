@@ -1,6 +1,8 @@
 import detect from './detect';
 import deviceMatrix from './device-matrix.json';
 
+const { browser, os, bots } = detect;
+
 /**
  * Returns if the current browser is supported by the web app
  * The algorithm is inclusive, so we enumerate everything we don't support, after that everything is supported
@@ -8,7 +10,6 @@ import deviceMatrix from './device-matrix.json';
  * @returns {Boolean} supported
  */
 function isSupported() {
-  const { browser, os, bots } = detect;
   const userBrowser = browser.getName().toLowerCase();
   const userBrowserVersion = parseFloat(browser.getVersion());
   const userOS = os ? os.getName().toLowerCase() : 'unknown';
