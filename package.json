@@ -17,6 +17,7 @@
     "build:ssr": "next build",
     "build:prod:static": "next build && next export && cross-env BUILD_ENV=production npm-run-all robots-txt-generator sitemap-generator",
     "build:staging:static": "cross-env BUILD_ENV=staging next build && next export",
+    "ci-prod-server": "serve out &",
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "robots-txt-generator": "node scripts/robots-txt-generator.js",
     "\n ######################  Support Development Tools  ######################": "",
@@ -25,10 +26,11 @@
     "component": "node scripts/component.js",
     "page": "node scripts/component.js --page",
     "\n ######################  Automation Tools  ######################": "",
-    "linters": "npm-run-all -p js-lint sass-lint",
+    "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
+    "adviser-dev": "adviser --tags dev --verbose",
+    "adviser-ci": "adviser --tags lighthouse,stage --verbose",
     "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
-    "sass-lint": "stylelint './src/**/*.scss'",
-    "audit": "audit-ci --high"
+    "sass-lint": "stylelint './src/**/*.scss'"
   },
   "dependencies": {
     "@jam3/detect": "1.0.2",
@@ -60,7 +62,9 @@
     "@svgr/webpack": "^5.1.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
-    "audit-ci": "^2.4.2",
+    "adviser": "^0.7.5",
+    "adviser-plugin-dependencies": "^0.4.1",
+    "adviser-plugin-lighthouse": "^1.0.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.1",
@@ -95,7 +99,7 @@
     "next-compose-plugins": "2.2.0",
     "next-fonts": "1.0.3",
     "next-images": "^1.3.0",
-    "next-offline": "4.0.6",
+    "next-offline": "^5.0.0",
     "next-optimized-images": "2.5.4",
     "next-server": "^9.0.5",
     "nextjs-sitemap-generator": "^0.5.0",
@@ -105,6 +109,7 @@
     "prettier": "1.19.1",
     "prop-types": "^15.7.2",
     "redux-devtools-extension": "2.13.8",
+    "serve": "^11.3.0",
     "stylelint": "13.0.0",
     "stylelint-config-jam3": "0.1.2",
     "webp-loader": "0.6.0"
@@ -127,7 +132,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "echo 'Pre-commit checks...' && lint-staged",
-      "pre-push": "echo 'Pre-push checks...' && npm run linters && npm run audit",
+      "pre-push": "echo 'Pre-push checks...' && npm run linters",
       "commitmsg": "commitlint -e $GIT_PARAMS"
     }
   },
