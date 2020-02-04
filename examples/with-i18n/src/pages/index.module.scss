@@ -1,0 +1,59 @@
+@import '../styles/shared.scss';
+
+.Landing {
+  > .hero {
+    width: 100%;
+    color: #333;
+
+    > .title {
+      margin: 0;
+      width: 100%;
+      padding-top: px(80);
+      line-height: 1.15;
+      font-size: px(48);
+    }
+
+    > .title,
+    > .description {
+      text-align: center;
+    }
+
+    > .row {
+      max-width: px(800);
+      margin: px(80) auto px(40);
+      display: flex;
+      align-items: stretch;
+      justify-content: space-around;
+      flex-wrap: wrap;
+
+      > li {
+        margin: px(10);
+
+        .card {
+          display: block;
+          width: px(220);
+          height: 100%;
+          padding: px(18) px(18) px(24);
+          border: 1px solid #9b9b9b;
+          text-align: left;
+          text-decoration: none;
+          color: #434343;
+
+          &:hover {
+            border-color: #067df7;
+          }
+
+          > h3 {
+            font-size: px(18);
+          }
+
+          > p {
+            padding: px(12) 0 0;
+            font-size: px(13);
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}
