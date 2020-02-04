@@ -7,18 +7,19 @@ require('dotenv').config({
 
 if (process.env.WEBSITE_SITE_URL) {
   sitemap({
-    alternateUrls: {
-      // NOTE: use it for multi-languages site
-      // en: 'https://example.com/en'
-      // es: 'https://example.com/es',
-      // ko: 'https://example.com/ko',
-      // fr: 'https://example.com/fr'
-    },
+    // NOTE: use it for multi-languages site
+    // alternateUrls: {
+    // en: 'https://example.com/en'
+    // es: 'https://example.com/es',
+    // ko: 'https://example.com/ko',
+    // fr: 'https://example.com/fr'
+    // },
     baseUrl: process.env.WEBSITE_SITE_URL.replace('://', '://www.'),
     ignoredPaths: ['admin'],
     pagesDirectory: path.resolve(__dirname + '/../src/pages'),
     targetDirectory: 'out/',
-    nextConfigPath: path.resolve(__dirname + '/../next.config.js'),
+    // NOTE: enabled nextConfigPath option if exportPathMap is enabled in next.config.js
+    // nextConfigPath: path.resolve(__dirname + '/../next.config.js'),
     ignoredExtensions: ['png', 'jpg', 'scss'],
     ignoreIndexFiles: true
   });
