@@ -9,6 +9,7 @@ const withPlugins = require('next-compose-plugins');
 const { PHASE_PRODUCTION_BUILD } = require('next-server/constants');
 const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const optimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
 const withOffline = require('next-offline');
@@ -92,6 +93,18 @@ const nextJSConfig = {
       ]
     });
 
+    if (config.mode === 'production') {
+      if (Array.isArray(config.optimization.minimizer)) {
+        config.optimization.minimizer.push(
+          new OptimizeCSSAssetsPlugin({
+            cssProcessorPluginOptions: {
+              preset: ['default', { discardComments: { removeAll: true } }]
+            }
+          })
+        );
+      }
+    }
+
     return config;
   }
   // // NOTE: remove comment if you need some special handle of static HTML
@@ -119,8 +132,8 @@ const nextJSConfig = {
 
 module.exports = withPlugins(
   [
-    [withSass, withSassConfig],
     [withCSS],
+    [withSass, withSassConfig],
     [withFonts],
     [withOffline, withOfflineSW],
     [optimizedImages, optimizedImagesConfig],
