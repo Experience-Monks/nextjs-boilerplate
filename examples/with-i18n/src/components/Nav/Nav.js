@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import checkProps from '@jam3/react-check-extra-props';
 import Link from 'next/link';
@@ -8,6 +9,8 @@ import styles from './Nav.module.scss';
 import jam3LogoSrc from '../../assets/images/threeLogo.jpeg';
 import githubLogoSrc from '../../assets/images/github-icon-64b.png';
 
+import { i18n, withTranslation } from '../../../i18n';
+
 const LINKS = [
   { href: 'https://jam3.com', label: 'Jam3', src: jam3LogoSrc },
   { href: 'https://github.com/jam3', label: 'GitHub', src: githubLogoSrc }
@@ -16,20 +19,20 @@ const LINKS = [
   key: `nav-link-${link.href}-${link.label}`
 }));
 
-function Nav() {
+function Nav({ t }) {
   return (
     <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper}>
         <ul className={styles.routes}>
           <li>
             <Link href="/">
-              <a>Home</a>
+              <a>{t('nav.home')}</a>
             </Link>
           </li>
 
           <li>
             <Link href="/about">
-              <a>About</a>
+              <a>{t('nav.about')}</a>
             </Link>
           </li>
         </ul>
@@ -43,13 +46,24 @@ function Nav() {
             </li>
           ))}
         </ul>
+
+        <button type="button" onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'fr' : 'en')}>
+          {t('nav.change-locale')}
+        </button>
       </div>
     </nav>
   );
 }
 
-Nav.propTypes = checkProps({});
+Nav.getInitialProps = async () => ({
+  namespacesRequired: ['common']
+});
 
-Nav.defaultProps = {};
+Nav.propTypes = checkProps({
+  namespacesRequired: PropTypes.any,
+  i18n: PropTypes.object,
+  t: PropTypes.func.isRequired,
+  tReady: PropTypes.bool
+});
 
-export default Nav;
+export default withTranslation('common')(Nav);

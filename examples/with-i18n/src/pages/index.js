@@ -1,4 +1,6 @@
 import React, { useRef, useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import checkProps from '@jam3/react-check-extra-props';
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
@@ -9,8 +11,9 @@ import Nav from '../components/Nav/Nav';
 
 import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
+import { withTranslation } from '../../i18n';
 
-function Landing() {
+function Landing({ t }) {
   const containerRef = useRef();
   const dispatch = useDispatch();
 
@@ -40,11 +43,9 @@ function Landing() {
       <Nav />
 
       <section className={styles.hero} ref={containerRef}>
-        <h1 className={styles.title}>Welcome to Jam3!</h1>
+        <h1 className={styles.title}>{t('hero.title')}</h1>
 
-        <p className={styles.description}>
-          To get started, edit <code>pages/index.js</code> and save to reload.
-        </p>
+        <p className={styles.description}>{t('hero.description')}</p>
 
         <ul className={styles.row}>
           <li>
@@ -65,4 +66,15 @@ function Landing() {
   );
 }
 
-export default withRedux(Landing);
+Landing.getInitialProps = async () => ({
+  namespacesRequired: ['landing-page', 'common']
+});
+
+Landing.propTypes = checkProps({
+  namespacesRequired: PropTypes.any,
+  i18n: PropTypes.object,
+  t: PropTypes.func.isRequired,
+  tReady: PropTypes.bool
+});
+
+export default withTranslation('landing-page')(withRedux(Landing));
