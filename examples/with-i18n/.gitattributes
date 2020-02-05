@@ -1,0 +1,2 @@
+#public/assets/sounds/**/* filter=lfs diff=lfs merge=lfs -text
+#public/assets/videos/**/* filter=lfs diff=lfs merge=lfs -text

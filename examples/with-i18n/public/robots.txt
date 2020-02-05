@@ -1,0 +1,8 @@
+# Development configuration
+User-agent: *
+Disallow: /
+
+# Production configuration
+# Sitemap: https://[final-domain]/sitemap.xml
+# User-agent: *
+# Disallow: [routes behind login]
