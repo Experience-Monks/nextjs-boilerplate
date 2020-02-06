@@ -29,7 +29,7 @@
         "pwa": 0.5,
         "seo": 0.9,
         "accessibility": 0.9,
-        "performance": 0.9
+        "performance": 0.94
       }
     ],
     "lighthouse/audits": [
@@ -37,8 +37,8 @@
       {
         "viewport": 1,
         "without-javascript": 1,
-        "first-contentful-paint": 0.9,
-        "first-meaningful-paint": 0.9,
+        "first-contentful-paint": 0.86,
+        "first-meaningful-paint": 0.86,
         "load-fast-enough-for-pwa": 1,
         "estimated-input-latency": 1,
         "total-blocking-time": 0.9,
