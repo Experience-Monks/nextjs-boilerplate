@@ -29,7 +29,7 @@
         "pwa": 0.5,
         "seo": 0.9,
         "accessibility": 0.9,
-        "performance": 0.94
+        "performance": 0.9
       }
     ],
     "lighthouse/audits": [
@@ -37,8 +37,8 @@
       {
         "viewport": 1,
         "without-javascript": 1,
-        "first-contentful-paint": 0.86,
-        "first-meaningful-paint": 0.86,
+        "first-contentful-paint": 0.85,
+        "first-meaningful-paint": 0.85,
         "load-fast-enough-for-pwa": 1,
         "estimated-input-latency": 1,
         "total-blocking-time": 0.9,
@@ -55,7 +55,7 @@
         "content-width": 1,
         "image-aspect-ratio": 1,
         "deprecations": 1,
-        "mainthread-work-breakdown": 0.9,
+        "mainthread-work-breakdown": 0.85,
         "bootup-time": 0.9,
         "uses-rel-preload": 1,
         "uses-rel-preconnect": 1,
