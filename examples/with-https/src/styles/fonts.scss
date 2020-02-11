@@ -1,0 +1,61 @@
+// Fonts
+//
+// Location of all the font-families and font-related css
+//
+// Best practices:
+// 1. Avoid load as many fonts as possible, e.x font styles, font families
+// 2. Optimize the font, remove the characters set that the site won't use: languages
+// 3. Include the unicode range in case you couldn't remove the characters. Included just Latin by default
+// 4. Change fonts just changing the font-weight
+
+@import 'vars.scss';
+
+$base-path: '../assets/fonts/';
+
+@font-face {
+  font-family: 'MatterLight';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MatterRegular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MatterMedium';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MatterSemiBold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MatterBold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'MatterHeavy';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('#{$base-path}Matter/Matter-Heavy.woff') format('woff');
+}
