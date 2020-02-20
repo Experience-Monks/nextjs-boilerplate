@@ -1,6 +1,7 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
+import { useIsomorphicLayoutEffect } from 'react-use';
 import { gsap } from 'gsap';
 
 import styles from './index.module.scss';
@@ -23,11 +24,11 @@ function Landing() {
     dispatch(setLandingLoaded(true));
   }, [dispatch]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     animateInInit();
   }, [animateInInit]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     animateIn();
   }, [animateIn]);
 
