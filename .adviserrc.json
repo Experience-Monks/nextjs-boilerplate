@@ -19,7 +19,7 @@
           ".stylelintrc",
           "README.md"
         ],
-        "blacklist": ["LICENSE"]
+        "blacklist": []
       }
     ],
     "lighthouse/scores": [
