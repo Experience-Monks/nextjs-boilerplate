@@ -5,7 +5,7 @@ import Head from 'next/head';
 
 import styles from './{{name}}.module.scss';
 
-import { withRedux } from '../redux/withRedux';
+import { withRedux } from '../../redux/withRedux';
 
 function {{name}}() {
   return (

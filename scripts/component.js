@@ -34,7 +34,7 @@ targetFolder = targetFolder ? `${formatComponentName(targetFolder)}/` : '';
 const cwd = process.cwd();
 const dir =
   type === 'page'
-    ? path.resolve(__dirname, `../src/${type}s/` + name)
+    ? path.resolve(__dirname, `../src/${type}s/` + argv._[0])
     : path.resolve(__dirname, [`../src/components/`, targetFolder, name].join(''));
 
 fs.stat(dir, (err, stat) => {
