@@ -67,6 +67,7 @@ const nextJSConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
     CUSTOM_ENV: process.env.CUSTOM_ENV
   },
+  exportTrailingSlash: true,
   // compress: true, // NOTE: enable this when doing SSR
   devIndicators: {
     autoPrerender: false
