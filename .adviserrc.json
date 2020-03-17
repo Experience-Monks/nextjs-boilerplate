@@ -12,7 +12,7 @@
       {
         "required": [
           ".gitignore",
-          ".commitlintrc",
+          "commitlint.config.js",
           ".editorconfig",
           ".eslintrc.json",
           ".prettierrc",
