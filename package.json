@@ -94,6 +94,7 @@
     "imagemin-pngquant": "8.0.0",
     "imagemin-svgo": "7.0.0",
     "isomorphic-unfetch": "3.0.0",
+    "lint-staged": "^10.0.8",
     "maxstache": "^1.0.7",
     "minimist": "^1.2.0",
     "mkdirp": "^1.0.3",
@@ -123,12 +124,9 @@
     "npm": ">=6.5.0"
   },
   "lint-staged": {
-    "linters": {
-      "src/**/*.{js,json,scss}": [
-        "prettier --write",
-        "git add"
-      ]
-    }
+    "src/**/*.{js,json,scss}": [
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {
