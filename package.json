@@ -52,6 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@jam3/react-check-extra-props": "^1.0.1",
     "@jam3/stats": "1.0.1",
     "@next/bundle-analyzer": "9.2.1",
@@ -93,6 +94,7 @@
     "imagemin-pngquant": "8.0.0",
     "imagemin-svgo": "7.0.0",
     "isomorphic-unfetch": "3.0.0",
+    "lint-staged": "^10.0.8",
     "maxstache": "^1.0.7",
     "minimist": "^1.2.0",
     "mkdirp": "^1.0.3",
@@ -122,18 +124,15 @@
     "npm": ">=6.5.0"
   },
   "lint-staged": {
-    "linters": {
-      "src/**/*.{js,json,scss}": [
-        "prettier --write",
-        "git add"
-      ]
-    }
+    "src/**/*.{js,json,scss}": [
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "echo 'Pre-commit checks...' && lint-staged",
       "pre-push": "echo 'Pre-push checks...' && npm run linters",
-      "commitmsg": "commitlint -e $GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "browserslist": [
