@@ -40,7 +40,7 @@
     "dompurify": "^2.0.8",
     "get-scroll": "^2.0.0",
     "gsap": "3.1.1",
-    "next": "9.2.1",
+    "next": "9.3.2",
     "no-op": "1.0.3",
     "normalize.css": "^8.0.1",
     "react": "16.12.0",

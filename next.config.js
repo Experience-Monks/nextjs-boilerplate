@@ -108,27 +108,6 @@ const nextJSConfig = {
 
     return config;
   }
-  // // NOTE: remove comment if you need some special handle of static HTML
-  // async exportPathMap() {
-  // NOTE: code below is to demonstrate how to generate with dynamic pages.
-  //       reference https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js
-  // const response = await fetch('URL TO RECEIVE POST LIST');
-  // const postList = await response.json();
-  // const dynamicPages = postList.reduce(
-  //   (dynamicPages, post) =>
-  //     Object.assign({}, dynamicPages, {
-  //       [`/PAGE_NAME/PAGE_ID`]: { page: '/PAGE_NAME/[PAGE_ID]' }
-  //     }),
-  //   {}
-  // );
-
-  //   const staticPages = {
-  //     '/': { page: '/' }
-  //   };
-
-  //   // combine the map of dynamicPages with the staticPages
-  //   return Object.assign({}, staticPages, dynamicPages);
-  // }
 };
 
 module.exports = withPlugins(
