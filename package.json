@@ -28,7 +28,7 @@
     "\n ######################  Automation Tools  ######################": "",
     "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
-    "adviser-ci": "adviser --tags lighthouse,stage --verbose",
+    "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
     "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
     "sass-lint": "stylelint './src/**/*.scss'"
   },
@@ -40,7 +40,7 @@
     "dompurify": "^2.0.8",
     "get-scroll": "^2.0.0",
     "gsap": "3.1.1",
-    "next": "9.2.1",
+    "next": "9.3.2",
     "no-op": "1.0.3",
     "normalize.css": "^8.0.1",
     "react": "16.12.0",
