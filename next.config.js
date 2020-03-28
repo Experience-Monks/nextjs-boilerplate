@@ -65,7 +65,8 @@ const nextJSConfig = {
     WEBSITE_SITE_URL: process.env.WEBSITE_SITE_URL,
     BUNDLE_ANALYZE: process.env.BUNDLE_ANALYZE === 'true',
     CUSTOM_KEY: process.env.CUSTOM_KEY,
-    CUSTOM_ENV: process.env.CUSTOM_ENV
+    CUSTOM_ENV: process.env.CUSTOM_ENV,
+    DNS_PREFETCH: process.env.DNS_PREFETCH
   },
   exportTrailingSlash: true,
   // compress: true, // NOTE: enable this when doing SSR
