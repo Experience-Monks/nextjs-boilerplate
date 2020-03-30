@@ -29,8 +29,8 @@
     "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
-    "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
-    "sass-lint": "stylelint './src/**/*.scss'"
+    "js-lint": "eslint \"./src/**/*.js\" -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
+    "sass-lint": "stylelint \"./src/**/*.scss\""
   },
   "dependencies": {
     "@jam3/detect": "1.0.2",
