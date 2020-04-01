@@ -2,11 +2,13 @@ import React from 'react';
 import App from 'next/app';
 import { Provider } from 'react-redux';
 
-import { initializeStore } from './index';
+import typeof AppType from 'next/app';
+
+import { initializeStore, type State } from './index';
 
 import { isBrowser } from '../utils/detect';
 
-export const withRedux = (PageComponent, { ssr = true } = {}) => {
+export const withRedux = (PageComponent: AppType | Function, { ssr = true }: Object = {}): Function => {
   const WithRedux = ({ initialReduxState, ...props }) => {
     const store = getOrInitializeStore(initialReduxState);
     return (
@@ -18,7 +20,7 @@ export const withRedux = (PageComponent, { ssr = true } = {}) => {
 
   // Make sure people don't use this HOC on _app.js level
   if (process.env.NODE_ENV !== 'production') {
-    const isAppHoc = PageComponent === App || PageComponent.prototype instanceof App;
+    const isAppHoc = PageComponent === App || PageComponent.prototype instanceof App || PageComponent.name === 'App';
     if (isAppHoc) {
       throw new Error('The withRedux HOC only works with PageComponents');
     }
@@ -27,7 +29,6 @@ export const withRedux = (PageComponent, { ssr = true } = {}) => {
   // Set the correct displayName in development
   if (process.env.NODE_ENV !== 'production') {
     const displayName = PageComponent.displayName || PageComponent.name || 'Component';
-
     WithRedux.displayName = `withRedux(${displayName})`;
   }
 
@@ -41,8 +42,8 @@ export const withRedux = (PageComponent, { ssr = true } = {}) => {
       context.reduxStore = reduxStore;
 
       // Run getInitialProps from HOCed PageComponent
-      const pageProps =
-        typeof PageComponent.getInitialProps === 'function' ? await PageComponent.getInitialProps(context) : {};
+      const { getInitialProps } = PageComponent;
+      const pageProps = getInitialProps instanceof Function ? await getInitialProps(context) : {};
 
       // Pass props to PageComponent
       return {
@@ -56,7 +57,7 @@ export const withRedux = (PageComponent, { ssr = true } = {}) => {
 };
 
 let reduxStore;
-const getOrInitializeStore = initialState => {
+const getOrInitializeStore = (initialState?: State) => {
   // Always make a new store if server, otherwise state is shared between requests
   if (!isBrowser) {
     return initializeStore(initialState);

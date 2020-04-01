@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
+
 import 'normalize.css';
 import 'default-passive-events';
 
@@ -10,20 +12,40 @@ import RotateScreen from '../components/RotateScreen/RotateScreen';
 
 import detect, { isBrowser } from '../utils/detect';
 
+type Props = {
+  Component: React$AbstractComponent<any, any>,
+  pageProps: Object
+};
+
 // This default export is required in a new `pages/_app.js` file.
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: Props) {
+  const [isSupported, setIsSupported] = useState(true);
+
   useEffect(() => {
     if (isBrowser) {
-      if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
-        require('@jam3/stats')();
+      const unsupportedUtil = require('../utils/unsupported-utils');
+
+      if (unsupportedUtil.isSupported()) {
+        if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
+          require('@jam3/stats')();
+        }
+        const { device, browser } = detect;
+        const classes = [device?.isMobile ? 'mobile' : '', device?.getType(), browser?.getName()].filter(className =>
+          Boolean(className)
+        );
+        document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
+      } else {
+        setIsSupported(false);
       }
-      const { device, browser } = detect;
-      const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
-        Boolean(className)
-      );
-      document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
     }
   }, []);
+
+  if (!isSupported) {
+    const Unsupported = dynamic(() =>
+      import(/* webpackChunkName: "Unsupported" */ '../components/Unsupported/Unsupported')
+    );
+    return <Unsupported />;
+  }
 
   return (
     <Layout>
@@ -42,7 +64,7 @@ function App({ Component, pageProps }) {
         <link rel="shortcut icon" href="/favicons/favicon.ico" />
         <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
         {/* Share meta tags */}
-        <meta property="og:locale" content="en_US" />>
+        <meta property="og:locale" content="en_US" />
         <meta property="og:title" content="Default title" />
         <meta property="og:description" content="Default title" />
         <meta property="og:type" content="website" />
@@ -67,4 +89,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default App;
+export default (memo(App): React$AbstractComponent<Props, any>);

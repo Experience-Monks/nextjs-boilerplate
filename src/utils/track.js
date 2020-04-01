@@ -6,7 +6,7 @@ window.dataLayer = window.dataLayer || [];
  * @param {boolean} [action=false] - Action name
  * @param {any} [payload={}] - Action data
  */
-function gtmEvent(action = false, payload = {}) {
+function gtmEvent(action: boolean = false, payload: any = {}) {
   if (action) {
     window.dataLayer.push({
       event: action,

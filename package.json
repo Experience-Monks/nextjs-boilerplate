@@ -17,6 +17,7 @@
     "build:ssr": "next build",
     "build:prod:static": "next build && next export && cross-env BUILD_ENV=production npm-run-all robots-txt-generator sitemap-generator",
     "build:staging:static": "cross-env BUILD_ENV=staging next build && next export",
+    "build-flow-typed": "$(npm bin)/flow-typed install",
     "ci-prod-server": "serve out &",
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "robots-txt-generator": "node scripts/robots-txt-generator.js",
@@ -30,7 +31,9 @@
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
     "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
-    "sass-lint": "stylelint './src/**/*.scss'"
+    "sass-lint": "stylelint './src/**/*.scss'",
+    "flow": "flow",
+    "postinstall": "npm run build-flow-typed"
   },
   "dependencies": {
     "@jam3/detect": "1.0.2",
@@ -51,6 +54,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.9.0",
+    "@babel/preset-flow": "^7.9.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@jam3/react-check-extra-props": "^1.0.1",
@@ -86,6 +91,8 @@
     "eslint-plugin-react": "7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-standard": "4.0.1",
+    "flow-bin": "^0.121.0",
+    "flow-typed": "^3.1.0",
     "generate-robotstxt": "^8.0.0",
     "husky": "^4.2.1",
     "imagemin-gifsicle": "7.0.0",
@@ -130,7 +137,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Pre-commit checks...' && lint-staged",
+      "pre-commit": "echo 'Pre-commit checks...' && lint-staged && npm run flow",
       "pre-push": "echo 'Pre-push checks...' && npm run linters",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }

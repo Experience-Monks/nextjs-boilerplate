@@ -12,6 +12,9 @@
 # testing
 /coverage
 
+#flowjs
+/flow-typed/npm
+
 # next.js
 /.next/
 /out/

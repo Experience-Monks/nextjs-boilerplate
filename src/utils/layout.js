@@ -1,7 +1,35 @@
 import { isBrowser } from './detect';
 
-function getLayout() {
-  if (!isBrowser) return {};
+export type Breakpoints = {
+  mobile: boolean,
+  tablet: boolean,
+  desktopSm: boolean,
+  desktopMd: boolean,
+  desktopLg: boolean
+};
+
+type Layout = {
+  ...Breakpoints,
+  all: Breakpoints
+};
+
+const defaultProps: Layout = {
+  mobile: false,
+  tablet: false,
+  desktopSm: false,
+  desktopMd: false,
+  desktopLg: false,
+  all: {
+    mobile: false,
+    tablet: false,
+    desktopSm: false,
+    desktopMd: false,
+    desktopLg: false
+  }
+};
+
+function getLayout(): Layout {
+  if (!isBrowser) return defaultProps;
 
   const TABLET_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
     '--layout-tablet'
@@ -49,4 +77,4 @@ function getLayout() {
   };
 }
 
-export default getLayout();
+export default (getLayout(): Layout);

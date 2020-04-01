@@ -1,11 +1,20 @@
 import keys from '../keys';
 
+type State = {
+  loaded?: boolean
+};
+
+type Action = {
+  type: $Values<typeof keys>,
+  ...State
+};
+
 const defaultState = {
   loaded: false
 };
 
 // Reducer
-export default function reducer(state = defaultState, action) {
+export default function reducer(state: State = defaultState, action: Action): State {
   switch (action.type) {
     case keys.LANDING_LOADED:
       return { ...state, loaded: action.loaded };
@@ -15,7 +24,7 @@ export default function reducer(state = defaultState, action) {
 }
 
 // Action Creators
-export function setLandingLoaded(loaded) {
+export function setLandingLoaded(loaded: boolean): Action {
   return {
     type: keys.LANDING_LOADED,
     loaded

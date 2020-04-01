@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { memo, useRef, useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
@@ -65,4 +65,4 @@ function Landing() {
   );
 }
 
-export default withRedux(Landing);
+export default (withRedux(memo(Landing)): React$AbstractComponent<any, any>);

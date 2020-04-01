@@ -1,13 +1,14 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+/* $FlowFixMe "Html" export is not defined in "next/document" */
+import Document, { Html, Head, Main, NextScript, type DocumentContext } from 'next/document';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext): Promise<any> {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
 
-  render() {
+  render(): React$Element<any> {
     return (
       <Html lang="en">
         <Head></Head>

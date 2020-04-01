@@ -1,22 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import checkProps from '@jam3/react-check-extra-props';
+import React, { memo } from 'react';
 import classnames from 'classnames';
 
 import styles from './Layout.module.scss';
 
 // import useLayout from '../../utils/hooks/use-layout';
 
-function Layout({ children }) {
-  // const layout = useLayout().layout;
+type Props = {
+  children?: React$Node,
+  className?: string
+};
 
-  return <main className={classnames(styles.Layout)}>{children}</main>;
+function Layout({ children, className }: Props) {
+  // const { layout } = useLayout();
+  return <main className={classnames(styles.Layout, className)}>{children}</main>;
 }
 
-Layout.propTypes = checkProps({
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
-});
-
-Layout.defaultProps = {};
-
-export default Layout;
+export default (memo(Layout): React$AbstractComponent<Props, any>);

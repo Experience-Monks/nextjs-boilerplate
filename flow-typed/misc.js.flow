@@ -1,0 +1,5 @@
+class DocumentWithProps extends Document {
+  body: HTMLBodyElement;
+  documentElement: HTMLElement;
+}
+declare var document: DocumentWithProps;

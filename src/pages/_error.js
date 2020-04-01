@@ -1,10 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
+import { type Context } from 'next';
 
 import Nav from '../components/Nav/Nav';
 import { ReactComponent as Cross } from '../assets/svgs/cross.svg';
 
-function Error({ statusCode }) {
+type PageError = { statusCode?: number };
+
+function Error({ statusCode }: PageError): React$Element<any> {
   return (
     <section className="Error">
       <Head>
@@ -19,7 +22,7 @@ function Error({ statusCode }) {
   );
 }
 
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = ({ res, err }: Context): PageError => {
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 };

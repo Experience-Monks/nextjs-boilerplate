@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 
@@ -27,4 +27,4 @@ function About() {
   );
 }
 
-export default withRedux(About);
+export default (withRedux(memo(About)): React$AbstractComponent<any, any>);

@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWindowSize } from '@jam3/react-hooks';
+
+import { type Breakpoints } from '../layout';
+
 import settings from '../../data/settings';
 import layout from '../layout';
 
@@ -12,7 +15,7 @@ import layout from '../layout';
  * import useLayout from '[path]/use-layout';
  * const { layout } = useLayout();
  */
-function useLayout() {
+function useLayout(): { layout: Breakpoints } {
   const { innerWidth } = useWindowSize(settings.resizeDebounceTime);
   const [currentLayout, setCurrentLayout] = useState(layout.all);
 

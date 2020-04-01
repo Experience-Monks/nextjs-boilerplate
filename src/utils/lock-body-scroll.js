@@ -2,17 +2,23 @@ import { getScrollTop } from 'get-scroll';
 
 import scrollPage from './scroll-page';
 
+type LockBodyScroll = {
+  isLocked: boolean,
+  lock: Function,
+  unlock: Function
+};
+
 /**
  * Lock and unlock body scroll with page position restoration
  */
-function lockBodyScroll() {
+function lockBodyScroll(): LockBodyScroll {
   let scrollPosY = 0;
   let isLocked = false;
 
   /**
    * Lock body scroll
    */
-  function lock() {
+  function lock(): void {
     if (!isLocked) {
       scrollPosY = getScrollTop();
       document.body.style.position = 'fixed';
@@ -27,7 +33,7 @@ function lockBodyScroll() {
    *
    * @param {boolean} [skipPositionRestore=false] - Skip page position restoration flag
    */
-  function unlock(skipPositionRestore = false) {
+  function unlock(skipPositionRestore: boolean = false): void {
     if (isLocked) {
       document.body.style.position = '';
       document.body.style.overflowY = '';
@@ -40,4 +46,4 @@ function lockBodyScroll() {
   return { isLocked, lock, unlock };
 }
 
-export default lockBodyScroll();
+export default (lockBodyScroll(): LockBodyScroll);

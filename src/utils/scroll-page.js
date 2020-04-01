@@ -16,7 +16,7 @@ let timeoutId;
  * @param {object} [props={}] - Scroll options. Refer to 'defaultProps' object
  * @param {function} [onComplete=noop] - On complete trigger function
  */
-export default function scrollPage(props = {}, onComplete = noop) {
+export default function scrollPage(props: Object = {}, onComplete: Function = noop) {
   const combinedProps = Object.assign({}, defaultProps, props);
   const { x, y, duration, ease } = combinedProps;
 

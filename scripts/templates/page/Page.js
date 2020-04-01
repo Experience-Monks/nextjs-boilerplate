@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 import Head from 'next/head';
 
 import styles from './{{name}}.module.scss';
@@ -17,6 +16,6 @@ function {{name}}() {
       <section>{{name}} Page</section>
     </section>
   );
-};
+}
 
-export default withRedux({{name}});
+export default (withRedux(memo({{name}})): React$AbstractComponent<any, any>);

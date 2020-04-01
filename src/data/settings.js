@@ -1,4 +1,4 @@
-const settings = {};
+const settings: Object = {};
 
 // global
 settings.resizeDebounceTime = 10; // in ms
