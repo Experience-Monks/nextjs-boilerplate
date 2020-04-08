@@ -26,6 +26,7 @@
     "component": "node scripts/component.js",
     "page": "node scripts/component.js --page",
     "\n ######################  Automation Tools  ######################": "",
+    "lint-staged": "lint-staged",
     "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
@@ -112,6 +113,7 @@
     "prop-types": "^15.7.2",
     "redux-devtools-extension": "2.13.8",
     "serve": "^11.3.0",
+    "shell-quote": "^1.7.2",
     "stylelint": "13.0.0",
     "stylelint-config-jam3": "0.1.2",
     "webp-loader": "0.6.0"
@@ -122,11 +124,6 @@
   "engines": {
     "node": ">=10.15.0",
     "npm": ">=6.5.0"
-  },
-  "lint-staged": {
-    "src/**/*.{js,json,scss}": [
-      "prettier --write"
-    ]
   },
   "husky": {
     "hooks": {
