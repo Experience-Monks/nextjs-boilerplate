@@ -17,6 +17,7 @@
     "build:ssr": "next build",
     "build:prod:static": "next build && next export && cross-env BUILD_ENV=production npm-run-all robots-txt-generator sitemap-generator",
     "build:staging:static": "cross-env BUILD_ENV=staging next build && next export",
+    "build:develop:static": "cross-env BUILD_ENV=develop next build && next export",
     "ci-prod-server": "serve out &",
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "robots-txt-generator": "node scripts/robots-txt-generator.js",
