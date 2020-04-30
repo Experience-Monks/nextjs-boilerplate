@@ -50,7 +50,7 @@ function App({ Component, pageProps }: Props) {
   return (
     <Layout>
       <Head>
-        <meta name="title" content="Jam3 generator" />
+        <title>Jam3 generator</title>
         <meta name="description" content="Default description" />
         <meta name="keywords" content="Jam3,web App,React" />
         {/* Generate favicons in https://realfavicongenerator.net */}
