@@ -27,7 +27,7 @@
     "component": "node scripts/component.js",
     "page": "node scripts/component.js --page",
     "\n ######################  Automation Tools  ######################": "",
-    "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
+    "linters": "npm-run-all -p flow js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
     "js-lint": "eslint './src/**/*.js' -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
@@ -137,7 +137,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Pre-commit checks...' && lint-staged && npm run flow",
+      "pre-commit": "echo 'Pre-commit checks...' && npm run linters && lint-staged",
       "pre-push": "echo 'Pre-push checks...' && npm run linters",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
