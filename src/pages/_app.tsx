@@ -23,8 +23,7 @@ function App({ Component, pageProps }: AppProps) {
         if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
           require('@jam3/stats')();
         }
-        const device: any = detect.device;
-        const browser: any = detect.browser;
+        const { device, browser } = detect;
         const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
           Boolean(className)
         );

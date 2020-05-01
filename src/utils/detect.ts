@@ -1,6 +1,11 @@
 export const isBrowser = typeof window !== 'undefined';
 
-const detect = {
+const detect: {
+  device: any;
+  browser: any;
+  os: any;
+  bots: any;
+} = {
   device: null,
   browser: null,
   os: null,
