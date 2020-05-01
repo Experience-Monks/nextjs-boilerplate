@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import { AppProps } from 'next/app';
 import 'normalize.css';
 import 'default-passive-events';
 
@@ -12,7 +13,7 @@ import RotateScreen from '../components/RotateScreen/RotateScreen';
 import detect, { isBrowser } from '../utils/detect';
 
 // This default export is required in a new `pages/_app.js` file.
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   const [isSupported, setIsSupported] = useState(true);
 
   useEffect(() => {
@@ -22,7 +23,8 @@ function App({ Component, pageProps }) {
         if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
           require('@jam3/stats')();
         }
-        const { device, browser } = detect;
+        const device: any = detect.device;
+        const browser: any = detect.browser;
         const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
           Boolean(className)
         );

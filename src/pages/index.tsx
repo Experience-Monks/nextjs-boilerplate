@@ -11,15 +11,19 @@ import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
 
 function Landing() {
-  const containerRef = useRef();
+  const containerRef = useRef<HTMLElement>(null);
   const dispatch = useDispatch();
 
   const animateInInit = useCallback(() => {
-    gsap.set(containerRef.current, { autoAlpha: 0 });
+    if (containerRef.current) {
+      gsap.set(containerRef.current, { autoAlpha: 0 });
+    }
   }, []);
 
   const animateIn = useCallback(async () => {
-    await gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
+    if (containerRef.current) {
+      await gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
+    }
     dispatch(setLandingLoaded(true));
   }, [dispatch]);
 

@@ -1,3 +1,4 @@
+// Custom error page adapted from https://nextjs.org/docs/advanced-features/custom-error-page#customizing-the-error-page
 import React from 'react';
 import Head from 'next/head';
 

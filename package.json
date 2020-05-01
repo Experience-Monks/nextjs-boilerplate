@@ -63,6 +63,7 @@
     "@storybook/addons": "^5.3.9",
     "@storybook/react": "^5.3.9",
     "@svgr/webpack": "^5.1.0",
+    "@types/react": "^16.9.34",
     "@types/react-redux": "^7.1.8",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",

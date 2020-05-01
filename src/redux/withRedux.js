@@ -1,3 +1,5 @@
+// This is a .js file because it is adopted from
+// https://github.com/zeit/next.js/blob/canary/examples/with-redux/lib/redux.js
 import React from 'react';
 import App from 'next/app';
 import { Provider } from 'react-redux';
