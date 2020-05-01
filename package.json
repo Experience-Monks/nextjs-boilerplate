@@ -31,7 +31,7 @@
     "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags lighthouse,webhint,stage --verbose --quiet",
-    "js-lint": "eslint \"./src/**/*.js\" -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
+    "js-lint": "eslint src --ext .js,.ts,.tsx -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
     "sass-lint": "stylelint \"./src/**/*.scss\""
   },
   "dependencies": {
@@ -63,6 +63,9 @@
     "@storybook/addons": "^5.3.9",
     "@storybook/react": "^5.3.9",
     "@svgr/webpack": "^5.1.0",
+    "@types/react-redux": "^7.1.8",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "adviser": "^0.7.5",
@@ -118,6 +121,7 @@
     "shell-quote": "^1.7.2",
     "stylelint": "13.0.0",
     "stylelint-config-jam3": "0.1.2",
+    "typescript": "^3.8.3",
     "webp-loader": "0.6.0"
   },
   "eslintConfig": {

@@ -7,9 +7,10 @@ import styles from '../index.module.scss';
 import Nav from '../../components/Nav/Nav';
 
 import { withRedux } from '../../redux/withRedux';
+import { State } from '../../redux';
 
 function About() {
-  const appLoaded = useSelector(state => state.app.loaded);
+  const appLoaded = useSelector((state: State) => state.app.loaded);
 
   return (
     <section className="About">
