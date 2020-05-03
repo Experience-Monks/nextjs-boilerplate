@@ -43,6 +43,7 @@ function App({ Component, pageProps }) {
   return (
     <Layout>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Jam3 generator</title>
         <meta name="description" content="Default description" />
         <meta name="keywords" content="Jam3,web App,React" />
@@ -72,7 +73,7 @@ function App({ Component, pageProps }) {
         <meta name="msvalidate.01" content="[Bing Web Master Tools]" />
         {/* Other recommends */}
         <link rel="canonical" href={process.env.WEBSITE_SITE_URL} />
-        <link rel="dns-prefetch" href="//[NEXT-DNS-request.com]" />
+        {process.env.DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.DNS_PREFETCH} />}
       </Head>
 
       <Component {...pageProps} />

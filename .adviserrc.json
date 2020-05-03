@@ -1,5 +1,5 @@
 {
-  "plugins": ["dependencies", "lighthouse"],
+  "plugins": ["dependencies", "lighthouse", "webhint"],
   "rules": {
     "package-json-properties": [
       "error",
@@ -112,6 +112,13 @@
         "plugins": 1
       }
     ],
+    "webhint/hints": [
+      "error",
+      {
+        "ignore": [],
+        "minSeverity": 3
+      }
+    ],
     "dependencies/not-allowed-packages": [
       "error",
       {
@@ -202,7 +209,7 @@
           "use-subscription@1.1.1",
           "gsap@3.1.1",
           "ignore-loader@0.1.2",
-          "nano-css@5.2.1",
+          "nano-css@5.3.0",
           "json-schema@0.2.3",
           "jam3-dev@0.1.0"
         ],
@@ -215,6 +222,10 @@
       "url": "http://localhost:5000",
       "configPath": "dev.lighthouse.config.json"
     },
+    "webhint": {
+      "url": "http://localhost:5000",
+      "configPath": "dev.wh.config.json"
+    },
     "tags": {
       "dev": [
         "package-json-properties",
@@ -223,6 +234,7 @@
         "dependencies/min-vulnerabilities-allow"
       ],
       "lighthouse": ["lighthouse/scores", "lighthouse/audits"],
+      "webhint": ["webhint/hints"],
       "stage": [
         "dependencies/outdated-packages",
         "dependencies/licenses-whitelist",

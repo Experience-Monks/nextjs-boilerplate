@@ -11,7 +11,7 @@
     "url": "https://github.com/Jam3/nyg-jam3/issues"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env BUILD_ENV=development next dev",
     "start": "next start",
     "\n ######################  NPM Secondary Pipeline  ######################": "",
     "build:ssr": "next build",
@@ -30,7 +30,7 @@
     "lint-staged": "lint-staged",
     "linters": "npm-run-all -p js-lint sass-lint adviser-dev",
     "adviser-dev": "adviser --tags dev --verbose",
-    "adviser-ci": "adviser --tags lighthouse,stage --verbose --quiet",
+    "adviser-ci": "adviser --tags lighthouse,webhint,stage --verbose --quiet",
     "js-lint": "eslint \"./src/**/*.js\" -c ./.eslintrc.json --quiet --ignore-pattern .gitignore",
     "sass-lint": "stylelint \"./src/**/*.scss\""
   },
@@ -68,6 +68,7 @@
     "adviser": "^0.7.5",
     "adviser-plugin-dependencies": "^0.4.1",
     "adviser-plugin-lighthouse": "^1.0.1",
+    "adviser-plugin-webhint": "^1.0.1",
     "babel-eslint": "10.0.3",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.1",
