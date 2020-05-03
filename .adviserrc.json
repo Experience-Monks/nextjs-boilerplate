@@ -4,7 +4,7 @@
     "package-json-properties": [
       "error",
       {
-        "required": ["name", "private", "scripts", "engines", "dependencies", "lint-staged", "husky", "browserslist"]
+        "required": ["name", "private", "scripts", "engines", "dependencies", "husky", "browserslist"]
       }
     ],
     "root-files": [
