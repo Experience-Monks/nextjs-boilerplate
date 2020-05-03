@@ -44,7 +44,7 @@ function App({ Component, pageProps }) {
     <Layout>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="title" content="Jam3 generator" />
+        <title>Jam3 generator</title>
         <meta name="description" content="Default description" />
         <meta name="keywords" content="Jam3,web App,React" />
         {/* Generate favicons in https://realfavicongenerator.net */}
