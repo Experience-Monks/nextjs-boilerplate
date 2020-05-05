@@ -1,7 +1,30 @@
 import { isBrowser } from './detect';
 
-function getLayout() {
-  if (!isBrowser) return {};
+interface BreakpointLayout {
+  readonly mobile: boolean;
+  readonly tablet: boolean;
+  readonly desktopSm: boolean;
+  readonly desktopMd: boolean;
+  readonly desktopLg: boolean;
+}
+
+function getLayout(): BreakpointLayout & { readonly all: BreakpointLayout } {
+  if (!isBrowser) {
+    return {
+      mobile: false,
+      tablet: false,
+      desktopSm: false,
+      desktopMd: false,
+      desktopLg: false,
+      all: {
+        mobile: false,
+        tablet: false,
+        desktopSm: false,
+        desktopMd: false,
+        desktopLg: false
+      }
+    };
+  }
 
   const TABLET_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
     '--layout-tablet'

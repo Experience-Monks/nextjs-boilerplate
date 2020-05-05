@@ -6,7 +6,6 @@ import layout from '../layout';
 /**
  * Layout hook
  * Set layout on window resize
- * @returns {object} Current layout object
  *
  * Example:
  * import useLayout from '[path]/use-layout';
@@ -17,7 +16,7 @@ function useLayout() {
   const [currentLayout, setCurrentLayout] = useState(layout.all);
 
   const handleResize = useCallback(() => {
-    if (Object.keys(layout.all).filter(key => currentLayout[key] !== layout[key]).length) {
+    if ((Object.keys(layout.all) as (keyof typeof layout.all)[]).some(key => currentLayout[key] !== layout[key])) {
       setCurrentLayout(layout.all);
     }
   }, [currentLayout, setCurrentLayout]);
