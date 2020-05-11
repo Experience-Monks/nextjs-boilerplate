@@ -69,7 +69,7 @@ const nextJSConfig = {
     DNS_PREFETCH: process.env.DNS_PREFETCH
   },
   exportTrailingSlash: true,
-  // compress: true, // NOTE: enable this when doing SSR
+  compress: false, // NOTE: enable this when doing SSR
   devIndicators: {
     autoPrerender: false
   },
