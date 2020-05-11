@@ -4,34 +4,13 @@ require('dotenv').config({
   path: path.resolve(process.cwd(), `.env.${process.env.BUILD_ENV || process.env.NODE_ENV}`)
 });
 
-// const fetch = require('isomorphic-unfetch');
 const withPlugins = require('next-compose-plugins');
-const { PHASE_PRODUCTION_BUILD } = require('next-server/constants');
-const withCSS = require('@zeit/next-css');
-const withSass = require('@zeit/next-sass');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const optimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
-const withOffline = require('next-offline');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.BUNDLE_ANALYZE === 'true'
 });
-
-const withOfflineSW = {
-  transformManifest: manifest => ['/'].concat(manifest)
-};
-
-const withSassConfig = {
-  cssModules: true,
-  cssLoaderOptions: {
-    localIdentName: '[local]_[hash:base64:5]' // [path]___[local]___[hash:base64:5]
-  },
-  [PHASE_PRODUCTION_BUILD]: {
-    cssLoaderOptions: {
-      localIdentName: '[hash:base64:8]'
-    }
-  }
-};
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
@@ -61,13 +40,6 @@ const optimizedImagesConfig = {
 };
 
 const nextJSConfig = {
-  env: {
-    WEBSITE_SITE_URL: process.env.WEBSITE_SITE_URL,
-    BUNDLE_ANALYZE: process.env.BUNDLE_ANALYZE === 'true',
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-    CUSTOM_ENV: process.env.CUSTOM_ENV,
-    DNS_PREFETCH: process.env.DNS_PREFETCH
-  },
   exportTrailingSlash: true,
   // compress: true, // NOTE: enable this when doing SSR
   devIndicators: {
@@ -112,13 +84,6 @@ const nextJSConfig = {
 };
 
 module.exports = withPlugins(
-  [
-    [withCSS],
-    [withSass, withSassConfig],
-    [withFonts],
-    [withOffline, withOfflineSW],
-    [optimizedImages, optimizedImagesConfig],
-    [withBundleAnalyzer]
-  ],
+  [[withFonts], [optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]],
   nextJSConfig
 );

@@ -7,7 +7,7 @@ require('dotenv').config({
   path: path.resolve(process.cwd(), `.env.${process.env.BUILD_ENV || process.env.NODE_ENV}`)
 });
 
-if (process.env.CI_ENV === 'production' && process.env.WEBSITE_SITE_URL) {
+if (process.env.CI_ENV === 'production' && process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
   console.log(chalk.cyan('\n###################### robots.txt ######################\n'));
 
   robotstxt({
@@ -18,8 +18,8 @@ if (process.env.CI_ENV === 'production' && process.env.WEBSITE_SITE_URL) {
         disallow: ['/_next']
       }
     ],
-    sitemap: `${process.env.WEBSITE_SITE_URL}/sitemap.xml`,
-    host: `${process.env.WEBSITE_SITE_URL}`
+    sitemap: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/sitemap.xml`,
+    host: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}`
   })
     .then(content => {
       fs.writeFileSync(path.resolve(__dirname, '../out/robots.txt'), content);
