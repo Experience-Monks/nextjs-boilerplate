@@ -59,11 +59,11 @@ function App({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/favicons/favicon.ico" />
         <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
         {/* Share meta tags */}
-        <meta property="og:locale" content="en_US" />>
+        <meta property="og:locale" content="en_US" />
         <meta property="og:title" content="Default title" />
         <meta property="og:description" content="Default title" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={process.env.WEBSITE_SITE_URL} />
+        <meta property="og:url" content={process.env.NEXT_PUBLIC_WEBSITE_SITE_URL} />
         <meta property="og:site_name" content="Default site name" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -73,8 +73,10 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="google-site-verification" content="[Google Web Master Tools]" />
         <meta name="msvalidate.01" content="[Bing Web Master Tools]" />
         {/* Other recommends */}
-        <link rel="canonical" href={process.env.WEBSITE_SITE_URL} />
-        {process.env.DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.DNS_PREFETCH} />}
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_WEBSITE_SITE_URL} />
+        {process.env.NEXT_PUBLIC_DNS_PREFETCH && (
+          <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
+        )}
       </Head>
 
       <Component {...pageProps} />
