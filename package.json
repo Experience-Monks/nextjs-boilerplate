@@ -67,8 +67,8 @@
     "@types/dompurify": "^2.0.1",
     "@types/react": "^16.9.34",
     "@types/react-redux": "^7.1.8",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "adviser": "^0.7.5",
     "adviser-plugin-dependencies": "^0.4.1",
     "adviser-plugin-lighthouse": "^1.0.1",
@@ -109,7 +109,7 @@
     "next-images": "^1.3.0",
     "next-optimized-images": "2.5.4",
     "nextjs-sitemap-generator": "^0.5.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "1.19.1",
@@ -120,7 +120,7 @@
     "shell-quote": "^1.7.2",
     "stylelint": "13.0.0",
     "stylelint-config-jam3": "0.1.2",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.2",
     "webp-loader": "0.6.0"
   },
   "eslintConfig": {
