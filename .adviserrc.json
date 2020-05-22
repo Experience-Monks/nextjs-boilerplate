@@ -129,7 +129,7 @@
       "error",
       {
         "level": "high",
-        "skip": ["1486"]
+        "skip": ["1219"]
       }
     ],
     "dependencies/outdated-packages": [
