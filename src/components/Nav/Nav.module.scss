@@ -21,6 +21,10 @@
 
       &.routes {
         justify-content: flex-start;
+
+        .threeLogo {
+          width: px(25);
+        }
       }
 
       &.links {

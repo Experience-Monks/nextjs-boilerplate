@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import styles from './Nav.module.scss';
 
+import SvgThreeLogo from '../../assets/svgs/svg-three-logo.svg';
+
 import jam3LogoSrc from '../../assets/images/threeLogo.jpeg';
 import githubLogoSrc from '../../assets/images/github-icon-64b.png';
 
@@ -23,12 +25,13 @@ function Nav() {
         <ul className={styles.routes}>
           <li>
             <Link href="/">
-              <a>Home</a>
+              <SvgThreeLogo className={styles.threeLogo} />
             </Link>
           </li>
 
           <li>
             <Link href="/about">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
               <a>About</a>
             </Link>
           </li>

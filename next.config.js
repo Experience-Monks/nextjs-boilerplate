@@ -48,24 +48,6 @@ const nextJSConfig = {
     modern: true
   },
   webpack: function(config, options) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: `@svgr/webpack`,
-          options: {
-            prettier: true,
-            svgo: true,
-            svgoConfig: {
-              removeViewBox: true,
-              cleanupIDs: true
-            }
-          }
-        },
-        'url-loader'
-      ]
-    });
-
     return config;
   }
 };
