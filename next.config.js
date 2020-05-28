@@ -5,7 +5,6 @@ require('dotenv').config({
 });
 
 const withPlugins = require('next-compose-plugins');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const optimizedImages = require('next-optimized-images');
 const withFonts = require('next-fonts');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -49,18 +48,6 @@ const nextJSConfig = {
     modern: true
   },
   webpack: function(config, options) {
-    if (config.mode === 'production') {
-      if (Array.isArray(config.optimization.minimizer)) {
-        config.optimization.minimizer.push(
-          new OptimizeCSSAssetsPlugin({
-            cssProcessorPluginOptions: {
-              preset: ['default', { discardComments: { removeAll: true } }]
-            }
-          })
-        );
-      }
-    }
-
     return config;
   }
 };
