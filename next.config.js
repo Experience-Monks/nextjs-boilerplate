@@ -40,7 +40,7 @@ const optimizedImagesConfig = {
 
 const nextJSConfig = {
   exportTrailingSlash: true,
-  // compress: true, // NOTE: enable this when doing SSR
+  compress: false, // NOTE: enable this when doing SSR
   devIndicators: {
     autoPrerender: false
   },
