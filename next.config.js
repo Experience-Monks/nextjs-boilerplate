@@ -6,7 +6,6 @@ require('dotenv').config({
 
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
-const withFonts = require('next-fonts');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.BUNDLE_ANALYZE === 'true'
 });
@@ -52,7 +51,4 @@ const nextJSConfig = {
   }
 };
 
-module.exports = withPlugins(
-  [[withFonts], [optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]],
-  nextJSConfig
-);
+module.exports = withPlugins([[optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]], nextJSConfig);
