@@ -25,7 +25,10 @@ function Nav() {
         <ul className={styles.routes}>
           <li>
             <Link href="/">
-              <SvgThreeLogo className={styles.threeLogo} />
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+              <a>
+                <SvgThreeLogo className={styles.threeLogo} />
+              </a>
             </Link>
           </li>
 
