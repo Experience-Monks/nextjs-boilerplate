@@ -14,3 +14,5 @@ ls:
 
 ignore:
   - node_modules
+  - .next
+  - out
