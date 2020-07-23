@@ -1,0 +1,18 @@
+ls:
+  .js: kebab-case | pointcase
+  .config.js: kebab-case
+  src:
+    components:
+      .js: PascalCase
+      .stories.js: PascalCase
+    pages:
+      .js: kebab-case | regex:^_[a-z-.]* #regex for kebab-case with preceeding underscore
+  scripts:
+    templates:
+      .js: PascalCase
+      .stories.js: PascalCase
+
+ignore:
+  - node_modules
+  - .next
+  - out
