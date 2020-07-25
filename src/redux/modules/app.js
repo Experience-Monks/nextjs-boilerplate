@@ -1,11 +1,8 @@
 import keys from '../keys';
-
-const defaultState = {
-  loaded: false
-};
+import { defaultState } from '../index';
 
 // Reducer
-export default function reducer(state = defaultState, action) {
+export default function reducer(state = defaultState.app, action) {
   switch (action.type) {
     case keys.LANDING_LOADED:
       return { ...state, loaded: action.loaded };

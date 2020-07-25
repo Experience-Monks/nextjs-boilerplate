@@ -6,8 +6,6 @@ import styles from '../index.module.scss';
 
 import Nav from '../../components/Nav/Nav';
 
-import { withRedux } from '../../redux/withRedux';
-
 function About() {
   const appLoaded = useSelector(state => state.app.loaded);
 
@@ -27,4 +25,17 @@ function About() {
   );
 }
 
-export default withRedux(About);
+export function getStaticProps() {
+  return {
+    props: {
+      initialReduxState: {
+        app: {
+          lastUpdate: Date.now(),
+          loaded: false
+        }
+      }
+    }
+  };
+}
+
+export default About;

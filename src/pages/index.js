@@ -7,7 +7,6 @@ import styles from './index.module.scss';
 
 import Nav from '../components/Nav/Nav';
 
-import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
 
 function Landing() {
@@ -65,4 +64,17 @@ function Landing() {
   );
 }
 
-export default withRedux(Landing);
+export function getStaticProps() {
+  return {
+    props: {
+      initialReduxState: {
+        app: {
+          lastUpdate: Date.now(),
+          loaded: false
+        }
+      }
+    }
+  };
+}
+
+export default Landing;

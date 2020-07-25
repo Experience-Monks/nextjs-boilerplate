@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import 'normalize.css';
@@ -9,11 +10,13 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 import RotateScreen from '../components/RotateScreen/RotateScreen';
 
+import { useStore } from '../redux/index';
 import detect, { isBrowser } from '../utils/detect';
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }) {
   const [isSupported, setIsSupported] = useState(true);
+  const store = useStore(pageProps.initialReduxState);
 
   useEffect(() => {
     if (isBrowser) {
@@ -78,7 +81,9 @@ function App({ Component, pageProps }) {
         )}
       </Head>
 
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
 
       <RotateScreen />
     </Layout>
