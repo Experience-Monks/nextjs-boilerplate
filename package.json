@@ -109,7 +109,7 @@
     "prettier": "1.19.1",
     "prop-types": "^15.7.2",
     "redux-devtools-extension": "2.13.8",
-    "serve": "^11.3.0",
+    "serve": "^11.3.2",
     "shell-quote": "^1.7.2",
     "stylelint": "13.0.0",
     "stylelint-config-jam3": "0.1.2",
