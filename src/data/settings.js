@@ -1,7 +1,7 @@
-const settings = {};
-
 // global
-settings.resizeDebounceTime = 10; // in ms
-settings.isDevelopment = process.env.NODE_ENV !== 'production';
+export const resizeDebounceTime = 10; // in ms
+export const isDevelopment = process.env.NODE_ENV !== 'production';
 
-export default settings;
+// head
+export const siteName = 'Jam3 Generator';
+export const siteSlogan = 'The Relentless Pursuit of Better';
