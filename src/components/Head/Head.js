@@ -8,12 +8,12 @@ import { siteName, siteSlogan } from '../../data/settings';
 const TITLE_SEPARATOR = '|';
 
 function Head({ title, description, keywords }) {
+  const fullTitle = title ? `${title} ${TITLE_SEPARATOR} ${siteName}` : `${siteName} ${TITLE_SEPARATOR} ${siteSlogan}`;
+
   return (
     <NextHead>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-      <title>
-        {title ? `${title} ${TITLE_SEPARATOR} ${siteName}` : `${siteName} ${TITLE_SEPARATOR} ${siteSlogan}`}
-      </title>
+      <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords.join()} />
       {/* Generate favicons in https://realfavicongenerator.net */}
@@ -28,11 +28,11 @@ function Head({ title, description, keywords }) {
       <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
       {/* Share meta tags */}
       <meta property="og:locale" content="en_US" />
-      <meta property="og:title" content="Default title" />
-      <meta property="og:description" content="Default title" />
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={process.env.NEXT_PUBLIC_WEBSITE_SITE_URL} />
-      <meta property="og:site_name" content="Default site name" />
+      <meta property="og:site_name" content={siteName} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image" content="/_next/static/images/share-image.jpg" />
