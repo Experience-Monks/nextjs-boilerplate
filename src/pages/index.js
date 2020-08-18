@@ -32,10 +32,8 @@ function Landing() {
   }, [animateIn]);
 
   return (
-    <section className={styles.Landing}>
+    <main className={styles.Landing}>
       <Head />
-
-      <Nav />
 
       <section className={styles.hero} ref={containerRef}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
@@ -59,7 +57,7 @@ function Landing() {
           </li>
         </ul>
       </section>
-    </section>
+    </main>
   );
 }
 

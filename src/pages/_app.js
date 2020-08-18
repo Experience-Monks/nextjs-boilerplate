@@ -6,7 +6,6 @@ import 'default-passive-events';
 import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
-import RotateScreen from '../components/RotateScreen/RotateScreen';
 
 import detect, { isBrowser } from '../utils/detect';
 
@@ -22,7 +21,7 @@ function App({ Component, pageProps }) {
           require('@jam3/stats')();
         }
         const { device, browser } = detect;
-        const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter(className =>
+        const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter((className) =>
           Boolean(className)
         );
         document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
@@ -42,8 +41,6 @@ function App({ Component, pageProps }) {
   return (
     <Layout>
       <Component {...pageProps} />
-
-      <RotateScreen />
     </Layout>
   );
 }

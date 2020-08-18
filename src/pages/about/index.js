@@ -9,19 +9,17 @@ import Nav from '../../components/Nav/Nav';
 import { withRedux } from '../../redux/withRedux';
 
 function About() {
-  const appLoaded = useSelector(state => state.app.loaded);
+  const appLoaded = useSelector((state) => state.app.loaded);
 
   return (
-    <section className="About">
+    <main className="About">
       <Head title="About" />
-
-      <Nav />
 
       <div className={styles.hero}>
         <h1 className={styles.title}>About!</h1>
         <p>{appLoaded ? 'landing loaded' : 'landing is not loaded'}</p>
       </div>
-    </section>
+    </main>
   );
 }
 

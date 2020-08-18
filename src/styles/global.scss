@@ -40,6 +40,15 @@ body {
   box-sizing: inherit;
 }
 
+main {
+  min-height: 100vh;
+  padding-top: $navbar-height-mobile;
+
+  @include breakpoint(desktopSm) {
+    padding-top: $navbar-height-desktop;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
