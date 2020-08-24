@@ -1,20 +1,13 @@
 import { isBrowser } from './detect';
+import { layoutTablet, layoutDesktopSm, layoutDesktopMd, layoutDesktopLg } from '../styles/export-vars.module.scss';
 
 function getLayout() {
   if (!isBrowser) return {};
 
-  const TABLET_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
-    '--layout-tablet'
-  )})`;
-  const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
-    '--layout-desktop-sm'
-  )})`;
-  const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
-    '--layout-desktop-md'
-  )})`;
-  const DESKTOP_LG_MEDIA_QUERY = `(min-width: ${getComputedStyle(document.documentElement).getPropertyValue(
-    '--layout-desktop-lg'
-  )})`;
+  const TABLET_MEDIA_QUERY = `(min-width: ${layoutTablet})`;
+  const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${layoutDesktopSm})`;
+  const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${layoutDesktopMd})`;
+  const DESKTOP_LG_MEDIA_QUERY = `(min-width: ${layoutDesktopLg})`;
 
   const TABLET_MATCH_MEDIA = window.matchMedia(TABLET_MEDIA_QUERY);
   const DESKTOP_SM_MATCH_MEDIA = window.matchMedia(DESKTOP_SM_MEDIA_QUERY);
