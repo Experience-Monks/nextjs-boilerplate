@@ -1,4 +1,4 @@
-import dompurify from 'dompurify';
+import xss from 'xss';
 
 /**
  * DOM Sanitizer to protect against untrust inputs and XSS attacks
@@ -6,7 +6,7 @@ import dompurify from 'dompurify';
  * @param {string} [dirtyInput=''] - Input to sanitize
  */
 function sanitizer(dirtyInput, ...options) {
-  return dompurify.sanitize(dirtyInput, options);
+  return xss(dirtyInput, options);
 }
 
 export default sanitizer;

@@ -38,7 +38,7 @@ const optimizedImagesConfig = {
 };
 
 const nextJSConfig = {
-  exportTrailingSlash: true,
+  trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
   devIndicators: {
     autoPrerender: false
@@ -46,7 +46,7 @@ const nextJSConfig = {
   experimental: {
     modern: true
   },
-  webpack: function(config, options) {
+  webpack: function (config, options) {
     return config;
   }
 };
