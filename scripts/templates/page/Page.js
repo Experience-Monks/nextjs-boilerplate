@@ -10,11 +10,11 @@ import { withRedux } from '../../redux/withRedux';
 
 function {{name}}() {
   return (
-    <section className={classnames(styles.{{name}})}>
+    <main className={classnames(styles.{{name}})}>
       <Head title="{{name}}" />
 
       <section>{{name}} Page</section>
-    </section>
+    </main>
   );
 };
 

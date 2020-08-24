@@ -5,15 +5,22 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: px(25) px(20);
+  padding: 0 px(20);
   box-shadow: $element-shadow;
   background-color: $white;
   @include z-index(main-nav);
+  @include flex-center-vert;
+  height: $navbar-height-mobile;
+
+  @include breakpoint(desktopSm) {
+    height: $navbar-height-desktop;
+  }
 
   > .wrapper {
     display: flex;
     max-width: px(1440);
     margin: 0 auto;
+    width: 100%;
 
     > ul {
       flex-grow: 1;
@@ -29,16 +36,16 @@
 
       &.links {
         justify-content: flex-end;
-      }
 
-      > * {
-        padding: 0 px(10);
-      }
-
-      a {
-        img {
-          @include box(px(25));
+        a {
+          img {
+            @include box(px(25));
+          }
         }
+      }
+
+      > li {
+        padding: 0 px(10);
       }
     }
   }
