@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import checkProps from '@jam3/react-check-extra-props';
+import dynamic from 'next/dynamic';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-import RotateScreen from '../RotateScreen/RotateScreen';
+
+const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
 function Layout({ children }) {
   return (

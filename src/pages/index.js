@@ -5,7 +5,6 @@ import { gsap } from 'gsap';
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
-import Nav from '../components/Nav/Nav';
 
 import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
