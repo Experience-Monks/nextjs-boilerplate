@@ -7,11 +7,6 @@ import { useOrientation } from 'react-use';
 import styles from './RotateScreen.module.scss';
 import detect, { isBrowser } from '../../utils/detect';
 
-const ROTATE_TYPES = {
-  PORTRAIT: 'portrait-primary',
-  LANDSCAPE: 'landscape-primary'
-};
-
 function RotateScreen({ className }) {
   const orientation = useOrientation();
 
@@ -19,7 +14,7 @@ function RotateScreen({ className }) {
     <div
       className={classnames(
         styles.RotateScreen,
-        { [styles.enabled]: isBrowser && !detect.device.isDesktop && orientation.type === ROTATE_TYPES.LANDSCAPE },
+        { [styles.enabled]: isBrowser && !detect.device.isDesktop && orientation.angle !== 0 },
         className
       )}
     >
