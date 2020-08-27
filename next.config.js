@@ -5,9 +5,7 @@ require('dotenv').config({
 });
 
 const withPlugins = require('next-compose-plugins');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const optimizedImages = require('next-optimized-images');
-const withFonts = require('next-fonts');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.BUNDLE_ANALYZE === 'true'
 });
@@ -40,50 +38,26 @@ const optimizedImagesConfig = {
 };
 
 const nextJSConfig = {
-  exportTrailingSlash: true,
-  // compress: true, // NOTE: enable this when doing SSR
+  trailingSlash: true,
+  compress: false, // NOTE: enable this when doing SSR
   devIndicators: {
     autoPrerender: false
   },
   experimental: {
     modern: true
   },
-  webpack: function(config, options) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: `@svgr/webpack`,
-          options: {
-            prettier: true,
-            svgo: true,
-            svgoConfig: {
-              removeViewBox: true,
-              cleanupIDs: true
-            }
-          }
-        },
-        'url-loader'
-      ]
-    });
+  webpack: function (config, options) {
+    const moduleSassRule = config.module.rules[1].oneOf.find(
+      (rule) => rule.test.toString() === /\.module\.(scss|sass)$/.toString()
+    );
 
-    if (config.mode === 'production') {
-      if (Array.isArray(config.optimization.minimizer)) {
-        config.optimization.minimizer.push(
-          new OptimizeCSSAssetsPlugin({
-            cssProcessorPluginOptions: {
-              preset: ['default', { discardComments: { removeAll: true } }]
-            }
-          })
-        );
-      }
+    if (moduleSassRule) {
+      const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
+      if (cssLoader) cssLoader.options.modules.mode = 'local';
     }
 
     return config;
   }
 };
 
-module.exports = withPlugins(
-  [[withFonts], [optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]],
-  nextJSConfig
-);
+module.exports = withPlugins([[optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]], nextJSConfig);

@@ -1,11 +1,10 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 
 import styles from './index.module.scss';
 
-import Nav from '../components/Nav/Nav';
+import Head from '../components/Head/Head';
 
 import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
@@ -32,12 +31,8 @@ function Landing() {
   }, [animateIn]);
 
   return (
-    <section className={styles.Landing}>
-      <Head>
-        <title>Home | Jam3 generator</title>
-      </Head>
-
-      <Nav />
+    <main className={styles.Landing}>
+      <Head />
 
       <section className={styles.hero} ref={containerRef}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
@@ -61,7 +56,7 @@ function Landing() {
           </li>
         </ul>
       </section>
-    </section>
+    </main>
   );
 }
 

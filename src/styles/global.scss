@@ -5,14 +5,6 @@
 @import 'polyfills.scss';
 @import 'shared.scss';
 
-:root {
-  --layout-mobile: #{$layout-mobile};
-  --layout-tablet: #{$layout-tablet};
-  --layout-desktop-sm: #{$layout-desktopSm};
-  --layout-desktop-md: #{$layout-desktopMd};
-  --layout-desktop-lg: #{$layout-desktopLg};
-}
-
 html {
   box-sizing: border-box;
   -moz-osx-font-smoothing: grayscale;
@@ -46,6 +38,15 @@ body {
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+main {
+  min-height: 100vh;
+  padding-top: $navbar-height-mobile;
+
+  @include breakpoint(desktopSm) {
+    padding-top: $navbar-height-desktop;
+  }
 }
 
 a {

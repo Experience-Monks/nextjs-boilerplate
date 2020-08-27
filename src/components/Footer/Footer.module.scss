@@ -1,0 +1,17 @@
+@import '../../styles/shared.scss';
+
+.Footer {
+  background-color: $black;
+  color: $white;
+  padding: px(50) 0;
+
+  ul {
+    li {
+      margin-top: px(15);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}

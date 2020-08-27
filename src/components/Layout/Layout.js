@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import checkProps from '@jam3/react-check-extra-props';
-import classnames from 'classnames';
+import dynamic from 'next/dynamic';
 
-import styles from './Layout.module.scss';
+import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 
-// import useLayout from '../../utils/hooks/use-layout';
+const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
 function Layout({ children }) {
-  // const layout = useLayout().layout;
+  return (
+    <>
+      <Nav />
 
-  return <main className={classnames(styles.Layout)}>{children}</main>;
+      {children}
+
+      <Footer />
+
+      <RotateScreen />
+    </>
+  );
 }
 
 Layout.propTypes = checkProps({

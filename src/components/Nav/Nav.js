@@ -5,13 +5,17 @@ import Link from 'next/link';
 
 import styles from './Nav.module.scss';
 
+import SvgThreeLogo from '../../assets/svgs/svg-three-logo.svg';
+
 import jam3LogoSrc from '../../assets/images/threeLogo.jpeg';
 import githubLogoSrc from '../../assets/images/github-icon-64b.png';
+
+import routes from '../../data/routes';
 
 const LINKS = [
   { href: 'https://jam3.com', label: 'Jam3', src: jam3LogoSrc },
   { href: 'https://github.com/jam3', label: 'GitHub', src: githubLogoSrc }
-].map(link => ({
+].map((link) => ({
   ...link,
   key: `nav-link-${link.href}-${link.label}`
 }));
@@ -21,17 +25,14 @@ function Nav() {
     <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper}>
         <ul className={styles.routes}>
-          <li>
-            <Link href="/">
-              <a>Home</a>
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
-          </li>
+          {Object.values(routes).map(({ path, title }) => (
+            <li key={path}>
+              <Link href={path}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+                <a>{path === '/' ? <SvgThreeLogo className={styles.threeLogo} /> : <>{title}</>}</a>
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <ul className={styles.links}>

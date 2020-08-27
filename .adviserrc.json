@@ -17,6 +17,7 @@
           ".eslintrc.json",
           ".prettierrc",
           ".stylelintrc",
+          ".babelrc",
           "README.md"
         ],
         "blacklist": []
@@ -129,7 +130,7 @@
       "error",
       {
         "level": "high",
-        "skip": ["1325", "1324", "1316", "1217"]
+        "skip": ["1213", "813"]
       }
     ],
     "dependencies/outdated-packages": [
