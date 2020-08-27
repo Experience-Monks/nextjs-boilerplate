@@ -214,19 +214,16 @@
   border: none;
   outline: none;
   cursor: pointer;
-  background: transparent;
+  background-color: transparent;
   padding: 0;
   text-align: inherit;
   letter-spacing: inherit;
   font-size: inherit;
   text-transform: inherit;
-  color: inherit;
-}
-
-@mixin pseudo-margin-desktop {
-  content: '';
-  display: block;
-  width: $side-wrapper-width;
-  height: 1px;
-  min-width: $side-wrapper-min-width;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: currentColor;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWindowSize } from '@jam3/react-hooks';
+
 import { resizeDebounceTime } from '../../data/settings';
 import layout from '../layout';
 
@@ -17,7 +18,7 @@ function useLayout() {
   const [currentLayout, setCurrentLayout] = useState(layout.all);
 
   const handleResize = useCallback(() => {
-    if (Object.keys(layout.all).filter(key => currentLayout[key] !== layout[key]).length) {
+    if (Object.keys(layout.all).filter((key) => currentLayout[key] !== layout[key]).length) {
       setCurrentLayout(layout.all);
     }
   }, [currentLayout, setCurrentLayout]);
