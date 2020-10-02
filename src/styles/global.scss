@@ -43,6 +43,7 @@ body {
 main {
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
+  @include z-index(pages);
 
   @include breakpoint(desktopSm) {
     padding-top: $navbar-height-desktop;
@@ -77,19 +78,10 @@ blockquote {
   padding: 0;
 }
 
-button {
-  display: inline-block;
-  border: none;
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  color: currentColor;
-  background-color: transparent;
-
-  &:focus {
+button,
+input,
+a {
+  &:focus:not(.focus-visible) {
     outline: none;
   }
 }

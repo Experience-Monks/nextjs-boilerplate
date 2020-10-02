@@ -43,13 +43,18 @@ function Landing() {
 
         <ul className={styles.row}>
           <li>
-            <a href="https://nextjs.org/docs" className={styles.card}>
-              <h3>Code standard</h3>
-              <p>Learn more about Jam3 code standard.</p>
+            <a
+              href="https://github.com/Jam3?q=&type=source"
+              className={styles.card}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3>Visit out GitHub</h3>
+              <p>See our contributions to Open Source community</p>
             </a>
           </li>
           <li>
-            <a href="https://nextjs.org/learn" className={styles.card}>
+            <a href="https://jam3.dev" className={styles.card} target="_blank" rel="noopener noreferrer">
               <h3>Jam3.dev</h3>
               <p>Learn more about Jam3.dev</p>
             </a>

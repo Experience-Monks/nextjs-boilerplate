@@ -5,7 +5,7 @@ const defaultProps = {
   x: 0,
   y: 0,
   duration: 0, // in seconds
-  ease: window.Quart.easeInOut
+  ease: 'none'
 };
 
 let timeoutId;

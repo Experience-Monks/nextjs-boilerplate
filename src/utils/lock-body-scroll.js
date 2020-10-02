@@ -32,7 +32,7 @@ function lockBodyScroll() {
       document.body.style.position = '';
       document.body.style.overflowY = '';
       document.body.style.marginTop = '';
-      !skipPositionRestore && scrollPage({ y: scrollPosY }, 0);
+      !skipPositionRestore && scrollPage({ y: scrollPosY });
       isLocked = false;
     }
   }
