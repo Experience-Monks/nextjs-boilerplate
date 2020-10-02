@@ -56,6 +56,18 @@ const nextJSConfig = {
       if (cssLoader) cssLoader.options.modules.mode = 'local';
     }
 
+    if (options.dev) {
+      config.module.rules.push({
+        test: /.\/src\/.*\/.*.js$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'eslint-loader'
+          }
+        ]
+      });
+    }
+
     return config;
   }
 };
