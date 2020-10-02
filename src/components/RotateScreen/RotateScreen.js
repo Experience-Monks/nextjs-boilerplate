@@ -19,7 +19,7 @@ function RotateScreen({ className }) {
         className
       )}
     >
-      RotateScreen
+      Rotate Screen
     </div>
   );
 }

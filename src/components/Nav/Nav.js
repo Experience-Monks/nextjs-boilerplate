@@ -28,8 +28,7 @@ function Nav() {
           {Object.values(routes).map(({ path, title }) => (
             <li key={path}>
               <Link href={path}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
-                <a>{path === '/' ? <SvgThreeLogo className={styles.threeLogo} /> : <>{title}</>}</a>
+                <a aria-label="Home">{path === '/' ? <SvgThreeLogo className={styles.threeLogo} /> : <>{title}</>}</a>
               </Link>
             </li>
           ))}
