@@ -5,7 +5,8 @@ import checkProps from '@jam3/react-check-extra-props';
 import { useOrientation } from 'react-use';
 
 import styles from './RotateScreen.module.scss';
-import detect, { isBrowser } from '../../utils/detect';
+
+import detect from '../../utils/detect';
 
 function RotateScreen({ className }) {
   const orientation = useOrientation();
@@ -14,7 +15,7 @@ function RotateScreen({ className }) {
     <div
       className={classnames(
         styles.RotateScreen,
-        { [styles.enabled]: isBrowser && !detect.device.isDesktop && orientation.angle !== 0 },
+        { [styles.enabled]: detect.device.isPhone && orientation.angle !== 0 },
         className
       )}
     >
