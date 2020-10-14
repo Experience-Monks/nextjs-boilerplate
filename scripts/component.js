@@ -34,7 +34,7 @@ targetFolder = targetFolder ? `${formatComponentName(targetFolder)}/` : '';
 const cwd = process.cwd();
 const dir =
   type === 'page'
-    ? path.resolve(__dirname, `../src/${type}s/` + argv._[0])
+    ? path.resolve(__dirname, `../src/${type}s/` + argv._[0].toLowerCase())
     : path.resolve(__dirname, [`../src/components/`, targetFolder, name].join(''));
 
 fs.stat(dir, (err, stat) => {
@@ -46,14 +46,14 @@ fs.stat(dir, (err, stat) => {
 });
 
 function write() {
-  mkdirp(dir).then(made => {
+  mkdirp(dir).then((made) => {
     if (!made) throw made;
 
     const files =
       type === 'page'
         ? [
             template(path.resolve(__dirname, 'templates/page/Page.js'), path.resolve(dir, `index.js`)),
-            template(path.resolve(__dirname, 'templates/page/Page.scss'), path.resolve(dir, `${name}.module.scss`))
+            template(path.resolve(__dirname, 'templates/page/Page.scss'), path.resolve(dir, `index.module.scss`))
           ]
         : [
             template(path.resolve(__dirname, 'templates/' + type + '/Component.js'), path.resolve(dir, `${name}.js`)),
@@ -71,7 +71,7 @@ function write() {
       .then(() => {
         console.log(`Created new ${name} ${type} at ${dir}`);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   });
 }
 
@@ -85,7 +85,7 @@ function template(input, output) {
     fs.readFile(input, 'utf8', (err, str) => {
       if (err) return reject(err);
       str = maxstache(str, data);
-      fs.writeFile(output, str, err => {
+      fs.writeFile(output, str, (err) => {
         if (err) return reject(err);
         resolve();
       });
