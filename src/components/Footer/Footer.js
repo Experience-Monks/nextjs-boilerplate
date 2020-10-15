@@ -14,7 +14,6 @@ function Footer() {
         {Object.values(routes).map(({ path, title }) => (
           <li key={path}>
             <Link href={path}>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
               <a>{title}</a>
             </Link>
           </li>

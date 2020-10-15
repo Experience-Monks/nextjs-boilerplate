@@ -37,9 +37,9 @@ function Landing() {
       <section className={styles.hero} ref={containerRef}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
 
-        <p className={styles.description}>
+        <h2 className={styles.description}>
           To get started, edit <code>pages/index.js</code> and save to reload.
-        </p>
+        </h2>
 
         <ul className={styles.row}>
           <li>
