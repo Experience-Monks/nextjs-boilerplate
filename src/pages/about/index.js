@@ -1,25 +1,37 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { memo, useCallback, useLayoutEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import checkProps from '@jam3/react-check-extra-props';
+import { gsap } from 'gsap';
 
-import styles from '../index.module.scss';
+import styles from './index.module.scss';
 
 import Head from '../../components/Head/Head';
 
-import { withRedux } from '../../redux/withRedux';
+function About({ className }) {
+  const containerRef = useRef();
 
-function About() {
-  const appLoaded = useSelector((state) => state.app.loaded);
+  const animateIn = useCallback(() => {
+    gsap.from(containerRef.current, { opacity: 0.01, duration: 0.3, ease: 'none' });
+  }, []);
+
+  useLayoutEffect(() => {
+    animateIn();
+  }, [animateIn]);
 
   return (
-    <main className="About">
+    <main className={classnames(styles.About, className)} ref={containerRef}>
       <Head title="About" />
 
-      <div className={styles.hero}>
-        <h1 className={styles.title}>About!</h1>
-        <p>{appLoaded ? 'landing loaded' : 'landing is not loaded'}</p>
-      </div>
+      <h1 className={styles.title}>About Page</h1>
     </main>
   );
 }
 
-export default withRedux(About);
+About.propTypes = checkProps({
+  className: PropTypes.string
+});
+
+About.defaultProps = {};
+
+export default memo(About);

@@ -1,0 +1,11 @@
+@import '../../styles/shared.scss';
+
+.About {
+  > .title {
+    margin: 0;
+    width: 100%;
+    padding-top: px(80);
+    line-height: 1.15;
+    font-size: px(48);
+  }
+}
