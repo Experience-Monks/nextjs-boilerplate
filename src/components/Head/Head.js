@@ -2,12 +2,16 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import checkProps from '@jam3/react-check-extra-props';
 import NextHead from 'next/head';
+import { useRouter } from 'next/router';
 
 import { siteName, siteSlogan } from '../../data/settings';
 
 const TITLE_SEPARATOR = '|';
 
 function Head({ title, description, keywords }) {
+  const router = useRouter();
+
+  const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
   const fullTitle = title ? `${title} ${TITLE_SEPARATOR} ${siteName}` : `${siteName} ${TITLE_SEPARATOR} ${siteSlogan}`;
 
   return (
@@ -31,7 +35,7 @@ function Head({ title, description, keywords }) {
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={process.env.NEXT_PUBLIC_WEBSITE_SITE_URL} />
+      <meta property="og:url" content={ogUrl} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
@@ -41,7 +45,7 @@ function Head({ title, description, keywords }) {
       <meta name="google-site-verification" content="[Google Web Master Tools]" />
       <meta name="msvalidate.01" content="[Bing Web Master Tools]" />
       {/* Other recommends */}
-      <link rel="canonical" href={process.env.NEXT_PUBLIC_WEBSITE_SITE_URL} />
+      <link rel="canonical" href={ogUrl} />
       {process.env.NEXT_PUBLIC_DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />}
     </NextHead>
   );

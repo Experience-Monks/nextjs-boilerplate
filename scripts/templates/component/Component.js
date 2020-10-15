@@ -5,15 +5,13 @@ import checkProps from '@jam3/react-check-extra-props';
 
 import styles from './{{name}}.module.scss';
 
-function {{name}}() {
-  return (
-    <div className={classnames(styles.{{name}})}>
-      {{name}} component
-    </div>
-  );
-};
+function {{name}}({ className }) {
+  return <div className={classnames(styles.{{name}}, className)}>{{name}} component</div>;
+}
 
-{{name}}.propTypes = checkProps({});
+{{name}}.propTypes = checkProps({
+  className: PropTypes.string
+});
 
 {{name}}.defaultProps = {};
 
