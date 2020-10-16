@@ -15,7 +15,7 @@ if (process.env.CI_ENV === 'prod' && process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/_next', '/assets']
+        disallow: ['/_next', '404', 'unsupported']
       }
     ],
     sitemap: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/sitemap.xml`,

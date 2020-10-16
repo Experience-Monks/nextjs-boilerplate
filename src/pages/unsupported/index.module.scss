@@ -1,0 +1,14 @@
+@import '../../styles/shared.scss';
+
+// IMPORTANT: use safe styles here. avoid flex and other latest CSS as this page is intended to be shown in legacy browsers aka IE9/10/11
+.Unsupported {
+  text-align: center;
+
+  > .title {
+    margin: 0;
+    width: 100%;
+    padding-top: px(80);
+    line-height: 1.15;
+    font-size: px(48);
+  }
+}
