@@ -19,6 +19,11 @@
 # production
 /build
 
+# CI/CD
+codeship.aes
+codeship.*.env*
+!codeship.*.env.example
+
 # misc
 .idea
 .vscode

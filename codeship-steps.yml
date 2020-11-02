@@ -1,0 +1,29 @@
+- type: parallel
+  steps:
+    - name: lint
+      service: app-dev
+      command: sh .codeship/linters.sh
+
+- type: serial
+  name: develop
+  tag: develop
+  steps:
+    - service: app-dev
+      name: s3_deploy
+      command: sh .codeship/deploy.sh
+
+- type: serial
+  name: staging
+  tag: staging
+  steps:
+    - service: app-stage
+      name: s3_deploy
+      command: sh .codeship/deploy.sh
+
+- type: serial
+  name: production
+  tag: master
+  steps:
+    - service: app-prod
+      name: s3_deploy
+      command: sh .codeship/deploy.sh
