@@ -22,7 +22,7 @@
     "sitemap-generator": "node scripts/nextjs-sitemap-generator.js",
     "robots-txt-generator": "node scripts/robots-txt-generator.js",
     "\n ######################  Support Development Tools  ######################": "",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook": "start-storybook -p 9001 -c .storybook -s ./public",
     "component": "node scripts/component.js",
     "page": "node scripts/component.js --page",
     "\n ######################  Automation Tools  ######################": "",
