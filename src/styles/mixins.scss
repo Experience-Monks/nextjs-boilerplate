@@ -3,7 +3,7 @@
 // More information about mixins in:
 // http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins
 // Add comment to every function
-@import 'vars.scss';
+@import 'vars';
 
 /// Set Regular Font as font family. This mixin's name is generic to abstract the font family name in case it changes
 /// @group Fonts

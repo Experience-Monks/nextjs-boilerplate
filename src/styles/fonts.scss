@@ -8,7 +8,7 @@
 // 3. Include the unicode range in case you couldn't remove the characters. Included just Latin by default
 // 4. Change fonts just changing the font-weight
 
-@import 'vars.scss';
+@import 'vars';
 
 $base-path: '../assets/fonts/' !default;
 

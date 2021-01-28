@@ -43,6 +43,9 @@ const nextJSConfig = {
   devIndicators: {
     autoPrerender: false
   },
+  sassOptions: {
+    includePaths: ['src/styles']
+  },
   experimental: {
     modern: true
   },
