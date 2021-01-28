@@ -6,7 +6,7 @@ ls:
       .js: PascalCase
       .stories.js: PascalCase
     pages:
-      .js: kebab-case | regex:^_[a-z-.]* #regex for kebab-case with preceeding underscore
+      .js: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
   scripts:
     templates:
       .js: PascalCase
