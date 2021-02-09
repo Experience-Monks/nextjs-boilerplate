@@ -187,7 +187,9 @@
           "NCSA",
           "OpenSSL",
           "PHP-3.0",
+          "Public Domain",
           "Ruby",
+          "UNKNOWN",
           "Unlicense",
           "W3C",
           "Xnet",
@@ -199,9 +201,11 @@
           "(MIT OR Apache-2.0)",
           "MPL-2.0 OR Apache-2.0",
           "(MIT AND Zlib)",
+          "(MIT OR WTFPL)",
           "(WTFPL OR MIT)",
           "(BSD-2-Clause OR MIT OR Apache-2.0)",
-          "(MIT AND BSD-3-Clause)"
+          "(MIT AND BSD-3-Clause)",
+          "0BSD"
         ],
         "excludePackage": [
           "async-foreach@0.1.3",
