@@ -3,7 +3,7 @@
 // Location of all the font-families and font-related css
 //
 // Best practices:
-// 1. Avoid load as many fonts as possible, e.x font styles, font families
+// 1. Avoid loading as many fonts as possible, e.x font styles, font families
 // 2. Optimize the font, remove the characters set that the site won't use: languages
 // 3. Include the unicode range in case you couldn't remove the characters. Included just Latin by default
 // 4. Change fonts just changing the font-weight
@@ -13,49 +13,49 @@
 $base-path: '../assets/fonts/' !default;
 
 @font-face {
-  font-family: 'MatterLight';
+  font-family: 'WorkSansLight';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('#{$base-path}Matter/Matter-Light.woff') format('woff');
+  src: url('#{$base-path}WorkSans/WorkSans-Light.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'MatterRegular';
+  font-family: 'WorkSansRegular';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('#{$base-path}Matter/Matter-Regular.woff') format('woff');
+  src: url('#{$base-path}WorkSans/WorkSans-Regular.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'MatterMedium';
+  font-family: 'WorkSansMedium';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-display: swap;
-  src: url('#{$base-path}Matter/Matter-Medium.woff') format('woff');
+  src: url('#{$base-path}WorkSans/WorkSans-Medium.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'MatterSemiBold';
+  font-family: 'WorkSansSemiBold';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
-  src: url('#{$base-path}Matter/Matter-SemiBold.woff') format('woff');
+  src: url('#{$base-path}WorkSans/WorkSans-SemiBold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'MatterBold';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('#{$base-path}Matter/Matter-Bold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'MatterHeavy';
+  font-family: 'WorkSansBold';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('#{$base-path}Matter/Matter-Heavy.woff') format('woff');
+  src: url('#{$base-path}WorkSans/WorkSans-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkExtraBold';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('#{$base-path}WorkSans/WorkSans-ExtraBold.woff') format('woff');
 }
