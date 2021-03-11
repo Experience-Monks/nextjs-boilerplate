@@ -7,7 +7,7 @@ require('dotenv').config({
   path: path.resolve(process.cwd(), `.env.${process.env.CI_ENV || process.env.NODE_ENV}`)
 });
 
-if (process.env.CI_ENV === 'production' && process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
+if (process.env.CI_ENV === 'prod' && process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
   console.log(chalk.cyan('\n###################### robots.txt ######################\n'));
 
   robotstxt({
@@ -15,7 +15,7 @@ if (process.env.CI_ENV === 'production' && process.env.NEXT_PUBLIC_WEBSITE_SITE_
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/_next']
+        disallow: ['/_next', '/aseets']
       }
     ],
     sitemap: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/sitemap.xml`,
