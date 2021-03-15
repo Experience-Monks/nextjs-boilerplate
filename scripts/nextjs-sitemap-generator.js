@@ -15,11 +15,11 @@ if (process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
     // fr: 'https://example.com/fr'
     // },
     baseUrl: process.env.NEXT_PUBLIC_WEBSITE_SITE_URL.replace('://', '://www.'),
-    ignoredPaths: ['admin'],
+    ignoredPaths: ['/404', '/unsupported', '/api'],
     pagesDirectory: path.resolve(__dirname + '/../src/pages'),
     targetDirectory: 'out/',
     // NOTE: enabled nextConfigPath option if exportPathMap is enabled in next.config.js
-    // nextConfigPath: path.resolve(__dirname + '/../next.config.js'),
+    nextConfigPath: path.resolve(__dirname + '/../next.config.js'),
     ignoredExtensions: ['png', 'jpg', 'scss'],
     ignoreIndexFiles: true
   });
