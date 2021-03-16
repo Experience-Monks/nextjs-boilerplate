@@ -12,6 +12,7 @@ function Head({ title, description, keywords }) {
   const router = useRouter();
 
   const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
+  const ogDefaultImage = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/assets/images/share-image.jpg`;
   const fullTitle = title ? `${title} ${TITLE_SEPARATOR} ${siteName}` : `${siteName} ${TITLE_SEPARATOR} ${siteSlogan}`;
 
   return (
@@ -39,7 +40,7 @@ function Head({ title, description, keywords }) {
       <meta property="og:site_name" content={siteName} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image" content="/_next/static/images/share-image.jpg" />
+      <meta property="og:image" content={ogDefaultImage} />
       <meta name="twitter:card" content="Default content" />
       <meta property="fb:app_id" content="FB_APP_ID" />
       <meta name="google-site-verification" content="[Google Web Master Tools]" />
