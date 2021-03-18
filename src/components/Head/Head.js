@@ -5,6 +5,7 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
 import { siteName, siteSlogan } from '../../data/settings';
+import { GtmScript } from '../../utils/track';
 
 const TITLE_SEPARATOR = '|';
 
@@ -48,6 +49,8 @@ function Head({ title, description, keywords }) {
       {/* Other recommends */}
       <link rel="canonical" href={ogUrl} />
       {process.env.NEXT_PUBLIC_DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />}
+
+      {GtmScript()}
     </NextHead>
   );
 }
