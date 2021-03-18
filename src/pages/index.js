@@ -8,7 +8,6 @@ import Head from '../components/Head/Head';
 
 import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
-import { lockBodyScroll, unlockBodyScroll } from '../utils/lock-body-scroll';
 
 function Landing() {
   const containerRef = useRef();
@@ -62,8 +61,6 @@ function Landing() {
           </li>
         </ul>
       </section>
-      <button onClick={lockBodyScroll}>Lock!</button>
-      <button onClick={unlockBodyScroll}>Unlock</button>
     </main>
   );
 }
