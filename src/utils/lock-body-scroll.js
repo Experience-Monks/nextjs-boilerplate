@@ -2,14 +2,37 @@
  * Lock and unlock body scroll within page
  */
 
- const root = document.documentElement;
+//importing utils
+import { getScrollTop } from 'get-scroll';
+import scrollPage from './scroll-page';
 
- function lockBodyScroll() {
-   root.style.setProperty('--body-scroll', 'hidden');
- }
- 
- function unlockBodyScroll() {
-   root.style.setProperty('--body-scroll', 'auto');
- }
- 
- export { lockBodyScroll, unlockBodyScroll };
+//variables
+const root = document.documentElement;
+let scrollPosY = 0;
+let isLocked = false;
+
+/* Lock body scroll function */
+
+function lockBodyScroll() {
+  if (!isLocked) {
+    root.style.setProperty('--body-scroll', 'hidden');
+    isLocked = true;
+  }
+}
+
+/**
+ * Unlock body scroll
+ *
+ * @param {boolean} [skipPositionRestore=false] - Skip page position restoration flag
+ */
+
+function unlockBodyScroll(skipPositionRestore = false) {
+  if (isLocked) {
+    scrollPosY = getScrollTop();
+    root.style.setProperty('--body-scroll', 'auto');
+    !skipPositionRestore && scrollPage({ y: scrollPosY });
+    isLocked = false;
+  }
+}
+
+export { lockBodyScroll, unlockBodyScroll };
