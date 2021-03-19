@@ -4,15 +4,19 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'app',
   initialState: {
-    loaded: false
+    loaded: false,
+    isWebpSupported: true
   },
   reducers: {
     setLandingLoaded(state, action) {
       return { ...state, loaded: action.payload };
+    },
+    setIsWebpSupported(state, action) {
+      return { ...state, isWebpSupported: action.payload };
     }
   }
 });
 
-export const { setLandingLoaded } = slice.actions;
+export const { setLandingLoaded, setIsWebpSupported } = slice.actions;
 
 export default slice.reducer;

@@ -6,6 +6,7 @@ import checkProps from '@jam3/react-check-extra-props';
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
+import Image from '../components/Image/Image';
 
 function Landing({ className }) {
   const containerRef = useRef();
@@ -37,6 +38,8 @@ function Landing({ className }) {
             </a>
           </li>
         </ul>
+
+        <Image imageObj={{ file: 'office.jpg', alt: 'Jam3 Office.' }} />
       </section>
     </main>
   );
