@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from '../index.module.scss';
 
 import Head from '../../components/Head/Head';
-
-import { withRedux } from '../../redux/withRedux';
 
 function About() {
   const appLoaded = useSelector((state) => state.app.loaded);
@@ -22,4 +20,4 @@ function About() {
   );
 }
 
-export default withRedux(About);
+export default memo(About);

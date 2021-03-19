@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 
@@ -6,7 +6,6 @@ import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
 
-import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
 
 function Landing() {
@@ -65,4 +64,4 @@ function Landing() {
   );
 }
 
-export default withRedux(Landing);
+export default memo(Landing);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import checkProps from '@jam3/react-check-extra-props';
 import dynamic from 'next/dynamic';
@@ -28,4 +28,4 @@ Layout.propTypes = checkProps({
 
 Layout.defaultProps = {};
 
-export default Layout;
+export default memo(Layout);

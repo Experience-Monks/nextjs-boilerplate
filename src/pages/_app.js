@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import dynamic from 'next/dynamic';
 import 'normalize.css';
 import 'default-passive-events';
@@ -9,9 +10,11 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 
 import detect from '../utils/detect';
+import { getOrInitializeStore } from '../redux';
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }) {
+  const store = getOrInitializeStore();
   const [isSupported, setIsSupported] = useState(true);
 
   useEffect(() => {
@@ -40,9 +43,11 @@ function App({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   );
 }
 
