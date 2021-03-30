@@ -25,6 +25,9 @@ function Nav() {
     <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper}>
         <ul className={styles.routes}>
+          <a tabIndex="0" aria-label="Skip to content" className={styles.skipToContent} href="#start-of-content">
+            Skip to content
+          </a>
           {Object.values(routes).map(({ path, title }) => (
             <li key={path}>
               <Link href={path}>
@@ -44,6 +47,7 @@ function Nav() {
           ))}
         </ul>
       </div>
+      <section aria-hidden="true" id="start-of-content"></section>
     </nav>
   );
 }
