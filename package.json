@@ -57,7 +57,6 @@
     "@babel/core": "^7.11.1",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@jam3/react-check-extra-props": "^1.0.1",
     "@jam3/stats": "1.0.1",
     "@ls-lint/ls-lint": "^1.9.2",
     "@next/bundle-analyzer": "9.5.2",

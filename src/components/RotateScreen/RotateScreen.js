@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 import { useOrientation } from 'react-use';
 
 import styles from './RotateScreen.module.scss';
@@ -24,9 +23,9 @@ function RotateScreen({ className }) {
   );
 }
 
-RotateScreen.propTypes = checkProps({
+RotateScreen.propTypes = {
   className: PropTypes.string
-});
+};
 
 RotateScreen.defaultProps = {};
 

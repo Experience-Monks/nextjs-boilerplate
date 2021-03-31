@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 import Link from 'next/link';
 
 import styles from './Nav.module.scss';
@@ -48,7 +47,7 @@ function Nav() {
   );
 }
 
-Nav.propTypes = checkProps({});
+Nav.propTypes = {};
 
 Nav.defaultProps = {};
 

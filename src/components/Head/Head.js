@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import checkProps from '@jam3/react-check-extra-props';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -52,11 +51,11 @@ function Head({ title, description, keywords }) {
   );
 }
 
-Head.propTypes = checkProps({
+Head.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   keywords: PropTypes.array
-});
+};
 
 Head.defaultProps = {
   description: 'Default Description',
