@@ -35,11 +35,15 @@
     "ls-lint": "node_modules/.bin/ls-lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.4.2",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "@jam3/detect": "1.0.2",
     "@jam3/react-hooks": "1.0.0",
     "classnames": "2.2.6",
     "default-passive-events": "2.0.0",
     "focus-visible": "^5.1.0",
+    "framer-motion": "^4.1.2",
     "get-scroll": "^2.0.1",
     "gsap": "3.6.0",
     "next": "^10.0.5",

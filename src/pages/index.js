@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
+import ChakraGrid from '../components/ChakraGrid/ChakraGrid';
 
 import { withRedux } from '../redux/withRedux';
 import { setLandingLoaded } from '../redux/modules/app';
@@ -60,6 +61,7 @@ function Landing() {
             </a>
           </li>
         </ul>
+        <ChakraGrid />
       </section>
     </main>
   );

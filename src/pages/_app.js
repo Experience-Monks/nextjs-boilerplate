@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import 'normalize.css';
 import 'default-passive-events';
 import 'focus-visible';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import '../styles/global.scss';
 
@@ -40,9 +41,11 @@ function App({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ChakraProvider>
   );
 }
 
