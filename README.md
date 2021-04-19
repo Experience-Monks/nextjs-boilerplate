@@ -33,6 +33,32 @@ Clone the GitHub repository or Fork it, and start working righ away with it.
 git clone https://github.com/Jam3/nyg-nextjs.git
 ```
 
+### Set up CI/CD
+
+Deploying a static site is fairly simple, we are going to the set up for Codeship.
+
+#### 1. Create env variables with AWS Access Keys
+
+Create three environment variables based on `.env.codeship.[env].local.example`
+
+Files:
+
+- .env.codeship.dev.local
+- .env.codeship.stage.local
+- .env.codeship.prod.local
+
+> Note: The environment variable files **can't** be commited. Based on the name convention they are ignored by GIT.
+
+#### 2. Generate encrypted env variables
+
+Run `$ ./encrypt-env.sh`
+
+#### 3. Update S3 and Cloudfront environment variables in codeship-services.yml
+
+Update `S3_ORIGIN_BUCKET` and `DISTRIBUTION_ID` with your AWS information.
+
+#### 4. Create a Codeship Pro project in Codeship
+
 ## Usage
 
 TBD: List commands in package.json

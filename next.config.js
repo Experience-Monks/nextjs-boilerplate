@@ -6,9 +6,6 @@ require('dotenv').config({
 
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.BUNDLE_ANALYZE === 'true'
-});
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
@@ -76,4 +73,12 @@ const nextJSConfig = {
   }
 };
 
-module.exports = withPlugins([[optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]], nextJSConfig);
+const nextPlugins = [[optimizedImages, optimizedImagesConfig]];
+if (process.env.BUNDLE_ANALYZE === 'true') {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: true
+  });
+  nextPlugins.push(withBundleAnalyzer);
+}
+
+module.exports = withPlugins(nextPlugins, nextJSConfig);

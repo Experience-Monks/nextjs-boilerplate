@@ -1,5 +1,5 @@
 {
-  "plugins": ["dependencies", "lighthouse", "webhint"],
+  "plugins": ["dependencies"],
   "rules": {
     "package-json-properties": [
       "error",
@@ -23,103 +23,6 @@
         "blacklist": []
       }
     ],
-    "lighthouse/scores": [
-      "error",
-      {
-        "best-practices": 0.9,
-        "pwa": 0.5,
-        "seo": 0.9,
-        "accessibility": 0.9,
-        "performance": 0.9
-      }
-    ],
-    "lighthouse/audits": [
-      "error",
-      {
-        "viewport": 1,
-        "without-javascript": 1,
-        "first-contentful-paint": 0.85,
-        "first-meaningful-paint": 0.85,
-        "load-fast-enough-for-pwa": 1,
-        "estimated-input-latency": 1,
-        "total-blocking-time": 0.9,
-        "max-potential-fid": 0.8,
-        "errors-in-console": 1,
-        "time-to-first-byte": 1,
-        "first-cpu-idle": 0.9,
-        "interactive": 0.9,
-        "redirects": 1,
-        "installable-manifest": 1,
-        "apple-touch-icon": 1,
-        "splash-screen": 1,
-        "themed-omnibox": 1,
-        "content-width": 1,
-        "image-aspect-ratio": 1,
-        "deprecations": 1,
-        "mainthread-work-breakdown": 0.85,
-        "bootup-time": 0.9,
-        "uses-rel-preload": 0.5,
-        "uses-rel-preconnect": 1,
-        "font-display": 1,
-        "third-party-summary": 1,
-        "aria-allowed-attr": 1,
-        "aria-required-attr": 1,
-        "aria-required-children": 1,
-        "aria-required-parent": 1,
-        "aria-roles": 1,
-        "aria-valid-attr-value": 1,
-        "aria-valid-attr": 1,
-        "button-name": 1,
-        "bypass": 1,
-        "color-contrast": 1,
-        "document-title": 1,
-        "duplicate-id": 1,
-        "html-has-lang": 1,
-        "html-lang-valid": 1,
-        "image-alt": 1,
-        "label": 1,
-        "link-name": 1,
-        "meta-viewport": 1,
-        "tabindex": 1,
-        "total-byte-weight": 1,
-        "offscreen-images": 1,
-        "render-blocking-resources": 1,
-        "unminified-css": 1,
-        "unminified-javascript": 1,
-        "unused-css-rules": 1,
-        "uses-webp-images": 1,
-        "uses-optimized-images": 1,
-        "uses-text-compression": 1,
-        "uses-responsive-images": 1,
-        "efficient-animated-content": 1,
-        "appcache-manifest": 1,
-        "doctype": 1,
-        "dom-size": 1,
-        "external-anchors-use-rel-noopener": 1,
-        "geolocation-on-start": 1,
-        "no-document-write": 1,
-        "no-vulnerable-libraries": 1,
-        "js-libraries": 1,
-        "notification-on-start": 1,
-        "password-inputs-can-be-pasted-into": 1,
-        "uses-passive-event-listeners": 1,
-        "meta-description": 1,
-        "http-status-code": 1,
-        "font-size": 1,
-        "link-text": 1,
-        "robots-txt": 1,
-        "tap-targets": 1,
-        "hreflang": 1,
-        "plugins": 1
-      }
-    ],
-    "webhint/hints": [
-      "error",
-      {
-        "ignore": [],
-        "minSeverity": 3
-      }
-    ],
     "dependencies/not-allowed-packages": [
       "error",
       {
@@ -129,7 +32,7 @@
     "dependencies/min-vulnerabilities-allow": [
       "error",
       {
-        "level": "high",
+        "level": "critical",
         "skip": ["1213", "813", "1573", "1643", "1644"]
       }
     ],
@@ -148,7 +51,7 @@
     ],
     "dependencies/unused-packages": ["warn"],
     "dependencies/licenses-whitelist": [
-      "error",
+      "warn",
       {
         "whitelist": [
           "AFL-2.1",
@@ -223,14 +126,6 @@
     ]
   },
   "settings": {
-    "lighthouse": {
-      "url": "http://localhost:5000",
-      "configPath": "dev.lighthouse.config.json"
-    },
-    "webhint": {
-      "url": "http://localhost:5000",
-      "configPath": "dev.wh.config.json"
-    },
     "tags": {
       "dev": [
         "package-json-properties",
@@ -238,7 +133,6 @@
         "dependencies/not-allowed-packages",
         "dependencies/min-vulnerabilities-allow"
       ],
-      "lighthouse": ["lighthouse/scores", "lighthouse/audits"],
       "webhint": ["webhint/hints"],
       "stage": [
         "dependencies/outdated-packages",

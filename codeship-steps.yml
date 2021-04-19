@@ -1,0 +1,38 @@
+- type: parallel
+  steps:
+    - name: lint
+      service: frontend-dev
+      command: sh .codeship/linters.sh
+
+- type: serial
+  name: develop
+  tag: develop
+  steps:
+    - service: frontend-dev
+      name: artifact
+      command: sh .codeship/artifact.sh
+    - service: awsdeployment-dev
+      name: deploy
+      command: sh ./usr/src/app/.codeship/deploy.sh
+
+- type: serial
+  name: staging
+  tag: staging
+  steps:
+    - service: frontend-stage
+      name: artifact
+      command: sh .codeship/artifact.sh
+    - service: awsdeployment-stage
+      name: deploy
+      command: sh ./usr/src/app/.codeship/deploy.sh
+
+- type: serial
+  name: production
+  tag: '^(master|main)$'
+  steps:
+    - service: frontend-prod
+      name: artifact
+      command: sh .codeship/artifact.sh
+    - service: awsdeployment-prod
+      name: deploy
+      command: sh ./usr/src/app/.codeship/deploy.sh
