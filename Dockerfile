@@ -5,11 +5,13 @@ LABEL maintainer_architect="iran.reyes@jam3.com"
 # Set working directory
 WORKDIR /usr/src/app
 
+# Install dependencies
+COPY package-lock.json .
+COPY package.json .
+RUN npm ci
+
 # Copy source files
 COPY . .
-
-# Install dependencies
-RUN npm ci --only=production
 
 # Expose files
 VOLUME ["/usr/src/app"]
