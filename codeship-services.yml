@@ -4,12 +4,29 @@ njsscan-dev:
   - frontend-dev
   cached: true
 
+njsscan-stage:
+  image: opensecurity/njsscan
+  volumes_from:
+  - frontend-stage
+  cached: true
+
 frontend-dev:
   build:
     image: app
     dockerfile: Dockerfile
   environment:
     CI_ENV: develop
+    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  volumes:
+  - ./tmp/artifacts:/artifacts
+  cached: true
+
+frontend-stage:
+  build:
+    image: app
+    dockerfile: Dockerfile
+  environment:
+    CI_ENV: production
     NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
   volumes:
   - ./tmp/artifacts:/artifacts
@@ -26,17 +43,6 @@ awsdeployment-dev:
   - frontend-dev
   cached: true
 
-frontend-stage:
-  build:
-    image: app
-    dockerfile: Dockerfile
-  environment:
-    CI_ENV: staging
-    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
-  volumes:
-  - ./tmp/artifacts:/artifacts
-  cached: true
-
 awsdeployment-stage:
   image: codeship/aws-deployment
   encrypted_env_file: .env.codeship.stage.encrypted
@@ -48,17 +54,6 @@ awsdeployment-stage:
   - frontend-stage
   cached: true
 
-frontend-prod:
-  build:
-    image: app
-    dockerfile: Dockerfile
-  environment:
-    CI_ENV: production
-    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
-  volumes:
-  - ./tmp/artifacts:/artifacts
-  cached: true
-
 awsdeployment-prod:
   image: codeship/aws-deployment
   encrypted_env_file: .env.codeship.prod.encrypted
@@ -67,5 +62,5 @@ awsdeployment-prod:
   - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
   - DISTRIBUTION_ID=PLACEHOLDER_CLODUFRONT_DIST_ID
   volumes_from:
-  - frontend-prod
+  - frontend-stage
   cached: true

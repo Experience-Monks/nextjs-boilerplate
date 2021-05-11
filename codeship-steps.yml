@@ -28,6 +28,9 @@
     - name: lint
       service: frontend-stage
       command: sh .codeship/linters.sh
+    - name: sast
+      service: njsscan-stage
+      command: -w /usr/src/app
     - name: build
       service: frontend-stage
       command: sh .codeship/artifact.sh
@@ -36,18 +39,9 @@
     command: sh ./usr/src/app/.codeship/deploy.sh
 
 - name: production
-  type: serial
-  tag: '^(master|main)$'
+  type: manual
+  tag: staging
   steps:
-  - name: integration
-    type: parallel
-    steps:
-    - name: lint
-      service: frontend-prod
-      command: sh .codeship/linters.sh
-    - name: build
-      service: frontend-prod
-      command: sh .codeship/artifact.sh
   - name: deployment
     service: awsdeployment-prod
     command: sh ./usr/src/app/.codeship/deploy.sh
