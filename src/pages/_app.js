@@ -7,7 +7,7 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 
 import detect from '../utils/detect';
-import { withRedux } from '../redux/withRedux';
+import { withRedux } from '../redux/with-redux';
 
 if (typeof window !== 'undefined') {
   require('default-passive-events');

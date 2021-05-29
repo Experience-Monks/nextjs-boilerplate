@@ -22,7 +22,6 @@ function About({ className }) {
   return (
     <main className={classnames(styles.About, className)} ref={containerRef}>
       <Head title="About" />
-
       <h1 className={styles.title}>About Page</h1>
     </main>
   );

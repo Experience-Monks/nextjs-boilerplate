@@ -22,14 +22,11 @@ function Landing({ className }) {
   return (
     <main className={classnames(styles.Landing, className)} ref={containerRef}>
       <Head />
-
       <section className={styles.hero}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
-
         <h2 className={styles.description}>
           To get started, edit <code>pages/index.js</code> and save to reload.
         </h2>
-
         <ul className={styles.row}>
           <li>
             <a
