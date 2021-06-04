@@ -8,6 +8,7 @@
   },
   "rules": {
     "prettier/prettier": "warn",
+    "import/no-anonymous-default-export": "off",
     "jam3/no-sanitizer-with-danger": [
       2,
       {

@@ -1,7 +1,6 @@
 // Export a function. Accept the base config as the only param.
 const path = require('path');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
-
+const svgsPath = path.resolve(__dirname, '../src/assets/svgs');
 const srcPath = path.resolve(__dirname, 'src');
 
 module.exports = {
@@ -16,39 +15,44 @@ module.exports = {
       }
     };
 
-    const fileLoaderRule = newConfig.module.rules.find((rule) => rule.test.test('.svg'));
-    fileLoaderRule.exclude = /src\/.*\.svg$/;
+    const fileLoader = baseConfig.module.rules.find((rule) => rule.test && rule.test.test('.svg'));
+    fileLoader.exclude = [svgsPath];
 
     newConfig.resolve.modules.push(srcPath);
 
-    newConfig.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 1,
-            modules: {
-              getLocalIdent: getCSSModuleLocalIdent
+    newConfig.module.rules.push(
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              importLoaders: 1,
+              modules: {
+                mode: 'local',
+                localIdentName: '[name]_[local]__[hash:base64:5]'
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                includePaths: ['src/styles']
+              }
             }
           }
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            sassOptions: {
-              includePaths: ['src/styles']
-            }
-          }
-        }
-      ]
-    });
-
-    newConfig.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack']
-    });
+        ]
+      },
+      {
+        test: /\.svg$/,
+        include: svgsPath,
+        use: ['@svgr/webpack']
+      }
+    );
 
     // Return the altered config
     return newConfig;
