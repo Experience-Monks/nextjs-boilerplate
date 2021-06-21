@@ -37,18 +37,18 @@ const optimizedImagesConfig = {
 const nextJSConfig = {
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
+  future: {
+    webpack5: true
+  },
   productionBrowserSourceMaps: process.env.CI_ENV !== 'prod',
   devIndicators: {
     autoPrerender: false
   },
   sassOptions: {
-    includePaths: ['src/styles']
-  },
-  experimental: {
-    modern: true
+    includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
-    const moduleSassRule = config.module.rules[1].oneOf.find(
+    const moduleSassRule = config.module.rules[2].oneOf.find(
       (rule) => rule.test.toString() === /\.module\.(scss|sass)$/.toString()
     );
 
