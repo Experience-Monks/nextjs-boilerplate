@@ -9,7 +9,6 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
 import { setPrevRoute } from '../../redux/modules/app';
-import { cleanUrl } from '../../utils/basic-functions';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
@@ -19,11 +18,7 @@ function Layout({ children }) {
 
   const handleRouteChange = useCallback(
     (url) => {
-      const prevRoute = cleanUrl(url, true);
-      const currRoute = cleanUrl(router.asPath, true);
-      if (currRoute !== prevRoute) {
-        dispatch(setPrevRoute(currRoute));
-      }
+      if (router.asPath !== url) dispatch(setPrevRoute(router.asPath));
     },
     [dispatch, router.asPath]
   );
