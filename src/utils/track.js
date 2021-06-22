@@ -1,7 +1,6 @@
 import React from 'react';
-import { isBrowser } from './detect';
 
-if (isBrowser) window.dataLayer = window.dataLayer || [];
+if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
 
 /**
  * Dispatch an event with GTM
@@ -10,7 +9,7 @@ if (isBrowser) window.dataLayer = window.dataLayer || [];
  * @param {any} [payload={}] - Action data
  */
 function gtmEvent(action = false, payload = {}) {
-  if (isBrowser && action) {
+  if (typeof window !== 'undefined' && action) {
     window.dataLayer.push({
       event: action,
       payload

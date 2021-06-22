@@ -5,9 +5,7 @@ const detect = {
   bots: {}
 };
 
-export const isBrowser = typeof window !== 'undefined';
-
-if (isBrowser) {
+if (typeof window !== 'undefined') {
   detect.device = require('@jam3/detect').device;
   detect.browser = require('@jam3/detect').browser;
   detect.os = require('@jam3/detect').os;
