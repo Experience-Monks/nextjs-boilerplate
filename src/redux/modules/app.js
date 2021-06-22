@@ -1,23 +1,23 @@
 import keys from '../keys';
 
 const defaultState = {
-  loaded: false
+  prevRoute: null
 };
 
 // Reducer
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
-    case keys.LANDING_LOADED:
-      return { ...state, loaded: action.loaded };
+    case keys.PREV_ROUTE:
+      return { ...state, prevRoute: action.prevRoute };
     default:
       return state;
   }
 }
 
 // Action Creators
-export function setLandingLoaded(loaded) {
+export function setPrevRoute(prevRoute) {
   return {
-    type: keys.LANDING_LOADED,
-    loaded
+    type: keys.PREV_ROUTE,
+    prevRoute
   };
 }

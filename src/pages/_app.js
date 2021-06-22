@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'normalize.css';
-import 'default-passive-events';
-import 'focus-visible';
 
 import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
 
 import detect from '../utils/detect';
+import { withRedux } from '../redux/with-redux';
+
+if (typeof window !== 'undefined') {
+  require('default-passive-events');
+  require('focus-visible');
+}
+
+const ReduxProvider = memo(withRedux(({ children }) => children));
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }) {
@@ -40,9 +46,11 @@ function App({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ReduxProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ReduxProvider>
   );
 }
 
