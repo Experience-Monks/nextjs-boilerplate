@@ -1,2 +1,3 @@
 src/util/share.js
 scripts/templates/*
+examples/with-redux-ssr/_app.js
