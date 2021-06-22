@@ -5,10 +5,10 @@ import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
 
-import detect, { isTouchDevice } from '../utils/detect';
+import detect, { isBrowser, isTouchDevice } from '../utils/detect';
 import { withRedux } from '../redux/with-redux';
 
-if (typeof window !== 'undefined') {
+if (isBrowser) {
   require('default-passive-events');
   require('focus-visible');
 }
@@ -20,7 +20,7 @@ function App({ Component, pageProps }) {
   const { isUnsupported, ...componentProps } = pageProps;
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (isBrowser) {
       if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
         require('@jam3/stats')();
       }

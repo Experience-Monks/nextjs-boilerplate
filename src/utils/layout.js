@@ -1,7 +1,8 @@
 import { layoutTablet, layoutDesktopSm, layoutDesktopMd, layoutDesktopLg } from '../styles/export-vars.module.scss';
+import { isBrowser } from './detect';
 
 function getLayout() {
-  if (typeof window !== 'undefined') {
+  if (isBrowser) {
     const TABLET_MEDIA_QUERY = `(min-width: ${layoutTablet})`;
     const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${layoutDesktopSm})`;
     const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${layoutDesktopMd})`;
