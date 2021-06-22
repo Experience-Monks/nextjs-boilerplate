@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import styles from './index.module.scss';
 
 import Head from '../../components/Head/Head';
+import { isBrowser } from '../../utils/detect';
 
 function About({ className }) {
   const containerRef = useRef();
@@ -23,6 +24,7 @@ function About({ className }) {
     <main className={classnames(styles.About, className)} ref={containerRef}>
       <Head title="About" />
       <h1 className={styles.title}>About Page</h1>
+      {isBrowser && <code>{navigator?.userAgent}</code>}
     </main>
   );
 }

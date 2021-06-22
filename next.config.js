@@ -40,6 +40,24 @@ const nextJSConfig = {
   future: {
     webpack5: true
   },
+  // NOTE: Redirects depend on trailingSlash
+  async redirects() {
+    return [
+      {
+        source: '/:path((?!unsupported/$).*)',
+        has: [
+          {
+            type: 'header',
+            key: 'User-Agent',
+            value:
+              'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'
+          }
+        ],
+        destination: '/unsupported/',
+        permanent: false
+      }
+    ];
+  },
   productionBrowserSourceMaps: process.env.CI_ENV !== 'prod',
   devIndicators: {
     autoPrerender: false

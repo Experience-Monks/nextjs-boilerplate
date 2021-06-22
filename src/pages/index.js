@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
+import { isBrowser } from '../utils/detect';
 
 function Landing({ className }) {
   const containerRef = useRef();
@@ -24,6 +25,7 @@ function Landing({ className }) {
       <Head />
       <section className={styles.hero}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
+        {isBrowser && <code>{navigator?.userAgent}</code>}
         <h2 className={styles.description}>
           To get started, edit <code>pages/index.js</code> and save to reload.
         </h2>
