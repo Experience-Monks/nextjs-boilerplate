@@ -5,7 +5,7 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
 import { siteName, siteSlogan } from '../../data/settings';
-import { GtmScript } from '../../utils/track';
+import { GtmScript } from '../../utils/analytics';
 
 const TITLE_SEPARATOR = '|';
 
