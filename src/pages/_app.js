@@ -1,19 +1,18 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import 'normalize.css';
 
 import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
 
+import { store } from '../redux';
 import detect, { isTouchDevice } from '../utils/detect';
-import { withRedux } from '../redux/with-redux';
 
 if (typeof window !== 'undefined') {
   require('default-passive-events');
   require('focus-visible');
 }
-
-const ReduxProvider = memo(withRedux(({ children }) => children));
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }) {
@@ -36,11 +35,11 @@ function App({ Component, pageProps }) {
   return isUnsupported ? (
     <Component {...componentProps} />
   ) : (
-    <ReduxProvider>
+    <Provider store={store}>
       <Layout>
         <Component {...componentProps} />
       </Layout>
-    </ReduxProvider>
+    </Provider>
   );
 }
 
