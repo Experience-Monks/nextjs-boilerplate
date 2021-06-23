@@ -4,15 +4,13 @@ import checkProps from '@jam3/react-check-extra-props';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import { setPrevRoute } from '../../redux';
+import { setPrevRoute, setIsWebpSupported } from '../../redux';
 import { checkWebpSupport } from '../../utils/detect';
-import { setIsWebpSupported } from '../../redux/slices/app';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 

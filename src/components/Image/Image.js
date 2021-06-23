@@ -16,7 +16,7 @@ const DEFAULT_SIZES = {
 
 const Image = forwardRef(({ className, imageObj, loadingType, sizes }, ref) => {
   const { file, alt } = imageObj;
-  const isWebpSupported = useSelector((state) => state.app.isWebpSupported);
+  const isWebpSupported = useSelector((state) => state.isWebpSupported);
 
   const { src, srcSet } = useMemo(() => {
     const extension = file.split('.').pop();
