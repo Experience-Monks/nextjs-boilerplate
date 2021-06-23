@@ -16,3 +16,4 @@ ignore:
   - node_modules
   - .next
   - out
+  - examples
