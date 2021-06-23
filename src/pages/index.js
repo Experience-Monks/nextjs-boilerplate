@@ -5,8 +5,6 @@ import checkProps from '@jam3/react-check-extra-props';
 import { gsap } from 'gsap';
 import { useDispatch } from 'react-redux';
 
-import { setLandingLoaded } from '../redux';
-
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
@@ -21,7 +19,6 @@ function Landing({ className }) {
 
   useLayoutEffect(() => {
     animateIn();
-    dispatch(setLandingLoaded(true));
   }, [animateIn, dispatch]);
 
   return (
