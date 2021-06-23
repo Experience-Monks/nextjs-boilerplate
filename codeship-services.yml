@@ -1,0 +1,61 @@
+frontend-dev:
+  build:
+    image: app
+    dockerfile: Dockerfile
+  environment:
+    CI_ENV: develop
+    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  volumes:
+    - ./tmp/artifacts:/artifacts
+  cached: true
+
+awsdeployment-dev:
+  image: codeship/aws-deployment
+  encrypted_env_file: .env.codeship.dev.encrypted
+  environment:
+    - AWS_DEFAULT_REGION=us-east-1
+    - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
+    - DISTRIBUTION_ID=PLACEHOLDER_CLODUFRONT_DIST_ID
+  volumes_from:
+    - frontend-dev
+  cached: true
+
+frontend-stage:
+  build:
+    image: app
+    dockerfile: Dockerfile
+  environment:
+    CI_ENV: staging
+    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  cached: true
+
+awsdeployment-stage:
+  image: codeship/aws-deployment
+  encrypted_env_file: .env.codeship.stage.encrypted
+  environment:
+    - AWS_DEFAULT_REGION=us-east-1
+    - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
+    - DISTRIBUTION_ID=PLACEHOLDER_CLODUFRONT_DIST_ID
+  volumes_from:
+    - frontend-stage
+  cached: true
+
+frontend-prod:
+  build:
+    image: app
+    dockerfile: Dockerfile
+  environment:
+    CI_ENV: production
+    NEXT_PUBLIC_WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  cached: true
+
+awsdeployment-prod:
+  image: codeship/aws-deployment
+  encrypted_env_file: .env.codeship.prod.encrypted
+  environment:
+    - AWS_DEFAULT_REGION=us-east-1
+    - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
+    - DISTRIBUTION_ID=PLACEHOLDER_CLODUFRONT_DIST_ID
+  volumes_from:
+    - frontend-prod
+  cached: true

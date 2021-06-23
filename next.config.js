@@ -6,9 +6,6 @@ require('dotenv').config({
 
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.BUNDLE_ANALYZE === 'true'
-});
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
@@ -40,18 +37,18 @@ const optimizedImagesConfig = {
 const nextJSConfig = {
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
+  future: {
+    webpack5: true
+  },
   productionBrowserSourceMaps: process.env.CI_ENV !== 'prod',
   devIndicators: {
     autoPrerender: false
   },
   sassOptions: {
-    includePaths: ['src/styles']
-  },
-  experimental: {
-    modern: true
+    includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
-    const moduleSassRule = config.module.rules[1].oneOf.find(
+    const moduleSassRule = config.module.rules[2].oneOf.find(
       (rule) => rule.test.toString() === /\.module\.(scss|sass)$/.toString()
     );
 
@@ -76,4 +73,12 @@ const nextJSConfig = {
   }
 };
 
-module.exports = withPlugins([[optimizedImages, optimizedImagesConfig], [withBundleAnalyzer]], nextJSConfig);
+const nextPlugins = [[optimizedImages, optimizedImagesConfig]];
+if (process.env.BUNDLE_ANALYZE === 'true') {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: true
+  });
+  nextPlugins.push(withBundleAnalyzer);
+}
+
+module.exports = withPlugins(nextPlugins, nextJSConfig);

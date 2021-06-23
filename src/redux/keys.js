@@ -1,3 +1,3 @@
 export default {
-  LANDING_LOADED: 'LANDING_LOADED'
+  PREV_ROUTE: 'PREV_ROUTE'
 };

@@ -1,46 +1,32 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useRef, useCallback, useLayoutEffect, memo } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import checkProps from '@jam3/react-check-extra-props';
 import { gsap } from 'gsap';
 
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
 
-import { withRedux } from '../redux/withRedux';
-import { setLandingLoaded } from '../redux/modules/app';
-
-function Landing() {
+function Landing({ className }) {
   const containerRef = useRef();
-  const dispatch = useDispatch();
 
-  const animateInInit = useCallback(() => {
-    gsap.set(containerRef.current, { autoAlpha: 0 });
+  const animateIn = useCallback(() => {
+    gsap.from(containerRef.current, { opacity: 0.01, duration: 0.3, ease: 'none' });
   }, []);
 
-  const animateIn = useCallback(async () => {
-    await gsap.to(containerRef.current, { duration: 0.5, autoAlpha: 1, delay: 0.3 });
-    dispatch(setLandingLoaded(true));
-  }, [dispatch]);
-
-  useEffect(() => {
-    animateInInit();
-  }, [animateInInit]);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     animateIn();
   }, [animateIn]);
 
   return (
-    <main className={styles.Landing}>
+    <main className={classnames(styles.Landing, className)} ref={containerRef}>
       <Head />
-
-      <section className={styles.hero} ref={containerRef}>
+      <section className={styles.hero}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
-
         <h2 className={styles.description}>
           To get started, edit <code>pages/index.js</code> and save to reload.
         </h2>
-
         <ul className={styles.row}>
           <li>
             <a
@@ -65,4 +51,10 @@ function Landing() {
   );
 }
 
-export default withRedux(Landing);
+Landing.propTypes = checkProps({
+  className: PropTypes.string
+});
+
+Landing.defaultProps = {};
+
+export default memo(Landing);
