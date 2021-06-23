@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import checkProps from '@jam3/react-check-extra-props';
 import { gsap } from 'gsap';
-import { useDispatch } from 'react-redux';
 
 import styles from './index.module.scss';
 
@@ -11,7 +10,6 @@ import Head from '../components/Head/Head';
 
 function Landing({ className }) {
   const containerRef = useRef();
-  const dispatch = useDispatch();
 
   const animateIn = useCallback(() => {
     gsap.from(containerRef.current, { opacity: 0.01, duration: 0.3, ease: 'none' });
@@ -19,7 +17,7 @@ function Landing({ className }) {
 
   useLayoutEffect(() => {
     animateIn();
-  }, [animateIn, dispatch]);
+  }, [animateIn]);
 
   return (
     <main className={classnames(styles.Landing, className)} ref={containerRef}>
