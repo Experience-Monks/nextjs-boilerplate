@@ -12,4 +12,8 @@ if (typeof window !== 'undefined') {
   detect.bots = require('@jam3/detect').bots;
 }
 
+export const isTouchDevice =
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
+
 export default detect;
