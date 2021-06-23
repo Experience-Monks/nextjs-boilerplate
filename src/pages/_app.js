@@ -5,8 +5,10 @@ import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
 
-import detect, { isBrowser, isTouchDevice } from '../utils/detect';
+import detect, { isTouchDevice } from '../utils/detect';
 import { withRedux } from '../redux/with-redux';
+
+const isBrowser = typeof window !== 'undefined';
 
 if (isBrowser) {
   require('default-passive-events');
