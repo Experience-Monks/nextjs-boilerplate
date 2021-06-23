@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import 'normalize.css';
 
@@ -43,4 +43,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default memo(App);
+export default App;
