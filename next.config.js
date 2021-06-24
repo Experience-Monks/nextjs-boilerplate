@@ -9,8 +9,7 @@ const optimizedImages = require('next-optimized-images');
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
-  imagesFolder: 'images',
-  imagesName: '[name]-[hash:base64:8].[ext]',
+  imagesName: '[name]-[hash].[ext]',
   handleImages: ['jpeg', 'png', 'webp', 'gif'],
   optimizeImages: process.env.OPTIMIZE_IMAGES === 'true',
   optimizeImagesInDev: process.env.OPTIMIZE_IMAGES === 'true',
@@ -46,6 +45,9 @@ const nextJSConfig = {
   productionBrowserSourceMaps: process.env.CI_ENV !== 'prod',
   devIndicators: {
     autoPrerender: false
+  },
+  images: {
+    disableStaticImages: true
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'src/styles')]
