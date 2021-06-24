@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import { setPrevRoute } from '../../redux/modules/app';
+import { setPrevRoute } from '../../redux';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
