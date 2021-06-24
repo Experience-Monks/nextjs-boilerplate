@@ -5,16 +5,14 @@ import Link from 'next/link';
 
 import styles from './Nav.module.scss';
 
+import Image from '../Image/Image';
 import SvgThreeLogo from '../../assets/svgs/svg-three-logo.svg';
-
-import jam3LogoSrc from '../../assets/images/threeLogo.jpeg';
-import githubLogoSrc from '../../assets/images/github-icon-64b.png';
 
 import routes from '../../data/routes';
 
 const LINKS = [
-  { href: 'https://jam3.com', label: 'Jam3', src: jam3LogoSrc },
-  { href: 'https://github.com/jam3', label: 'GitHub', src: githubLogoSrc }
+  { href: 'https://jam3.com', label: 'Jam3', file: 'threeLogo.jpeg' },
+  { href: 'https://github.com/jam3', label: 'GitHub', file: 'github-icon-64b.png' }
 ].map((link) => ({
   ...link,
   key: `nav-link-${link.href}-${link.label}`
@@ -38,10 +36,10 @@ function Nav() {
         </ul>
 
         <ul className={styles.links}>
-          {LINKS.map(({ key, href, label, src }) => (
+          {LINKS.map(({ key, href, label, file }) => (
             <li key={key}>
               <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-                <img src={src} alt={label} />
+                <Image imageObj={{ file: file, alt: label }} />
               </a>
             </li>
           ))}
