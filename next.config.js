@@ -12,10 +12,10 @@ const optimizedImagesConfig = {
   imagesFolder: 'images',
   imagesName: '[name]-[hash:base64:8].[ext]',
   handleImages: ['jpeg', 'png', 'webp', 'gif'],
-  optimizeImages: true,
-  optimizeImagesInDev: false,
+  optimizeImages: process.env.OPTIMIZE_IMAGES === 'true',
+  optimizeImagesInDev: process.env.OPTIMIZE_IMAGES === 'true',
   mozjpeg: {
-    quality: 80
+    quality: 85
   },
   optipng: {
     optimizationLevel: 3
@@ -30,7 +30,13 @@ const optimizedImagesConfig = {
   },
   webp: {
     preset: 'default',
-    quality: 75
+    quality: 85
+  },
+  // if using sizes attr, optimization goes through `responsive-loader` using `sharp`
+  responsive: {
+    disable: process.env.OPTIMIZE_IMAGES !== 'true',
+    adapter: require('responsive-loader/sharp'),
+    quality: 85
   }
 };
 
