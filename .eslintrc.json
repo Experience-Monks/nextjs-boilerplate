@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app", "react-jam3"],
+  "extends": ["react-app", "react-jam3", "plugin:@next/next/recommended"],
   "plugins": ["jam3"],
   "settings": {
     "react": {
@@ -59,7 +59,8 @@
           ]
         }
       }
-    ]
+    ],
+    "@next/next/no-img-element": "off"
   },
   "overrides": [
     {
