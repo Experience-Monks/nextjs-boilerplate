@@ -24,9 +24,6 @@ const optimizedImagesConfig = {
     interlaced: true,
     optimizationLevel: 3
   },
-  svgo: {
-    // enable/disable svgo plugins here
-  },
   webp: {
     preset: 'default',
     quality: 85
