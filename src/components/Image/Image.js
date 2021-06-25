@@ -2,9 +2,10 @@ import React, { memo, forwardRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import { check } from '../../utils/detect';
+
 import styles from './Image.module.scss';
 import sassVars from '../../styles/export-vars.module.scss';
-import { check } from '../../utils/detect';
 
 const DEFAULT_SIZES = {
   desktopLg: '100vw',
