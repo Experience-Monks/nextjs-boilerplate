@@ -51,11 +51,11 @@
     "extends": "react-app"
   },
   "dependencies": {
-    "@jam3/detect": "1.0.2",
     "@jam3/react-check-extra-props": "1.0.1",
     "@jam3/react-hooks": "1.0.0",
     "@jam3/stats": "1.0.1",
     "@reduxjs/toolkit": "^1.6.0",
+    "bowser": "2.11.0",
     "classnames": "2.3.1",
     "default-passive-events": "2.0.0",
     "focus-visible": "5.2.0",
@@ -66,6 +66,7 @@
     "imagemin-optipng": "8.0.0",
     "imagemin-pngquant": "9.0.2",
     "imagemin-svgo": "9.0.0",
+    "lodash.kebabcase": "4.1.1",
     "next": "^11.0.1",
     "next-optimized-images": "2.6.2",
     "no-op": "1.0.3",

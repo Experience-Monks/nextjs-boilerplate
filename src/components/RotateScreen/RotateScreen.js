@@ -6,7 +6,7 @@ import { useOrientation } from 'react-use';
 
 import styles from './RotateScreen.module.scss';
 
-import detect from '../../utils/detect';
+import { device } from '../../utils/detect';
 
 function RotateScreen({ className }) {
   const orientation = useOrientation();
@@ -15,7 +15,7 @@ function RotateScreen({ className }) {
     <div
       className={classnames(
         styles.RotateScreen,
-        { [styles.enabled]: detect.device.isPhone && orientation.angle !== 0 },
+        { [styles.enabled]: device.phone && orientation.angle !== 0 },
         className
       )}
     >

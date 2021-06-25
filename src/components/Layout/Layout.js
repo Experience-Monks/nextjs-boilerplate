@@ -9,8 +9,7 @@ import { useDispatch } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import { setPrevRoute, setIsWebpSupported } from '../../redux';
-import { checkWebpSupport } from '../../utils/detect';
+import { setPrevRoute } from '../../redux';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
@@ -32,10 +31,6 @@ function Layout({ children }) {
       router.events.off('routeChangeStart', handleRouteChange);
     };
   }, [router.events, handleRouteChange]);
-
-  useEffect(() => {
-    checkWebpSupport('lossy', (isSupported) => dispatch(setIsWebpSupported(isSupported)));
-  }, [dispatch]);
 
   return (
     <>

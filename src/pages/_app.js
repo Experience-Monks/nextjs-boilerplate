@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import kebabCase from 'lodash.kebabcase';
 import 'normalize.css';
 
 import '../styles/global.scss';
@@ -7,7 +8,7 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 
 import { store } from '../redux';
-import detect, { isTouchDevice } from '../utils/detect';
+import { device, browser } from '../utils/detect';
 
 const isBrowser = typeof window !== 'undefined';
 
@@ -26,11 +27,8 @@ function App({ Component, pageProps }) {
         require('@jam3/stats')();
       }
 
-      const { device, browser } = detect;
-      const classes = [isTouchDevice ? 'touch-device' : '', device.getType(), browser.getName()].filter((className) =>
-        Boolean(className)
-      );
-      document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
+      const classes = [device.mobile ? 'mobile' : '', device.type, browser.name].filter(Boolean);
+      classes.forEach((c) => document.body.classList.add(kebabCase(c)));
     }
   }, []);
 

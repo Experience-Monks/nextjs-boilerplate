@@ -1,13 +1,14 @@
 import React, { memo, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import kebabCase from 'lodash.kebabcase';
 import 'normalize.css';
 
 import '../styles/global.scss';
 
 import Layout from '../components/Layout/Layout';
 
-import detect from '../utils/detect';
 import { withRedux } from '../redux/with-redux';
+import { device, browser } from '../utils/detect';
 
 if (typeof window !== 'undefined') {
   require('default-passive-events');
@@ -27,11 +28,8 @@ function App({ Component, pageProps }) {
         if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
           require('@jam3/stats')();
         }
-        const { device, browser } = detect;
-        const classes = [device.isMobile ? 'mobile' : '', device.getType(), browser.getName()].filter((className) =>
-          Boolean(className)
-        );
-        document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
+        const classes = [device.mobile ? 'mobile' : '', device.type, browser.name].filter(Boolean);
+        classes.forEach((c) => document.body.classList.add(kebabCase(c)));
       } else {
         setIsSupported(false);
       }
