@@ -16,7 +16,7 @@ const DEFAULT_SIZES = {
 };
 
 const Image = forwardRef(({ className, imageObj, loadingType, sizes }, ref) => {
-  const [webpSupported, setWebpSupported] = useState(true);
+  const [webpSupported, setWebpSupported] = useState(check._webp);
 
   const { file, alt } = imageObj;
 
