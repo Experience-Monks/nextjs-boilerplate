@@ -50,15 +50,6 @@ const nextJSConfig = {
     includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
-    const moduleSassRule = config.module.rules[2].oneOf.find(
-      (rule) => rule.test.toString() === /\.module\.(scss|sass)$/.toString()
-    );
-
-    if (moduleSassRule) {
-      const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
-      if (cssLoader) cssLoader.options.modules.mode = 'local';
-    }
-
     if (options.dev) {
       config.module.rules.push({
         test: /.\/src\/.*\/.*.js$/,
