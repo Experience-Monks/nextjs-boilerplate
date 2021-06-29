@@ -9,13 +9,12 @@ const optimizedImages = require('next-optimized-images');
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
-  imagesFolder: 'images',
-  imagesName: '[name]-[hash:base64:8].[ext]',
+  imagesName: '[name]-[hash].[ext]',
   handleImages: ['jpeg', 'png', 'webp', 'gif'],
-  optimizeImages: true,
-  optimizeImagesInDev: false,
+  optimizeImages: process.env.OPTIMIZE_IMAGES === 'true',
+  optimizeImagesInDev: process.env.OPTIMIZE_IMAGES === 'true',
   mozjpeg: {
-    quality: 80
+    quality: 85
   },
   optipng: {
     optimizationLevel: 3
@@ -25,12 +24,15 @@ const optimizedImagesConfig = {
     interlaced: true,
     optimizationLevel: 3
   },
-  svgo: {
-    // enable/disable svgo plugins here
-  },
   webp: {
     preset: 'default',
-    quality: 75
+    quality: 85
+  },
+  // if using sizes attr, optimization goes through `responsive-loader` using `sharp`
+  responsive: {
+    disable: process.env.OPTIMIZE_IMAGES !== 'true',
+    adapter: require('responsive-loader/sharp'),
+    quality: 85
   }
 };
 
@@ -41,22 +43,13 @@ const nextJSConfig = {
   devIndicators: {
     autoPrerender: false
   },
-  sassOptions: {
-    includePaths: ['src/styles']
+  images: {
+    disableStaticImages: true
   },
-  experimental: {
-    modern: true
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
-    const moduleSassRule = config.module.rules[1].oneOf.find(
-      (rule) => rule.test.toString() === /\.module\.(scss|sass)$/.toString()
-    );
-
-    if (moduleSassRule) {
-      const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
-      if (cssLoader) cssLoader.options.modules.mode = 'local';
-    }
-
     if (options.dev) {
       config.module.rules.push({
         test: /.\/src\/.*\/.*.js$/,

@@ -1,13 +1,23 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-import appReducers from './modules/app';
-
-const reducers = combineReducers({
-  // NOTE: add more reducers here
-  app: appReducers
+const appSlice = createSlice({
+  name: 'app',
+  initialState: {
+    prevRoute: null,
+    isWebpSupported: true
+  },
+  reducers: {
+    setPrevRoute(state, action) {
+      return { ...state, prevRoute: action.prevRoute };
+    },
+    setIsWebpSupported(state, action) {
+      return { ...state, isWebpSupported: action.payload };
+    }
+  }
 });
 
-export const initializeStore = (preloadedState) => {
-  return createStore(reducers, preloadedState, composeWithDevTools(applyMiddleware()));
-};
+export const { setPrevRoute, setIsWebpSupported } = appSlice.actions;
+
+export const store = configureStore({
+  reducer: appSlice.reducer
+});
