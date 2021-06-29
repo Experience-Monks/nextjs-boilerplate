@@ -141,7 +141,7 @@
     "shell-quote": "1.7.2",
     "storybook-addon-next-router": "2.0.4",
     "stylelint": "13.13.1",
-    "stylelint-config-jam3": "0.1.4"
+    "stylelint-config-jam3": "0.1.7"
   },
   "engines": {
     "node": ">=10.15.0",
