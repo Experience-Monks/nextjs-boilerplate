@@ -122,7 +122,6 @@
     "eslint-plugin-promise": "4.3.1",
     "eslint-plugin-react": "7.24.0",
     "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-standard": "5.0.0",
     "generate-robotstxt": "8.0.3",
     "husky": "4.2.5",
     "lint-staged": "10.2.11",
