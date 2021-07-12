@@ -8,6 +8,7 @@ import Layout from '../components/Layout/Layout';
 
 import { store } from '../redux';
 import detect, { isTouchDevice } from '../utils/detect';
+import '../utils/why-did-you-render';
 
 const isBrowser = typeof window !== 'undefined';
 
