@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env BUILD_ENV=development next dev",
+    "dev": "next dev",
     "start": "next start",
     "\n ######################  NPM Secondary Pipeline  ######################": "",
     "build:ssr": "next build",
