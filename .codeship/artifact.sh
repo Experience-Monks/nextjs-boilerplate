@@ -2,7 +2,9 @@
 set -e
 
 #### Running build ####
-npm run build:prod:static
+export COMMIT_ID=$(git rev-parse --short HEAD)
+
+npm run build:static
 
 rm -rf /artifacts/build
 mv ./out /artifacts/build
