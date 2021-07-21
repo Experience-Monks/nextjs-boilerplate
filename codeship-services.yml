@@ -29,6 +29,8 @@ frontend-stage:
     CI_ENV: staging
     GTM_ID: 'GTM-0000000'
     WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  volumes:
+    - ./tmp/artifacts:/artifacts
   cached: true
 
 awsdeployment-stage:
@@ -50,6 +52,8 @@ frontend-prod:
     CI_ENV: production
     GTM_ID: 'GTM-0000000'
     WEBSITE_SITE_URL: https://PLACEHOLDER_WEBSITE_SITE_URL
+  volumes:
+    - ./tmp/artifacts:/artifacts
   cached: true
 
 awsdeployment-prod:
