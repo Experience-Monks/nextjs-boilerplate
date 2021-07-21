@@ -1,9 +1,5 @@
 const path = require('path');
 
-require('dotenv').config({
-  path: path.resolve(process.cwd(), `.env.${process.env.CI_ENV || process.env.NODE_ENV}`)
-});
-
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
 
@@ -39,7 +35,7 @@ const optimizedImagesConfig = {
 const nextJSConfig = {
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
-  productionBrowserSourceMaps: process.env.CI_ENV !== 'prod',
+  productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
   devIndicators: {
     autoPrerender: false
   },

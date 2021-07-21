@@ -1,10 +1,6 @@
 const path = require('path');
 const sitemap = require('nextjs-sitemap-generator');
 
-require('dotenv').config({
-  path: path.resolve(process.cwd(), `.env.${process.env.CI_ENV || process.env.NODE_ENV}`)
-});
-
 if (process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
   sitemap({
     // NOTE: use it for multi-languages site
