@@ -2,8 +2,7 @@ import { memo } from 'react';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
-import { siteName, siteSlogan } from '@/data/settings';
-import { GtmScript } from '@/utils/analytics';
+import { siteName, siteSlogan } from '../../data/settings';
 
 type Props = {
   title?: string;
@@ -57,8 +56,6 @@ function Head({
       {/* Other recommends */}
       <link rel="canonical" href={ogUrl} />
       {process.env.NEXT_PUBLIC_DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />}
-
-      {GtmScript()}
     </NextHead>
   );
 }

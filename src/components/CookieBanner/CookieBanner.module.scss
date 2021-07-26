@@ -1,0 +1,73 @@
+@import 'shared';
+
+$cookie-banner-bg-color: #202020;
+$cookie-banner-overlay-bg-color: lighten($cookie-banner-bg-color, 10%);
+$cookie-banner-padding: px(20);
+
+.CookieBanner {
+  display: flex;
+  // flex-wrap: wrap;
+  flex-flow: column;
+  justify-content: space-between;
+  position: fixed;
+  bottom: px(20);
+  left: px(20);
+  padding: $cookie-banner-padding;
+  color: $white;
+  background-color: $cookie-banner-bg-color;
+
+  > .description {
+    margin-bottom: px(30);
+    font-size: px(14);
+    line-height: px(16);
+    color: $white;
+
+    a {
+      color: currentColor;
+    }
+  }
+
+  > .cookieSettings {
+    @include position-100(absolute);
+    padding: $cookie-banner-padding;
+    background-color: $cookie-banner-overlay-bg-color;
+    text-align: left;
+
+    .cookieSettingsClose {
+      position: absolute;
+      top: px(10);
+      right: px(10);
+    }
+
+    .cookieSettingsContent {
+      display: flex;
+    }
+
+    .cookieSettingsDescription {
+      width: 50%;
+      margin-right: px(15);
+      font-size: px(12);
+      line-height: px(13);
+    }
+  }
+
+  .buttonContainer {
+    display: flex;
+  }
+
+  button {
+    padding: px(10);
+    margin-left: px(20);
+    border: 0;
+    font-size: px(14);
+    line-height: px(16);
+    white-space: nowrap;
+    cursor: pointer;
+    color: currentColor;
+    background-color: $black;
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+}
