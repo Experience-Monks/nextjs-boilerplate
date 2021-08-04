@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
+import AppAdmin from '@/components/AppAdmin/AppAdmin';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Analytics from '@/utils/analytics';
 
@@ -56,6 +57,7 @@ function Layout({ children }: Props) {
           onReject={rejectAllCookies}
         />
       )}
+      <AppAdmin />
     </>
   );
 }

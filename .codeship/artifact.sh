@@ -3,6 +3,7 @@ set -e
 
 #### Running build ####
 export COMMIT_ID=$(git rev-parse --short HEAD)
+export COMMIT_COUNT=$(git rev-list --no-merges --count HEAD)
 
 npm run build:static
 
