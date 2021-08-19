@@ -1,6 +1,7 @@
 {
-  "extends": ["react-app", "react-jam3", "plugin:@next/next/recommended"],
+  "extends": ["react-app", "react-jam3", "plugin:@next/next/recommended", "plugin:import/typescript"],
   "plugins": ["jam3"],
+  "parser": "@typescript-eslint/parser",
   "settings": {
     "react": {
       "version": "detect"

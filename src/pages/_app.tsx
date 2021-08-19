@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { AppProps } from 'next/app';
 import 'normalize.css';
 
 import '../styles/global.scss';
@@ -18,7 +19,7 @@ if (isBrowser) {
 }
 
 // This default export is required in a new `pages/_app.js` file.
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   const { isUnsupported, ...componentProps } = pageProps;
 
   useEffect(() => {

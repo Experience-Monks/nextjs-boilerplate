@@ -1,15 +1,19 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import checkProps from '@jam3/react-check-extra-props';
+import { memo } from 'react';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
 import { siteName, siteSlogan } from '../../data/settings';
 import { GtmScript } from '../../utils/analytics';
 
+type Props = {
+  title?: string;
+  description: string;
+  keywords: Array<string>;
+};
+
 const TITLE_SEPARATOR = '|';
 
-function Head({ title, description, keywords }) {
+function Head({ title, description, keywords }: Props) {
   const router = useRouter();
 
   const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
@@ -54,12 +58,6 @@ function Head({ title, description, keywords }) {
     </NextHead>
   );
 }
-
-Head.propTypes = checkProps({
-  title: PropTypes.string,
-  description: PropTypes.string,
-  keywords: PropTypes.array
-});
 
 Head.defaultProps = {
   description: 'Default Description',

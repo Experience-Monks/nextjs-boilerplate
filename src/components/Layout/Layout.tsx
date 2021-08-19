@@ -1,21 +1,19 @@
-import React, { memo, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import checkProps from '@jam3/react-check-extra-props';
+import { memo, useEffect, useCallback, PropsWithChildren } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-
-import { useDispatch } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
-import { setPrevRoute, setIsWebpSupported } from '../../redux';
+import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '../../redux';
 import { checkWebpSupport } from '../../utils/detect';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 
-function Layout({ children }) {
-  const dispatch = useDispatch();
+export type Props = PropsWithChildren<{}>;
+
+function Layout({ children }: Props) {
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleRouteChange = useCallback(
@@ -34,7 +32,7 @@ function Layout({ children }) {
   }, [router.events, handleRouteChange]);
 
   useEffect(() => {
-    checkWebpSupport('lossy', (isSupported) => dispatch(setIsWebpSupported(isSupported)));
+    checkWebpSupport('lossy', (isSupported: boolean) => dispatch(setIsWebpSupported(isSupported)));
   }, [dispatch]);
 
   return (
@@ -46,10 +44,6 @@ function Layout({ children }) {
     </>
   );
 }
-
-Layout.propTypes = checkProps({
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
-});
 
 Layout.defaultProps = {};
 

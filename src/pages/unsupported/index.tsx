@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import classnames from 'classnames';
 
 import styles from './index.module.scss';
@@ -22,8 +22,6 @@ export async function getStaticProps() {
     }
   };
 }
-
-Unsupported.propTypes = {};
 
 Unsupported.defaultProps = {};
 

@@ -1,14 +1,16 @@
-import React, { memo, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { memo, useRef } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 
 import styles from './index.module.scss';
 
 import Head from '../../components/Head/Head';
 
-function About({ className }) {
-  const containerRef = useRef();
+type Props = {
+  className: string;
+};
+
+function About({ className }: Props) {
+  const containerRef = useRef<HTMLElement>(null);
 
   return (
     <main className={classnames(styles.About, className)} ref={containerRef}>
@@ -17,10 +19,6 @@ function About({ className }) {
     </main>
   );
 }
-
-About.propTypes = checkProps({
-  className: PropTypes.string
-});
 
 About.defaultProps = {};
 

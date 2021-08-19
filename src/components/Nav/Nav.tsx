@@ -1,6 +1,4 @@
-import React from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 import Link from 'next/link';
 
 import styles from './Nav.module.scss';
@@ -23,13 +21,13 @@ function Nav() {
     <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper}>
         <ul className={styles.routes}>
-          <a tabIndex="0" aria-label="Skip to content" className={styles.skipToContent} href="#start-of-content">
+          <a tabIndex={0} aria-label="Skip to content" className={styles.skipToContent} href="#start-of-content">
             Skip to content
           </a>
           {Object.values(routes).map(({ path, title }) => (
             <li key={path}>
               <Link href={path}>
-                <a aria-label="Home">{path === '/' ? <SvgThreeLogo className={styles.threeLogo} /> : <>{title}</>}</a>
+                <a aria-label="Home">{path === '/' ? <SvgThreeLogo className={styles.threeLogo} /> : title}</a>
               </Link>
             </li>
           ))}
@@ -49,8 +47,6 @@ function Nav() {
     </nav>
   );
 }
-
-Nav.propTypes = checkProps({});
 
 Nav.defaultProps = {};
 

@@ -1,8 +1,10 @@
+import noop from 'no-op';
+
 const isBrowser = typeof window !== 'undefined';
 
 const detect = {
-  device: { isDesktop: true },
-  browser: {},
+  device: { isDesktop: true, isMobile: false, isPhone: false, getType: noop },
+  browser: { getName: noop },
   os: {},
   bots: {}
 };
@@ -26,7 +28,7 @@ const testImages = {
     'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
 };
 
-export function checkWebpSupport(feature, callback) {
+export function checkWebpSupport(feature: keyof typeof testImages, callback: (isSupported: boolean) => any): void {
   var img = new Image();
   img.onload = function () {
     var result = img.width > 0 && img.height > 0;

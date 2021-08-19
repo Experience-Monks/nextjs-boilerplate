@@ -1,14 +1,16 @@
-import React, { useRef, memo } from 'react';
-import PropTypes from 'prop-types';
+import { useRef, memo } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 
 import styles from './index.module.scss';
 
 import Head from '../components/Head/Head';
 
-function Landing({ className }) {
-  const containerRef = useRef();
+type Props = {
+  className: string;
+};
+
+function Landing({ className }: Props) {
+  const containerRef = useRef<HTMLElement>(null);
 
   return (
     <main className={classnames(styles.Landing, className)} ref={containerRef}>
@@ -41,10 +43,6 @@ function Landing({ className }) {
     </main>
   );
 }
-
-Landing.propTypes = checkProps({
-  className: PropTypes.string
-});
 
 Landing.defaultProps = {};
 

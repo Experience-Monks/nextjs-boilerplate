@@ -1,10 +1,18 @@
-import React, { memo, forwardRef, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { memo, forwardRef, useMemo, ForwardedRef } from 'react';
 import classnames from 'classnames';
-import { useSelector } from 'react-redux';
 
 import styles from './Image.module.scss';
 import sassVars from '../../styles/export-vars.module.scss';
+
+import { Breakpoints } from '../../utils/layout';
+import { useAppSelector } from '../../redux';
+
+type Props = {
+  className?: string;
+  imageObj: { file: string; alt: string };
+  loadingType?: 'lazy' | 'eager' | undefined;
+  sizes?: Partial<Breakpoints>;
+};
 
 const DEFAULT_SIZES = {
   desktopLg: '100vw',
@@ -14,9 +22,9 @@ const DEFAULT_SIZES = {
   mobile: '100vw'
 };
 
-const Image = forwardRef(({ className, imageObj, loadingType, sizes }, ref) => {
+const Image = forwardRef(({ className, imageObj, loadingType, sizes }: Props, ref: ForwardedRef<HTMLImageElement>) => {
   const { file, alt } = imageObj;
-  const isWebpSupported = useSelector((state) => state.isWebpSupported);
+  const isWebpSupported = useAppSelector((state) => state.isWebpSupported);
 
   const { src, srcSet } = useMemo(() => {
     const extension = file.split('.').pop();
@@ -57,24 +65,7 @@ const Image = forwardRef(({ className, imageObj, loadingType, sizes }, ref) => {
   );
 });
 
-Image.propTypes = {
-  className: PropTypes.string,
-  imageObj: PropTypes.shape({
-    file: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired
-  }).isRequired,
-  loadingType: PropTypes.oneOf(['auto', 'lazy', 'eager']),
-  sizes: PropTypes.shape({
-    desktopLg: PropTypes.string,
-    desktopMd: PropTypes.string,
-    desktopSm: PropTypes.string,
-    tablet: PropTypes.string,
-    mobile: PropTypes.string
-  }).isRequired
-};
-
 Image.defaultProps = {
-  isInverse: false,
   loadingType: 'lazy',
   sizes: {}
 };

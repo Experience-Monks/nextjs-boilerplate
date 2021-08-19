@@ -1,14 +1,16 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 import { useOrientation } from 'react-use';
 
 import styles from './RotateScreen.module.scss';
 
 import detect from '../../utils/detect';
 
-function RotateScreen({ className }) {
+export type Props = {
+  className?: string;
+};
+
+function RotateScreen({ className }: Props) {
   const orientation = useOrientation();
 
   return (
@@ -23,10 +25,6 @@ function RotateScreen({ className }) {
     </div>
   );
 }
-
-RotateScreen.propTypes = checkProps({
-  className: PropTypes.string
-});
 
 RotateScreen.defaultProps = {};
 

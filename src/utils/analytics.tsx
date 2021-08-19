@@ -1,5 +1,3 @@
-import React from 'react';
-
 if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
 
 /**
@@ -8,7 +6,7 @@ if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
  * @param {boolean} [action=false] - Action name
  * @param {any} [payload={}] - Action data
  */
-function gtmEvent(action = false, payload = {}) {
+function gtmEvent(action: boolean = false, payload: object = {}): void {
   if (typeof window !== 'undefined' && action) {
     window.dataLayer.push({
       event: action,
