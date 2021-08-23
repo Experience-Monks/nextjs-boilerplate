@@ -1,4 +1,4 @@
 import { storiesOf } from '@storybook/react';
 import Component from './Footer';
 
-storiesOf('Footer', module).add('Default', () => <Component />);
+storiesOf('Components/Footer', module).add('Default', () => <Component />);

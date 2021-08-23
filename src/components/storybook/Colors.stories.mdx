@@ -1,0 +1,12 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
+
+import sassVars from '../../styles/export-vars.module.scss';
+
+<Meta title="Colors" />
+
+# Colors
+
+<ColorPalette>
+  <ColorItem title="Core White" subtitle="$core-white" colors={[sassVars.white]} />
+  <ColorItem title="Core Black" subtitle="$core-black" colors={[sassVars.black]} />
+</ColorPalette>
