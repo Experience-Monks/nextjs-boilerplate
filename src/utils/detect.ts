@@ -28,7 +28,7 @@ const testImages = {
     'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
 };
 
-export function checkWebpSupport(feature: keyof typeof testImages, callback: (isSupported: boolean) => any): void {
+export function checkWebpSupport(feature: keyof typeof testImages, callback: (isSupported: boolean) => void): void {
   var img = new Image();
   img.onload = function () {
     var result = img.width > 0 && img.height > 0;

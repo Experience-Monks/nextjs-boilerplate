@@ -5,7 +5,7 @@ interface ScrollProps {
   x: number;
   y: number;
   duration: number;
-  ease: string | any;
+  ease: string;
 }
 
 const defaultProps: ScrollProps = {
