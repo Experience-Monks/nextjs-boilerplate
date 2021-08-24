@@ -1,3 +1,5 @@
 src/util/share.js
-scripts/templates/*
+scripts/templates/**/*.js
+scripts/templates/**/*.ts
+scripts/templates/**/*.tsx
 examples/with-redux-ssr/_app.js

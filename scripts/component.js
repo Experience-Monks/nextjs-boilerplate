@@ -52,14 +52,14 @@ function write() {
     const files =
       type === 'page'
         ? [
-            template(path.resolve(__dirname, 'templates/page/Page.js'), path.resolve(dir, `index.js`)),
+            template(path.resolve(__dirname, 'templates/page/Page.tsx'), path.resolve(dir, `index.tsx`)),
             template(path.resolve(__dirname, 'templates/page/Page.scss'), path.resolve(dir, `index.module.scss`))
           ]
         : [
-            template(path.resolve(__dirname, 'templates/' + type + '/Component.js'), path.resolve(dir, `${name}.js`)),
+            template(path.resolve(__dirname, 'templates/' + type + '/Component.tsx'), path.resolve(dir, `${name}.tsx`)),
             template(
-              path.resolve(__dirname, 'templates/' + type + '/Component.stories.js'),
-              path.resolve(dir, `${name}.stories.js`)
+              path.resolve(__dirname, 'templates/' + type + '/Component.stories.tsx'),
+              path.resolve(dir, `${name}.stories.tsx`)
             ),
             template(
               path.resolve(__dirname, 'templates/' + type + '/Component.scss'),

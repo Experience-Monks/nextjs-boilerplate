@@ -1,13 +1,11 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 
 import styles from './index.module.scss';
 
 import Head from '../../components/Head/Head';
 
-function {{name}}({ className }) {
+function {{name}}() {
   return (
     <main className={classnames(styles.{{name}}, className)}>
       <Head title="{{name}}" />
@@ -16,10 +14,6 @@ function {{name}}({ className }) {
     </main>
   );
 }
-
-{{name}}.propTypes = checkProps({
-  className: PropTypes.string
-});
 
 {{name}}.defaultProps = {};
 

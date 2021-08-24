@@ -1,17 +1,15 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 import classnames from 'classnames';
-import checkProps from '@jam3/react-check-extra-props';
 
 import styles from './{{name}}.module.scss';
 
-function {{name}}({ className }) {
+type Props = {
+  className?: string;
+};
+
+function {{name}}({ className }: Props) {
   return <div className={classnames(styles.{{name}}, className)}>{{name}} component</div>;
 }
-
-{{name}}.propTypes = checkProps({
-  className: PropTypes.string
-});
 
 {{name}}.defaultProps = {};
 
