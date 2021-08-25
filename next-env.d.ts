@@ -2,7 +2,7 @@
 /// <reference types="next/types/global" />
 
 interface Window {
-  dataLayer: Array<any>;
+  dataLayer: Array<object>;
 }
 
 type SetTimeout = ReturnType<typeof setTimeout>;
