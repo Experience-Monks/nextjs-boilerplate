@@ -133,11 +133,13 @@
         "dependencies/not-allowed-packages",
         "dependencies/min-vulnerabilities-allow"
       ],
-      "webhint": ["webhint/hints"],
-      "stage": [
+      "ci": [
+        "package-json-properties",
+        "root-files",
+        "dependencies/not-allowed-packages",
+        "dependencies/min-vulnerabilities-allow",
         "dependencies/outdated-packages",
         "dependencies/licenses-whitelist",
-        "dependencies/package-size",
         "dependencies/unused-packages"
       ]
     }
