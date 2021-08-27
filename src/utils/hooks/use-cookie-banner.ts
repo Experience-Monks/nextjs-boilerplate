@@ -17,7 +17,7 @@ const DEFAULT_COOKIE_CONSENT = {
   thirdParty: false
 };
 
-const explicitSetCookieValue = (value) => {
+const explicitSetCookieValue = (value: boolean) => {
   return JSON.stringify({
     // duration
     session: value,
@@ -34,23 +34,26 @@ const explicitSetCookieValue = (value) => {
 };
 
 const useCookieBanner = () => {
-  const validCookie = Boolean(Cookies.get(COOKIE_BANNER_NAME));
-  const initialConsent = validCookie ? JSON.parse(Cookies.get(COOKIE_BANNER_NAME)) : DEFAULT_COOKIE_CONSENT;
+  const validCookie = Cookies.get(COOKIE_BANNER_NAME);
+  //
+  const initialConsent = typeof validCookie === 'string' ? JSON.parse(validCookie) : DEFAULT_COOKIE_CONSENT;
   const [cookieConsent, setCookieConsent] = useState(initialConsent);
 
-  const updateCookies = (cookieSettings) => {
+  const updateCookies = (cookieSettings: typeof DEFAULT_COOKIE_CONSENT) => {
     Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(cookieSettings));
-    setCookieConsent(JSON.parse(Cookies.get(COOKIE_BANNER_NAME)));
+    setCookieConsent(cookieSettings);
   };
 
   const acceptAllCookies = () => {
-    Cookies.set(COOKIE_BANNER_NAME, explicitSetCookieValue(true), COOKIE_BANNER_OPTIONS);
-    setCookieConsent(JSON.parse(Cookies.get(COOKIE_BANNER_NAME)));
+    const newCookieValue = explicitSetCookieValue(true);
+    Cookies.set(COOKIE_BANNER_NAME, newCookieValue, COOKIE_BANNER_OPTIONS);
+    setCookieConsent(newCookieValue);
   };
 
   const rejectAllCookies = () => {
-    Cookies.set(COOKIE_BANNER_NAME, explicitSetCookieValue(false), COOKIE_BANNER_OPTIONS);
-    setCookieConsent(JSON.parse(Cookies.get(COOKIE_BANNER_NAME)));
+    const newCookieValue = explicitSetCookieValue(false);
+    Cookies.set(COOKIE_BANNER_NAME, newCookieValue, COOKIE_BANNER_OPTIONS);
+    setCookieConsent(newCookieValue);
   };
 
   return { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies };

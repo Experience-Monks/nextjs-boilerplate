@@ -1,12 +1,45 @@
-import React, { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState, PropsWithChildren } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import checkProps from '@jam3/react-check-extra-props';
 import noop from 'no-op';
 
 import styles from './CookieBanner.module.scss';
 
-function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, onReject }) {
+type CookieConsentProps = {
+  // duration
+  session: boolean;
+  persistent: boolean;
+  // purpose
+  necessary: boolean;
+  preference: boolean;
+  statistics: boolean;
+  marketing: boolean;
+  // provenance
+  firstParty: boolean;
+  thirdParty: boolean;
+};
+
+type Props = PropsWithChildren<{
+  className?: string;
+  defaultText?: string;
+  acceptCta?: string;
+  rejectCta?: string;
+  cookieConsent: CookieConsentProps;
+  onAccept(): void;
+  onUpdate(arg0: CookieConsentProps): void;
+  onReject(): void;
+}>;
+
+function CookieBanner({
+  className,
+  defaultText = 'We use cookies on this website to improve your experience.',
+  acceptCta = 'Accept all',
+  rejectCta = 'Reject all',
+  cookieConsent,
+  onUpdate = noop,
+  onAccept = noop,
+  onReject = noop,
+  children
+}: Props) {
   const [cookieSettings, setCookieSettings] = useState(cookieConsent);
   const [showCookieSetting, setShowCookieSettings] = useState(false);
 
@@ -36,11 +69,11 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
 
   return (
     <div className={classnames(styles.CookieBanner, className)}>
-      <p className={styles.description}>{children || 'We use cookies on this website to improve your experience.'}</p>
+      <p className={styles.description}>{children || defaultText}</p>
 
       <div className={styles.buttonContainer}>
-        <button onClick={handleAcceptAllCookies}>Accept all</button>
-        <button onClick={handleDeclineAllCookies}>Reject all</button>
+        <button onClick={handleAcceptAllCookies}>{acceptCta}</button>
+        <button onClick={handleDeclineAllCookies}>{rejectCta}</button>
         <button onClick={handleCookieSettingsClick}>Cookie settings</button>
       </div>
 
@@ -59,7 +92,7 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
             <ul>
               <li>
                 <input type="checkbox" id="cookie-necessary" checked={cookieSettings.necessary} readOnly />
-                <label>necessary</label>
+                <label htmlFor="cookie-necessary">necessary</label>
               </li>
               <li>
                 <input
@@ -68,7 +101,7 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
                   checked={cookieSettings.preference}
                   onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
                 />
-                <label>preference</label>
+                <label htmlFor="cookie-preference">preference</label>
               </li>
               <li>
                 <input
@@ -77,7 +110,7 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
                   checked={cookieSettings.statistics}
                   onChange={(e) => handleCookieUpdate('statistics', e.target.checked)}
                 />
-                <label>statistics</label>
+                <label htmlFor="cookie-statistics">statistics</label>
               </li>
               <li>
                 <input
@@ -86,7 +119,7 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
                   checked={cookieSettings.marketing}
                   onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
                 />
-                <label>marketing</label>
+                <label htmlFor="cookie-marketing">marketing</label>
               </li>
             </ul>
           </div>
@@ -95,37 +128,5 @@ function CookieBanner({ className, children, cookieConsent, onUpdate, onAccept, 
     </div>
   );
 }
-
-CookieBanner.propTypes = checkProps({
-  className: PropTypes.string,
-  defaultText: PropTypes.string,
-  acceptCta: PropTypes.string,
-  rejectCta: PropTypes.string,
-  cookieConsent: PropTypes.shape({
-    // duration
-    session: PropTypes.bool,
-    persistent: PropTypes.bool,
-    // purpose
-    necessary: PropTypes.bool,
-    preference: PropTypes.bool,
-    statistics: PropTypes.bool,
-    marketing: PropTypes.bool,
-    // provenance
-    firstParty: PropTypes.bool,
-    thirdParty: PropTypes.bool
-  }),
-  onAccept: PropTypes.func,
-  onUpdate: PropTypes.func,
-  onReject: PropTypes.func
-});
-
-CookieBanner.defaultProps = {
-  defaultText: 'We use cookies on this website to improve your experience.',
-  acceptCta: 'Accept cookies',
-  rejectCta: 'No thanks',
-  onAccept: noop,
-  onUpdate: noop,
-  onReject: noop
-};
 
 export default memo(CookieBanner);

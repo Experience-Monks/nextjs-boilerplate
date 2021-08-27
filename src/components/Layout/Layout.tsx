@@ -1,15 +1,14 @@
 import { memo, useEffect, useCallback, PropsWithChildren } from 'react';
 import dynamic from 'next/dynamic';
-import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
+import Analytics from '@/utils/analytics';
 
 import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
 import { checkWebpSupport } from '@/utils/basic-functions';
-import { GtmScript } from '@/utils/analytics';
 import useCookieBanner from '@/utils/hooks/use-cookie-banner';
 
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
@@ -43,7 +42,7 @@ function Layout({ children }: Props) {
 
   return (
     <>
-      <NextHead>{cookieConsent?.statistics && GtmScript()}</NextHead>
+      <Analytics consent={cookieConsent?.statistics} />
 
       <Nav />
       {children}
