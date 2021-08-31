@@ -15,6 +15,6 @@
     "allowUnreachableCode": false,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "next-env-jam3.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "scripts/templates"]
 }
