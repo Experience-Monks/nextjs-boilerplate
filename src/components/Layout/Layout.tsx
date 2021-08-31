@@ -32,7 +32,7 @@ function Layout({ children }: Props) {
   }, [router.events, handleRouteChange]);
 
   useEffect(() => {
-    checkWebpSupport('lossy', (isSupported: boolean) => dispatch(setIsWebpSupported(isSupported)));
+    checkWebpSupport('lossy', (isSupported) => dispatch(setIsWebpSupported(isSupported)));
   }, [dispatch]);
 
   return (

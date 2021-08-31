@@ -48,13 +48,10 @@ const nextJSConfig = {
   webpack: function (config, options) {
     if (options.dev) {
       config.module.rules.push({
-        test: /.\/src\/.*\/.*.js$/,
+        test: /\.(js|ts)x?$/,
         enforce: 'pre',
-        use: [
-          {
-            loader: 'eslint-loader'
-          }
-        ]
+        include: path.resolve('./src'),
+        loader: 'eslint-loader'
       });
     }
 

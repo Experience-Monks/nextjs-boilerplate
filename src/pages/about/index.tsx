@@ -20,6 +20,4 @@ function About({ className }: Props) {
   );
 }
 
-About.defaultProps = {};
-
 export default memo(About);

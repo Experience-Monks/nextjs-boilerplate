@@ -20,6 +20,4 @@ function NotFound({ className }: Props) {
   );
 }
 
-NotFound.defaultProps = {};
-
 export default memo(NotFound);

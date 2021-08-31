@@ -44,6 +44,4 @@ function Landing({ className }: Props) {
   );
 }
 
-Landing.defaultProps = {};
-
 export default memo(Landing);

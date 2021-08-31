@@ -1,3 +1,5 @@
+import Script from 'next/script';
+
 if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
 
 /**
@@ -6,7 +8,7 @@ if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
  * @param {boolean} [action=false] - Action name
  * @param {any} [payload={}] - Action data
  */
-function gtmEvent(action: boolean = false, payload: object = {}): void {
+function gtmEvent(action = false, payload = {}): void {
   if (typeof window !== 'undefined' && action) {
     window.dataLayer.push({
       event: action,
@@ -20,7 +22,8 @@ function gtmEvent(action: boolean = false, payload: object = {}): void {
  */
 export const GtmScript = () => {
   return (
-    <script
+    <Script
+      id="gtm-container"
       /* <!-- Google Tag Manager --> */
       // eslint-disable-next-line
       dangerouslySetInnerHTML={{

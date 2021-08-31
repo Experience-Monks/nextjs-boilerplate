@@ -16,8 +16,7 @@ if (isBrowser) {
   detect.bots = require('@jam3/detect').bots;
 }
 
-export const isTouchDevice =
-  isBrowser && ('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
+export const isTouchDevice = isBrowser && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
 const testImages = {
   lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',

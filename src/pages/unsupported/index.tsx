@@ -23,6 +23,4 @@ export async function getStaticProps() {
   };
 }
 
-Unsupported.defaultProps = {};
-
 export default memo(Unsupported);
