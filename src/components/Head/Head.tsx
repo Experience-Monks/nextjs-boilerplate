@@ -7,13 +7,17 @@ import { GtmScript } from '../../utils/analytics';
 
 type Props = {
   title?: string;
-  description: string;
-  keywords: Array<string>;
+  description?: string;
+  keywords?: Array<string>;
 };
 
 const TITLE_SEPARATOR = '|';
 
-function Head({ title, description, keywords }: Props) {
+function Head({
+  title,
+  description = 'Default Description',
+  keywords = ['Jam3', 'Web App', 'React', 'NextJS']
+}: Props) {
   const router = useRouter();
 
   const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
@@ -58,10 +62,5 @@ function Head({ title, description, keywords }: Props) {
     </NextHead>
   );
 }
-
-Head.defaultProps = {
-  description: 'Default Description',
-  keywords: ['Jam3', 'Web App', 'React', 'NextJS']
-};
 
 export default memo(Head);

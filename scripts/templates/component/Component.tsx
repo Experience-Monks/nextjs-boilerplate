@@ -11,6 +11,4 @@ function {{name}}({ className }: Props) {
   return <div className={classnames(styles.{{name}}, className)}>{{name}} component</div>;
 }
 
-{{name}}.defaultProps = {};
-
 export default memo({{name}});

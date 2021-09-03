@@ -26,6 +26,4 @@ function RotateScreen({ className }: Props) {
   );
 }
 
-RotateScreen.defaultProps = {};
-
 export default memo(RotateScreen);

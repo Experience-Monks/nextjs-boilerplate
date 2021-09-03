@@ -15,6 +15,4 @@ function {{name}}() {
   );
 }
 
-{{name}}.defaultProps = {};
-
 export default memo({{name}});

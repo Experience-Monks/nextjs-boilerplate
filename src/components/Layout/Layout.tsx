@@ -45,6 +45,4 @@ function Layout({ children }: Props) {
   );
 }
 
-Layout.defaultProps = {};
-
 export default memo(Layout);

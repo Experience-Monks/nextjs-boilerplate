@@ -48,6 +48,4 @@ function Nav() {
   );
 }
 
-Nav.defaultProps = {};
-
 export default Nav;
