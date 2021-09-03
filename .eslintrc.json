@@ -1,5 +1,12 @@
 {
-  "extends": ["react-app", "react-jam3", "plugin:@next/next/recommended", "plugin:import/typescript"],
+  "extends": [
+    "react-app",
+    "react-jam3",
+    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
+    "plugin:import/typescript",
+    "prettier"
+  ],
   "plugins": ["jam3"],
   "parser": "@typescript-eslint/parser",
   "settings": {

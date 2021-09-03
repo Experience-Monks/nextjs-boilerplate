@@ -1,5 +1,3 @@
-import Script from 'next/script';
-
 if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
 
 /**
@@ -22,7 +20,10 @@ function gtmEvent(action = false, payload = {}): void {
  */
 export const GtmScript = () => {
   return (
-    <Script
+    // TODO: next/head is not currently not accepting next/script component.
+    //       when it is fixed, use next/script
+    // eslint-disable-next-line
+    <script
       id="gtm-container"
       /* <!-- Google Tag Manager --> */
       // eslint-disable-next-line

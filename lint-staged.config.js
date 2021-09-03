@@ -10,6 +10,7 @@ module.exports = {
       `git add ${escapedFileNames}`
     ];
   },
+  '**/*.ts?(x)': () => 'tsc -p tsconfig.json --noEmit',
   '**/*.{json,md,mdx,css,html,yml,yaml,scss}': (filenames) => {
     const escapedFileNames = filenames.map((filename) => `"${isWin ? filename : escape([filename])}"`).join(' ');
     return [

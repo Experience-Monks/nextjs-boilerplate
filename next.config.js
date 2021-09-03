@@ -46,15 +46,6 @@ const nextJSConfig = {
     includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
-    if (options.dev) {
-      config.module.rules.push({
-        test: /\.(js|ts)x?$/,
-        enforce: 'pre',
-        include: path.resolve('./src'),
-        loader: 'eslint-loader'
-      });
-    }
-
     return config;
   }
 };
