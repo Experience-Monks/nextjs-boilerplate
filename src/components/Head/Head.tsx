@@ -8,7 +8,7 @@ import { GtmScript } from '../../utils/analytics';
 type Props = {
   title?: string;
   description?: string;
-  keywords?: Array<string>;
+  keywords?: string[];
 };
 
 const TITLE_SEPARATOR = '|';
