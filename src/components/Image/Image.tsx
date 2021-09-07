@@ -10,7 +10,7 @@ import { useAppSelector } from '../../redux';
 type Props = {
   className?: string;
   imageObj: { file: string; alt: string };
-  loadingType?: 'lazy' | 'eager' | undefined;
+  loadingType?: 'lazy' | 'eager';
   sizes?: Partial<Breakpoints>;
 };
 

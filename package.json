@@ -26,11 +26,10 @@
     "\n ######################  Automation Tools  ######################": "",
     "lint": "next lint",
     "lint-staged": "lint-staged",
-    "linters": "npm-run-all -p lint js-lint sass-lint adviser-dev ls-lint tsc",
-    "linters-ci": "npm-run-all -p lint js-lint sass-lint adviser-ci ls-lint tsc",
+    "linters": "npm-run-all -p lint sass-lint adviser-dev ls-lint tsc",
+    "linters-ci": "npm-run-all -p lint sass-lint adviser-ci ls-lint tsc",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags ci --verbose --quiet",
-    "js-lint": "eslint src --ext .js,.ts,.tsx -c ./.eslintrc.json --ignore-pattern .gitignore",
     "sass-lint": "stylelint \"./src/**/*.scss\"",
     "ls-lint": "node_modules/.bin/ls-lint",
     "tsc": "tsc"
