@@ -3,7 +3,7 @@ const path = require('path');
 const robotstxt = require('generate-robotstxt');
 const chalk = require('chalk');
 
-if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && process.env.NEXT_PUBLIC_WEBSITE_SITE_URL) {
+if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && process.env.WEBSITE_SITE_URL) {
   console.log(chalk.cyan('\n###################### robots.txt ######################\n'));
 
   robotstxt({
@@ -14,8 +14,8 @@ if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && process.env.NEXT_PUB
         disallow: ['/_next', '404', 'unsupported']
       }
     ],
-    sitemap: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/sitemap.xml`,
-    host: `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}`
+    sitemap: `${process.env.WEBSITE_SITE_URL}/sitemap.xml`,
+    host: `${process.env.WEBSITE_SITE_URL}`
   })
     .then((content) => {
       fs.writeFileSync(path.resolve(__dirname, '../out/robots.txt'), content);
