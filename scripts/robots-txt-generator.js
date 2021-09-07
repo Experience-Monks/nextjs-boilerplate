@@ -11,7 +11,7 @@ if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && process.env.WEBSITE_
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/_next', '404', 'unsupported']
+        disallow: ['/_next', '/404', '/unsupported']
       }
     ],
     sitemap: `${process.env.WEBSITE_SITE_URL}/sitemap.xml`,
