@@ -1,6 +1,14 @@
 {
-  "extends": ["react-app", "react-jam3", "plugin:@next/next/recommended"],
+  "extends": [
+    "react-app",
+    "react-jam3",
+    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
+    "plugin:import/typescript",
+    "prettier"
+  ],
   "plugins": ["jam3"],
+  "parser": "@typescript-eslint/parser",
   "settings": {
     "react": {
       "version": "detect"
@@ -60,7 +68,8 @@
         }
       }
     ],
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "@typescript-eslint/no-explicit-any": ["error"]
   },
   "overrides": [
     {

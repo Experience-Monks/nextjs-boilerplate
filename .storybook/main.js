@@ -4,12 +4,15 @@ module.exports = {
   core: {
     builder: 'webpack5'
   },
-  stories: ['../src/**/*.stories.@(js)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
+    'storybook-jira-addon',
+    '@storybook/addon-essentials',
     '@storybook/addon-actions',
+    '@storybook/addon-controls',
     '@storybook/addon-links',
     '@storybook/addon-a11y',
-    '@storybook/addon-knobs',
+    'storybook-addon-next-router',
     {
       name: '@storybook/addon-postcss',
       options: {
