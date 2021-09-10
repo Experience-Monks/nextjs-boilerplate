@@ -6,7 +6,7 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
 import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '../../redux';
-import { checkWebpSupport } from '../../utils/detect';
+import { checkWebpSupport } from '../../utils/basic-functions';
 
 const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
 

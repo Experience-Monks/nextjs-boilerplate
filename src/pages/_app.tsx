@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
+import { device, browser } from '@jam3/detect';
+import classnames from 'classnames';
 import 'normalize.css';
 
 import '../styles/global.scss';
@@ -8,7 +10,6 @@ import '../styles/global.scss';
 import Layout from '../components/Layout/Layout';
 
 import { store } from '../redux';
-import detect, { isTouchDevice } from '../utils/detect';
 import '../utils/why-did-you-render';
 
 const isBrowser = typeof window !== 'undefined';
@@ -28,11 +29,9 @@ function App({ Component, pageProps }: AppProps) {
         require('@jam3/stats')();
       }
 
-      const { device, browser } = detect;
-      const classes = [isTouchDevice ? 'touch-device' : '', device.getType(), browser.getName()].filter((className) =>
-        Boolean(className)
-      );
-      document.body.className = [...document.body.className.split(' '), ...classes].filter(Boolean).join(' ');
+      document.body.className = `${document.body.className} ${classnames(device.type, browser.name, {
+        'touch-device': device.touch
+      })}`.trim();
     }
   }, []);
 
