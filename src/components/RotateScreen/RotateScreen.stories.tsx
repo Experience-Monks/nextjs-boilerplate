@@ -1,8 +1,7 @@
 import { storiesOf } from '@storybook/react';
+import { device } from '@jam3/detect';
 import Component from './RotateScreen';
 
-import detect from '../../utils/detect';
-
 storiesOf('Components/RotateScreen', module).add('Default', () =>
-  detect.device.isPhone ? <Component /> : <p>Please enable mobile device simulator</p>
+  device.phone ? <Component /> : <p>Please enable mobile device simulator</p>
 );
