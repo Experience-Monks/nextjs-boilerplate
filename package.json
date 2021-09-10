@@ -51,7 +51,7 @@
     "extends": "react-app"
   },
   "dependencies": {
-    "@jam3/detect": "2.0.3",
+    "@jam3/detect": "2.0.5",
     "@jam3/react-check-extra-props": "1.0.1",
     "@jam3/react-hooks": "1.0.0",
     "@jam3/stats": "1.0.1",
