@@ -4,7 +4,51 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: px(10);
-  background-color: #e0e0e0;
-  cursor: pointer;
+  width: px(180);
+  display: flex;
+  flex-direction: column;
+  font: 11px 'Lucida Grande', sans-serif;
+  color: $white;
+  background-color: $black;
+  z-index: 10000000;
+
+  button {
+    width: 100%;
+    height: px(20);
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+
+    line-height: normal;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+  }
+
+  section.adminSection {
+    text-align: left;
+    padding: 0 px(10);
+    border-top: 1px solid #303030;
+
+    &.closed {
+      .adminSectionTitle {
+        span {
+        }
+      }
+    }
+
+    .adminSectionTitle {
+      font-size: inherit;
+      padding: px(7) 0;
+    }
+
+    ul li {
+      padding: px(7) 0 px(7) px(10);
+    }
+  }
 }

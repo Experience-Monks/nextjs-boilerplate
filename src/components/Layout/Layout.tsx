@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
-import AppAdmin from '@/components/AppAdmin/AppAdmin';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Analytics from '@/utils/analytics';
 
@@ -12,6 +11,7 @@ import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
 import { checkWebpSupport } from '@/utils/basic-functions';
 import useCookieBanner from '@/utils/hooks/use-cookie-banner';
 
+const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 
 export type Props = PropsWithChildren<{}>;
