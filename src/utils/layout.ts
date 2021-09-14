@@ -6,7 +6,6 @@ export interface Breakpoints {
   readonly desktopSm: boolean;
   readonly desktopMd: boolean;
   readonly desktopLg: boolean;
-  [key: string]: boolean | Breakpoints;
 }
 
 export interface BreakpointLayout extends Breakpoints {

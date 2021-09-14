@@ -18,7 +18,8 @@ function useLayout(): { layout: Breakpoints } {
   const [currentLayout, setCurrentLayout] = useState<Breakpoints>(layout.all);
 
   const handleResize = useCallback(() => {
-    if (Object.keys(layout.all).filter((key) => currentLayout[key] !== layout[key]).length) {
+    const breakpoints = Object.keys(layout.all) as (keyof Breakpoints)[];
+    if (breakpoints.filter((key) => currentLayout[key] !== layout[key]).length) {
       setCurrentLayout(layout.all);
     }
   }, [currentLayout, setCurrentLayout]);
