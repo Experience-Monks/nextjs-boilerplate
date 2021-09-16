@@ -4,6 +4,9 @@ module.exports = {
   core: {
     builder: 'webpack5'
   },
+  typescript: {
+    reactDocgen: false
+  },
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
     'storybook-jira-addon',
