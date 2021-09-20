@@ -2,8 +2,8 @@ import { memo } from 'react';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
-import { siteName, siteSlogan } from '../../data/settings';
-import { GtmScript } from '../../utils/analytics';
+import { siteName, siteSlogan } from '@/data/settings';
+import { GtmScript } from '@/utils/analytics';
 
 type Props = {
   title?: string;
