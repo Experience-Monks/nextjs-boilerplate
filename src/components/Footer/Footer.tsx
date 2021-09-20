@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import styles from './Footer.module.scss';
 
-import routes from '../../data/routes';
+import routes from '@/data/routes';
 
 function Footer() {
   return (

@@ -1,4 +1,4 @@
-import styles from '../styles/export-vars.module.scss';
+import styles from '@/styles/export-vars.module.scss';
 
 export interface Breakpoints {
   readonly mobile: boolean;

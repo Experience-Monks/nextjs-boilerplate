@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import styles from './index.module.scss';
 
-import Head from '../../components/Head/Head';
+import Head from '@/components/Head/Head';
 
 function Unsupported() {
   return (

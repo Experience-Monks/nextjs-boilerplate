@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import styles from './index.module.scss';
 
-import Head from '../../components/Head/Head';
+import Head from '@/components/Head/Head';
 
 function {{name}}() {
   return (

@@ -2,13 +2,13 @@ import { memo, useEffect, useCallback, PropsWithChildren } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+import Nav from '@/components/Nav/Nav';
+import Footer from '@/components/Footer/Footer';
 
-import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '../../redux';
-import { checkWebpSupport } from '../../utils/basic-functions';
+import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
+import { checkWebpSupport } from '@/utils/basic-functions';
 
-const RotateScreen = dynamic(() => import('../RotateScreen/RotateScreen'), { ssr: false });
+const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 
 export type Props = PropsWithChildren<{}>;
 
