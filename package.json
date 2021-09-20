@@ -90,6 +90,7 @@
     "@storybook/manager-webpack5": "^6.3.8",
     "@storybook/preset-scss": "1.0.3",
     "@storybook/react": "6.3.8",
+    "@svgr/webpack": "^5.5.0",
     "@types/node": "^16.9.2",
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
