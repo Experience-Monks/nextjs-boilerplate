@@ -57,7 +57,10 @@ function Layout({ children }: Props) {
           onReject={rejectAllCookies}
         />
       )}
-      <AppAdmin />
+
+      {(process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production') && (
+        <AppAdmin />
+      )}
     </>
   );
 }

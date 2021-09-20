@@ -46,8 +46,10 @@ function AppAdmin() {
             </h3>
             {buildOpen && (
               <ul>
-                <li>{process.env.NEXT_PUBLIC_COMMIT_COUNT}</li>
-                <li>{process.env.NEXT_PUBLIC_COMMIT_ID}</li>
+                <li>
+                  {process.env.NEXT_PUBLIC_PR_NUMBER}.{process.env.NEXT_PUBLIC_COMMIT_COUNT}
+                </li>
+                <li>{process.env.NEXT_PUBLIC_COMMIT_ID?.slice(0, 6)}</li>
                 <li>{process.env.NEXT_PUBLIC_BUILD_TIME}</li>
                 {process.env.NEXT_PUBLIC_PULL_REQUEST && (
                   <li>
