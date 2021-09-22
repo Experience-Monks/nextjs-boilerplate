@@ -1,7 +1,7 @@
 // Export a function. Accept the base config as the only param.
 const path = require('path');
 const svgsPath = path.resolve(__dirname, '../src/assets/svgs');
-const srcPath = path.resolve(__dirname, 'src');
+const srcPath = path.resolve(__dirname, '../src');
 
 module.exports = {
   webpackFinal: async (baseConfig, options) => {
@@ -19,6 +19,8 @@ module.exports = {
     fileLoader.exclude = [svgsPath];
 
     newConfig.resolve.modules.push(srcPath);
+
+    newConfig.resolve.alias['@'] = srcPath;
 
     newConfig.module.rules.push(
       {
