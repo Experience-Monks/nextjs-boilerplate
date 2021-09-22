@@ -11,7 +11,7 @@ type SrcSetSizes = {
   [breakpoint in keyof Breakpoints]: string;
 };
 
-type Props = {
+export type Props = {
   className?: string;
   imageObj: { file: string; alt: string };
   loadingType?: 'lazy' | 'eager';
