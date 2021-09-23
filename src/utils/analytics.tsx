@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo } from 'react';
 import NextHead from 'next/head';
 
 if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
@@ -46,22 +46,6 @@ const GtmScript = () => {
 };
 
 function Analytics({ consent }: Props) {
-  const noscriptRef = useRef<HTMLElement>();
-
-  useEffect(() => {
-    if (consent && !noscriptRef.current) {
-      noscriptRef.current = document.createElement('noscript');
-      noscriptRef.current.innerHTML = `<iframe
-        title="gtm-container"
-        src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden;"></iframe>`;
-
-      document.body.insertBefore(noscriptRef.current, document.body.querySelector('#__next'));
-    }
-  }, [consent]);
-
   return <NextHead>{consent && GtmScript()}</NextHead>;
 }
 

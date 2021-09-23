@@ -18,7 +18,7 @@ const DEFAULT_COOKIE_CONSENT = {
 };
 
 const explicitSetCookieValue = (value: boolean) => {
-  return JSON.stringify({
+  return {
     // duration
     session: value,
     persistent: value,
@@ -30,7 +30,7 @@ const explicitSetCookieValue = (value: boolean) => {
     // provenance
     firstParty: value,
     thirdParty: value
-  });
+  };
 };
 
 const useCookieBanner = () => {
@@ -46,13 +46,13 @@ const useCookieBanner = () => {
 
   const acceptAllCookies = () => {
     const newCookieValue = explicitSetCookieValue(true);
-    Cookies.set(COOKIE_BANNER_NAME, newCookieValue, COOKIE_BANNER_OPTIONS);
+    Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(newCookieValue), COOKIE_BANNER_OPTIONS);
     setCookieConsent(newCookieValue);
   };
 
   const rejectAllCookies = () => {
     const newCookieValue = explicitSetCookieValue(false);
-    Cookies.set(COOKIE_BANNER_NAME, newCookieValue, COOKIE_BANNER_OPTIONS);
+    Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(newCookieValue), COOKIE_BANNER_OPTIONS);
     setCookieConsent(newCookieValue);
   };
 
