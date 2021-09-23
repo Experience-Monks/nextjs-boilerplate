@@ -11,6 +11,7 @@ import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
 import { checkWebpSupport } from '@/utils/basic-functions';
 import useCookieBanner from '@/utils/hooks/use-cookie-banner';
 
+const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 
 export type Props = PropsWithChildren<{}>;
@@ -55,6 +56,10 @@ function Layout({ children }: Props) {
           onUpdate={updateCookies}
           onReject={rejectAllCookies}
         />
+      )}
+
+      {(process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production') && (
+        <AppAdmin />
       )}
     </>
   );
