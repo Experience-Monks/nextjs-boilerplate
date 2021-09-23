@@ -4,9 +4,12 @@ import { useRouter } from 'next/router';
 
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
+import CookieBanner from '@/components/CookieBanner/CookieBanner';
+import Analytics from '@/utils/analytics';
 
 import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
 import { checkWebpSupport } from '@/utils/basic-functions';
+import useCookieBanner from '@/utils/hooks/use-cookie-banner';
 
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 
@@ -15,6 +18,8 @@ export type Props = PropsWithChildren<{}>;
 function Layout({ children }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner();
 
   const handleRouteChange = useCallback(
     (url) => {
@@ -37,10 +42,20 @@ function Layout({ children }: Props) {
 
   return (
     <>
+      <Analytics consent={cookieConsent?.statistics} />
+
       <Nav />
       {children}
       <Footer />
       <RotateScreen />
+      {!validCookie && (
+        <CookieBanner
+          cookieConsent={cookieConsent}
+          onAccept={acceptAllCookies}
+          onUpdate={updateCookies}
+          onReject={rejectAllCookies}
+        />
+      )}
     </>
   );
 }

@@ -1,4 +1,11 @@
+import { memo } from 'react';
+import NextHead from 'next/head';
+
 if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
+
+type Props = {
+  consent: boolean;
+};
 
 /**
  * Dispatch an event with GTM
@@ -6,7 +13,7 @@ if (typeof window !== 'undefined') window.dataLayer = window.dataLayer || [];
  * @param {boolean} [action=false] - Action name
  * @param {any} [payload={}] - Action data
  */
-function gtmEvent(action = false, payload = {}): void {
+export function gtmEvent(action = false, payload = {}): void {
   if (typeof window !== 'undefined' && action) {
     window.dataLayer.push({
       event: action,
@@ -18,7 +25,7 @@ function gtmEvent(action = false, payload = {}): void {
 /**
  * GTM code snippet in head
  */
-export const GtmScript = () => {
+const GtmScript = () => {
   return (
     // TODO: next/head is not currently not accepting next/script component.
     //       when it is fixed, use next/script
@@ -34,28 +41,12 @@ export const GtmScript = () => {
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer', '${process.env.NEXT_PUBLIC_GTM_ID}');`
       }}
-      /* <!-- End Google Tag Manager --> */
     />
   );
 };
 
-/**
- * GTM code snippet in body
- */
-export const GtmNoScript = () => {
-  return (
-    <noscript>
-      {/* <!-- Google Tag Manager (noscript) --> */}
-      <iframe
-        title="gtm-container"
-        src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
-        height="0"
-        width="0"
-        style={{ display: 'none', visibility: 'hidden' }}
-      ></iframe>
-      {/* <!-- End Google Tag Manager (noscript) --> */}
-    </noscript>
-  );
-};
+function Analytics({ consent }: Props) {
+  return <NextHead>{consent && GtmScript()}</NextHead>;
+}
 
-export default { gtmEvent, GtmScript, GtmNoScript };
+export default memo(Analytics);
