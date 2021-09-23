@@ -4,6 +4,9 @@ module.exports = {
   core: {
     builder: 'webpack5'
   },
+  typescript: {
+    reactDocgen: false
+  },
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
     'storybook-jira-addon',
@@ -12,15 +15,7 @@ module.exports = {
     '@storybook/addon-controls',
     '@storybook/addon-links',
     '@storybook/addon-a11y',
-    'storybook-addon-next-router',
-    {
-      name: '@storybook/addon-postcss',
-      options: {
-        postcssLoaderOptions: {
-          implementation: require('postcss')
-        }
-      }
-    }
+    'storybook-addon-next-router'
   ],
   presets: [path.resolve(__dirname, './next-preset.js')]
 };

@@ -61,7 +61,38 @@ Update `S3_ORIGIN_BUCKET` and `DISTRIBUTION_ID` with your AWS information.
 
 ## Usage
 
-TBD: List commands in package.json
+#### 1. local Front End server
+
+```
+// http://localhost:3000
+npm run dev
+```
+
+#### 2. storybook
+
+```
+// http://localhost:9001
+npm run storybook
+```
+
+#### 3. template scripts
+
+```
+// create page(s)
+npm run page [page-name 1] [page-name 2] ...
+
+// create sub-page(s)
+npm run page [parent page-name]/[child page-name]
+
+// create api routes
+npm run api [api-name 1] [api-name 2]
+
+// create component(s)
+npm run component [component-name 1] [component-name 2] ...
+
+// create sub-component(s)
+npm run component [parent component-name]/[child component-name]
+```
 
 ## Release
 

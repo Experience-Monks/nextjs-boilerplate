@@ -1,6 +1,20 @@
-import { storiesOf } from '@storybook/react';
-import Component from './Image';
+import Image, { Props } from './Image';
 
-storiesOf('Components/Image', module).add('Default', () => (
-  <Component imageObj={{ file: 'threeLogo.jpeg', alt: '' }} />
-));
+export default { title: 'components/Image' };
+
+export const Default = (args: Props) => <Image {...args} />;
+
+Default.args = { imageObj: { file: 'threeLogo.jpeg', alt: '' }, loadingType: undefined };
+
+Default.argTypes = {
+  loadingType: {
+    options: ['lazy', 'eager'],
+    control: { type: 'select' }
+  }
+};
+
+Default.parameters = {
+  jira: {
+    id: 'SON-145'
+  }
+};

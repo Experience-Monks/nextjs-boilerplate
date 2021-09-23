@@ -2,19 +2,23 @@ import { memo, forwardRef, useMemo, ForwardedRef } from 'react';
 import classnames from 'classnames';
 
 import styles from './Image.module.scss';
-import sassVars from '../../styles/export-vars.module.scss';
+import sassVars from '@/styles/export-vars.module.scss';
 
-import { Breakpoints } from '../../utils/layout';
-import { useAppSelector } from '../../redux';
+import { Breakpoints } from '@/utils/layout';
+import { useAppSelector } from '@/redux';
 
-type Props = {
+type SrcSetSizes = {
+  [breakpoint in keyof Breakpoints]: string;
+};
+
+export type Props = {
   className?: string;
   imageObj: { file: string; alt: string };
   loadingType?: 'lazy' | 'eager';
-  sizes?: Partial<Breakpoints>;
+  sizes?: Partial<SrcSetSizes>;
 };
 
-const DEFAULT_SIZES = {
+const DEFAULT_SIZES: SrcSetSizes = {
   desktopLg: '100vw',
   desktopMd: '100vw',
   desktopSm: '100vw',

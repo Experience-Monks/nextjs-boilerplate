@@ -1,4 +1,4 @@
-import styles from '../styles/export-vars.module.scss';
+import styles from '@/styles/export-vars.module.scss';
 
 export interface Breakpoints {
   readonly mobile: boolean;
@@ -6,7 +6,6 @@ export interface Breakpoints {
   readonly desktopSm: boolean;
   readonly desktopMd: boolean;
   readonly desktopLg: boolean;
-  [key: string]: boolean | Breakpoints;
 }
 
 export interface BreakpointLayout extends Breakpoints {

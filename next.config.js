@@ -46,6 +46,15 @@ const nextJSConfig = {
     includePaths: [path.join(__dirname, 'src/styles')]
   },
   webpack: function (config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack'
+        }
+      ]
+    });
+
     return config;
   }
 };

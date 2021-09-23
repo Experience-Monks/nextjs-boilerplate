@@ -3,10 +3,11 @@ import Link from 'next/link';
 
 import styles from './Nav.module.scss';
 
-import Image from '../Image/Image';
-import SvgThreeLogo from '../../assets/svgs/svg-three-logo.svg';
+import Image from '@/components/Image/Image';
 
-import routes from '../../data/routes';
+import SvgThreeLogo from '@/assets/svgs/svg-three-logo.svg';
+
+import routes from '@/data/routes';
 
 const LINKS = [
   { href: 'https://jam3.com', label: 'Jam3', file: 'threeLogo.jpeg' },

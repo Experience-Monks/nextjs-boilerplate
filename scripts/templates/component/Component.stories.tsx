@@ -1,4 +1,9 @@
-import { storiesOf } from '@storybook/react';
-import Component from './{{name}}';
+import {{name}}, { Props } from './{{name}}';
 
-storiesOf('{{name}}', module).add('Default', () => <Component />);
+export default { title: 'components/{{name}}' };
+
+export const Default = (args: Props) => <{{name}} {...args} />;
+
+Default.args = {
+  // add control data
+};
