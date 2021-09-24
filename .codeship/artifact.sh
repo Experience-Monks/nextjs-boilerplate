@@ -5,6 +5,9 @@ set -e
 export COMMIT_ID=$(git rev-parse --short HEAD)
 export COMMIT_COUNT=$(git rev-list --no-merges --count HEAD)
 
+## Set Git LFS
+# bash ./.codeship/set-lfs.sh
+
 npm run build:static
 
 rm -rf /artifacts/build
