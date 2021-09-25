@@ -25,6 +25,8 @@
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Installation
 
 Clone the GitHub repository or Fork it, and start working righ away with it.
@@ -47,17 +49,33 @@ Files:
 - .env.codeship.stage.local
 - .env.codeship.prod.local
 
+Make sure updating `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+
 > Note: The environment variable files **can't** be commited. Based on the name convention they are ignored by GIT.
 
-#### 2. Generate encrypted env variables
+#### 2. Create a Codeship Pro project in Codeship
 
-Run `$ ./encrypt-env.sh`
+- Go to Codeship
+- Create a project and follow the general step to initiate it.
 
-#### 3. Update S3 and Cloudfront environment variables in codeship-services.yml
+#### 3. Downloading the project AES Key
+
+- Go to Project setting > General and download AES Key
+- Rename it to codeship.aes
+
+> Note: codeship.aes should never be committed to the repository.
+
+#### 4. Generate encrypted env variables
+
+Run `$ ./encrypt-env.sh`.
+
+> Note: you may face an issue if missing codeship.aes file locally.
+
+#### 5. Update S3 and Cloudfront environment variables in codeship-services.yml
 
 Update `S3_ORIGIN_BUCKET` and `DISTRIBUTION_ID` with your AWS information.
 
-#### 4. Create a Codeship Pro project in Codeship
+---
 
 ## Usage
 
@@ -94,6 +112,8 @@ npm run component [component-name 1] [component-name 2] ...
 npm run component [parent component-name]/[child component-name]
 ```
 
+---
+
 ## Release
 
 To releasing new versions we are using [standard-version](https://github.com/conventional-changelog/standard-version).
@@ -106,10 +126,14 @@ Steps:
 4. Run `$ npm run release`
 5. Run `$ git push --follow-tags origin master`
 
+---
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting
 pull requests.
+
+---
 
 ## License
 
