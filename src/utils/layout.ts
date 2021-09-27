@@ -24,7 +24,7 @@ function getLayout(): BreakpointLayout {
     };
   }
 
-  const TABLET_MEDIA_QUERY = `(min-width: ${styles.ayoutTablet})`;
+  const TABLET_MEDIA_QUERY = `(min-width: ${styles.layoutTablet})`;
   const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopSm})`;
   const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopMd})`;
   const DESKTOP_LG_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopLg})`;
