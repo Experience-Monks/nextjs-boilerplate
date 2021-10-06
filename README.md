@@ -22,6 +22,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Release](#release)
+- [Set up Git LFS](#setupgitlfs)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -125,6 +126,21 @@ Steps:
 3. Run `$ git checkout master; git pull origin master`
 4. Run `$ npm run release`
 5. Run `$ git push --follow-tags origin master`
+
+
+---
+
+## Set up Git LFS
+
+If you would like to track files with Git LFS follow the below steps. These steps assume docker is used to deploy, and might change based on your deployment infrastructure as it was tested in Jam3 infrastructures.
+
+1. Generate SSH key + save it in a encrypted env variable
+   You can use the [Codeship Pro guide](https://github.com/codeship-library/docker-utilities/tree/master/ssh-helper). The encrypted environment will be a different file name, like `.env.codeship.ssh.local`
+
+2. Upload public SSH key to GitHub
+
+3. Enable Git LFS ini the artifact.sh script, uncommenting the line `bash ./.codeship/set-lfs.sh`
+
 
 ---
 
