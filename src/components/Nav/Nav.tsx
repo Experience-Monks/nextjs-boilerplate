@@ -38,7 +38,7 @@ function Nav() {
           {LINKS.map(({ key, href, label, file }) => (
             <li key={key}>
               <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-                <Image imageObj={{ file: file, alt: label }} />
+                <Image src={file} alt={label} />
               </a>
             </li>
           ))}
