@@ -10,6 +10,6 @@ export type ExampleRoute = {
 };
 
 export interface ExampleRoutes {
-  readonly Landing: ExampleRoute;
+  readonly Home: ExampleRoute;
   readonly About: ExampleRoute;
 }
