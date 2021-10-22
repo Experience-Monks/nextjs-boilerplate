@@ -13,7 +13,8 @@ type SrcSetSizes = {
 
 export type Props = {
   className?: string;
-  imageObj: { file: string; alt: string };
+  src: string;
+  alt: string;
   loadingType?: 'lazy' | 'eager';
   sizes?: Partial<SrcSetSizes>;
 };
@@ -27,10 +28,9 @@ const DEFAULT_SIZES: SrcSetSizes = {
 };
 
 const Image = (
-  { className, imageObj, loadingType = 'lazy', sizes = {} }: Props,
+  { className, src: file, alt, loadingType = 'lazy', sizes = {} }: Props,
   ref: ForwardedRef<HTMLImageElement>
 ) => {
-  const { file, alt } = imageObj;
   const isWebpSupported = useAppSelector((state) => state.isWebpSupported);
 
   const { src, srcSet } = useMemo(() => {
