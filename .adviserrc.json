@@ -32,7 +32,7 @@
     "dependencies/min-vulnerabilities-allow": [
       "error",
       {
-        "level": "critical",
+        "level": "",
         "skip": ["1213", "813", "1573", "1643", "1644"]
       }
     ],
