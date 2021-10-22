@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:14
 LABEL maintainer_devops="michael.silva@jam3.com"
 LABEL maintainer_architect="iran.reyes@jam3.com"
 
