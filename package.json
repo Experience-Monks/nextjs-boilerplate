@@ -57,7 +57,7 @@
     "get-scroll": "2.0.1",
     "gsap": "3.7.1",
     "js-cookie": "^3.0.0",
-    "next": "^11.1.2",
+    "next": "^12.0.1",
     "no-op": "1.0.3",
     "normalize.css": "8.0.1",
     "react": "^17.0.2",

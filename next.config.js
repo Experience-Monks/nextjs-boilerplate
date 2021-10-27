@@ -33,6 +33,7 @@ const optimizedImagesConfig = {
 };
 
 const nextJSConfig = {
+  swcMinify: true,
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
   productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
