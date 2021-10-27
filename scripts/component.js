@@ -89,6 +89,20 @@ function write(dir, name) {
 }
 
 //
+function append(dir, name) {
+  const files = [];
+  if (argv.type === 'api') {
+    files.push(writeTemplate(name, path.resolve(__dirname, 'templates/api/api.ts'), path.resolve(dir, `${name}.tsx`)));
+  }
+
+  return Promise.all(files)
+    .then(() => {
+      console.log(`Appended new ${name} ${argv.type} at ${dir}`);
+    })
+    .catch((err) => console.error(err));
+}
+
+//
 argv._.forEach(async (t) => {
   const names = [];
 
@@ -116,7 +130,8 @@ argv._.forEach(async (t) => {
 
     try {
       await stat(dir);
-      console.log(chalk.red(`Path at ${path.relative(cwd, dir)} already exists!`));
+      // console.log(chalk.red(`Path at ${path.relative(cwd, dir)} already exists!`));
+      await append(dir, name);
     } catch (err) {
       await write(dir, name);
       // console.error(err);
