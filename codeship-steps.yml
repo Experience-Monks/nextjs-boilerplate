@@ -8,31 +8,31 @@
   type: serial
   tag: develop
   steps:
-  - service: frontend-dev
-    name: artifact
-    command: sh .codeship/artifact.sh
-  - name: deployment
-    service: awsdeployment-dev
-    command: sh ./usr/src/app/.codeship/deploy.sh
+    - service: frontend-dev
+      name: artifact
+      command: sh .codeship/artifact.sh
+    - name: deployment
+      service: awsdeployment-dev
+      command: sh ./usr/src/app/.codeship/deploy.sh
 
-- name: staging
+- name: stage
   type: serial
-  tag: staging
+  tag: '^(stage|staging)$'
   steps:
-  - name: build
-    service: frontend-stage
-    command: sh .codeship/artifact.sh
-  - name: deployment
-    service: awsdeployment-stage
-    command: sh ./usr/src/app/.codeship/deploy.sh
+    - name: build
+      service: frontend-stage
+      command: sh .codeship/artifact.sh
+    - name: deployment
+      service: awsdeployment-stage
+      command: sh ./usr/src/app/.codeship/deploy.sh
 
 - name: production
   type: serial
   tag: '^(master|main)$'
   steps:
-  - name: build
-    service: frontend-prod
-    command: sh .codeship/artifact.sh
-  - name: deployment
-    service: awsdeployment-prod
-    command: sh ./usr/src/app/.codeship/deploy.sh
+    - name: build
+      service: frontend-prod
+      command: sh .codeship/artifact.sh
+    - name: deployment
+      service: awsdeployment-prod
+      command: sh ./usr/src/app/.codeship/deploy.sh
