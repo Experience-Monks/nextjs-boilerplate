@@ -32,8 +32,8 @@
     "dependencies/min-vulnerabilities-allow": [
       "error",
       {
-        "level": "",
-        "skip": ["1213", "813", "1573", "1643", "1644"]
+        "level": "critical",
+        "skip": ["immer"]
       }
     ],
     "dependencies/outdated-packages": [

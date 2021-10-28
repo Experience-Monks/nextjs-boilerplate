@@ -48,9 +48,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "dependencies": {
     "@jam3/detect": "2.0.5",
     "@jam3/react-hooks": "1.0.0",
@@ -99,8 +96,8 @@
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "@welldone-software/why-did-you-render": "^6.2.1",
-    "adviser": "0.7.5",
-    "adviser-plugin-dependencies": "0.4.2",
+    "adviser": "0.7.6",
+    "adviser-plugin-dependencies": "0.5.1",
     "adviser-plugin-lighthouse": "1.0.1",
     "adviser-plugin-webhint": "1.0.1",
     "babel-eslint": "10.1.0",
