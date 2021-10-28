@@ -114,7 +114,7 @@
 ///   element {
 ///     @include position-100(absolute);
 ///   }
-@mixin position-100($pos: 'relative') {
+@mixin position-100($pos: relative) {
   position: $pos;
   @include position-0;
   @include box(100%);
