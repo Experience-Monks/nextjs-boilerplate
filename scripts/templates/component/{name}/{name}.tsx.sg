@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import styles from './{{name}}.module.scss';
 
-type Props = {
+export type Props = {
   className?: string;
 };
 

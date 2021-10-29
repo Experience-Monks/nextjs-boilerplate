@@ -96,24 +96,27 @@ npm run storybook
 
 #### 3. template scripts
 
-```
-// create page(s)
-npm run page [page-name 1] [page-name 2] ...
+We are using [seng-generator](https://github.com/mediamonks/seng-generator) to generate templates
 
-// create sub-page(s)
-npm run page [parent page-name]/[child page-name]
+```bash
+// cli
+npm run generate
+
+// create page(s)
+npm run generate page [page-name]
 
 // create api routes
-npm run api [api-name 1] [api-name 2]
+npm run generate api [api-name]
 
-// create component(s)
-npm run component [component-name 1] [component-name 2] ...
-
-// create sub-component(s)
-npm run component [parent component-name]/[child component-name]
+// create component
+npm run generate component [component-name]
 ```
 
----
+Default location can be edited here:
+
+- [page](scripts/templates/page/.senggenerator)
+- [component](scripts/templates/component/.senggenerator)
+- [api](scripts/templates/api/.senggenerator)
 
 ## Release
 
