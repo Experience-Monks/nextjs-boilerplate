@@ -130,7 +130,6 @@ Steps:
 4. Run `$ npm run release`
 5. Run `$ git push --follow-tags origin master`
 
-
 ---
 
 ## Set up Git LFS
@@ -143,7 +142,7 @@ If you would like to track files with Git LFS follow the below steps. These step
 2. Upload public SSH key to GitHub
 
 3. Enable Git LFS ini the artifact.sh script, uncommenting the line `bash ./.codeship/set-lfs.sh`
-
+4. Enable ssh config `encrypted_env_file: .env.codeship.ssh.encrypted` in `codeship-services.yml`
 
 ---
 
