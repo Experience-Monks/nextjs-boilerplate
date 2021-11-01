@@ -9,11 +9,11 @@ type Props = {
   className: string;
 };
 
-function Landing({ className }: Props) {
+function Home({ className }: Props) {
   const containerRef = useRef<HTMLElement>(null);
 
   return (
-    <main className={classnames(styles.Landing, className)} ref={containerRef}>
+    <main className={classnames(styles.Home, className)} ref={containerRef}>
       <Head />
       <section className={styles.hero}>
         <h1 className={styles.title}>Welcome to Jam3!</h1>
@@ -44,4 +44,4 @@ function Landing({ className }: Props) {
   );
 }
 
-export default memo(Landing);
+export default memo(Home);
