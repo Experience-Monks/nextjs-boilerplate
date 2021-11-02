@@ -30,7 +30,18 @@
 
 ## Installation
 
-Clone the GitHub repository or Fork it, and start working righ away with it.
+### Check your Node and NPM versions.
+
+Make sure you are using Node 12.x.x and NPM 7.x.x on your development environment. Using NVM is highly encouraged.
+
+```
+nvm use 12
+npm install --global npm@7
+```
+
+### Clone the GitHub repository
+
+Or Fork it, and start working righ away with it.
 
 ```
 git clone https://github.com/Jam3/nyg-nextjs.git
