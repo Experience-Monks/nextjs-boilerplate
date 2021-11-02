@@ -32,12 +32,14 @@
 
 ### Check your Node and NPM versions.
 
-Make sure you are using Node 12.x.x and NPM 7.x.x on your development environment. Using NVM is highly encouraged.
+Make sure you are using Node 14.x.x and NPM 7.x.x on your development environment. Using NVM is highly encouraged.
 
 ```
-nvm use 12
+nvm use 14
 npm install --global npm@7
 ```
+
+> TIP: If you use ZSH, you can configure automatic Node switching: https://kinduff.com/2016/09/14/automatic-version-switch-for-nvm/
 
 ### Clone the GitHub repository
 
