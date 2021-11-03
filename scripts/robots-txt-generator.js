@@ -3,7 +3,7 @@ const path = require('path');
 const robotstxt = require('generate-robotstxt');
 const chalk = require('chalk');
 
-if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' && process.env.WEBSITE_SITE_URL) {
+if (process.env.CI_ENV === 'production' && process.env.WEBSITE_SITE_URL) {
   console.log(chalk.cyan('\n###################### robots.txt ######################\n'));
 
   robotstxt({
