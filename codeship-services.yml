@@ -9,7 +9,7 @@ frontend-dev:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .env.codeship.ssh.encrypted
 
 awsdeployment-dev:
   image: codeship/aws-deployment
@@ -33,7 +33,7 @@ frontend-stage:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .env.codeship.ssh.encrypted
 
 awsdeployment-stage:
   image: codeship/aws-deployment
@@ -57,7 +57,7 @@ frontend-prod:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .env.codeship.ssh.encrypted
 
 awsdeployment-prod:
   image: codeship/aws-deployment
