@@ -49,7 +49,7 @@ function Head({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image" content={ogDefaultImage} />
-      <meta name="twitter:card" content="Default content" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta property="fb:app_id" content="FB_APP_ID" />
       <meta name="google-site-verification" content="[Google Web Master Tools]" />
       <meta name="msvalidate.01" content="[Bing Web Master Tools]" />
