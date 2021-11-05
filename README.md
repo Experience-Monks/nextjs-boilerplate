@@ -43,7 +43,7 @@ npm install --global npm@7
 
 ### Clone the GitHub repository
 
-Or Fork it, and start working righ away with it.
+Or Fork it, and start working right away with it.
 
 ```
 git clone https://github.com/Jam3/nyg-nextjs.git
