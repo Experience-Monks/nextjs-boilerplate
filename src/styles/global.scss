@@ -23,6 +23,7 @@ body {
   overflow-x: hidden;
   font-size: px(16);
   word-break: keep-all;
+  @include font-work-sans-regular;
 }
 
 #root {

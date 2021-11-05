@@ -35,16 +35,10 @@
     padding: 0 px(10);
     border-top: 1px solid #303030;
 
-    &.closed {
-      .adminSectionTitle {
-        span {
-        }
-      }
-    }
-
     .adminSectionTitle {
       font-size: inherit;
       padding: px(7) 0;
+      cursor: pointer;
     }
 
     ul li {

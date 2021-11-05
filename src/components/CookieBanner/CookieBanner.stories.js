@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import CookieBanner from './CookieBanner';
 
-storiesOf('CookieBanner', module)
+storiesOf('components/CookieBanner', module)
   .add('Default', () => <CookieBanner onAccept={() => console.log('accept')} onReject={() => console.log('reject')} />)
   .add('With children', () => (
     <CookieBanner onAccept={() => console.log('accept')} onReject={() => console.log('reject')}>

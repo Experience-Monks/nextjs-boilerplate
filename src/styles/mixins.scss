@@ -9,10 +9,10 @@
 /// @group Fonts
 /// @example scss Input
 ///   .landing-section {
-///     @include font-slate-regular();
+///     @include font-work-sans-regular();
 ///   }
-@mixin font-slate-regular() {
-  font-family: 'SlateStdRegular', #{$generic-fonts};
+@mixin font-work-sans-regular() {
+  font-family: WorkSansRegular, #{$generic-fonts};
 }
 
 // Use two pixel values to convert line-height into a unitless number

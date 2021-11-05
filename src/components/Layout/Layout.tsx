@@ -46,9 +46,13 @@ function Layout({ children }: Props) {
       <Analytics consent={cookieConsent?.statistics} />
 
       <Nav />
+
       {children}
+
       <Footer />
+
       <RotateScreen />
+
       {!validCookie && (
         <CookieBanner
           cookieConsent={cookieConsent}

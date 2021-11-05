@@ -55,7 +55,12 @@ function Head({
       <meta name="msvalidate.01" content="[Bing Web Master Tools]" />
       {/* Other recommends */}
       <link rel="canonical" href={ogUrl} />
-      {process.env.NEXT_PUBLIC_DNS_PREFETCH && <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />}
+      {process.env.NEXT_PUBLIC_DNS_PREFETCH && (
+        <>
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} crossOrigin="true" />
+          <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
+        </>
+      )}
     </NextHead>
   );
 }

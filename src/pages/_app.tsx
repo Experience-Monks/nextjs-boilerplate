@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import { device, browser } from '@jam3/detect';
 import classnames from 'classnames';
-import 'normalize.css';
 
+import 'normalize.css';
 import '@/styles/global.scss';
 
 import Layout from '@/components/Layout/Layout';
@@ -35,9 +35,11 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, []);
 
-  return isUnsupported ? (
-    <Component {...componentProps} />
-  ) : (
+  if (isUnsupported) {
+    return <Component {...componentProps} />;
+  }
+
+  return (
     <Provider store={store}>
       <Layout>
         <Component {...componentProps} />
