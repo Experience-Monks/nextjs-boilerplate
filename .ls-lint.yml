@@ -2,6 +2,14 @@ ls:
   .js: kebab-case | pointcase
   .config.js: kebab-case
   src:
+    assets:
+      .png: kebab-case
+      .jpg: kebab-case
+      .jpeg: kebab-case
+      .webp: kebab-case
+      .svg: kebab-case
+      .mp4: kebab-case
+      .webm: kebab-case
     components:
       .js: PascalCase
       .stories.js: PascalCase
