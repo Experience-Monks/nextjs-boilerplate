@@ -10,7 +10,7 @@ import SvgThreeLogo from '@/assets/svgs/svg-three-logo.svg';
 import routes from '@/data/routes';
 
 const LINKS = [
-  { href: 'https://jam3.com', label: 'Jam3', file: 'threeLogo.jpeg' },
+  { href: 'https://jam3.com', label: 'Jam3', file: 'three-logo.jpeg' },
   { href: 'https://github.com/jam3', label: 'GitHub', file: 'github-icon-64b.png' }
 ].map((link) => ({
   ...link,
