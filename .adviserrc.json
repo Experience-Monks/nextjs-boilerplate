@@ -17,7 +17,6 @@
           ".eslintrc.json",
           ".prettierrc",
           ".stylelintrc",
-          ".babelrc",
           "README.md"
         ],
         "blacklist": []
