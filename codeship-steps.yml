@@ -28,7 +28,7 @@
 
 - name: production
   type: serial
-  tag: '^(master|main)$'
+  tag: main
   steps:
     - name: build
       service: frontend-prod

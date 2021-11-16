@@ -34,9 +34,9 @@
 
 Make sure you are using Node 14.x.x and NPM 7.x.x on your development environment. Using NVM is highly encouraged.
 
-```
-nvm use 14
-npm install --global npm@7
+```properties
+$ nvm use 14
+$ npm install --global npm@7
 ```
 
 > TIP: If you use ZSH, you can configure automatic Node switching: https://kinduff.com/2016/09/14/automatic-version-switch-for-nvm/
@@ -45,8 +45,8 @@ npm install --global npm@7
 
 Or Fork it, and start working right away with it.
 
-```
-git clone https://github.com/Jam3/nyg-nextjs.git
+```properties
+$ git clone https://github.com/Jam3/nyg-nextjs.git
 ```
 
 ### Set up CI/CD
@@ -55,13 +55,14 @@ Deploying a static site is fairly simple, we are going to the set up for Codeshi
 
 #### 1. Create env variables with AWS Access Keys
 
-Create three environment variables based on `.env.codeship.[env].local.example`
+Create three environment variables based on `.codeship/.env.codeship.[env].local.example`
 
 Files:
 
-- .env.codeship.dev.local
-- .env.codeship.stage.local
-- .env.codeship.prod.local
+- `.codeship/.env.codeship.dev.local`
+- `.codeship/.env.codeship.stage.local`
+- `.codeship/.env.codeship.prod.local`
+- (optional) `.codeship/.env.codeship.ssh.local`
 
 Make sure updating `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
@@ -81,7 +82,18 @@ Make sure updating `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
 
 #### 4. Generate encrypted env variables
 
-Run `$ ./encrypt-env.sh`.
+Run commands below;
+
+```properties
+# go to .codeship directory/folder
+$ cd .codeship
+
+# encrypts files
+$ ./encrypt-env.sh
+
+# go back to the root
+$ cd ..
+```
 
 > Note: you may face an issue if missing codeship.aes file locally.
 
@@ -95,34 +107,34 @@ Update `S3_ORIGIN_BUCKET` and `DISTRIBUTION_ID` with your AWS information.
 
 #### 1. local Front End server
 
-```
-// http://localhost:3000
-npm run dev
+```properties
+# http://localhost:3000
+$ npm run dev
 ```
 
 #### 2. storybook
 
-```
-// http://localhost:9001
-npm run storybook
+```properties
+# http://localhost:9001
+$ npm run storybook
 ```
 
 #### 3. template scripts
 
 We are using [seng-generator](https://github.com/mediamonks/seng-generator) to generate templates
 
-```bash
-// cli
-npm run generate
+```properties
+# cli
+$ npm run generate
 
-// create page(s)
-npm run generate page [page-name]
+# create page(s)
+$ npm run generate page [page-name]
 
-// create api routes
-npm run generate api [api-name]
+# create api routes
+$ npm run generate api [api-name]
 
-// create component
-npm run generate component [component-name]
+# create component
+$ npm run generate component [component-name]
 ```
 
 Default location can be edited here:

@@ -9,11 +9,11 @@ frontend-dev:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  # encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .codeship/.env.codeship.ssh.encrypted
 
 awsdeployment-dev:
   image: codeship/aws-deployment
-  encrypted_env_file: .env.codeship.dev.encrypted
+  encrypted_env_file: .codeship/.env.codeship.dev.encrypted
   environment:
     - AWS_DEFAULT_REGION=us-east-1
     - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
@@ -33,11 +33,11 @@ frontend-stage:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  # encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .codeship/.env.codeship.ssh.encrypted
 
 awsdeployment-stage:
   image: codeship/aws-deployment
-  encrypted_env_file: .env.codeship.stage.encrypted
+  encrypted_env_file: .codeship/.env.codeship.stage.encrypted
   environment:
     - AWS_DEFAULT_REGION=us-east-1
     - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
@@ -57,11 +57,11 @@ frontend-prod:
   volumes:
     - ./tmp/artifacts:/artifacts
   cached: true
-  # encrypted_env_file: .env.codeship.ssh.encrypted
+  # encrypted_env_file: .codeship/.env.codeship.ssh.encrypted
 
 awsdeployment-prod:
   image: codeship/aws-deployment
-  encrypted_env_file: .env.codeship.prod.encrypted
+  encrypted_env_file: .codeship/.env.codeship.prod.encrypted
   environment:
     - AWS_DEFAULT_REGION=us-east-1
     - S3_ORIGIN_BUCKET=PLACEHOLDER_S3_BUCKET_NAME
