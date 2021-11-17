@@ -22,6 +22,7 @@
     "storybook": "start-storybook --no-manager-cache -p 9001 -c .storybook -s ./public",
     "generate": "sg wizard",
     "\n ######################  Automation Tools  ######################": "",
+    "prepare": "husky install",
     "lint": "next lint",
     "lint-staged": "lint-staged",
     "linters": "npm-run-all -p lint sass-lint adviser-dev ls-lint tsc",
@@ -31,13 +32,6 @@
     "sass-lint": "stylelint \"./src/**/*.scss\"",
     "ls-lint": "node_modules/.bin/ls-lint",
     "tsc": "tsc"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo \"Pre-commit checks...\" && lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "echo \"Pre-push checks...\" && npm run linters"
-    }
   },
   "browserslist": [
     ">0.2%",
@@ -66,8 +60,8 @@
     "xss": "1.0.10"
   },
   "devDependencies": {
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
+    "@commitlint/cli": "13.1.0",
+    "@commitlint/config-conventional": "13.1.0",
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.10.0",
     "@next/bundle-analyzer": "11.1.2",
@@ -109,7 +103,7 @@
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-react": "7.25.1",
     "eslint-plugin-react-hooks": "4.2.0",
-    "husky": "4.2.5",
+    "husky": "7.0.4",
     "imagemin-gifsicle": "7.0.0",
     "imagemin-mozjpeg": "9.0.0",
     "imagemin-optipng": "8.0.0",

@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 # Install dependencies
 COPY package-lock.json .
 COPY package.json .
+RUN npm set-script prepare ""
 RUN npm ci
 
 # Copy source files
