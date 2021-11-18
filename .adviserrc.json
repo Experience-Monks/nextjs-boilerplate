@@ -4,13 +4,14 @@
     "package-json-properties": [
       "error",
       {
-        "required": ["name", "private", "scripts", "engines", "dependencies", "husky", "browserslist"]
+        "required": ["name", "private", "scripts", "engines", "dependencies", "browserslist"]
       }
     ],
     "root-files": [
       "error",
       {
         "required": [
+          ".husky",
           ".gitignore",
           "commitlint.config.js",
           ".editorconfig",
