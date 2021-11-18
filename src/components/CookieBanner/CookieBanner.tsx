@@ -77,7 +77,7 @@ function CookieBanner({
   }, [onUpdate, cookieSettings]);
 
   const handleCookieUpdate = useCallback(
-    (key, value) => {
+    (key: string, value: boolean) => {
       setCookieSettings({ ...cookieSettings, [key]: value });
     },
     [cookieSettings]
