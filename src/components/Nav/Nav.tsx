@@ -4,8 +4,7 @@ import Link from 'next/link';
 import styles from './Nav.module.scss';
 
 import Image from '@/components/Image/Image';
-
-import SvgThreeLogo from '@/assets/svgs/svg-three-logo.svg';
+import SvgThreeLogo from '@/components/svgs/three-logo.svg';
 
 import routes from '@/data/routes';
 
