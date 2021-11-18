@@ -200,7 +200,7 @@
 ///     }
 ///   }
 @mixin breakpoint($size) {
-  @media (min-width: map-get($layout, $size) + px) {
+  @media (min-width: #{map-get($layout, $size) + px}) {
     @content;
   }
 }
