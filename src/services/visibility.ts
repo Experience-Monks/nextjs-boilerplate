@@ -7,14 +7,14 @@ class VisibilityService {
     this.listeners.map((listener) => listener(e));
   };
 
-  add = (listener: VisibilityListener) => {
+  listen = (listener: VisibilityListener) => {
     if (!this.listeners.length) {
       document.addEventListener('visibilitychange', this.onVisibility);
     }
     if (!this.listeners.includes(listener)) this.listeners.push(listener);
   };
 
-  remove = (listener: VisibilityListener) => {
+  dismiss = (listener: VisibilityListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
     if (!this.listeners.length) {
       document.removeEventListener('visibilitychange', this.onVisibility);
