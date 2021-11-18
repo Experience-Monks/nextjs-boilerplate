@@ -4,6 +4,8 @@ import { device } from '@jam3/detect';
 
 import styles from './RotateScreen.module.scss';
 
+import resize from '@/services/resize';
+
 export type Props = {
   className?: string;
 };
@@ -16,10 +18,10 @@ function RotateScreen({ className }: Props) {
       setEnable(device.phone && device.landscape);
     };
 
-    window.addEventListener('resize', handleResize);
+    resize.listen(handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      resize.dismiss(handleResize);
     };
   }, []);
 
