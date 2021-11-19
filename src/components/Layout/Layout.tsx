@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
-import Analytics from '@/utils/analytics';
+import { GtmScript } from '@/utils/analytics';
 
 import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
 import { checkWebpSupport } from '@/utils/basic-functions';
@@ -43,7 +43,7 @@ function Layout({ children }: Props) {
 
   return (
     <>
-      <Analytics consent={cookieConsent?.statistics} />
+      <GtmScript consent={cookieConsent?.statistics} />
 
       <Nav />
 
