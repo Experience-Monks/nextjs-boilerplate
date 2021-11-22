@@ -32,10 +32,7 @@
     "dependencies/min-vulnerabilities-allow": [
       "error",
       {
-<<<<<<< HEAD
         "production": true,
-=======
->>>>>>> fix: upgrade adviser and rollback config
         "level": "critical",
         "skip": ["immer"]
       }
