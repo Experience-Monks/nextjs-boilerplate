@@ -4,7 +4,7 @@ class VisibilityService {
   listeners: VisibilityListener[] = [];
 
   onVisibility = (e: Event) => {
-    this.listeners.map((listener) => listener(e));
+    this.listeners.forEach((listener) => listener(e));
   };
 
   listen = (listener: VisibilityListener) => {

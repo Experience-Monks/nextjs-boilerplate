@@ -4,7 +4,7 @@ class OrientationService {
   listeners: OrientationListener[] = [];
 
   onOrientation = (e: Event) => {
-    this.listeners.map((listener) => listener(e));
+    this.listeners.forEach((listener) => listener(e));
   };
 
   listen = (listener: OrientationListener) => {

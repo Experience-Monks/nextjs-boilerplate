@@ -9,7 +9,7 @@ class RequestAnimationFrameService {
     const now = Date.now();
     const delta = now - this.elapsed;
     this.elapsed = now;
-    this.listeners.map((listener) => listener(delta));
+    this.listeners.forEach((listener) => listener(delta));
     this.frameId = requestAnimationFrame(this.onFrame);
   };
 

@@ -8,7 +8,7 @@ class PointerMoveService {
   onMove = (e: MouseEvent | TouchEvent) => {
     const x = (e as TouchEvent).targetTouches?.[0]?.clientX || (e as MouseEvent).clientX;
     const y = (e as TouchEvent).targetTouches?.[0]?.clientY || (e as MouseEvent).clientY;
-    this.listeners.map((listener) => listener(x, y, e));
+    this.listeners.forEach((listener) => listener(x, y, e));
   };
 
   listen = (listener: PointerMoveListener) => {

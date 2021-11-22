@@ -8,7 +8,7 @@ class ResizeService {
   onResize = (e: Event | UIEvent) => {
     setTimeout(
       () => {
-        this.listeners.map((listener) => listener(e));
+        this.listeners.forEach((listener) => listener(e));
       },
       device.mobile ? 500 : 0 // some mobile browsers only update window dimensions when the rotate animation finishes
     );
