@@ -63,6 +63,7 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "@jam3/stats": "^1.0.1",
@@ -74,9 +75,15 @@
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "6.3.12",
 =======
+=======
+>>>>>>> feature: upgrade husky
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
 <<<<<<< HEAD
+=======
+    "@commitlint/cli": "13.1.0",
+    "@commitlint/config-conventional": "13.1.0",
+>>>>>>> 6ac6746 (feature: upgrade husky)
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.9.2",
 =======
