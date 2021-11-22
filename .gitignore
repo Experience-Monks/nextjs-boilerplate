@@ -19,6 +19,7 @@ codeship.aes
 /public/workbox*
 
 # misc
+.idea
 .vscode
 .DS_Store
 *.log*
