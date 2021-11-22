@@ -1,6 +1,6 @@
 // Export a function. Accept the base config as the only param.
 const path = require('path');
-const svgsPath = path.resolve(__dirname, '../src/assets/svgs');
+const svgsPath = path.resolve(__dirname, '../src/components/svgs');
 const srcPath = path.resolve(__dirname, '../src');
 
 module.exports = {
@@ -52,7 +52,11 @@ module.exports = {
       {
         test: /\.svg$/,
         include: svgsPath,
-        use: ['@svgr/webpack']
+        use: [
+          {
+            loader: '@svgr/webpack'
+          }
+        ]
       }
     );
 

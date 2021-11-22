@@ -19,7 +19,7 @@ type Props = {
 
 const SvgCatalog = ({ color, viewbox }: Props) => {
   return (
-    <div style={{ width: '100%', padding: '10px', textAlign: 'center' }}>
+    <div style={{ position: 'relative', width: '100%', padding: '10px', textAlign: 'center' }}>
       {icons
         .sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
         .map(({ Component, name }, i) => (
@@ -54,6 +54,17 @@ const SvgCatalog = ({ color, viewbox }: Props) => {
             </div>
           </div>
         ))}
+
+      <p
+        style={{
+          fontSize: '11px',
+          position: 'absolute',
+          bottom: '0',
+          left: '0'
+        }}
+      >
+        Svg Catalog created by @Edgard
+      </p>
     </div>
   );
 };
