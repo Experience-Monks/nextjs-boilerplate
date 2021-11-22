@@ -62,6 +62,7 @@
     "xss": "1.0.10"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "@jam3/stats": "^1.0.1",
@@ -72,6 +73,22 @@
     "@storybook/addon-controls": "6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
     "@storybook/addon-links": "6.3.12",
+=======
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+<<<<<<< HEAD
+    "@jam3/stats": "^1.0.1",
+    "@ls-lint/ls-lint": "1.9.2",
+=======
+    "@ls-lint/ls-lint": "1.10.0",
+>>>>>>> 43da044 (fix: update ls-lint)
+    "@next/bundle-analyzer": "11.1.2",
+    "@storybook/addon-a11y": "6.3.8",
+    "@storybook/addon-actions": "6.3.8",
+    "@storybook/addon-controls": "6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
+    "@storybook/addon-links": "6.3.8",
+>>>>>>> fix: update ls-lint
     "@storybook/addon-postcss": "2.0.0",
     "@storybook/addons": "6.3.12",
     "@storybook/builder-webpack5": "^6.3.12",
