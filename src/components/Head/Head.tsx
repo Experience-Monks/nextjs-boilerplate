@@ -2,7 +2,8 @@ import { memo } from 'react';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
-import { siteName, siteSlogan } from '../../data/settings';
+import StrictCSP from './StrictCSP';
+import { siteName, siteSlogan } from '@/data/settings';
 
 type Props = {
   title?: string;
@@ -61,6 +62,7 @@ function Head({
           <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
         </>
       )}
+      <StrictCSP />
     </NextHead>
   );
 }
