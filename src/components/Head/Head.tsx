@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import NextHead from 'next/head';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import StrictCSP from './StrictCSP';
 import { siteName, siteSlogan } from '@/data/settings';
 
 type Props = {
@@ -12,6 +12,11 @@ type Props = {
 };
 
 const TITLE_SEPARATOR = '|';
+
+const FeaturePolicy = dynamic(() => import(/* webpackChunkName: "FeaturePolicy" */ './FeaturePolicy'));
+const ContentSecurityPolicy = dynamic(
+  () => import(/* webpackChunkName: "ContentSecurityPolicy" */ './ContentSecurityPolicy')
+);
 
 function Head({
   title,
@@ -62,7 +67,13 @@ function Head({
           <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
         </>
       )}
-      <StrictCSP />
+
+      {process.env.NEXT_PUBLIC_ENVIRONMENT === 'local' && (
+        <>
+          <FeaturePolicy />
+          <ContentSecurityPolicy />
+        </>
+      )}
     </NextHead>
   );
 }

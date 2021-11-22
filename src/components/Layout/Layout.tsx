@@ -1,6 +1,7 @@
 import { memo, useEffect, useCallback, PropsWithChildren } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { device } from '@jam3/detect';
 
 import Nav from '@/components/Nav/Nav';
 import Footer from '@/components/Footer/Footer';
@@ -51,7 +52,7 @@ function Layout({ children }: Props) {
 
       <Footer />
 
-      <RotateScreen />
+      {!device.desktop && <RotateScreen />}
 
       {!validCookie && (
         <CookieBanner
