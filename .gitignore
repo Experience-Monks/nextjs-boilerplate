@@ -14,6 +14,10 @@ codeship.aes
 /.next
 /out
 
+# pwa - service worker
+/public/sw.*
+/public/workbox*
+
 # misc
 .vscode
 .DS_Store

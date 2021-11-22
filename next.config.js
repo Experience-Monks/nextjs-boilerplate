@@ -1,5 +1,7 @@
 const path = require('path');
 
+const withPWA = require('next-pwa');
+const runtimeCaching = require('next-pwa/cache');
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
 
@@ -65,6 +67,18 @@ if (process.env.BUNDLE_ANALYZE === 'true') {
     enabled: true
   });
   nextPlugins.push(withBundleAnalyzer);
+}
+
+if (process.env.ENABLE_PWA === 'true') {
+  nextPlugins.push([
+    withPWA,
+    {
+      pwa: {
+        dest: 'public',
+        runtimeCaching
+      }
+    }
+  ]);
 }
 
 module.exports = withPlugins(nextPlugins, nextJSConfig);
