@@ -13,6 +13,7 @@ codeship.aes
 # next.js
 /.next
 /out
+tsconfig.tsbuildinfo
 
 # pwa - service worker
 /public/sw.*
