@@ -64,6 +64,7 @@
   "devDependencies": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "@jam3/stats": "^1.0.1",
@@ -77,6 +78,8 @@
 =======
 =======
 >>>>>>> feature: upgrade husky
+=======
+>>>>>>> fix: upgrade bundle analyzer
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
 <<<<<<< HEAD
@@ -84,10 +87,15 @@
     "@commitlint/cli": "13.1.0",
     "@commitlint/config-conventional": "13.1.0",
 >>>>>>> 6ac6746 (feature: upgrade husky)
+=======
+    "@commitlint/cli": "15.0.0",
+    "@commitlint/config-conventional": "15.0.0",
+>>>>>>> dfd3dde (fix: upgrade bundle analyzer)
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.9.2",
 =======
     "@ls-lint/ls-lint": "1.10.0",
+<<<<<<< HEAD
 >>>>>>> 43da044 (fix: update ls-lint)
     "@next/bundle-analyzer": "11.1.2",
     "@storybook/addon-a11y": "6.3.8",
@@ -95,7 +103,18 @@
     "@storybook/addon-controls": "6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addon-links": "6.3.8",
+<<<<<<< HEAD
 >>>>>>> fix: update ls-lint
+=======
+=======
+    "@next/bundle-analyzer": "12.0.4",
+    "@storybook/addon-a11y": "6.3.12",
+    "@storybook/addon-actions": "6.3.12",
+    "@storybook/addon-controls": "6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "6.3.12",
+>>>>>>> dfd3dde (fix: upgrade bundle analyzer)
+>>>>>>> fix: upgrade bundle analyzer
     "@storybook/addon-postcss": "2.0.0",
     "@storybook/addons": "6.3.12",
     "@storybook/builder-webpack5": "^6.3.12",
