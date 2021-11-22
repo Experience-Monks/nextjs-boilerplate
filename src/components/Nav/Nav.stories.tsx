@@ -1,4 +1,15 @@
-import { storiesOf } from '@storybook/react';
 import Component from './Nav';
 
-storiesOf('Components/Nav', module).add('Default', () => <Component />);
+export default { title: 'components/Nav' };
+
+export const Default = (args: {}) => <Component {...args} />;
+
+Default.args = {};
+
+Default.argTypes = {};
+
+Default.parameters = {
+  jira: {
+    id: 'SON-145'
+  }
+};
