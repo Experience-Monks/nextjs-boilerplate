@@ -1,7 +1,17 @@
-import { storiesOf } from '@storybook/react';
 import { device } from '@jam3/detect';
-import Component from './RotateScreen';
+import Component, { Props } from './RotateScreen';
 
-storiesOf('Components/RotateScreen', module).add('Default', () =>
-  device.phone ? <Component /> : <p>Please enable mobile device simulator</p>
-);
+export default { title: 'components/RotateScreen' };
+
+export const Default = (args: Props) =>
+  device.phone ? <Component {...args} /> : <p>Please enable mobile device simulator</p>;
+
+Default.args = {};
+
+Default.argTypes = {};
+
+Default.parameters = {
+  jira: {
+    id: 'SON-145'
+  }
+};

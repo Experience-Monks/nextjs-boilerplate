@@ -1,10 +1,15 @@
-import { storiesOf } from '@storybook/react';
 import Component from './Footer';
 
-storiesOf('Components/Footer', module)
-  .addParameters({
-    jira: {
-      id: 'SON-145'
-    }
-  })
-  .add('Default', () => <Component />);
+export default { title: 'components/Footer' };
+
+export const Default = (args: {}) => <Component {...args} />;
+
+Default.args = {};
+
+Default.argTypes = {};
+
+Default.parameters = {
+  jira: {
+    id: 'SON-145'
+  }
+};

@@ -34,7 +34,7 @@ type CookieConsentProps = {
   thirdParty: boolean;
 };
 
-type Props = PropsWithChildren<{
+export type Props = PropsWithChildren<{
   className?: string;
   defaultText?: string;
   acceptCta?: string;
