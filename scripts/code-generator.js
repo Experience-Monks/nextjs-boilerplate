@@ -40,52 +40,51 @@ async function writeTemplate(name, input, output) {
 }
 
 //
-function write(dir, name) {
-  return mkdirp(dir).then((made) => {
-    if (!made) throw made;
-    const files = [];
+async function write(dir, name) {
+  const made = await mkdirp(dir);
 
-    if (argv.type === 'page') {
-      files.push(
-        writeTemplate(name, path.resolve(__dirname, 'templates/page/page.tsx'), path.resolve(dir, `index.tsx`))
-      );
-      files.push(
-        writeTemplate(name, path.resolve(__dirname, 'templates/page/page.scss'), path.resolve(dir, `index.module.scss`))
-      );
-    } else if (argv.type === 'api') {
-      files.push(
-        writeTemplate(name, path.resolve(__dirname, 'templates/api/api.ts'), path.resolve(dir, `${name}.tsx`))
-      );
-    } else {
-      files.push(
-        writeTemplate(
-          name,
-          path.resolve(__dirname, 'templates/component/component.tsx'),
-          path.resolve(dir, `${name}.tsx`)
-        )
-      );
-      files.push(
-        writeTemplate(
-          name,
-          path.resolve(__dirname, 'templates/component/component.stories.tsx'),
-          path.resolve(dir, `${name}.stories.tsx`)
-        )
-      );
-      files.push(
-        writeTemplate(
-          name,
-          path.resolve(__dirname, 'templates/component/component.scss'),
-          path.resolve(dir, `${name}.module.scss`)
-        )
-      );
-    }
+  if (made) {
+    console.log(`Path ${path.relative(cwd, dir)} is created!`);
+  }
 
-    return Promise.all(files)
-      .then(() => {
-        console.log(`Created new ${name} ${argv.type} at ${dir}`);
-      })
-      .catch((err) => console.error(err));
-  });
+  const files = [];
+
+  if (argv.type === 'page') {
+    files.push(writeTemplate(name, path.resolve(__dirname, 'templates/page/page.tsx'), path.resolve(dir, `index.tsx`)));
+    files.push(
+      writeTemplate(name, path.resolve(__dirname, 'templates/page/page.scss'), path.resolve(dir, `index.module.scss`))
+    );
+  } else if (argv.type === 'api') {
+    files.push(writeTemplate(name, path.resolve(__dirname, 'templates/api/api.ts'), path.resolve(dir, `${name}.tsx`)));
+  } else {
+    files.push(
+      writeTemplate(
+        name,
+        path.resolve(__dirname, 'templates/component/component.tsx'),
+        path.resolve(dir, `${name}.tsx`)
+      )
+    );
+    files.push(
+      writeTemplate(
+        name,
+        path.resolve(__dirname, 'templates/component/component.stories.tsx'),
+        path.resolve(dir, `${name}.stories.tsx`)
+      )
+    );
+    files.push(
+      writeTemplate(
+        name,
+        path.resolve(__dirname, 'templates/component/component.scss'),
+        path.resolve(dir, `${name}.module.scss`)
+      )
+    );
+  }
+
+  return Promise.all(files)
+    .then(() => {
+      console.log(`Created new ${name} ${argv.type} at ${dir}`);
+    })
+    .catch((err) => console.error(err));
 }
 
 //
@@ -103,8 +102,6 @@ argv._.forEach(async (t) => {
     const destName = names.slice(0, index + 1).join('/');
     let dir = null;
 
-    console.log(destName);
-
     if (argv.type === 'page') {
       dir = path.resolve(__dirname, `../src/${argv.type}s/${destName}`);
     } else if (argv.type === 'api') {
@@ -115,11 +112,9 @@ argv._.forEach(async (t) => {
     }
 
     try {
-      await stat(dir);
-      console.log(chalk.red(`Path at ${path.relative(cwd, dir)} already exists!`));
-    } catch (err) {
       await write(dir, name);
-      // console.error(err);
+    } catch (err) {
+      console.error(err);
     }
   });
 });
