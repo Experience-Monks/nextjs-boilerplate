@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import NextHead from 'next/head';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import { siteName, siteSlogan } from '../../data/settings';
+import { siteName, siteSlogan } from '@/data/settings';
 
 type Props = {
   title?: string;
@@ -11,6 +12,11 @@ type Props = {
 };
 
 const TITLE_SEPARATOR = '|';
+
+const FeaturePolicy = dynamic(() => import(/* webpackChunkName: "FeaturePolicy" */ './FeaturePolicy'));
+const ContentSecurityPolicy = dynamic(
+  () => import(/* webpackChunkName: "ContentSecurityPolicy" */ './ContentSecurityPolicy')
+);
 
 function Head({
   title,
@@ -59,6 +65,13 @@ function Head({
         <>
           <link rel="preconnect" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} crossOrigin="true" />
           <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
+        </>
+      )}
+
+      {process.env.NEXT_PUBLIC_ENVIRONMENT === 'local' && (
+        <>
+          <FeaturePolicy />
+          <ContentSecurityPolicy />
         </>
       )}
     </NextHead>
