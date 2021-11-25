@@ -9,8 +9,8 @@ module.exports = {
   },
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
-    'storybook-jira-addon',
     '@storybook/addon-essentials',
+    'storybook-jira-addon',
     '@storybook/addon-actions',
     '@storybook/addon-controls',
     '@storybook/addon-links',

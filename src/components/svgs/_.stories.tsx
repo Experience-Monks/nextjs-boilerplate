@@ -41,7 +41,7 @@ const SvgCatalog = ({ color, viewbox }: Props) => {
                 color
               }}
             >
-              <Component style={{ width: '100px' }} />
+              <Component style={{ width: '100px', fill: 'currentColor', display: 'block', overflow: 'visible' }} />
             </div>
             <div
               style={{
