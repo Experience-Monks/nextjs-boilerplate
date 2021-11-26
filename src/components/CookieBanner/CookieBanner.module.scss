@@ -12,6 +12,7 @@ $cookie-banner-padding: px(20);
   bottom: px(20);
   left: px(20);
   padding: $cookie-banner-padding;
+  max-width: calc(100% - #{px(40)});
   color: $white;
   background-color: $cookie-banner-bg-color;
 
@@ -52,10 +53,12 @@ $cookie-banner-padding: px(20);
 
   .buttonContainer {
     display: flex;
+    flex-wrap: wrap;
   }
 
   button {
     padding: px(10);
+    margin-bottom: px(20);
     margin-left: px(20);
     border: 0;
     font-size: px(14);
@@ -67,6 +70,12 @@ $cookie-banner-padding: px(20);
 
     &:first-of-type {
       margin-left: 0;
+    }
+  }
+
+  @include breakpoint(tablet) {
+    button {
+      margin-bottom: 0;
     }
   }
 }

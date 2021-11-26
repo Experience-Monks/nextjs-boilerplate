@@ -17,6 +17,7 @@ ls:
       .tsx: PascalCase
       .stories.js: PascalCase
       .stories.tsx: PascalCase
+      .svg: kebab-case
     pages:
       .js: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
       .tsx: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
