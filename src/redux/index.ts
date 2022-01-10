@@ -19,7 +19,7 @@ const { actions, reducer } = createSlice({
 
 export const { setPrevRoute, setIsWebpSupported } = actions;
 
-export const store = configureStore({ reducer });
+export const store = configureStore({ reducer, devTools: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' });
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
