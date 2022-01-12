@@ -22,6 +22,7 @@
     "postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
     "\n ######################  Support Development Tools  ######################": "",
     "storybook": "start-storybook --no-manager-cache -p 9001 -c .storybook -s ./public",
+    "build-storybook": "build-storybook -c .storybook -s ./src -o ./storybook",
     "generate": "sg wizard",
     "\n ######################  Automation Tools  ######################": "",
     "prepare": "husky install",
