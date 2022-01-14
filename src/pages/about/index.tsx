@@ -1,5 +1,6 @@
-import { memo, useRef } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import classnames from 'classnames';
+import gsap from 'gsap';
 
 import styles from './index.module.scss';
 
@@ -11,11 +12,23 @@ type Props = {
 
 function About({ className }: Props) {
   const containerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const headerElRef = headerRef.current;
+    gsap.effects.fadeIn(headerElRef, { delay: 0.1 });
+
+    return () => {
+      gsap.killTweensOf(headerElRef);
+    };
+  }, []);
 
   return (
     <main className={classnames(styles.About, className)} ref={containerRef}>
       <Head title="About" />
-      <h1 className={styles.title}>About Page</h1>
+      <h1 className={styles.title} ref={headerRef}>
+        About Page
+      </h1>
     </main>
   );
 }

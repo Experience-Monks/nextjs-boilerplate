@@ -11,12 +11,14 @@ import Layout from '@/components/Layout/Layout';
 
 import { store } from '@/redux';
 import '@/utils/why-did-you-render';
+import gsapInit from '@/utils/gsap-init';
 
 const isBrowser = typeof window !== 'undefined';
 
 if (isBrowser) {
   require('default-passive-events');
   require('focus-visible');
+  gsapInit();
 }
 
 // This default export is required in a new `pages/_app.js` file.
