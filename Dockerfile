@@ -1,8 +1,8 @@
-FROM node:14
+FROM node:14-bullseye
 LABEL maintainer_devops="michael.silva@jam3.com"
 LABEL maintainer_architect="iran.reyes@jam3.com"
 
-# Upgrade npm 
+# Upgrade npm
 RUN npm install -g npm@7
 
 # Set working directory
