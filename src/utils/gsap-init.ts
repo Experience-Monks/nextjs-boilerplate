@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin';
 import ScrollTrigger from 'gsap/dist/ScrollTrigger';
@@ -11,7 +10,7 @@ function gsapInit() {
   gsap.registerEffect({
     name: 'fadeIn',
     extendTimeline: true,
-    effect: (targets: any, config: any) => {
+    effect: (targets: gsap.TweenTarget, config: { duration: number; y: number; delay: number; stagger: number }) => {
       return gsap.from(targets, {
         duration: config.duration,
         autoAlpha: 0,
