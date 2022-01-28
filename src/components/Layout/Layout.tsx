@@ -1,16 +1,17 @@
-import { memo, useEffect, useCallback, PropsWithChildren } from 'react';
+import { memo, PropsWithChildren, useCallback, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { device } from '@jam3/detect';
 
-import Nav from '@/components/Nav/Nav';
-import Footer from '@/components/Footer/Footer';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
-import { GtmScript } from '@/utils/analytics';
+import Footer from '@/components/Footer/Footer';
+import Nav from '@/components/Nav/Nav';
 
-import { setPrevRoute, setIsWebpSupported, useAppDispatch } from '@/redux';
+import { GtmScript } from '@/utils/analytics';
 import { checkWebpSupport } from '@/utils/basic-functions';
 import useCookieBanner from '@/hooks/use-cookie-banner';
+
+import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
 const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });

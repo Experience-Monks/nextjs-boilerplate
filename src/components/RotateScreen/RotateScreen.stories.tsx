@@ -1,4 +1,5 @@
 import { device } from '@jam3/detect';
+
 import Component, { Props } from './RotateScreen';
 
 export default { title: 'components/RotateScreen' };

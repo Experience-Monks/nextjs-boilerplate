@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-import classnames from 'classnames';
 import { device } from '@jam3/detect';
+import classnames from 'classnames';
 
 import styles from './RotateScreen.module.scss';
 

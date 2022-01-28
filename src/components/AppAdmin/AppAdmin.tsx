@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
-import { os, browser, device } from '@jam3/detect';
 import { useWindowSize } from 'react-use';
+import { browser, device, os } from '@jam3/detect';
 import classnames from 'classnames';
 
 import styles from './AppAdmin.module.scss';

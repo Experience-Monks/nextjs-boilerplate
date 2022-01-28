@@ -1,4 +1,4 @@
-import { memo, useCallback, useState, PropsWithChildren } from 'react';
+import { memo, PropsWithChildren, useCallback, useState } from 'react';
 import classnames from 'classnames';
 import noop from 'no-op';
 

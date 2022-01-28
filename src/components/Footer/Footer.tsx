@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import classnames from 'classnames';
 import Link from 'next/link';
+import classnames from 'classnames';
 
 import styles from './Footer.module.scss';
 
