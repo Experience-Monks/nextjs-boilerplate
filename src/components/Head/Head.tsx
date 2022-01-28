@@ -3,7 +3,7 @@ import NextHead from 'next/head';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import { siteName, siteSlogan } from '@/data/settings';
+import { siteName, siteDescription, siteSlogan, siteKeywords } from '@/data/settings';
 
 type Props = {
   title?: string;
@@ -18,11 +18,7 @@ const ContentSecurityPolicy = dynamic(
   () => import(/* webpackChunkName: "ContentSecurityPolicy" */ './ContentSecurityPolicy')
 );
 
-function Head({
-  title,
-  description = 'Default Description',
-  keywords = ['Jam3', 'Web App', 'React', 'NextJS']
-}: Props) {
+function Head({ title, description = siteDescription, keywords = siteKeywords }: Props) {
   const router = useRouter();
 
   const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
