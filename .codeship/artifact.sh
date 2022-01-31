@@ -14,7 +14,7 @@ rm -rf /artifacts/build
 mv ./out /artifacts/build
 
 if [ "$CI_ENV" != "production" ]; then
-  npm run build-storybook
+  npm run build:storybook
   mv ./storybook /artifacts/build/storybook
 fi
 
