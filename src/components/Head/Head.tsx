@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import NextHead from 'next/head';
 import dynamic from 'next/dynamic';
+import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
 import { siteName, siteSlogan } from '@/data/settings';

@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWindowSize } from '@jam3/react-hooks';
 
-import { resizeDebounceTime } from '@/data/settings';
 import layout, { Breakpoints } from '@/utils/layout';
+
+import { resizeDebounceTime } from '@/data/settings';
 
 /**
  * Layout hook

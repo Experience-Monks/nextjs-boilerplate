@@ -1,11 +1,11 @@
-import classnames from 'classnames';
 import Link from 'next/link';
+import classnames from 'classnames';
 
 import styles from './Nav.module.scss';
 
 import Image from '@/components/Image/Image';
-import SvgThreeLogo from '@/components/svgs/three-logo.svg';
 
+import SvgThreeLogo from '@/components/svgs/three-logo.svg';
 import routes from '@/data/routes';
 
 const LINKS = [

@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
-import { device, browser } from '@jam3/detect';
+import { browser, device } from '@jam3/detect';
 import classnames from 'classnames';
-
 import 'normalize.css';
+import '@/utils/why-did-you-render';
+
 import '@/styles/global.scss';
 
 import Layout from '@/components/Layout/Layout';
 
 import { store } from '@/redux';
-import '@/utils/why-did-you-render';
 
 const isBrowser = typeof window !== 'undefined';
 

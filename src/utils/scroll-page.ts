@@ -1,5 +1,5 @@
-import noop from 'no-op';
 import { gsap } from 'gsap';
+import noop from 'no-op';
 
 interface ScrollProps {
   x: number;

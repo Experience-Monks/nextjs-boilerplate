@@ -1,10 +1,11 @@
-import { memo, forwardRef, useMemo, ForwardedRef } from 'react';
+import { ForwardedRef, forwardRef, memo, useMemo } from 'react';
 import classnames from 'classnames';
 
 import styles from './Image.module.scss';
 import sassVars from '@/styles/export-vars.module.scss';
 
 import { Breakpoints } from '@/utils/layout';
+
 import { useAppSelector } from '@/redux';
 
 type SrcSetSizes = {
