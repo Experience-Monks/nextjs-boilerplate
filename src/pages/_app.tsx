@@ -10,6 +10,8 @@ import '@/styles/global.scss';
 
 import Layout from '@/components/Layout/Layout';
 
+import gsapInit from '@/utils/gsap-init';
+
 import { store } from '@/redux';
 
 const isBrowser = typeof window !== 'undefined';
@@ -17,6 +19,7 @@ const isBrowser = typeof window !== 'undefined';
 if (isBrowser) {
   require('default-passive-events');
   require('focus-visible');
+  gsapInit();
 }
 
 // This default export is required in a new `pages/_app.js` file.

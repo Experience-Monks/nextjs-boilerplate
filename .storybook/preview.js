@@ -4,6 +4,9 @@ import { RouterContext } from 'next/dist/shared/lib/router-context'; // next 11.
 import '../src/styles/global.scss';
 
 import { store } from '../src/redux';
+import gsapInit from '../src/utils/gsap-init';
+
+gsapInit();
 
 export const decorators = [
   (Story) => (
