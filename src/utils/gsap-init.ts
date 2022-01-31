@@ -13,7 +13,7 @@ function gsapInit() {
     effect: (targets: gsap.TweenTarget, config: { duration: number; y: number; delay: number; stagger: number }) => {
       return gsap.from(targets, {
         duration: config.duration,
-        autoAlpha: 0,
+        opacity: 0,
         y: config.y,
         delay: config.delay,
         stagger: config.stagger

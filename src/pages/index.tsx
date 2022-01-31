@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import gsap from 'gsap';
 
@@ -18,13 +18,13 @@ function Home({ className }: Props) {
 
   useEffect(() => {
     const timeline = gsap
-      .timeline({ delay: 0.1 })
+      .timeline()
       .fadeIn(titleRef.current, 0.2)
       .fadeIn(descriptionRef.current, 0.4)
       .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.6);
 
     return () => {
-      timeline.kill();
+      timeline?.kill();
     };
   }, []);
 
