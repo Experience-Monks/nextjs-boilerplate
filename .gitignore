@@ -7,8 +7,8 @@
 .env.local
 .env.*.local
 
-# CI/CD
-codeship.aes
+# testing
+/coverage
 
 # next.js
 /.next
