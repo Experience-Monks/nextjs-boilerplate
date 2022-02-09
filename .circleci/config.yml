@@ -57,7 +57,10 @@ jobs:
           name: 'Preparing Build'
           command: |
             npm run build:static
-      - aws-cli/setup
+      - aws-cli/setup:  #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
       - run:
           name: 'Deploying to S3 and Invalidate Cloudfront'
           command: |

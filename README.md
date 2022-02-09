@@ -54,10 +54,11 @@ Deploying a static site is fairly simple, we are going to the set up for Circle 
 
 #### 1. Open Circle CI Dashboard and sync the repo
 
-Create four environment variables for the project:
+Create 5 environment variables for the project:
 
-- AAWS_ACCESS_KEY_ID
+- AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
+- AWS_REGION (us-east-2)
 - CLOUDFRONT_DISTRIBUTION_ID
 - S3_ORIGIN_BUCKET
 
