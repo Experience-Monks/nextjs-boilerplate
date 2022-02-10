@@ -22,7 +22,8 @@ module.exports = {
         'style',
         'test',
         'pxpush',
-        'motion'
+        'motion',
+        'improve'
       ]
     ]
   }

@@ -1,8 +1,8 @@
 // Global
-export const resizeDebounceTime: number = 10; // in ms
+export const resizeDebounceTime = 10; // in ms
 
 // Head
-export const siteName: string = 'Jam3 Generator';
-export const siteDescription: string = 'Default Description';
-export const siteSlogan: string = 'The Relentless Pursuit of Better';
-export const siteKeywords: string[] = ['Jam3', 'Web App', 'React', 'NextJS'];
+export const siteName = 'Jam3 Generator';
+export const siteDescription = 'Default Description';
+export const siteSlogan = 'The Relentless Pursuit of Better';
+export const siteKeywords = ['Jam3', 'Web App', 'React', 'NextJS'];
