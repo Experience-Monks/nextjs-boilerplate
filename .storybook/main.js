@@ -1,4 +1,5 @@
 const path = require('path');
+const welcomeStory = '../src/components/storybook/Intro.stories.mdx';
 
 module.exports = {
   core: {
@@ -7,7 +8,7 @@ module.exports = {
   typescript: {
     reactDocgen: false
   },
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  stories: [welcomeStory, '../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
     '@storybook/addon-essentials',
     'storybook-jira-addon',

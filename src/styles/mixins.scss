@@ -25,7 +25,7 @@
   @if $line-height==normal {
     @return normal;
   }
-  @return $line-height / $font-size;
+  @return math.div($line-height, $font-size);
 }
 
 // Use two pixel values to convert letter-spacing into an em value
@@ -39,7 +39,7 @@
   @if $letter-spacing==normal {
     @return normal;
   }
-  @return #{$letter-spacing / $font-size}em;
+  @return #{math.div($letter-spacing, $font-size)}em;
 }
 
 // Define font-size, line-height and letter-spacing in function
