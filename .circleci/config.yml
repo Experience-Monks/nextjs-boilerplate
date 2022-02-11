@@ -83,6 +83,10 @@ workflows:
       - linters:
           requires:
             - prepare
+          filters:
+            branches:
+              ignore:
+                  - main
       - build:
           requires:
             - prepare

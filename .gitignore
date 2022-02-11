@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 
-# Local env variables
+# local env variables
 .env.local
 .env.*.local
 
@@ -29,3 +29,10 @@ tsconfig.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# documentation
+public/components
+public/styleguide
+
+# ts
+tsconfig.tsbuildinfo
