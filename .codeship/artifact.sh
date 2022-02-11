@@ -10,12 +10,12 @@ export COMMIT_COUNT=$(git rev-list --no-merges --count HEAD)
 
 npm run build:static
 
-rm -rf /artifacts/build
-mv ./out /artifacts/build
 
 if [ "$CI_ENV" != "production" ]; then
   npm run build:storybook
-  mv ./storybook /artifacts/build/storybook
 fi
+
+rm -rf /artifacts/build
+mv ./out /artifacts/build
 
 echo "$CI_COMMIT_ID/$CI_BUILD_ID" > /artifacts/build/VERSION.txt
