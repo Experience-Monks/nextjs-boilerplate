@@ -54,15 +54,31 @@ Deploying a static site is fairly simple, we are going to the set up for Circle 
 
 #### 1. Open Circle CI Dashboard and sync the repo
 
-Create 5 environment variables for the project:
+Create 4 environment variables per environment for example:
 
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-- AWS_REGION (us-east-2)
-- CLOUDFRONT_DISTRIBUTION_ID
-- S3_ORIGIN_BUCKET
+For `develop`
+- AWS_ACCESS_KEY_ID_DEV
+- AWS_SECRET_ACCESS_KEY_DEV
+- CLOUDFRONT_DISTRIBUTION_ID_DEV
+- S3_ORIGIN_BUCKET_DEV
 
-You can find the values in Terraform's project build output or ask your TA.
+For `staging`
+- AWS_ACCESS_KEY_ID_STAGE
+- AWS_SECRET_ACCESS_KEY_STAGE
+- CLOUDFRONT_DISTRIBUTION_ID_STAGE
+- S3_ORIGIN_BUCKET_STAGE
+
+For production -> `main`
+- AWS_ACCESS_KEY_ID_PROD
+- AWS_SECRET_ACCESS_KEY_PROD
+- CLOUDFRONT_DISTRIBUTION_ID_PROD
+- S3_ORIGIN_BUCKET_PROD
+
+You can find all these values in Terraform after a successful run is done
+
+Edit the amount branches if you need more or less environments in the: 
+- [CircleCI config](.circleci/config.yml)
+- [Branching pre-build](.circleci/scripts/pre-build.sh)
 
 ---
 

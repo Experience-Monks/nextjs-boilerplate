@@ -1,13 +1,13 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
-defaults: &defaults
-  working_directory: ~/project
+defaults: &defaults # working_directory: ~/project
   docker:
     - image: 'cimg/node:14.18'
 
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -25,8 +25,6 @@ jobs:
           command: |
             sudo npm install -g npm@7
             npm install
-      - run: node --version
-      - run: npm --version
       - save_cache:
           paths:
             - node_modules
@@ -54,24 +52,18 @@ jobs:
           at: .
       - checkout
       - run:
-          name: 'Preparing Build'
-          command: |
-            npm run build:static
-      - aws-cli/setup:  #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
+          name: Prepare deployment variables
+          command: sh .circleci/scripts/pre-build.sh
+      - run:
+          name: Preparing Build
+          command: sh .circleci/scripts/build.sh
+      - aws-cli/setup: #See: https://circleci.com/orbs/registry/orb/circleci/aws-cli
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
       - run:
-          name: 'Deploying to S3 and Invalidate Cloudfront'
-          command: |
-            aws s3 sync ./favicons s3://$S3_ORIGIN_BUCKET/favicons --metadata-directive 'REPLACE' --cache-control max-age=31536000,public ${DELETE_OLD_FILES}
-            aws s3 sync ./_next s3://$S3_ORIGIN_BUCKET/_next --metadata-directive 'REPLACE' --cache-control max-age=31536000,public ${DELETE_OLD_FILES}
-            aws s3 sync ./assets s3://$S3_ORIGIN_BUCKET/assets --metadata-directive 'REPLACE' --cache-control max-age=31536000,public ${DELETE_OLD_FILES}
-
-            aws s3 sync ./ s3://$S3_ORIGIN_BUCKET --exclude "favicons/*" --exclude "_next/*" --exclude "assets/*" ${DELETE_OLD_FILES}
-
-            aws configure set preview.cloudfront true
-            aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+          name: Deploying to S3 and Invalidate Cloudfront
+          command: sh .circleci/scripts/deploy.sh
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -86,11 +78,15 @@ workflows:
           filters:
             branches:
               ignore:
-                  - main
+                - develop
+                - staging
+                - main
       - build:
           requires:
             - prepare
           filters:
             branches:
               only:
+                - develop
+                - staging
                 - main
