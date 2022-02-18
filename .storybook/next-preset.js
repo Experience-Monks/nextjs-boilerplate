@@ -60,7 +60,17 @@ module.exports = {
       }
     );
 
+    if (process.env.NODE_ENV === 'production') {
+      newConfig.output.publicPath = '/storybook/';
+    }
+
     // Return the altered config
     return newConfig;
+  },
+  managerWebpack: async (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      config.output.publicPath = '/storybook/';
+    }
+    return config;
   }
 };

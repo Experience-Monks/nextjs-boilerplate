@@ -10,6 +10,11 @@ export COMMIT_COUNT=$(git rev-list --no-merges --count HEAD)
 
 npm run build:static
 
+
+if [ "$CI_ENV" != "production" ]; then
+  npm run build:storybook
+fi
+
 rm -rf /artifacts/build
 mv ./out /artifacts/build
 
