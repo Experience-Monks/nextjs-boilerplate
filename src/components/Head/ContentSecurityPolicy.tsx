@@ -28,6 +28,7 @@ export default function ContentSecurityPolicy() {
       data:;
     connect-src
       'self'
+      *.ingest.sentry.io
       www.google-analytics.com;
     prefetch-src
       'self';
@@ -37,7 +38,9 @@ export default function ContentSecurityPolicy() {
       'unsafe-inline'
       www.googletagmanager.com
       www.google-analytics.com
-      www.google.com www.gstatic.com;
+      www.google.com
+      www.gstatic.com
+      *.ingest.sentry.io;
     style-src-elem
       'self'
       blob:

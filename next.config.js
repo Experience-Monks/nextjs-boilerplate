@@ -4,6 +4,7 @@ const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
@@ -81,4 +82,16 @@ if (process.env.ENABLE_PWA === 'true') {
   ]);
 }
 
-module.exports = withPlugins(nextPlugins, nextJSConfig);
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/
+const moduleExports = withPlugins(nextPlugins, nextJSConfig);
+
+// https://github.com/getsentry/sentry-webpack-plugin#options.
+const sentryWebpackPluginOptions = {
+  silent: true,
+  url: 'https://sentry.io/',
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT_NAME,
+  authToken: process.env.SENTRY_AUTH_TOKEN // https://sentry.io/settings/account/api/auth-tokens/
+};
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
