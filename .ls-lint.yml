@@ -2,7 +2,7 @@ ls:
   .js: kebab-case | pointcase
   .ts: kebab-case | pointcase
   .d.ts: kebab-case
-  .config.js: kebab-case
+  .config.js: kebab-case | pointcase
   src:
     assets:
       .png: kebab-case
