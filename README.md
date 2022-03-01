@@ -7,7 +7,7 @@
 # Jam3 NextJS Generator
 
 ![GitHub](https://img.shields.io/github/license/jam3/nyg-nextjs)
-[![CircleCI](https://circleci.com/gh/jam3/next-boilerplate.svg?style=svg)](https://circleci.com/gh/jam3/next-boilerplate.svg?style=svg)
+[![CircleCI](https://circleci.com/gh/Jam3/nextjs-boilerplate/tree/main.svg?style=svg)](https://circleci.com/gh/Jam3/nextjs-boilerplate/tree/main)
 
 > Boilerplate for React, Static and Server Side Rendered projects with NextJS
 
@@ -57,18 +57,21 @@ Deploying a static site is fairly simple, we are going to the set up for Circle 
 Create 4 environment variables per environment for example:
 
 For `develop`
+
 - AWS_ACCESS_KEY_ID_DEV
 - AWS_SECRET_ACCESS_KEY_DEV
 - CLOUDFRONT_DISTRIBUTION_ID_DEV
 - S3_ORIGIN_BUCKET_DEV
 
 For `staging`
+
 - AWS_ACCESS_KEY_ID_STAGE
 - AWS_SECRET_ACCESS_KEY_STAGE
 - CLOUDFRONT_DISTRIBUTION_ID_STAGE
 - S3_ORIGIN_BUCKET_STAGE
 
 For production -> `main`
+
 - AWS_ACCESS_KEY_ID_PROD
 - AWS_SECRET_ACCESS_KEY_PROD
 - CLOUDFRONT_DISTRIBUTION_ID_PROD
@@ -76,7 +79,8 @@ For production -> `main`
 
 You can find all these values in Terraform after a successful run is done
 
-Edit the amount branches if you need more or less environments in the: 
+Edit the amount branches if you need more or less environments in the:
+
 - [CircleCI config](.circleci/config.yml)
 - [Branching pre-build](.circleci/scripts/pre-build.sh)
 
