@@ -9,4 +9,8 @@ rm -rf ./out
 
 npm run build:static
 
+if [ "$CI_ENV" != "production" ]; then
+  npm run build:storybook
+fi
+
 echo "$CI_COMMIT_ID/$CI_BUILD_ID" > out/VERSION.txt
