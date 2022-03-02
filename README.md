@@ -54,7 +54,20 @@ Deploying a static site is fairly simple, we are going to the set up for Circle 
 
 #### 1. Open Circle CI Dashboard and sync the repo
 
-Create 4 environment variables per environment for example:
+CircleCI permissions are synchronized with GitHub permissions so if you access to the repo you got access to the [admin panel](https://app.circleci.com/projects/project-dashboard/github/Jam3/), open it and select `Set Up Project`, this will pickup our `config.yml`
+
+#### 2. CI/CD Branching
+
+By default CircleCI will:
+
+- Deploy in production branches `main` `develop` and `staging` branches only
+- Run linters in non-production branches: `main`, `develop` and `staging`
+
+If you need more or less envs you can tweak this at tne end [CircleCI config](.circleci/config.yml) config file
+
+#### 3. Configure environment variables
+
+For each deployment environment you need to add a set of keys to CircleCI as env variables, for our classic approach with 3 envs it would generally look like this:
 
 For `develop`
 
@@ -81,8 +94,12 @@ You can find all these values in Terraform after a successful run is done
 
 Edit the amount branches if you need more or less environments in the:
 
-- [CircleCI config](.circleci/config.yml)
-- [Branching pre-build](.circleci/scripts/pre-build.sh)
+#### 4. Useful file locations
+
+- [CircleCI config](.circleci/config.yml) - General config config [config]
+- [Branching pre-build](.circleci/scripts/pre-build.sh) - Assign different set of variables per branches [script]
+- [Deploy](.circleci/scripts/deploy.sh) - deploy to S3 and Cloudfront [script]
+- [Build](.circleci/scripts/build.sh) - Build the static site + storybook [script]
 
 ---
 
