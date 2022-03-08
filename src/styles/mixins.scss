@@ -191,20 +191,6 @@
   z-index: index($elements, $id);
 }
 
-/// Set breakpoint via media queries
-/// @example scss Input
-///   element {
-///     [...phone styles....]
-///     @include breakpoint(tablet) {
-///        [...tablet+desktop styles...]
-///     }
-///   }
-@mixin breakpoint($size) {
-  @media (min-width: #{map-get($layout, $size) + px}) {
-    @content;
-  }
-}
-
 /// Reset button's look
 /// @example scss Input
 ///   button {

@@ -12,7 +12,7 @@
   @include flex-center-vert;
   height: $navbar-height-mobile;
 
-  @include breakpoint(desktopSm) {
+  @include media-desktopSm {
     height: $navbar-height-desktop;
   }
 
