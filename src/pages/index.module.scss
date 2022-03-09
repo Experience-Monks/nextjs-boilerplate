@@ -6,14 +6,11 @@
     color: #333;
 
     > .title {
-      font-family: WorkSansSemiBold;
+      @include typography-h1;
       margin: 0;
       width: 100%;
       padding-top: px(80);
       padding-bottom: px(24);
-      letter-spacing: -1px;
-      line-height: 1.15;
-      font-size: px(48);
     }
 
     > .title,
@@ -51,8 +48,8 @@
           }
 
           > p {
+            @include typography-paragraph;
             padding: px(12) 0 0;
-            font-size: px(13);
             color: #333;
           }
         }
