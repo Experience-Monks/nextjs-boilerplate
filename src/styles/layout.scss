@@ -3,5 +3,53 @@ $layout: (
   tablet: 768,
   desktopSm: 1024,
   desktopMd: 1440,
-  desktopLg: 1920,
+  desktopLg: 1920
 );
+
+/// Set breakpoint via media queries
+/// @example scss Input
+///   element {
+///     [...phone styles....]
+///     @include breakpoint(tablet) {
+///        [...tablet+desktop styles...]
+///     }
+///   }
+@mixin breakpoint($size) {
+  @if map-get($layout, $size) {
+    @media (min-width: #{map-get($layout, $size)}px) {
+      @content;
+    }
+  } @else {
+    @error 'Breakpoint not found: ' + $size;
+  }
+}
+
+@mixin media-mobile() {
+  @media (max-width: #{map-get($layout, tablet) - 1}px) {
+    @content;
+  }
+}
+
+@mixin media-tablet() {
+  @include breakpoint(tablet) {
+    @content;
+  }
+}
+
+@mixin media-desktopSm() {
+  @include breakpoint(desktopSm) {
+    @content;
+  }
+}
+
+@mixin media-desktopMd() {
+  @include breakpoint(desktopMd) {
+    @content;
+  }
+}
+
+@mixin media-desktopLg() {
+  @include breakpoint(desktopLg) {
+    @content;
+  }
+}

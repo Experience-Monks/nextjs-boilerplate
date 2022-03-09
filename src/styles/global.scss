@@ -46,7 +46,7 @@ main {
   padding-top: $navbar-height-mobile;
   @include z-index(pages);
 
-  @include breakpoint(desktopSm) {
+  @include media-desktopSm {
     padding-top: $navbar-height-desktop;
   }
 }

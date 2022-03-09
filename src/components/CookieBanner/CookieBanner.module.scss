@@ -73,7 +73,7 @@ $cookie-banner-padding: px(20);
     }
   }
 
-  @include breakpoint(tablet) {
+  @include media-tablet {
     button {
       margin-bottom: 0;
     }
