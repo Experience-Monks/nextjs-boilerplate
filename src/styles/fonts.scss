@@ -6,56 +6,182 @@
 // 1. Avoid loading as many fonts as possible, e.x font styles, font families
 // 2. Optimize the font, remove the characters set that the site won't use: languages
 // 3. Include the unicode range in case you couldn't remove the characters. Included just Latin by default
-// 4. Change fonts just changing the font-weight
+// 4. Change fonts by just changing the font-weight
+
+/* Fonts Map:
+- 100 - Thin
+- 200 - Extra-light
+- 300 - Light
+- 400 - Normal
+- 500 - Medium
+- 600 - Semi-bold
+- 700 - Bold
+- 800 - Extra-bold
+- 900 - Black
+
+// NOTE: All fonts have italic variants too
+*/
 
 @import 'vars';
 
-$base-path: '../assets/fonts/' !default;
+@font-face {
+  font-family: 'WorkSans';
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Thin.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Thin.woff') format('woff');
+}
 
 @font-face {
-  font-family: 'WorkSansLight';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-ThinItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-ThinItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-ExtraLight.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-ExtraLightItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-ExtraLightItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-Light.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Light.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Light.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'WorkSansRegular';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-LightItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-LightItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-Regular.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Regular.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Regular.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'WorkSansMedium';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Italic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-Medium.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Medium.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Medium.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'WorkSansSemiBold';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-MediumItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-MediumItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-SemiBold.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-SemiBold.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-SemiBold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'WorkSansBold';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-SemiBoldItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-SemiBoldItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-Bold.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Bold.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Bold.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'WorkExtraBold';
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-BoldItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-BoldItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url('#{$base-path}WorkSans/WorkSans-ExtraBold.woff') format('woff');
+  src: url('~@/assets/fonts/WorkSans/WorkSans-ExtraBold.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-ExtraBoldItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-ExtraBoldItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-Black.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans';
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url('~@/assets/fonts/WorkSans/WorkSans-BlackItalic.woff2') format('woff2'),
+    url('~@/assets/fonts/WorkSans/WorkSans-BlackItalic.woff') format('woff');
 }

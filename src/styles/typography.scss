@@ -1,0 +1,140 @@
+// Sass Mixins
+//
+// More information about mixins in:
+// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins
+// Add comment to every function
+
+@use 'sass:math';
+@import 'vars';
+
+$generic-fonts: system-ui, Helvetica, Arial, sans-serif;
+
+/// Check if two scss values are safe to add, subtract, or multiply.
+/// @example scss Input
+///  @if is-compatible($font-size, $line-height) {
+///    @return math.div($line-height, $font-size);
+///  } @else {
+///    @return $line-height;
+///  }
+@function is-compatible($a, $b) {
+  // Check if both values are numbers, for scss values like 3% or 10px count as numbers
+  @if (type-of($a) == 'number' and type-of($b) == 'number') {
+    // Check if they are unitless so we can do transformations
+    @if (math.is-unitless($a) and math.is-unitless($b)) {
+      // Extra check to make sure they are compatible for math.div later on
+      @return math.compatible($a, $b);
+    } @else {
+      @return false;
+    }
+  } @else {
+    @return false;
+  }
+}
+
+/// Set Body Font as font family. This mixin's name is generic to abstract the font weight of body typography
+/// @group Fonts
+/// @example scss Input
+///   .landing-section {
+///     @include font-body;
+///   }
+@mixin font-body {
+  @include font-family('WorkSans', 400);
+}
+
+/// Set Header Font as font family. This mixin's name is generic to abstract the font weight of header typography
+/// @group Fonts
+/// @example scss Input
+///   .landing-section {
+///     @include font-header;
+///   }
+@mixin font-header {
+  @include font-family('WorkSans', 600);
+}
+
+// Use two pixel values to convert line-height into a unitless number
+// @example scss Input
+//   p {
+//     font-size: 16px;
+//     line-height: line-height(16, 30);
+//   }
+@function line-height($font-size, $line-height) {
+  @if is-compatible($font-size, $line-height) {
+    @return math.div($line-height, $font-size);
+  } @else {
+    @return $line-height;
+  }
+}
+
+// Use two pixel values to convert letter-spacing into an em value
+// @example scss Input
+//   p {
+//     font-size: 16px;
+//     // letter-spacing: -0.1px;
+//     letter-spacing: letter-spacing(16, -0.1);
+//   }
+@function letter-spacing($font-size, $letter-spacing) {
+  @if is-compatible($font-size, $letter-spacing) {
+    @return #{math.div($letter-spacing, $font-size)}em;
+  } @else {
+    @return $letter-spacing;
+  }
+}
+
+// Define font-size, line-height and letter-spacing in function
+// @example scss Input
+//   p {
+//     // font-size: 16px;
+//     // letter-spacing: -0.1px;
+//     // line-height: 1.5; // This is line-height 24px and font-size: 16px
+//     @include font-size(16, 24, -0.1)
+//   }
+@mixin font-size($font-size, $line-height: null, $letter-spacing: null) {
+  @if math.is-unitless($font-size) {
+    font-size: px($font-size);
+  } @else {
+    font-size: $font-size;
+  }
+
+  line-height: line-height($font-size, $line-height);
+  letter-spacing: letter-spacing($font-size, $letter-spacing);
+}
+
+// Define font-family, font-weight and font-style in function
+// @example scss Input
+//   p {
+//     // font-family: 'Roboto';
+//     // font-weight: 400;
+//     // font-style: italic;
+//     @include font-family('Roboto', 400, italic)
+//   }
+@mixin font-family($font-family: null, $font-weight: null, $font-style: null) {
+  @if $font-family {
+    font-family: $font-family, $generic-fonts;
+  }
+  font-weight: $font-weight;
+  font-style: $font-style;
+}
+
+// Example Typography System
+// TODO: Replace with your project typography system
+@mixin typography-paragraph {
+  @include font-family('WorkSans', 400);
+  @include font-size(12, 14, -0.04);
+
+  @include breakpoint(tablet) {
+    @include font-size(13, 15);
+  }
+}
+
+@mixin typography-h1 {
+  @include font-family('WorkSans', 600);
+  @include font-size(26, 30, -0.04);
+
+  @include breakpoint(tablet) {
+    @include font-size(32);
+  }
+
+  @include breakpoint(desktopSm) {
+    @include font-size(42);
+  }
+}

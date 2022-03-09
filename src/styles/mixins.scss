@@ -5,60 +5,6 @@
 // Add comment to every function
 @import 'vars';
 
-/// Set Regular Font as font family. This mixin's name is generic to abstract the font family name in case it changes
-/// @group Fonts
-/// @example scss Input
-///   .landing-section {
-///     @include font-work-sans-regular();
-///   }
-@mixin font-work-sans-regular() {
-  font-family: WorkSansRegular, #{$generic-fonts};
-}
-
-// Use two pixel values to convert line-height into a unitless number
-// @example scss Input
-//   p {
-//     font-size: 16px;
-//     line-height: line-height(16, 30);
-//   }
-@function line-height($font-size, $line-height) {
-  @if $line-height==normal {
-    @return normal;
-  }
-  @return math.div($line-height, $font-size);
-}
-
-// Use two pixel values to convert letter-spacing into an em value
-// @example scss Input
-//   p {
-//     font-size: 16px;
-//     // letter-spacing: -0.1px;
-//     letter-spacing: letter-spacing(16, -0.1);
-//   }
-@function letter-spacing($font-size, $letter-spacing) {
-  @if $letter-spacing==normal {
-    @return normal;
-  }
-  @return #{math.div($letter-spacing, $font-size)}em;
-}
-
-// Define font-size, line-height and letter-spacing in function
-// @example scss Input
-//   p {
-//     // font-size: 16px;
-//     // letter-spacing: -0.1px;
-//     // line-height: 1.5; // This is line-height 24px and font-size: 16px
-//     @include font-size(16, 24, -0.1)
-//   }
-@mixin font-size($font-size, $line-height: normal, $letter-spacing: normal) {
-  font-size: px($font-size);
-  line-height: line-height($font-size, $line-height);
-
-  @if $letter-spacing !=0 {
-    letter-spacing: letter-spacing($font-size, $letter-spacing);
-  }
-}
-
 /// Improve animation performance for containers
 /// @example scss Input
 ///   .card {
