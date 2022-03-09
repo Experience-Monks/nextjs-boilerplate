@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 
-import { siteName, siteDescription, siteSlogan, siteKeywords } from '@/data/settings';
+import { siteDescription, siteKeywords, siteName, siteSlogan } from '@/data/settings';
 
 type Props = {
   title?: string;
