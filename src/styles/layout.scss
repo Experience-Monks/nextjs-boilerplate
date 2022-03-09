@@ -16,7 +16,7 @@ $layout: (
 ///   }
 @mixin breakpoint($size) {
   @if map-get($layout, $size) {
-    @media (min-width: map-get($layout, $size) + px) {
+    @media (min-width: #{map-get($layout, $size)}px) {
       @content;
     }
   } @else {
@@ -25,7 +25,7 @@ $layout: (
 }
 
 @mixin media-mobile() {
-  @include breakpoint(mobile) {
+  @media (max-width: #{map-get($layout, tablet) - 1}px) {
     @content;
   }
 }
