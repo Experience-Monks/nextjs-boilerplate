@@ -1,0 +1,394 @@
+## TODO
+# 1. Trigger artifact creation if wasn't created already
+# 5. Parse Ursus
+# 6. Set parallelism
+# 8. Tag releases
+
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.1.0
+  github-cli: circleci/github-cli@1.0.4
+
+commands:
+  configure-aws-cli:
+    parameters:
+      aws_env_suffix:
+        description: 'Dynamic env variable suffix'
+        type: string
+        default: ''
+    steps:
+      - aws-cli/setup
+      - run: |
+          echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+          echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+          echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+
+jobs:
+  envtest:
+    docker:
+      - image: cimg/node:14.19
+
+    environment:
+      S3_ORIGIN_BUCKET: 'test'
+
+    steps:
+      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
+      - run: echo $CIRCLE_SHA1
+      - run: echo $ENV_PREVIEW_ID
+
+  setup:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  linters:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm run linters-ci
+
+  tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm test
+
+  artifact:
+    docker:
+      - image: cimg/node:14.19
+
+    parameters:
+      git_lfs:
+        description: 'Enable Git LFS'
+        default: false
+        type: boolean
+
+    steps:
+      - checkout
+      - when:
+          condition: << parameters.git_lfs >>
+          steps:
+            - run:
+                name: Install Git LFS
+                command: |
+                  sudo apt-get update
+                  sudo apt-get install git-lfs
+            - run:
+                name: Checkout binaries
+                command: git lfs pull
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Creating artifact
+          command: sh .circleci/scripts/build.sh
+      - run: tar -cvzf build.tar ~/project/out
+      - store_artifacts:
+          path: build.tar
+          destination: build.tar
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./out
+
+  preview-environment:
+    docker:
+      - image: cimg/node:14.19
+
+    parameters:
+      aws_env_suffix:
+        description: 'Dynamic env variable suffix'
+        type: string
+        default: ''
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        default: 'jam3-s3-example-name'
+        type: string
+      environment_domain:
+        description: 'Domain'
+        default: 'dev.test.cloud.jam3.net'
+        type: string
+
+    environment:
+      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
+      ENV_DOMAIN: << parameters.environment_domain >>
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - configure-aws-cli:
+          aws_env_suffix: << parameters.aws_env_suffix >>
+      - github-cli/setup
+      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
+      - run: aws s3 sync ./out s3://$S3_ORIGIN_BUCKET/preview/$ENV_PREVIEW_ID
+      - run:
+          command: |
+            gh pr comment $CIRCLE_PR_NUMBER --body "Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENV_DOMAIN"
+
+  storybook:
+    docker:
+      - image: cimg/node:14.19
+
+    parameters:
+      aws_env_suffix:
+        description: 'Dynamic env variable suffix'
+        type: string
+        default: ''
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        default: 'jam3-s3-example-name'
+        type: string
+
+    environment:
+      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm run build:storybook
+      - configure-aws-cli:
+          aws_env_suffix: << parameters.aws_env_suffix >>
+      - run: aws s3 sync ./storybook s3://$S3_ORIGIN_BUCKET/storybook
+
+  deployment:
+    docker:
+      - image: cimg/node:14.19
+
+    parameters:
+      ci_env:
+        description: 'CI Environment'
+        default: 'development'
+        type: enum
+        enum: ['development', 'staging', 'production']
+      gtm_id:
+        description: 'GTM Container ID'
+        default: 'GTM-0000000'
+        type: string
+      website_url:
+        description: 'Full site URL, including the protocol'
+        default: 'https://PLACEHOLDER_WEBSITE_SITE_URL'
+        type: string
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        default: 'jam3-s3-example-name'
+        type: string
+      cloudfront_distribution_id:
+        description: 'Cloudfront Distribution ID'
+        default: 'XXXXXXXXXXXXXXXX'
+        type: string
+      aws_env_suffix:
+        description: 'Dynamic env variable suffix'
+        type: string
+        default: ''
+
+    environment:
+      CI_ENV: << parameters.ci_env >>
+      NODE_ENV: << parameters.ci_env >>
+      GTM_ID: << parameters.gtm_id >>
+      WEBSITE_SITE_URL: << parameters.website_url >>
+      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
+      DISTRIBUTION_ID: << parameters.cloudfront_distribution_id >>
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - configure-aws-cli:
+          aws_env_suffix: << parameters.aws_env_suffix >>
+      - run:
+          name: Deploying artifact
+          command: sh .circleci/scripts/deploy.sh
+
+  sast:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  dast:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "DAST"
+
+  integration-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "Integration Tests"
+
+  performance-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "Performance Tests"
+
+  pen-test:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  accessibility-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  qa-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  social-test:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  content-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+  seo-tests:
+    docker:
+      - image: cimg/node:14.19
+
+    steps:
+      - run: echo "SAST"
+
+workflows:
+  version: 2
+  pull-requests:
+    jobs:
+      #       - envtest:
+      #           filters:
+      #             branches:
+      #               ignore: main
+      - setup:
+          filters:
+            branches:
+              ignore: main
+      - artifact:
+          requires:
+            - setup
+      - preview-environment:
+          context: GITHUB_CREDENTIALS
+          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
+          environment_domain: 'dev.eduardo-devops-boilerplate.jam3.cloud.jam3.net'
+          requires:
+            - artifact
+      - linters:
+          requires:
+            - setup
+      - sast:
+          requires:
+            - setup
+      - tests:
+          requires:
+            - setup
+
+  main:
+    jobs:
+      - artifact:
+          filters:
+            branches:
+              only: main
+      - deployment:
+          requires:
+            - artifact
+          ci_env: 'development'
+          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
+          cloudfront_distribution_id: 'EF37LJDOLPMA9'
+      - dast:
+          requires:
+            - deployment
+      - integration-tests:
+          requires:
+            - deployment
+      - performance-tests:
+          requires:
+            - deployment
+      - storybook:
+          requires:
+            - deployment
+          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
+      - deployment:
+          type: approval
+          name: deployment-staging
+          requires:
+            - dast
+            - integration-tests
+            - performance-tests
+          ci_env: 'stage'
+          s3_origin_bucket: 'am3-s3-example-stage-name'
+          cloudfront_distribution_id: 'xxxxx-stage'
+      - pen-test:
+          requires:
+            - deployment-staging
+      - accessibility-tests:
+          requires:
+            - deployment-staging
+      - qa-tests:
+          requires:
+            - deployment-staging
+      - deployment:
+          type: approval
+          name: deployment-production
+          requires:
+            - pen-test
+            - accessibility-tests
+            - qa-tests
+          ci_env: 'stage'
+          s3_origin_bucket: 'am3-s3-example-stage-name'
+          cloudfront_distribution_id: 'xxxxx-stage'
+      - social-test:
+          requires:
+            - deployment-production
+      - content-tests:
+          requires:
+            - deployment-production
+      - seo-tests:
+          requires:
+            - deployment-production

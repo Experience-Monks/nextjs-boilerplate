@@ -16,7 +16,7 @@
     "\n ######################  NPM Secondary Pipeline  ######################": "",
     "build:ssr": "next build",
     "build:static": "next build && next export",
-    "build:storybook": "build-storybook -c .storybook -s ./public -o ./out/storybook -- --preview-url=/storybook/iframe.html",
+    "build:storybook": "build-storybook -c .storybook -s ./public -o ./storybook -- --preview-url=/storybook/iframe.html",
     "postbuild:static": "npm-run-all postcss next-sitemap",
     "ci-prod-server": "serve out &",
     "next-sitemap": "next-sitemap",
