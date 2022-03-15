@@ -6,6 +6,8 @@ const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
 const { withSentryConfig } = require('@sentry/nextjs');
 
+const Sentry = false;
+
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
   imagesName: '[name]-[hash].[ext]',
@@ -82,16 +84,21 @@ if (process.env.ENABLE_PWA === 'true') {
   ]);
 }
 
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
 const moduleExports = withPlugins(nextPlugins, nextJSConfig);
 
-// https://github.com/getsentry/sentry-webpack-plugin#options.
-const sentryWebpackPluginOptions = {
-  silent: true,
-  url: 'https://sentry.io/',
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT_NAME,
-  authToken: process.env.SENTRY_AUTH_TOKEN // https://sentry.io/settings/account/api/auth-tokens/
-};
+let Config;
+if (Sentry) {
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+  const sentryWebpackPluginOptions = {
+    silent: true,
+    url: 'https://sentry.io/',
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT_NAME,
+    authToken: process.env.SENTRY_AUTH_TOKEN // https://sentry.io/settings/account/api/auth-tokens/
+  };
+  Config = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+} else {
+  Config = moduleExports;
+}
 
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+module.exports = Config;
