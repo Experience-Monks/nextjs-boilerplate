@@ -116,7 +116,9 @@ $generic-fonts: system-ui, Helvetica, Arial, sans-serif;
 }
 
 // Example Typography System
-// TODO: Replace with your project typography system
+// TODO: Replace with your project typography system.
+// Also update docs/storybook/3.Typography.stories.mdx
+
 @mixin typography-paragraph {
   @include font-family('WorkSans', 400);
   @include font-size(12, 14, -0.04);

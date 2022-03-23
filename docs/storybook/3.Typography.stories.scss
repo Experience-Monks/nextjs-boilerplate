@@ -1,0 +1,11 @@
+@import 'shared';
+
+.h1 {
+  @include typography-h1;
+  margin: 0 0 20px;
+}
+
+.paragraph {
+  @include typography-paragraph;
+  margin: 0 0 20px;
+}
