@@ -1,0 +1,47 @@
+@import 'shared';
+
+.Layout {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: px(100) 100%;
+  grid-template-areas:
+    'mobileHeader'
+    'content';
+
+  .mobileHeader {
+    grid-area: mobileHeader;
+    background-color: $black;
+    position: fixed;
+    top: 0;
+    height: px(100);
+    @include z-index(header);
+  }
+
+  .sidebar {
+    height: 100%;
+    display: none;
+  }
+
+  .content {
+    grid-area: content;
+    padding: $box-padding;
+    position: fixed;
+  }
+
+  @media (min-width: $layout-desktopSm) {
+    grid-template-rows: 100%;
+    grid-template-columns: #{px(316)} 1fr;
+    grid-template-areas: 'sidebar content';
+
+    .mobileHeader {
+      display: none;
+    }
+
+    .sidebar {
+      grid-area: sidebar;
+      padding: $box-padding;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

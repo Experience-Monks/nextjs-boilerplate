@@ -1,0 +1,32 @@
+@import 'shared';
+
+.SVGWrapper {
+  width: px(24);
+  height: px(24);
+
+  .svg {
+    width: 100%;
+    height: 100%;
+    fill: $light_grey_2;
+
+    &.documentation {
+      path {
+        fill: $light_grey_2;
+      }
+    }
+
+    &.logging {
+      fill: none;
+      path {
+        stroke: $light_grey_2;
+      }
+    }
+  }
+
+  .square {
+    @include box(px(22));
+    background-color: $green;
+    display: inline-block;
+    margin-right: px(20);
+  }
+}

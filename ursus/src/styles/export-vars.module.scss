@@ -1,0 +1,12 @@
+/* stylelint-disable */
+@import 'shared';
+
+:export {
+  white: $white;
+  black: $black;
+  layoutMobile: $layout-mobile;
+  layoutTablet: $layout-tablet;
+  layoutDesktopSm: $layout-desktopSm;
+  layoutDesktopMd: $layout-desktopMd;
+  layoutDesktopLg: $layout-desktopLg;
+}

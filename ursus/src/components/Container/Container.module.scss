@@ -1,0 +1,38 @@
+@import 'shared';
+
+.Container {
+  border-radius: px(6);
+  box-shadow: px(0) px(0) px(2) rgba(0, 0, 0, 0.25);
+
+  .topContainer {
+    display: flex;
+
+    .title {
+      padding: px(12) 0 px(23) px(19);
+    }
+    .reportLink {
+      margin-left: auto;
+      padding-top: px(12);
+      padding-right: px(19);
+    }
+  }
+
+  .listItem {
+    display: flex;
+    margin-left: px(0);
+    padding-bottom: px(19);
+  }
+
+  .status {
+    @include status;
+    margin-right: px(16);
+
+    &.complete {
+      color: $dark_green;
+    }
+  }
+
+  .text {
+    margin-top: px(5);
+  }
+}

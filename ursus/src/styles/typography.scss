@@ -1,0 +1,110 @@
+// Fonts
+//
+// Location of all the font-families and font-related css
+//
+// Best practices:
+// 1. Avoid loading as many fonts as possible, e.x font styles, font families
+// 2. Optimize the font, remove the characters set that the site won't use: languages
+// 3. Include the unicode range in case you couldn't remove the characters. Included just Latin by default
+// 4. Change fonts just changing the font-weight
+
+@import 'vars';
+
+// Ursus Custom typography
+@mixin h1 {
+  font-size: px(48);
+  font-style: normal;
+  line-height: px(56);
+}
+
+@mixin h2 {
+  font-weight: $font-weight-regular;
+  font-size: px(30);
+  font-style: normal;
+  line-height: px(35);
+}
+
+@mixin h3 {
+  font-size: px(20);
+  font-style: normal;
+  line-height: px(23);
+}
+
+@mixin h4 {
+  font-size: px(18);
+  font-style: normal;
+  line-height: px(21);
+}
+
+@mixin h5 {
+  font-size: px(16);
+  font-style: normal;
+  line-height: px(19);
+}
+
+@mixin p4 {
+  font-size: px(14);
+  font-style: normal;
+  line-height: px(16);
+}
+
+@mixin caption {
+  font-weight: $font-weight-bold;
+  font-size: px(12);
+  line-height: px(14);
+}
+
+@mixin logoFont {
+  font-size: px(24);
+  font-style: normal;
+  line-height: px(28);
+}
+
+@mixin link {
+  color: $purple;
+}
+
+@mixin gridRowHeader {
+  font-size: px(12);
+}
+
+@mixin buttonLabel {
+  font-size: px(14);
+}
+
+.Form {
+  .label {
+    @include p4;
+  }
+
+  input {
+    @include p4;
+  }
+}
+
+.Grid {
+  .headerItem {
+    @include caption;
+  }
+  .rowItem {
+    @include gridRowHeader;
+  }
+
+  .loadMorebutton {
+    @include buttonLabel;
+  }
+}
+
+.QuickLink {
+  @include h5;
+}
+
+@media (min-width: $layout-desktopSm) {
+  .name {
+    @include h1;
+  }
+
+  .description {
+    @include h3;
+  }
+}

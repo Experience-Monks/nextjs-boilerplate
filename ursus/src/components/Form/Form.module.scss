@@ -1,0 +1,30 @@
+@import 'shared';
+
+.Form {
+  border: px(1) solid $grey;
+  padding: px(14);
+  box-shadow: 0 0 px(2) rgba(0, 0, 0, 0.25);
+  border-radius: px(6);
+  background-color: $white;
+
+  .title {
+    padding-bottom: px(21);
+    font-weight: $font-weight-regular;
+    @include logoFont;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 2fr 6fr;
+    padding-bottom: px(14);
+  }
+
+  .label {
+    color: $dark_grey_6;
+  }
+
+  input {
+    border: px(1) solid $light_grey;
+    border-radius: px(3);
+  }
+}

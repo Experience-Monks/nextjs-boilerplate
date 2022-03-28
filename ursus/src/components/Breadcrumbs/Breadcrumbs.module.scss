@@ -1,0 +1,26 @@
+@import 'shared';
+
+.Breadcrumbs {
+  margin-bottom: px(21);
+  display: flex;
+  align-items: center;
+
+  .homeIcon {
+    width: 1em;
+    height: 1em;
+  }
+
+  .breadcrumbsLink {
+    color: $dark_grey_2;
+  }
+}
+
+.ActiveLink {
+  color: $dark_grey_3;
+  border-bottom: 1px solid transparent;
+
+  &.active {
+    color: $black;
+    border-bottom-color: $black;
+  }
+}

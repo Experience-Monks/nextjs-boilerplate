@@ -1,0 +1,51 @@
+@import 'shared';
+.Grid {
+  width: 100%;
+  .countWrapper {
+    display: flex;
+
+    .countLogo {
+      width: px(24);
+      height: px(24);
+    }
+    .count {
+      margin-left: px(8);
+      margin-bottom: px(25);
+    }
+  }
+  .table {
+    width: 100%;
+    .row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      border-bottom: px(1) solid $grey;
+
+      .headerItem {
+        color: $dark_grey_2;
+        text-align: left;
+        border-top: px(1) solid $grey;
+        padding-top: px(5);
+        padding-bottom: px(5);
+      }
+
+      .rowItem {
+        color: $dark_grey_3;
+        padding: px(11) 0;
+
+        .status {
+          @include status;
+          margin: 0;
+          width: fit-content;
+        }
+      }
+    }
+  }
+
+  .loadMorebutton {
+    margin-top: px(20);
+    padding: px(11) px(14);
+    background-color: $light_pink;
+    border: none;
+    border-radius: px(4);
+  }
+}

@@ -1,0 +1,28 @@
+@import 'shared';
+
+.HamburgerMenu {
+  .hamburgerIcon,
+  .closeIcon {
+    fill: $white;
+    width: px(36);
+  }
+
+  .logo {
+    margin: px(40) 0 0 px(32);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .projectName {
+      color: $white;
+      margin: 0 0 px(10) px(18);
+    }
+  }
+
+  .container {
+    height: 0;
+    overflow: auto;
+    background-color: $black;
+    @include custom-scrollbar($dark_grey_5, $dark_grey_3);
+  }
+}

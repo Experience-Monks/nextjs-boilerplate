@@ -1,0 +1,26 @@
+# This workflow is written specifically for Jam3/nextjs-boilerplate
+# It uploads all contents inside the ./out/ folder generated on build:prod:static process to a AWS S3 accoun
+
+name: Github Action Workflow DEV
+
+on:
+  push:
+    branches:
+      - develop
+
+concurrency:
+  group: environment-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-dev:
+    uses: Jam3/intern-ursus-prototype/.github/workflows/deploy-to-s3.yml@develop
+    with:
+      CI_ENV: development
+      WEBSITE_SITE_URL: https://dev.ursus.intern.cloud.jam3.net
+      S3_ORIGIN_BUCKET: intern-dev-ursus-origin
+      CLOUDFRONT_DISTRIBUTION_ID: E21SQ9LB4ALG4T
+      AWS_DEFAULT_REGION: us-east-1
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

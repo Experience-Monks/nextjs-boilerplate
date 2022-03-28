@@ -1,0 +1,86 @@
+@import 'shared';
+
+.Checklist {
+  .list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .listItem {
+    .container {
+      display: block;
+      position: relative;
+      padding-left: px(35);
+      margin-bottom: px(12);
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: px(17);
+      width: px(17);
+      background-color: #eee;
+    }
+
+    .container input:checked ~ .checkmark {
+      background-color: $dark_grey;
+    }
+
+    .checkmark::after {
+      content: '';
+      position: absolute;
+      display: none;
+    }
+
+    .container input:checked ~ .checkmark::after {
+      display: block;
+    }
+
+    .container .checkmark::after {
+      left: px(6);
+      top: px(3);
+      width: px(5);
+      height: px(10);
+      border: solid white;
+      border-width: 0 px(3) px(3) 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .itemName {
+      padding-left: px(10);
+
+      .linkIcon {
+        margin-left: px(8);
+        width: px(10);
+        height: px(12);
+      }
+    }
+  }
+
+  @media (min-width: $layout-desktopSm) {
+    .list {
+      height: 16.4rem;
+      flex-flow: column wrap;
+    }
+
+    .listItem {
+      min-width: px(350);
+    }
+  }
+}

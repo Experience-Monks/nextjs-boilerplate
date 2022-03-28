@@ -1,0 +1,27 @@
+@import 'shared';
+
+.List {
+  .title {
+    margin-bottom: px(12);
+  }
+
+  .listItem {
+    display: flex;
+    margin-left: px(19);
+  }
+
+  .listItemBlock {
+    display: block;
+
+    .link {
+      text-transform: capitalize;
+    }
+  }
+
+  .link {
+    @include p4;
+    padding-right: px(44);
+    text-transform: uppercase;
+    list-style: disc;
+  }
+}

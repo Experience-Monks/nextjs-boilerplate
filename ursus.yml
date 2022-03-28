@@ -1,0 +1,388 @@
+general:
+  project-name: Sonos Prelude
+  ursus-help: https://wiki.jam3.net/shelves/ursus
+  version: sdfg35f
+
+categories:
+  dashboard:
+    setting: # Special category used by Ursus UI
+      name: Dashboard
+      title: Sonos Prelude
+      description: Project’s dashboard
+      quicklink:
+        - name: Live
+          link: https://jam3.com
+        - name: Github
+          link: https://jam3.com
+        - name: Design
+          link: https://jam3.com
+        - name: Jira
+          link: https://jam3.com
+        - name: CI/CD
+          link: https://jam3.com
+        - name: AWS
+          link: https://jam3.com
+    sections:
+      - component: tips
+        content:
+          type: info
+          message: 'The project is not ready to be launched: Security and Performance are not ready.'
+  control-tower:
+    setting:
+      environments:
+        develop: settings.dev.tfvars
+        staging: settings.stage.tfvars
+        production: settings.prod.tfvars
+      route: /infrastructure
+      name: Control Tower
+      title: Control Tower # If title is not in yml, name is used for title
+      description: Read and update the AWS infrastructure
+      quicklink:
+        - name: DevOps Repository
+          link: https://jam3.com
+    sections:
+      - component: form
+        title: General
+        items:
+          - name: Project name
+            value: devops-boilerplate
+          - name: Namespace
+            value: jam3
+          - name: Environment
+            value: dev
+          - name: Alarm email address
+            value: marcelo.rodriguez@jam3.com
+      - component: form
+        title: Authentication
+        items:
+          - name: Basic auth enabled
+            value: true
+          - name: Basic auth username
+            value: jam3
+          - name: Basic auth password
+            value: WeAreJam3
+          - name: Basic auth token
+            value: 233hhdk34kdkngf34
+          - name: Basic auth IP allowlist
+            value: 123.56.78.90, 132.10.45.34
+      - component: form
+        title: Security Headers
+        items:
+          - name: Enabled
+            value: devops-boilerplate
+          - name: CSP report only
+            value: jam3
+          - name: Default source
+            value: dev
+          - name: Image source
+            value: marcelo.rodriguez@jam3.com
+  documentation:
+    setting:
+      name: Documentation
+      description: Hub for all the technical documentation of the project
+    sections:
+      - component: checklist
+        title: Checklist
+        items:
+          - name: Run Technical Audit
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create Cache Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create Analytics Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create AWS Quota Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create TDD
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create Redirect Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create URL & Endpoints Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create SEO Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create Jam3 Threat Model
+            reference: https://wiki.jam3.net/shelves/doc
+            done: false
+          - name: Create Launch Plan
+            reference: https://wiki.jam3.net/shelves/doc
+            done: false
+          - name: Create Sunset Plan
+            reference: https://wiki.jam3.net/shelves/doc
+            done: false
+          - name: Review Infrastructure
+            reference: https://wiki.jam3.net/shelves/doc
+            done: true
+          - name: Create AWS Concurrency Manifest
+            reference: https://wiki.jam3.net/shelves/doc
+            done: false
+      - component: list
+        title: Documents
+        items:
+          - name: Open Report
+            link: https://demo.ca
+      - component: list
+        title: Slack
+        items:
+          - name: Project Channel
+            link: https://demo.ca
+          - name: Client Channel
+            link: https://demo.ca
+          - name: Dev Channel
+            link: https://demo.ca
+      - component: list
+        title: Repositories
+        items:
+          - name: Frontend
+            link: https://demo.ca
+          - name: Devops
+            link: https://demo.ca
+          - name: Backend
+            link: https://demo.ca
+      - component: plain
+        title: Environment
+        items:
+          - name: Link
+            link: https://demo.ca
+          - name: user
+            text: user
+          - name: pass
+            text: pass
+      - component: list
+        title: Other links
+        config:
+          columnDirection: true
+        items:
+          - name: Team members
+            link: https://demo.ca
+          - name: Resourcing
+            link: https://demo.ca
+          - name: Sorbet
+            link: https://demo.ca
+  licenses:
+    setting:
+      name: Licenses
+      description: Monitor frontend and backend licenses that are not safe to use in our projects
+      quicklink:
+        - name: OS Licenses
+          link: https://jam3.com
+    sections:
+      - component: tips
+        content:
+          type: error
+          message: The project is using dependencies with invalid licences, to check this module out, please fix the licences issue.
+      - component: tips
+        content:
+          type: info
+          message: The project is using “adviser” package to scan for licenses that are not open sourced. To export and further analyse use the package directly.
+      - component: table #will be better to define a header, and there all the items like SCRIPT, LOCATION, etc
+        title: Frontend Licenses
+        items:
+          - name: Script
+            text: npm run licenses
+          - name: Hook
+            text: scheduled, nightly
+          - name: Location
+            text: N/A
+          - name: Bucket
+            link: s3://<route>/licenses/frontend
+          - name: Out-folder
+            link: /out-licenses
+        checklist:
+          - sigmund:
+              version: 1.0.0
+              license: BSD-2-Clause
+              status: error
+          - text-render-canvas:
+              version: 1.3.3
+              license: Unknown
+              status: Needs review
+          - iframe-open:
+              version: 3.1.0
+              license: BSD-2-Clause
+              status: Needs review
+          - component-hooks-library:
+              version: 4.0.5
+              license: Unknown
+              status: Complete
+          - glob:
+              version: 2.7.0
+              license: BSD-2-Clause
+              status: Needs review
+          - fps-monitor:
+              version: 8.0.3
+              license: Unknown
+              status: error
+          - sigmund-2:
+              version: 1.0.0
+              license: BSD-2-Clause
+              status: Complete
+          - text-render-canvas-2:
+              version: 1.3.3
+              license: Unknown
+              status: Complete
+          - iframe-open-2:
+              version: 3.1.0
+              license: BSD-2-Clause
+              status: Complete
+          - component-hooks-library-2:
+              version: 4.0.5
+              license: Unknown
+              status: Needs review
+          - glob-2:
+              version: 2.7.0
+              license: BSD-2-Clause
+              status: Needs review
+          - fps-monitor-2:
+              version: 8.0.3
+              license: Unknown
+              status: error
+  testing:
+    setting:
+      name: Automated Testing
+      description: All the automated tests for the project
+    sections: # Unit test has a 2 sub sections in the section, we need to define that
+      - section:
+          component: tips
+          content: The project is using “adviser” package to scan for licenses that are not open sourced. To export and further analyse use the package directly.
+      - section:
+          component: table
+          title: Frontend Licenses
+          checklist:
+          criteria: empty
+          items:
+            - name: Script
+              text: npm run licenses
+            - name: Hook
+              text: scheduled, nightly
+            - name: Location
+              text: N/A
+            - name: Bucket
+              link: s3://<route>/licenses/frontend
+            - name: Out-folder
+              link: /out-licenses
+  qa:
+    setting:
+      name: Quality Assurance
+      description: Tool set to help during our QA pipelines
+      quicklink:
+        - name: TestRail
+          link: https://testrail.titanhq.com
+        - name: BrowserStack
+          link: https://www.browserstack.com
+        - name: UserSnap
+          link: https://usersnap.com
+    sections:
+      - component: plain
+        title: Test Rail
+        config:
+          columnDirection: false
+        items:
+          - name: Technical Design Documentation
+            link: https://demo.ca
+          - name: AWS Quotas
+            link: https://demo.ca
+      - component: table
+        title:
+        items:
+          - name: Script
+            text: N/A
+          - name: Hook
+            text: N/A
+          - name: Location
+            text: TBD with QA
+            link: https:/demo.ca
+      - component: embedded
+        title: Embedded Link
+        link: /testrail/testrail.pdf#toolbar=0
+  components:
+    setting:
+      name: Components
+      description: All the project's components, including frontend and backend
+      quicklink:
+        - name: Jam3 React UI
+          link: https://jam3.com
+        - name: Jam3 Guttenberg UI
+          link: https://jam3.com
+    sections:
+      - section:
+          component: embedded
+          title: Frontend Components
+          hook: scheduled, nightly
+          script: npm run storybook
+          built-folder: /out-storybook
+          bucket: s3://<route>/components/frontend
+          last-update: 12d
+      - component: table
+        title: Frontend Components
+        items:
+          - name: Script
+            text: npm run storybook
+          - name: Hook
+            text: 'Schedule: nightly'
+          - name: Location
+            text: /ursus/components/frontend
+            link: https://dev.ursus.intern.cloud.jam3.net/storybook/
+      - component: embedded
+        title: Embedded Link
+        link: https://dev.ursus.intern.cloud.jam3.net/storybook/?path=/story/intro--page
+  security:
+    setting:
+      name: Security
+      description: Hub for all the technical documentation of the project
+    sections:
+      - component: container
+        title: Output
+        reportLink: https://demo.ca
+        items:
+          - text: Links do not have descriptive text
+            status: error
+          - text: Document has a <title> element
+            status: error
+          - text: Document has a meta description
+            status: error
+          - text: Page isn’t blocked from indexing
+            status: error
+          - text: robots.txt is invalid
+            status: error
+  logging:
+    setting:
+      name: Logging
+      description: Hub for all the technical documentation of the project
+    sections:
+      - component: card #will be better to define a header, and there all the items like SCRIPT, LOCATION, etc
+        title: Best Practices
+        items:
+          - name: Frontend - Sentry
+            text: An example of a really really long two-line secondary text example.
+            imageLink: sentry.png
+            externLink: https://www.google.ca/
+          - name: Backend - Datadog
+            text: An example of a really really long two-line secondary text example.
+            imageLink: datadog.png
+            externLink: https://www.google.ca/
+          - name: Backend - Datadog
+            text: An example of a really really long two-line secondary text example.
+            imageLink: datadog.png
+            externLink: https://www.google.ca/
+          - name: Backend - Datadog
+            text: An example of a really really long two-line secondary text example.
+            imageLink: datadog.png
+            externLink: https://www.google.ca/
+          - name: Backend - Datadog
+            text: An example of a really really long two-line secondary text example.
+            imageLink: datadog.png
+            externLink: https://www.google.ca/
+  seo:
+  auditor:
+  billing:
+  i18n:
+  backups:
+  data:

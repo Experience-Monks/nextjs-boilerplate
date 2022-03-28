@@ -56,6 +56,12 @@ function Home({ className }: Props) {
               <p>Learn more about Jam3.dev</p>
             </a>
           </li>
+          <li>
+            <a href="/ursus" className={styles.card} target="_blank" rel="noopener noreferrer">
+              <h3>Ursus</h3>
+              <p>See project details</p>
+            </a>
+          </li>
         </ul>
       </section>
     </main>

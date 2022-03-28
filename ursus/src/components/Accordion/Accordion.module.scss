@@ -1,0 +1,40 @@
+@import 'shared';
+
+.Accordion {
+  .openIcon,
+  .closeIcon {
+    @include box(px(14));
+    cursor: pointer;
+  }
+
+  .titleWrapper {
+    display: flex;
+    padding-bottom: px(21);
+    align-items: center;
+
+    .accordionBtn {
+      margin-right: px(10);
+    }
+
+    .status {
+      @include caption;
+      color: $red_error;
+      border: px(1) solid currentColor;
+      border-radius: px(41);
+      margin-left: px(20);
+      padding: px(6);
+
+      &.complete {
+        color: $dark_green;
+      }
+    }
+
+    .titleName {
+      text-transform: capitalize;
+    }
+  }
+
+  .content {
+    overflow: hidden;
+  }
+}

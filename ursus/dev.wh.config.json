@@ -1,0 +1,21 @@
+{
+  "connector": "jsdom",
+  "extends": ["web-recommended"],
+  "formatters": [],
+  "hints": {
+    "compat-api/html": "off",
+    "ssllabs": "off",
+    "no-disallowed-headers": "off",
+    "strict-transport-security": "off",
+    "http-compression": "off",
+    "http-cache": "off",
+    "no-html-only-headers": "off",
+    "x-content-type-options": "off"
+  },
+  "ignoredUrls": [
+    {
+      "domain": "http://localhost:5000/_next/static/css/.*",
+      "hints": ["*"]
+    }
+  ]
+}

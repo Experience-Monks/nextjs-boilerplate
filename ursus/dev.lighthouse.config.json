@@ -1,0 +1,31 @@
+{
+  "extends": "lighthouse:default",
+  "settings": {
+    "skipAudits": [
+      "is-on-https",
+      "redirects-http",
+      "uses-http2",
+      "service-worker",
+      "works-offline",
+      "offline-start-url",
+      "pwa-cross-browser",
+      "pwa-page-transitions",
+      "pwa-each-page-has-url",
+      "screenshot-thumbnails",
+      "final-screenshot",
+      "user-timings",
+      "critical-request-chains",
+      "diagnostics",
+      "network-requests",
+      "network-rtt",
+      "network-server-latency",
+      "main-thread-tasks",
+      "metrics",
+      "resource-summary",
+      "canonical",
+      "structured-data",
+      "is-crawlable",
+      "uses-long-cache-ttl"
+    ]
+  }
+}

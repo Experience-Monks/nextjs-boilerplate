@@ -1,0 +1,36 @@
+@import 'shared';
+
+.Table {
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: px(17);
+  }
+
+  .status {
+    @include status;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: px(25);
+
+    .listItem {
+      padding-right: px(73);
+      margin-bottom: px(27);
+      display: flex;
+      flex-direction: column;
+
+      .itemKey {
+        color: $dark_grey_3;
+        font-weight: $font-weight-bold;
+        margin-bottom: px(5);
+      }
+
+      .itemValue {
+        color: $dark_grey_6;
+      }
+    }
+  }
+}

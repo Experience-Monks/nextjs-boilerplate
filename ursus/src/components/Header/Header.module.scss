@@ -1,0 +1,56 @@
+@import 'shared';
+
+.Header {
+  width: 100%;
+  padding: $box-padding;
+  background-color: $white;
+  border: px(1) solid $grey;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .profile {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: px(23) px(32) 0 0;
+    @include z-index(profile-setting);
+
+    .profileImage {
+      border: px(4) solid $dark_grey_2;
+      border-radius: 50%;
+    }
+
+    .dropdownIcon {
+      fill: $white;
+      height: px(12);
+      width: px(12);
+      margin-left: px(16);
+    }
+  }
+
+  .name {
+    color: $dark_grey_3;
+    font-weight: $font-weight-regular;
+  }
+
+  .description {
+    color: $dark_grey_4;
+    font-weight: $font-weight-regular;
+  }
+
+  .quickLinkWrapper {
+    display: flex;
+    margin-top: px(25);
+  }
+
+  @media (min-width: $layout-desktopSm) {
+    .profile {
+      .dropdownIcon {
+        fill: $black;
+      }
+    }
+  }
+}

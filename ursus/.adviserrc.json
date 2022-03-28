@@ -1,0 +1,148 @@
+{
+  "plugins": ["dependencies"],
+  "rules": {
+    "package-json-properties": [
+      "error",
+      {
+        "required": ["name", "private", "scripts", "engines", "dependencies", "browserslist"]
+      }
+    ],
+    "root-files": [
+      "error",
+      {
+        "required": [
+          ".husky",
+          ".gitignore",
+          "commitlint.config.js",
+          ".editorconfig",
+          ".eslintrc.json",
+          ".prettierrc",
+          ".stylelintrc",
+          "README.md"
+        ],
+        "blacklist": []
+      }
+    ],
+    "dependencies/not-allowed-packages": [
+      "error",
+      {
+        "packages": ["jquery", "lodash"]
+      }
+    ],
+    "dependencies/min-vulnerabilities-allow": [
+      "error",
+      {
+        "production": true,
+        "level": "critical",
+        "skip": ["immer"]
+      }
+    ],
+    "dependencies/outdated-packages": [
+      "warn",
+      {
+        "criteria": "major",
+        "exclude": ["gsap"]
+      }
+    ],
+    "dependencies/package-size": [
+      "warn",
+      {
+        "threshold": 60
+      }
+    ],
+    "dependencies/unused-packages": ["warn"],
+    "dependencies/licenses-whitelist": [
+      "warn",
+      {
+        "whitelist": [
+          "AFL-2.1",
+          "AFL-3.0",
+          "APSL-2.0",
+          "Apache-1.1",
+          "Apache-2.0",
+          "Artistic-1.0",
+          "Artistic-2.0",
+          "BSD-2-Clause",
+          "BSD-3-Clause",
+          "BSL-1.0",
+          "CC-BY-1.0",
+          "CC-BY-2.0",
+          "CC-BY-2.5",
+          "CC-BY-3.0",
+          "CC-BY-4.0",
+          "CC0-1.0",
+          "CDDL-1.0",
+          "CDDL-1.1",
+          "CPL-1.0",
+          "EPL-1.0",
+          "FTL",
+          "GPL-3.0",
+          "IPL-1.0",
+          "ISC",
+          "LGPL-2.0",
+          "LGPL-2.1",
+          "LGPL-3.0",
+          "LPL-1.02",
+          "MIT",
+          "MPL-1.0",
+          "MPL-1.1",
+          "MPL-2.0",
+          "MS-PL",
+          "NCSA",
+          "OpenSSL",
+          "PHP-3.0",
+          "Ruby",
+          "Unlicense",
+          "W3C",
+          "Xnet",
+          "ZPL-2.0",
+          "Zend-2.0",
+          "Zlib",
+          "libtiff",
+          "BSD-3-Clause OR MIT",
+          "(MIT OR Apache-2.0)",
+          "MPL-2.0 OR Apache-2.0",
+          "(MIT AND Zlib)",
+          "(WTFPL OR MIT)",
+          "(BSD-2-Clause OR MIT OR Apache-2.0)",
+          "(MIT AND BSD-3-Clause)"
+        ],
+        "excludePackage": [
+          "async-foreach@0.1.3",
+          "fast-shallow-equal@1.0.0",
+          "rework@1.0.1",
+          "use-subscription@1.4.1",
+          "gsap@3.5.0",
+          "ignore-loader@0.1.2",
+          "nano-css@5.3.0",
+          "json-schema@0.2.3",
+          "jam3-dev@0.1.0",
+          "react-universal-interface@0.6.2",
+          "tslib@1.13.0",
+          "tslib@2.0.1",
+          "type-fest@0.7.1"
+        ],
+        "includeNoProdPackages": false
+      }
+    ]
+  },
+  "settings": {
+    "tags": {
+      "dev": [
+        "package-json-properties",
+        "root-files",
+        "dependencies/not-allowed-packages",
+        "dependencies/min-vulnerabilities-allow"
+      ],
+      "ci": [
+        "package-json-properties",
+        "root-files",
+        "dependencies/not-allowed-packages",
+        "dependencies/min-vulnerabilities-allow",
+        "dependencies/outdated-packages",
+        "dependencies/licenses-whitelist",
+        "dependencies/unused-packages"
+      ]
+    }
+  }
+}

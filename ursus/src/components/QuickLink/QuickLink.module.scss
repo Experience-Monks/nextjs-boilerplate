@@ -1,0 +1,23 @@
+@import 'shared';
+
+.QuickLink {
+  background-color: $light_grey_3;
+  padding: px(9) px(11);
+  margin-right: px(37);
+  border-radius: px(20);
+
+  .link {
+    display: flex;
+    align-items: center;
+    color: $black;
+
+    .dot {
+      height: px(25);
+      width: px(25);
+      background-color: $dark_grey_7;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: px(10);
+    }
+  }
+}

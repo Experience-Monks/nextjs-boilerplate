@@ -1,0 +1,22 @@
+@import 'shared';
+
+.PlainList {
+  .title {
+    padding-bottom: px(12);
+  }
+
+  .listItem {
+    padding-right: px(44);
+    @include p4;
+
+    .itemKey {
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+
+    .itemValue {
+      color: $dark_grey_2;
+      font-weight: $font-weight-bold;
+    }
+  }
+}

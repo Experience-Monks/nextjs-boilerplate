@@ -1,0 +1,35 @@
+ls:
+  .js: kebab-case | pointcase
+  .ts: kebab-case | pointcase
+  .d.ts: kebab-case
+  .config.js: kebab-case
+  src:
+    assets:
+      .png: kebab-case
+      .jpg: kebab-case
+      .jpeg: kebab-case
+      .webp: kebab-case
+      .svg: kebab-case
+      .mp4: kebab-case
+      .webm: kebab-case
+    components:
+      .js: PascalCase
+      .tsx: PascalCase
+      .stories.js: PascalCase
+      .stories.tsx: PascalCase
+      .svg: kebab-case
+    pages:
+      .js: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
+      .tsx: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
+  scripts:
+    templates:
+      .js: PascalCase
+      .stories.js: PascalCase
+
+ignore:
+  - node_modules
+  - .next
+  - out
+  - examples
+  - src/components/svgs/_.stories.tsx
+  - public/testrail

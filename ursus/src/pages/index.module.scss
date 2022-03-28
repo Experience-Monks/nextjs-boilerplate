@@ -1,0 +1,23 @@
+@import 'shared';
+
+.Home {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-rows: #{px(198)} 1fr;
+
+  .header {
+    border: 1px solid $grey;
+    padding: $box-padding;
+  }
+
+  .content {
+    overflow-y: auto;
+    background-color: $bg-white;
+    padding: $box-padding;
+
+    > * {
+      margin-bottom: px(48);
+    }
+  }
+}

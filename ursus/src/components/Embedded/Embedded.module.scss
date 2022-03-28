@@ -1,0 +1,19 @@
+@import 'shared';
+
+.Embedded {
+  .title,
+  .link {
+    display: inline-block;
+    width: 50%;
+  }
+
+  .link {
+    text-align: end;
+  }
+
+  .iframe {
+    width: 100%;
+    height: px(600);
+    margin: px(20) 0;
+  }
+}

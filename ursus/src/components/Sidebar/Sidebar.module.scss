@@ -1,0 +1,105 @@
+@import 'shared';
+
+.Sidebar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: $black;
+  color: $white;
+  padding: px(27);
+  justify-content: space-between;
+  width: 100vw;
+  min-height: min-content;
+
+  .ursus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: px(21);
+    width: 100%;
+
+    .logo {
+      @include box(px(64));
+      margin-right: px(20);
+    }
+    .name {
+      color: $yellow;
+      @include logoFont;
+    }
+  }
+
+  .projectName {
+    border-top: px(1) solid $dark_grey_5;
+    border-bottom: px(1) solid $dark_grey_5;
+    width: px(274);
+    padding: px(25) 0 px(31);
+    margin-bottom: px(31);
+    text-align: center;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+    gap: px(10);
+    overflow-y: auto;
+    margin-bottom: px(31);
+    padding-right: px(10);
+    @include custom-scrollbar($dark_grey_5, $dark_grey_3);
+
+    .link {
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox {
+      height: px(25);
+      width: px(25);
+      background-color: $white;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: px(20);
+
+      &.active {
+        background-color: $light_green;
+      }
+    }
+
+    .listItem {
+      color: $light_grey_2;
+      margin-left: px(14);
+    }
+  }
+
+  .sidebarFooter {
+    .help {
+      background-color: $dark_grey;
+      display: flex;
+      align-items: center;
+      padding: px(13) px(14);
+      margin-bottom: px(21);
+
+      .helpIcon {
+        fill: $white;
+        height: px(31);
+        width: px(23);
+        margin-right: px(13);
+      }
+
+      .helpLink {
+        color: $white;
+      }
+    }
+
+    .version {
+      color: $dark_grey_2;
+      margin-bottom: px(17);
+    }
+  }
+
+  @media (min-width: $layout-desktopSm) {
+    align-items: flex-start;
+    width: 100%;
+  }
+}

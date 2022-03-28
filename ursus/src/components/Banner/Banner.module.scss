@@ -1,0 +1,37 @@
+@import 'shared';
+
+.Banner {
+  width: 100%;
+  background: $white;
+  box-shadow: 0 0 px(2) rgba(0, 0, 0, 0.25);
+  border-radius: px(6);
+  padding: px(18) px(12);
+
+  .messageWrapper {
+    display: flex;
+
+    .errorIcon {
+      fill: $red;
+      min-width: px(21);
+      width: px(21);
+    }
+
+    .infoIcon {
+      fill: $purple;
+      min-width: px(21);
+      width: px(21);
+    }
+
+    .message {
+      padding-left: px(11);
+
+      &.error {
+        color: $red;
+      }
+
+      &.info {
+        color: $dark_grey_4;
+      }
+    }
+  }
+}

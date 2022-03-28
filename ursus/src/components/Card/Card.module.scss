@@ -1,0 +1,65 @@
+@import 'shared';
+
+.Card {
+  width: 100%;
+
+  .title {
+    margin-bottom: px(23);
+    color: $dark_grey_3;
+  }
+
+  .listContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    .cardContainer {
+      margin-right: 6%;
+      margin-bottom: 6%;
+      box-shadow: 0 px(4) px(10) 0 rgba(0, 0, 0, 0.2);
+      width: px(300);
+      background-color: white;
+      border: px(0.4) solid $light_grey_2;
+      border-radius: px(4);
+
+      .imageContainer {
+        width: 100%;
+        height: px(169);
+        background-color: $dark_grey_8;
+        @include flex-center;
+
+        .image {
+          height: 75%;
+          display: block;
+        }
+      }
+
+      .textContainer {
+        margin: 0 px(5);
+        padding: px(14) px(15);
+
+        .title {
+          margin-bottom: px(38);
+        }
+
+        .paragraph {
+          color: $light_grey_4;
+          margin-bottom: px(6);
+        }
+
+        border-bottom: solid $light_grey_2 px(0.54);
+      }
+
+      .linkContainer {
+        width: 100%;
+        text-align: center;
+        padding: px(11) 0;
+
+        .link {
+          color: $light_grey_4;
+          text-transform: uppercase;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

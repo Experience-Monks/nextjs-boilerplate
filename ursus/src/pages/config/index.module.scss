@@ -1,0 +1,32 @@
+@import 'shared';
+
+.Config {
+  width: 100vw;
+  height: 100vh;
+  padding-top: px(100);
+
+  .header {
+    border: 1px solid $grey;
+    padding: $box-padding;
+  }
+
+  .content {
+    background-color: $bg-white;
+    padding: $box-padding;
+
+    > * {
+      margin-bottom: px(48);
+    }
+  }
+
+  @media (min-width: $layout-desktopSm) {
+    display: grid;
+    grid-template-rows: #{px(258)} 1fr;
+    padding-top: 0;
+    width: 100%;
+
+    .content {
+      overflow-y: auto;
+    }
+  }
+}

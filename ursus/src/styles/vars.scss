@@ -1,0 +1,70 @@
+@import 'layout';
+
+// Variables
+//
+// Add global variables here, color palette, those variables shared by components all applied to global styling
+
+// ====================================================================
+// Breakpoints
+//
+// Window breakpoints
+// ====================================================================
+$layout-mobile: map-get($layout, mobile) + px;
+$layout-tablet: map-get($layout, tablet) + px;
+$layout-desktopSm: map-get($layout, desktopSm) + px;
+$layout-desktopMd: map-get($layout, desktopMd) + px;
+$layout-desktopLg: map-get($layout, desktopLg) + px;
+
+// ====================================================================
+// Base palette
+//
+// Grayscale and brand colors for use across the site.
+// ====================================================================
+$white: #fff;
+$black: #000;
+$grey: #dcdcdc;
+$bg-white: #fafafa;
+$purple: #6945cf;
+$red: #f13e3e;
+$red_error: #ff3f3f;
+$light_pink: #ffeded;
+$yellow: #b7a66d;
+$orange: #dd9228;
+$light_green: #b4c740;
+$green: #69996d;
+$dark_green: #008000;
+$light_grey: #dbdbdb;
+$light_grey_2: #c2c2c2;
+$light_grey_3: #e2e2e2;
+$light_grey_4: #696969;
+$dark_grey: #282828;
+$dark_grey_2: #707070;
+$dark_grey_3: #424242;
+$dark_grey_4: #5e5d5d;
+$dark_grey_5: #272727;
+$dark_grey_6: #878787;
+$dark_grey_7: #b5b5b5;
+$dark_grey_8: #d8d8d8;
+
+// ====================================================================
+// General
+//
+// Global color variables, used usually in sections
+// Global variables used across the web app
+// ====================================================================
+$page-bg-color: $white;
+$element-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.04);
+$generic-fonts: Roboto, Helvetica, Arial, sans-serif;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$box-padding: px(33) px(40);
+
+// ====================================================================
+// List of z-index element
+// ====================================================================
+$elements: pages, main-nav, rotate, header, profile-setting;
+
+//Animation
+$cubic-bezier-0: 0.75s cubic-bezier(0, 1, 0.5, 1);
