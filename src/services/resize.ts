@@ -2,21 +2,28 @@ import { device } from '@jam3/detect';
 
 type ResizeListener = (e?: Event | UIEvent) => void;
 
-class ResizeService {
+let timeout: NodeJS.Timeout;
+class Service {
+  debounceTime = 10; // in ms
   listeners: ResizeListener[] = [];
 
   onResize = (e: Event | UIEvent) => {
-    setTimeout(
-      () => {
-        this.listeners.forEach((listener) => listener(e));
-      },
-      device.mobile ? 500 : 0 // some mobile browsers only update window dimensions when the rotate animation finishes
-    );
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      this.listeners.forEach((listener) => listener(e));
+      if (device.mobile) {
+        timeout = setTimeout(() => {
+          this.listeners.forEach((listener) => listener(e));
+        }, 500); // some mobile browsers only update window dimensions when the rotate animation finishes
+      }
+    }, this.debounceTime);
   };
 
   listen = (listener: ResizeListener) => {
     if (!this.listeners.length) {
-      window.addEventListener(device.mobile ? 'orientationchange' : 'resize', this.onResize);
+      window.addEventListener('resize', this.onResize);
+      if (device.mobile) window.addEventListener('orientationchange', this.onResize);
     }
     if (!this.listeners.includes(listener)) this.listeners.push(listener);
   };
@@ -24,9 +31,12 @@ class ResizeService {
   dismiss = (listener: ResizeListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
     if (!this.listeners.length) {
-      window.removeEventListener(device.mobile ? 'orientationchange' : 'resize', this.onResize);
+      window.removeEventListener('resize', this.onResize);
+      if (device.mobile) window.removeEventListener('orientationchange', this.onResize);
     }
   };
 }
 
-export default new ResizeService();
+const ResizeService = new Service();
+
+export default ResizeService;

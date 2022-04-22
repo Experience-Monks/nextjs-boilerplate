@@ -1,6 +1,6 @@
-type VisibilityListener = (e?: Event) => void;
+type VisibilityListener = ((e: Event) => void) | ((e?: Event) => void);
 
-class VisibilityService {
+class Service {
   listeners: VisibilityListener[] = [];
 
   onVisibility = (e: Event) => {
@@ -22,4 +22,6 @@ class VisibilityService {
   };
 }
 
-export default new VisibilityService();
+const VisibilityService = new Service();
+
+export default VisibilityService;

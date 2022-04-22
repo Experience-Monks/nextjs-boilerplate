@@ -1,6 +1,6 @@
 type OrientationListener = (e?: Event) => void;
 
-class OrientationService {
+class Service {
   listeners: OrientationListener[] = [];
 
   onOrientation = (e: Event) => {
@@ -22,4 +22,6 @@ class OrientationService {
   };
 }
 
-export default new OrientationService();
+const OrientationService = new Service();
+
+export default OrientationService;
