@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "npm-run-all --parallel start:dev storybook",
+    "dev": "BROWSER=none npm-run-all --parallel start:dev storybook",
     "start": "node scripts/server",
     "start:dev": "NODE_OPTIONS='--inspect' node scripts/server",
     "\n ######################  NPM Secondary Pipeline  ######################": "",
@@ -23,7 +23,7 @@
     "next-sitemap": "next-sitemap",
     "postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
     "\n ######################  Support Development Tools  ######################": "",
-    "storybook": "BROWSER=none start-storybook --quiet -p 9001 -c .storybook -s ./public",
+    "storybook": "start-storybook --no-manager-cache -p 9001 -c .storybook -s ./public",
     "generate": "sg wizard",
     "\n ######################  Automation Tools  ######################": "",
     "prepare": "husky install",
