@@ -13,5 +13,6 @@ function getVariables(prefix: string) {
 
 export default {
   layout: getVariables('layout'),
-  color: getVariables('color')
+  color: getVariables('color'),
+  all: sassVars
 };

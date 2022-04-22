@@ -64,13 +64,13 @@ const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
   );
 };
 
-storiesOf(`docs/SVG`, module).add('CATALOG', (args: unknown) => <SvgCatalog {...(args as SvgCatalogProps)} />, {
+storiesOf(`intro/SVG`, module).add('CATALOG', (args: unknown) => <SvgCatalog {...(args as SvgCatalogProps)} />, {
   args: { viewbox: true, color: '#000000' },
   argTypes: { color: { control: { type: 'color' } } }
 });
 
 icons.forEach((icon) => {
-  storiesOf(`docs/SVG`, module).add(
+  storiesOf(`intro/SVG`, module).add(
     icon.name,
     (args: unknown) => {
       const { viewbox, color } = args as SvgCatalogProps;

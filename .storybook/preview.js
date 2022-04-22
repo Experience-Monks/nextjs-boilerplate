@@ -21,7 +21,7 @@ export const decorators = [
 export const parameters = {
   options: {
     storySort: {
-      order: ['docs', ['*', 'SVG'], 'containers', 'components']
+      order: ['intro', ['*', 'SVG'], 'containers', 'components']
     }
   },
   actions: { argTypesRegex: '^on[A-Z].*' },
