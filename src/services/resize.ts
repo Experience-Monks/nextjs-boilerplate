@@ -1,10 +1,11 @@
 import { device } from '@jam3/detect';
 
+import { resizeDebounceTime } from '@/data/settings';
+
 type ResizeListener = (e?: Event | UIEvent) => void;
 
 let timeout: NodeJS.Timeout;
 class Service {
-  debounceTime = 10; // in ms
   listeners: ResizeListener[] = [];
 
   onResize = (e: Event | UIEvent) => {
@@ -17,7 +18,7 @@ class Service {
           this.listeners.forEach((listener) => listener(e));
         }, 500); // some mobile browsers only update window dimensions when the rotate animation finishes
       }
-    }, this.debounceTime);
+    }, resizeDebounceTime);
   };
 
   listen = (listener: ResizeListener) => {
