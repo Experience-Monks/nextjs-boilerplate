@@ -2,9 +2,9 @@ import { ForwardedRef, forwardRef, memo, useMemo } from 'react';
 import classnames from 'classnames';
 
 import styles from './Image.module.scss';
-import sassVars from '@/styles/export-vars.module.scss';
 
 import { Breakpoints } from '@/utils/layout';
+import sass from '@/utils/sass';
 
 import { useAppSelector } from '@/redux';
 
@@ -67,7 +67,7 @@ const Image = (
       loading={loadingType}
       sizes={
         srcSet &&
-        `(min-width: ${sassVars.layoutDesktopLg}) ${desktopLg}, (min-width: ${sassVars.layoutDesktopMd}) ${desktopMd}, (min-width: ${sassVars.layoutDesktopSm}) ${desktopSm}, (min-width: ${sassVars.layoutTablet}) ${tablet}, ${mobile}`
+        `(min-width: ${sass.layout.desktopLg}) ${desktopLg}, (min-width: ${sass.layout.desktopMd}) ${desktopMd}, (min-width: ${sass.layout.desktopSm}) ${desktopSm}, (min-width: ${sass.layout.tablet}) ${tablet}, ${mobile}`
       }
     />
   );

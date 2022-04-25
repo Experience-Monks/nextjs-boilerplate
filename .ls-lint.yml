@@ -31,4 +31,3 @@ ignore:
   - .next
   - out
   - examples
-  - src/components/svgs/_.stories.tsx

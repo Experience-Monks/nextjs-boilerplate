@@ -1,6 +1,12 @@
 import { addons } from '@storybook/addons';
-import mainTheme from './main-theme';
+import { create } from '@storybook/theming';
 
 addons.setConfig({
-  theme: mainTheme
+  theme: create({
+    base: 'light',
+    brandTitle: 'Jam3 NextJS Boilerplate',
+    brandUrl: 'https://jam3.com',
+    brandImage: '/favicons/favicon-32x32.png',
+    colorSecondary: 'deepskyblue'
+  })
 });
