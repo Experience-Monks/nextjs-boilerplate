@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
-import { browser, device } from '@jam3/detect';
-import classnames from 'classnames';
 import 'normalize.css';
 import '@/utils/why-did-you-render';
 
@@ -11,6 +9,7 @@ import '@/styles/global.scss';
 import Layout from '@/components/Layout/Layout';
 
 import gsapInit from '@/utils/gsap-init';
+import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
 
@@ -32,9 +31,7 @@ function App({ Component, pageProps }: AppProps) {
         require('@jam3/stats')();
       }
 
-      document.body.className = `${document.body.className} ${classnames(device.type, browser.name, {
-        'touch-device': device.touch
-      })}`.trim();
+      setBodyClasses();
     }
   }, []);
 
