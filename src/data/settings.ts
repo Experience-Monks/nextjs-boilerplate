@@ -1,5 +1,6 @@
 // Global
 export const resizeDebounceTime = 10; // in ms
+export const cookieBannerName = 'JAM3_GENERATOR_COOKIE_CONSENT';
 
 // Head
 export const siteName = 'Jam3 Generator';

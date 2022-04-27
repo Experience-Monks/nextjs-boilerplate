@@ -1,145 +1,149 @@
-import { memo, PropsWithChildren, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import classnames from 'classnames';
-import noop from 'no-op';
 
 import styles from './CookieBanner.module.scss';
 
+import CookieService from '@/services/cookie';
+
+import { cookieBannerName } from '@/data/settings';
+
+const cookieBannerOptions = { expires: 30 };
+
 const copy = {
-  settings: 'Cookie Settings',
-  close: 'close',
-  description:
-    'Ullamco deserunt dolore officia cillum ea culpa eu. Voluptate ex in commodo in dolor magna velit pariatur in nostrud enim tempor aliquip nisi.',
-  purpose: {
-    necessary: 'necessary',
-    preference: 'preference',
-    statistics: 'statistics',
-    marketing: 'marketing'
+  description: 'We use cookies on this website to improve your experience.',
+  ctas: {
+    settings: 'Cookie Settings',
+    accept: 'Accept All',
+    reject: 'Reject All',
+    close: 'close'
   },
-  defaultText: 'We use cookies on this website to improve your experience.',
-  accept: 'Accept All',
-  reject: 'Reject All'
+  settings: {
+    description:
+      'You can choose not to allow some types of cookies. Click on the different options to change the default cookie settings.',
+    necessary: 'Necessary',
+    preference: 'Preferences',
+    statistics: 'Statistics',
+    marketing: 'Marketing'
+  }
 };
 
-type CookieConsentProps = {
-  // duration
-  session: boolean;
-  persistent: boolean;
-  // purpose
-  necessary: boolean;
-  preference: boolean;
-  statistics: boolean;
-  marketing: boolean;
-  // provenance
-  firstParty: boolean;
-  thirdParty: boolean;
+const createDefaultSettings = (value: boolean) => {
+  return {
+    // duration
+    session: value,
+    persistent: value,
+    // purpose
+    necessary: true,
+    preference: value,
+    statistics: value,
+    marketing: value,
+    // provenance
+    firstParty: value,
+    thirdParty: value
+  };
 };
 
-export type Props = PropsWithChildren<{
+export interface CookieBannerProps {
   className?: string;
-  defaultText?: string;
-  acceptCta?: string;
-  rejectCta?: string;
-  cookieConsent: CookieConsentProps;
-  onAccept(): void;
-  onUpdate(arg0: CookieConsentProps): void;
-  onReject(): void;
-}>;
+}
 
-function CookieBanner({
-  className,
-  defaultText = copy.defaultText,
-  acceptCta = copy.accept,
-  rejectCta = copy.reject,
-  cookieConsent,
-  onUpdate = noop,
-  onAccept = noop,
-  onReject = noop,
-  children
-}: Props) {
-  const [cookieSettings, setCookieSettings] = useState(cookieConsent);
+const validCookie = CookieService.get(cookieBannerName);
+
+const CookieBanner: FC<CookieBannerProps> = ({ className }) => {
+  const [render, setRender] = useState(false);
   const [showCookieSetting, setShowCookieSettings] = useState(false);
+  const [cookieSettings, setCookieSettings] = useState<ReturnType<typeof createDefaultSettings>>(
+    typeof validCookie === 'string' ? JSON.parse(validCookie) : createDefaultSettings(false)
+  );
 
   const handleAcceptAllCookies = useCallback(() => {
-    onAccept();
-  }, [onAccept]);
-
-  const handleDeclineAllCookies = useCallback(() => {
-    onReject();
-  }, [onReject]);
-
-  const handleCookieSettingsClick = useCallback(() => {
-    setShowCookieSettings(true);
+    const newCookieValue = createDefaultSettings(true);
+    CookieService.set(cookieBannerName, JSON.stringify(newCookieValue), cookieBannerOptions);
+    setCookieSettings(newCookieValue);
+    setRender(false);
   }, []);
 
+  const handleDeclineAllCookies = useCallback(() => {
+    const newCookieValue = createDefaultSettings(false);
+    CookieService.set(cookieBannerName, JSON.stringify(newCookieValue), cookieBannerOptions);
+    setCookieSettings(newCookieValue);
+    setRender(false);
+  }, []);
+
+  const handleCookieSettingsClick = useCallback(() => setShowCookieSettings(true), []);
+
   const handleCookieSettingsClose = useCallback(() => {
+    CookieService.set(cookieBannerName, JSON.stringify(cookieSettings));
+    setCookieSettings(cookieSettings);
     setShowCookieSettings(false);
-    onUpdate(cookieSettings);
-  }, [onUpdate, cookieSettings]);
+    setRender(false);
+  }, [cookieSettings]);
 
   const handleCookieUpdate = useCallback(
-    (key: string, value: boolean) => {
-      setCookieSettings({ ...cookieSettings, [key]: value });
-    },
+    (key, value) => setCookieSettings({ ...cookieSettings, [key]: value }),
     [cookieSettings]
   );
 
-  return (
+  useEffect(() => {
+    setRender(!validCookie);
+  }, []);
+
+  return render || process.env.STORYBOOK ? (
     <div className={classnames(styles.CookieBanner, className)}>
-      <p className={styles.description}>{children || defaultText}</p>
-
-      <div className={styles.buttonContainer}>
-        <button onClick={handleAcceptAllCookies}>{acceptCta}</button>
-        <button onClick={handleDeclineAllCookies}>{rejectCta}</button>
-        <button onClick={handleCookieSettingsClick}>{copy.settings}</button>
-      </div>
-
-      {showCookieSetting && (
-        <div className={styles.cookieSettings}>
-          <button className={styles.cookieSettingsClose} onClick={handleCookieSettingsClose}>
-            {copy.close}
+      {showCookieSetting ? (
+        <div className={styles.settings}>
+          <button className={styles.close} onClick={handleCookieSettingsClose}>
+            {copy.ctas.close}
           </button>
 
-          <div className={styles.cookieSettingsContent}>
-            <p className={styles.cookieSettingsDescription}>{copy.description}</p>
+          <p className={styles.description}>{copy.settings.description}</p>
 
-            <ul>
-              <li>
-                <input type="checkbox" id="cookie-necessary" checked={cookieSettings.necessary} readOnly />
-                <label htmlFor="cookie-necessary">{copy.purpose.necessary}</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="cookie-preference"
-                  checked={cookieSettings.preference}
-                  onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
-                />
-                <label htmlFor="cookie-preference">{copy.purpose.preference}</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="cookie-statistics"
-                  checked={cookieSettings.statistics}
-                  onChange={(e) => handleCookieUpdate('statistics', e.target.checked)}
-                />
-                <label htmlFor="cookie-statistics">{copy.purpose.statistics}</label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="cookie-marketing"
-                  checked={cookieSettings.marketing}
-                  onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
-                />
-                <label htmlFor="cookie-marketing">{copy.purpose.marketing}</label>
-              </li>
-            </ul>
+          <ul>
+            <li>
+              <input type="checkbox" id="cookie-necessary" checked={cookieSettings.necessary} readOnly />
+              <label htmlFor="cookie-necessary">{copy.settings.necessary}</label>
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                id="cookie-preference"
+                checked={cookieSettings.preference}
+                onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
+              />
+              <label htmlFor="cookie-preference">{copy.settings.preference}</label>
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                id="cookie-statistics"
+                checked={cookieSettings.statistics}
+                onChange={(e) => handleCookieUpdate('statistics', e.target.checked)}
+              />
+              <label htmlFor="cookie-statistics">{copy.settings.statistics}</label>
+            </li>
+            <li>
+              <input
+                type="checkbox"
+                id="cookie-marketing"
+                checked={cookieSettings.marketing}
+                onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
+              />
+              <label htmlFor="cookie-marketing">{copy.settings.marketing}</label>
+            </li>
+          </ul>
+        </div>
+      ) : (
+        <div className={styles.base}>
+          <p className={styles.description}>{copy.description}</p>
+          <div className={styles.buttons}>
+            <button onClick={handleAcceptAllCookies}>{copy.ctas.accept}</button>
+            <button onClick={handleDeclineAllCookies}>{copy.ctas.reject}</button>
+            <button onClick={handleCookieSettingsClick}>{copy.ctas.settings}</button>
           </div>
         </div>
       )}
     </div>
-  );
-}
+  ) : null;
+};
 
 export default memo(CookieBanner);

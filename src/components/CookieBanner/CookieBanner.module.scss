@@ -1,81 +1,80 @@
 @import 'shared';
 
-$cookie-banner-bg-color: #202020;
-$cookie-banner-overlay-bg-color: lighten($cookie-banner-bg-color, 10%);
-$cookie-banner-padding: px(20);
-
 .CookieBanner {
+  position: fixed;
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  position: fixed;
-  bottom: px(20);
+  text-align: left;
   left: px(20);
-  padding: $cookie-banner-padding;
-  max-width: calc(100% - #{px(40)});
+  right: px(20);
+  bottom: px(20);
+  padding: px(20);
   color: $white;
-  background-color: $cookie-banner-bg-color;
+  background: lighten($black, 15);
 
-  > .description {
-    margin-bottom: px(30);
-    font-size: px(14);
-    line-height: px(16);
-    color: $white;
-
-    a {
-      color: currentColor;
-    }
-  }
-
-  > .cookieSettings {
-    @include position-100(absolute);
-    padding: $cookie-banner-padding;
-    background-color: $cookie-banner-overlay-bg-color;
-    text-align: left;
-
-    .cookieSettingsClose {
-      position: absolute;
-      top: px(10);
-      right: px(10);
-    }
-
-    .cookieSettingsContent {
-      display: flex;
-    }
-
-    .cookieSettingsDescription {
-      width: 50%;
-      margin-right: px(15);
-      font-size: px(12);
-      line-height: px(13);
-    }
-  }
-
-  .buttonContainer {
-    display: flex;
-    flex-wrap: wrap;
+  @include media-tablet {
+    right: initial;
   }
 
   button {
-    padding: px(10);
-    margin-bottom: px(20);
-    margin-left: px(20);
     border: 0;
-    font-size: px(14);
-    line-height: px(16);
-    white-space: nowrap;
     cursor: pointer;
+    padding: px(10);
     color: currentColor;
-    background-color: $black;
+    background: $black;
+  }
 
-    &:first-of-type {
-      margin-left: 0;
+  .base {
+    .description {
+      margin: 0 0 px(10);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+
+      button {
+        width: 100%;
+
+        &:not(:last-child) {
+          margin: 0 0 px(10);
+        }
+
+        @include media-tablet {
+          width: initial;
+
+          &:not(:last-child) {
+            margin: 0 px(10) 0 0;
+          }
+        }
+      }
     }
   }
 
-  @include media-tablet {
-    button {
-      margin-bottom: 0;
+  .settings {
+    padding: 0 px(60) 0 0;
+
+    .close {
+      position: absolute;
+      right: px(10);
+      top: px(10);
+    }
+
+    .description {
+      margin: 0 0 px(10);
+      max-width: px(400);
+    }
+
+    ul {
+      li {
+        display: flex;
+        align-items: center;
+
+        input {
+          margin: 0 px(5) 0 0;
+        }
+      }
     }
   }
 }

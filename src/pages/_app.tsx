@@ -8,10 +8,14 @@ import '@/styles/global.scss';
 
 import Layout from '@/components/Layout/Layout';
 
+import AnalyticsService from '@/services/analytics';
+import CookieService from '@/services/cookie';
 import gsapInit from '@/utils/gsap-init';
 import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
+
+import { cookieBannerName } from '@/data/settings';
 
 const isBrowser = typeof window !== 'undefined';
 
@@ -31,7 +35,17 @@ function App({ Component, pageProps }: AppProps) {
         require('@jam3/stats')();
       }
 
+      // Body class names
       setBodyClasses();
+
+      // Analytics
+      if (JSON.parse(CookieService.get(cookieBannerName) || '{}').statistics) {
+        AnalyticsService.start();
+      } else {
+        CookieService.listen((name, value) => {
+          if (name === cookieBannerName && JSON.parse(value || '{}').statistics) AnalyticsService.start();
+        });
+      }
     }
   }, []);
 

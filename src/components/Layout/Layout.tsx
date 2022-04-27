@@ -7,9 +7,7 @@ import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Nav from '@/components/Nav/Nav';
 
-import { GtmScript } from '@/utils/analytics';
 import { checkWebpSupport } from '@/utils/basic-functions';
-import useCookieBanner from '@/hooks/use-cookie-banner';
 
 import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
@@ -21,8 +19,6 @@ export type Props = PropsWithChildren<{}>;
 function Layout({ children }: Props) {
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner();
 
   const handleRouteChange = useCallback(
     (url) => {
@@ -45,8 +41,6 @@ function Layout({ children }: Props) {
 
   return (
     <>
-      <GtmScript consent={cookieConsent?.statistics} />
-
       <Nav />
 
       {children}
@@ -55,14 +49,7 @@ function Layout({ children }: Props) {
 
       {!device.desktop && <RotateScreen />}
 
-      {!validCookie && (
-        <CookieBanner
-          cookieConsent={cookieConsent}
-          onAccept={acceptAllCookies}
-          onUpdate={updateCookies}
-          onReject={rejectAllCookies}
-        />
-      )}
+      <CookieBanner />
 
       {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
     </>
