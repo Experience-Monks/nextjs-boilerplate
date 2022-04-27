@@ -6,7 +6,7 @@ import scrollPage from '@/utils/scroll-page';
 /**
  * Lock and unlock body scroll with page position restoration
  */
-class LockBodyScroll {
+class Service {
   scrollPosY = 0;
   isLocked = false;
 
@@ -33,4 +33,6 @@ class LockBodyScroll {
         };
 }
 
-export default new LockBodyScroll();
+const LockBodyScrollService = new Service();
+
+export default LockBodyScrollService;

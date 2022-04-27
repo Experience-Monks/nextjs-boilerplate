@@ -2,7 +2,7 @@ import { device } from '@jam3/detect';
 
 type PointerMoveListener = (x?: number, y?: number, e?: MouseEvent | TouchEvent) => void;
 
-class PointerMoveService {
+class Service {
   listeners: PointerMoveListener[] = [];
 
   onMove = (e: MouseEvent | TouchEvent) => {
@@ -26,4 +26,6 @@ class PointerMoveService {
   };
 }
 
-export default new PointerMoveService();
+const PointerMoveService = new Service();
+
+export default PointerMoveService;

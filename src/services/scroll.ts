@@ -1,6 +1,6 @@
 type ScrollListener = (e?: Event) => void;
 
-class ScrollService {
+class Service {
   listeners: ScrollListener[] = [];
 
   onScroll = (e: Event) => {
@@ -22,4 +22,6 @@ class ScrollService {
   };
 }
 
-export default new ScrollService();
+const ScrollService = new Service();
+
+export default ScrollService;

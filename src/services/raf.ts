@@ -1,6 +1,6 @@
-type RequestAnimationFrameListener = (delta?: number) => void;
+type RequestAnimationFrameListener = ((delta?: number) => void) | ((delta: number) => void);
 
-class RequestAnimationFrameService {
+class Service {
   listeners: RequestAnimationFrameListener[] = [];
   frameId = 0;
   elapsed = 0;
@@ -30,4 +30,6 @@ class RequestAnimationFrameService {
   };
 }
 
-export default new RequestAnimationFrameService();
+const RafService = new Service();
+
+export default RafService;
