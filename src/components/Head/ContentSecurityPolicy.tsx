@@ -23,6 +23,7 @@ export default function ContentSecurityPolicy() {
     media-src
       'self';
     img-src
+      ${process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_CDN}
       'self'
       blob:
       data:;

@@ -7,7 +7,7 @@ const optimizedImages = require('next-optimized-images');
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
-  imagesName: '[name]-[hash].[ext]',
+  imagesName: '[name].[ext]',
   handleImages: ['jpeg', 'png', 'webp', 'gif'],
   optimizeImages: process.env.OPTIMIZE_IMAGES === 'true',
   optimizeImagesInDev: process.env.OPTIMIZE_IMAGES === 'true',
