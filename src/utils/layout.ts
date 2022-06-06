@@ -1,3 +1,5 @@
+import { device } from '@jam3/detect';
+
 import sass from '@/utils/sass';
 
 export interface Breakpoints {
@@ -13,7 +15,7 @@ export interface BreakpointLayout extends Breakpoints {
 }
 
 function getLayout(): BreakpointLayout {
-  if (typeof window === 'undefined') {
+  if (device.node) {
     return {
       mobile: false,
       tablet: false,

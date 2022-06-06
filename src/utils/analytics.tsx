@@ -1,6 +1,7 @@
 import Script from 'next/script';
+import { device } from '@jam3/detect';
 
-if (typeof window !== 'undefined') {
+if (device.browser) {
   window.dataLayer = window.dataLayer || [];
 }
 
@@ -11,7 +12,7 @@ if (typeof window !== 'undefined') {
  * @param {any} [payload={}] - Action data
  */
 export function gtmEvent(action = false, payload = {}): void {
-  if (typeof window !== 'undefined' && action) {
+  if (device.browser && action) {
     window.dataLayer.push({
       event: action,
       payload

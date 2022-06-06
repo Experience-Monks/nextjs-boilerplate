@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
+import { device } from '@jam3/detect';
 import 'normalize.css';
 import '@/utils/why-did-you-render';
 
@@ -13,9 +14,7 @@ import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
 
-const isBrowser = typeof window !== 'undefined';
-
-if (isBrowser) {
+if (device.browser) {
   require('default-passive-events');
   require('focus-visible');
   gsapInit();
@@ -26,7 +25,7 @@ function App({ Component, pageProps }: AppProps) {
   const { isUnsupported, ...componentProps } = pageProps;
 
   useEffect(() => {
-    if (isBrowser) {
+    if (device.browser) {
       if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
         require('@jam3/stats')();
       }
