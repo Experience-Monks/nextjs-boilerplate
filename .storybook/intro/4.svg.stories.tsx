@@ -22,6 +22,7 @@ interface SvgCatalogProps {
   viewbox: boolean;
   color: string;
 }
+
 const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
   return (
     <div style={{ width: '100%', padding: '10px', textAlign: 'center' }}>

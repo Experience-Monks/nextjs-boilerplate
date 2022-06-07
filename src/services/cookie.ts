@@ -15,7 +15,9 @@ class Service {
   };
 
   listen = (listener: CookieListener) => {
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
   };
 
   dismiss = (listener: CookieListener) => {

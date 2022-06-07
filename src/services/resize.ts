@@ -11,29 +11,37 @@ class Service {
   onResize = (e: Event | UIEvent) => {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() => {
-      this.listeners.forEach((listener) => listener(e));
-      if (device.mobile) {
-        timeout = setTimeout(() => {
-          this.listeners.forEach((listener) => listener(e));
-        }, 500); // some mobile browsers only update window dimensions when the rotate animation finishes
-      }
-    }, resizeDebounceTime);
+    timeout = setTimeout(
+      () => {
+        this.listeners.forEach((listener) => listener(e));
+      },
+      device.mobile ? 500 : resizeDebounceTime // some mobile browsers only update window dimensions when the rotate animation finishes
+    );
   };
 
   listen = (listener: ResizeListener) => {
     if (!this.listeners.length) {
       window.addEventListener('resize', this.onResize);
-      if (device.mobile) window.addEventListener('orientationchange', this.onResize);
+
+      if (device.mobile) {
+        window.addEventListener('orientationchange', this.onResize);
+      }
     }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
   };
 
   dismiss = (listener: ResizeListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
+
     if (!this.listeners.length) {
       window.removeEventListener('resize', this.onResize);
-      if (device.mobile) window.removeEventListener('orientationchange', this.onResize);
+
+      if (device.mobile) {
+        window.removeEventListener('orientationchange', this.onResize);
+      }
     }
   };
 }

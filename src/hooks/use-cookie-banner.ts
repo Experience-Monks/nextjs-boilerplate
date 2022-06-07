@@ -35,7 +35,6 @@ const explicitSetCookieValue = (value: boolean) => {
 
 const useCookieBanner = () => {
   const validCookie = Cookies.get(COOKIE_BANNER_NAME);
-  //
   const initialConsent = typeof validCookie === 'string' ? JSON.parse(validCookie) : DEFAULT_COOKIE_CONSENT;
   const [cookieConsent, setCookieConsent] = useState(initialConsent);
 
