@@ -14,7 +14,10 @@ class Service {
   };
 
   listen = (listener: RequestAnimationFrameListener) => {
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
+
     if (!this.frameId) {
       this.elapsed = Date.now();
       this.frameId = requestAnimationFrame(this.onFrame);
@@ -23,6 +26,7 @@ class Service {
 
   dismiss = (listener: RequestAnimationFrameListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
+
     if (!this.listeners.length) {
       cancelAnimationFrame(this.frameId);
       this.frameId = 0;

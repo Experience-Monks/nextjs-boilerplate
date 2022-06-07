@@ -31,8 +31,14 @@ app.prepare().then(() => {
       }
     }
   ).listen(port, (err) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
+
     console.log(`> Ready on https://${hostname}:${port}`);
-    if (dev) require('opener')(`https://${hostname}:${port}`);
+
+    if (dev) {
+      require('opener')(`https://${hostname}:${port}`);
+    }
   });
 });

@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react';
+import { memo } from 'react';
 import classnames from 'classnames';
 
 import styles from './index.module.scss';
@@ -10,10 +10,8 @@ type Props = {
 };
 
 function NotFound({ className }: Props) {
-  const containerRef = useRef<HTMLElement>(null);
-
   return (
-    <main className={classnames(styles.NotFound, className)} ref={containerRef}>
+    <main className={classnames(styles.NotFound, className)}>
       <Head title="NotFound" />
       <h1 className={styles.title}>NotFound Page</h1>
     </main>

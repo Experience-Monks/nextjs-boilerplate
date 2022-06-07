@@ -20,6 +20,7 @@ function useLayout(): { layout: Breakpoints } {
 
   const handleResize = useCallback(() => {
     const breakpoints = Object.keys(layout.all) as (keyof Breakpoints)[];
+
     if (breakpoints.filter((key) => currentLayout[key] !== layout[key]).length) {
       setCurrentLayout(layout.all);
     }

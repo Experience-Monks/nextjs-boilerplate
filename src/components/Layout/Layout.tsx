@@ -26,7 +26,9 @@ function Layout({ children }: Props) {
 
   const handleRouteChange = useCallback(
     (url) => {
-      if (router.asPath !== url) dispatch(setPrevRoute(router.asPath));
+      if (router.asPath !== url) {
+        dispatch(setPrevRoute(router.asPath));
+      }
     },
     [dispatch, router.asPath]
   );
