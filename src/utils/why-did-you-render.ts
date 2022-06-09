@@ -1,7 +1,9 @@
 import React from 'react';
 import { device } from '@jam3/detect';
 
-if (process.env.NODE_ENV === 'development' && device.browser) {
+import { isDev } from '@/data/settings';
+
+if (isDev && device.browser) {
   // Dependencies
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
-import { device } from '@jam3/detect';
 import 'normalize.css';
 import '@/utils/why-did-you-render';
 
@@ -14,23 +13,24 @@ import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
 
-if (device.browser) {
-  require('default-passive-events');
-  require('focus-visible');
-  gsapInit();
-}
+import { isProd } from '@/data/settings';
+
+require('default-passive-events');
+require('focus-visible');
+gsapInit();
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }: AppProps) {
   const { isUnsupported, ...componentProps } = pageProps;
 
   useEffect(() => {
-    if (device.browser) {
-      if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
-        require('@jam3/stats')();
-      }
+    setBodyClasses();
+  }, []);
 
-      setBodyClasses();
+  /** NOTE: this is where dev tools and helper modules can be placed */
+  useEffect(() => {
+    if (!isProd && window.location.href.indexOf('?nostat') === -1) {
+      import(/* webpackChunkName: "jam3-stats" */ '@jam3/stats').then((module) => module.default());
     }
   }, []);
 
