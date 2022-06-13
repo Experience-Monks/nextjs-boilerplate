@@ -13,8 +13,20 @@ import useCookieBanner from '@/hooks/use-cookie-banner';
 
 import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
-const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
+const AppAdmin = dynamic(() => import(/* webpackChunkName: 'app-admin' */ '@/components/AppAdmin/AppAdmin'), {
+  ssr: false
+});
+const FeaturePolicy = dynamic(
+  () => import(/* webpackChunkName: 'feature-policy' */ '@/components/Head/FeaturePolicy'),
+  {
+    ssr: false
+  }
+);
+const ContentSecurityPolicy = dynamic(
+  () => import(/* webpackChunkName: 'content-security-policy' */ '@/components/Head/ContentSecurityPolicy'),
+  { ssr: false }
+);
 
 export type Props = PropsWithChildren<{}>;
 
@@ -67,6 +79,13 @@ function Layout({ children }: Props) {
       )}
 
       {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
+
+      {process.env.NODE_ENV === 'development' && (
+        <>
+          <FeaturePolicy />
+          <ContentSecurityPolicy />
+        </>
+      )}
     </>
   );
 }
