@@ -126,7 +126,6 @@
     "postcss": "^8.3.11",
     "postcss-cli": "^9.0.2",
     "prettier": "2.4.1",
-    "react-dev-utils": "11.0.4",
     "redux-devtools": "^3.7.0",
     "responsive-loader": "^2.3.0",
     "sass": "1.43.4",
