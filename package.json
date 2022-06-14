@@ -64,8 +64,8 @@
     "xss": "1.0.13"
   },
   "devDependencies": {
-    "@commitlint/cli": "15.0.0",
-    "@commitlint/config-conventional": "15.0.0",
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-conventional": "17.0.2",
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.10.0",
     "@next/bundle-analyzer": "12.0.7",
@@ -127,7 +127,7 @@
     "postcss-cli": "^9.0.2",
     "prettier": "2.4.1",
     "react-dev-utils": "11.0.4",
-    "redux-devtools-extension": "2.13.9",
+    "redux-devtools": "^3.7.0",
     "responsive-loader": "^2.3.0",
     "sass": "1.43.4",
     "sass-loader": "12.3.0",
