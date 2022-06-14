@@ -1,3 +1,5 @@
+/** @type {import('next-sitemap').IConfig} */
+
 // for more config options;
 // https://www.npmjs.com/package/next-sitemap#configuration-options
 
@@ -26,6 +28,7 @@ module.exports = {
   // additionalPaths: async (config) => {},
   outDir: 'out',
   autoLastmod: true,
+  generateIndexSitemap: false,
   // ========================
   // robots.txt
   // ========================
