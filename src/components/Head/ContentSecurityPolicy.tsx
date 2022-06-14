@@ -8,7 +8,7 @@ import NextHead from 'next/head';
 export default function ContentSecurityPolicy() {
   const content = `
     default-src
-      'self';
+      self;
     manifest-src
       'self';
     base-uri
@@ -49,7 +49,7 @@ export default function ContentSecurityPolicy() {
       blob:
       data:
       'unsafe-inline';
-  `.replace(/\s+/g, '');
+  `.replace(/(\r\n|\n|\r)/gm, '');
 
   return (
     <NextHead>
