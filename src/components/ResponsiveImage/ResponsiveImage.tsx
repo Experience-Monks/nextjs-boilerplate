@@ -29,7 +29,6 @@ export type Props = {
 export function getOptimizedImageURL(localSrc: string, options?: SrcOptions) {
   if (
     // required env variables are missing, fallback to local src
-    !process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_BUCKET ||
     !process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_CDN ||
     // responsive options are missing, fallback to local src
     !options
@@ -42,7 +41,6 @@ export function getOptimizedImageURL(localSrc: string, options?: SrcOptions) {
 
   // build the API string
   const apiImgStr = JSON.stringify({
-    bucket: process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_BUCKET,
     key: localSrcNoLeadingSlash,
     edits: {
       resize: options
@@ -73,7 +71,6 @@ const ResponsiveImage = (
   const finalSrcSet = useMemo(() => {
     if (
       // required env variables are missing, fallback to disabling srcset and sizes
-      !process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_BUCKET ||
       !process.env.NEXT_PUBLIC_SERVERLESS_IMAGE_HANDLER_CDN ||
       // options for serverless image handler not specified, fallback to disabling srcset and sizes
       !srcSetOptions
