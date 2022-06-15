@@ -1,8 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { isProd } from '@/data/settings';
-
 const { actions, reducer } = createSlice({
   name: 'app',
   initialState: {
@@ -21,7 +19,7 @@ const { actions, reducer } = createSlice({
 
 export const { setPrevRoute, setIsWebpSupported } = actions;
 
-export const store = configureStore({ reducer, devTools: !isProd });
+export const store = configureStore({ reducer, devTools: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' });
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();

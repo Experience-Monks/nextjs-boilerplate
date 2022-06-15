@@ -37,7 +37,7 @@ const optimizedImagesConfig = {
 const nextJSConfig = {
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
-  productionBrowserSourceMaps: process.env.NODE_ENV !== 'production',
+  productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
   devIndicators: {
     autoPrerender: false
   },

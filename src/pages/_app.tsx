@@ -13,8 +13,6 @@ import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
 
-import { isProd } from '@/data/settings';
-
 require('default-passive-events');
 require('focus-visible');
 gsapInit();
@@ -29,7 +27,7 @@ function App({ Component, pageProps }: AppProps) {
 
   /** NOTE: this is where dev tools and helper modules can be placed */
   useEffect(() => {
-    if (!isProd && window.location.href.indexOf('?nostat') === -1) {
+    if (process.env.NODE_ENV === 'development' && window.location.href.indexOf('?nostat') === -1) {
       import(/* webpackChunkName: "jam3-stats" */ '@jam3/stats').then((module) => module.default());
     }
   }, []);
