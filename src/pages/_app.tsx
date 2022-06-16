@@ -13,25 +13,22 @@ import setBodyClasses from '@/utils/set-body-classes';
 
 import { store } from '@/redux';
 
-const isBrowser = typeof window !== 'undefined';
-
-if (isBrowser) {
-  require('default-passive-events');
-  require('focus-visible');
-  gsapInit();
-}
+require('default-passive-events');
+require('focus-visible');
+gsapInit();
 
 // This default export is required in a new `pages/_app.js` file.
 function App({ Component, pageProps }: AppProps) {
   const { isUnsupported, ...componentProps } = pageProps;
 
   useEffect(() => {
-    if (isBrowser) {
-      if (process.env.NODE_ENV !== 'production' && window.location.href.indexOf('?nostat') === -1) {
-        require('@jam3/stats')();
-      }
+    setBodyClasses();
+  }, []);
 
-      setBodyClasses();
+  /** NOTE: this is where dev tools and helper modules can be placed */
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && window.location.href.indexOf('?nostat') === -1) {
+      import(/* webpackChunkName: "jam3-stats" */ '@jam3/stats').then((module) => module.default());
     }
   }, []);
 
