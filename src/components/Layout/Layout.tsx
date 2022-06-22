@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { device } from '@jam3/detect';
 
-import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Nav from '@/components/Nav/Nav';
 
@@ -14,6 +13,7 @@ import useCookieBanner from '@/hooks/use-cookie-banner';
 import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
+const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false });
 const AppAdmin = dynamic(() => import(/* webpackChunkName: 'app-admin' */ '@/components/AppAdmin/AppAdmin'), {
   ssr: false
 });
