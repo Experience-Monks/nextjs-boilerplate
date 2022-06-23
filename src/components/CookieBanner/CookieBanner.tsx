@@ -104,14 +104,14 @@ function CookieBanner({
 
             <ul>
               <li>
-                <input type="checkbox" id="cookie-necessary" checked={cookieSettings.necessary} readOnly />
+                <input type="checkbox" id="cookie-necessary" checked={cookieSettings?.necessary} readOnly />
                 <label htmlFor="cookie-necessary">{copy.purpose.necessary}</label>
               </li>
               <li>
                 <input
                   type="checkbox"
                   id="cookie-preference"
-                  checked={cookieSettings.preference}
+                  checked={cookieSettings?.preference}
                   onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
                 />
                 <label htmlFor="cookie-preference">{copy.purpose.preference}</label>
@@ -120,7 +120,7 @@ function CookieBanner({
                 <input
                   type="checkbox"
                   id="cookie-statistics"
-                  checked={cookieSettings.statistics}
+                  checked={cookieSettings?.statistics}
                   onChange={(e) => handleCookieUpdate('statistics', e.target.checked)}
                 />
                 <label htmlFor="cookie-statistics">{copy.purpose.statistics}</label>
@@ -129,7 +129,7 @@ function CookieBanner({
                 <input
                   type="checkbox"
                   id="cookie-marketing"
-                  checked={cookieSettings.marketing}
+                  checked={cookieSettings?.marketing}
                   onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
                 />
                 <label htmlFor="cookie-marketing">{copy.purpose.marketing}</label>
