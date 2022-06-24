@@ -47,6 +47,9 @@ const nextJSConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'src/styles')]
   },
+  experimental: {
+    removeConsole: process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
+  },
   webpack: function (config, options) {
     config.module.rules.push({
       test: /\.svg$/,
