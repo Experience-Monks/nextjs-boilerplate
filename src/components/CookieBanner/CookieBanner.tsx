@@ -104,7 +104,7 @@ function CookieBanner({
 
             <ul>
               <li>
-                <input type="checkbox" id="cookie-necessary" checked={cookieSettings?.necessary ?? false} readOnly />
+                <input type="checkbox" id="cookie-necessary" checked={cookieSettings?.necessary} readOnly />
                 <label htmlFor="cookie-necessary">{copy.purpose.necessary}</label>
               </li>
               <li>
