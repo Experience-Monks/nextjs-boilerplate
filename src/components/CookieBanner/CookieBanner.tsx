@@ -129,7 +129,7 @@ function CookieBanner({
                 <input
                   type="checkbox"
                   id="cookie-marketing"
-                  checked={cookieSettings?.marketing ?? false}
+                  checked={cookieSettings?.marketing}
                   onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
                 />
                 <label htmlFor="cookie-marketing">{copy.purpose.marketing}</label>
