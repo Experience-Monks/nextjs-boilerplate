@@ -37,7 +37,7 @@ function Layout({ children }: Props) {
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner();
 
   const handleRouteChange = useCallback(
-    (url) => {
+    (url: string) => {
       if (router.asPath !== url) {
         dispatch(setPrevRoute(router.asPath));
       }
