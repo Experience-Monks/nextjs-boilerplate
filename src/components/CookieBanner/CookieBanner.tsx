@@ -111,7 +111,7 @@ function CookieBanner({
                 <input
                   type="checkbox"
                   id="cookie-preference"
-                  checked={cookieSettings?.preference ?? false}
+                  checked={cookieSettings?.preference}
                   onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
                 />
                 <label htmlFor="cookie-preference">{copy.purpose.preference}</label>
