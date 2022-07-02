@@ -5,9 +5,10 @@
     "next/core-web-vitals",
     "plugin:@next/next/recommended",
     "plugin:import/typescript",
-    "prettier"
+    "prettier",
+    "plugin:sonarjs/recommended"
   ],
-  "plugins": ["jam3", "simple-import-sort"],
+  "plugins": ["jam3", "simple-import-sort", "sonarjs"],
   "parser": "@typescript-eslint/parser",
   "settings": {
     "react": {
