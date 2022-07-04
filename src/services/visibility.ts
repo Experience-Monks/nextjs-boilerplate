@@ -1,6 +1,6 @@
-type VisibilityListener = (e?: Event) => void;
+type VisibilityListener = ((e: Event) => void) | ((e?: Event) => void);
 
-class VisibilityService {
+class Service {
   listeners: VisibilityListener[] = [];
 
   onVisibility = (e: Event) => {
@@ -11,15 +11,21 @@ class VisibilityService {
     if (!this.listeners.length) {
       document.addEventListener('visibilitychange', this.onVisibility);
     }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
   };
 
   dismiss = (listener: VisibilityListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
+
     if (!this.listeners.length) {
       document.removeEventListener('visibilitychange', this.onVisibility);
     }
   };
 }
 
-export default new VisibilityService();
+const VisibilityService = new Service();
+
+export default VisibilityService;

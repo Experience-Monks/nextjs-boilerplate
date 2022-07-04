@@ -44,17 +44,11 @@
         "exclude": ["gsap"]
       }
     ],
-    "dependencies/package-size": [
-      "warn",
-      {
-        "threshold": 60
-      }
-    ],
     "dependencies/unused-packages": ["warn"],
-    "dependencies/licenses-whitelist": [
+    "dependencies/licenses-allowlist": [
       "warn",
       {
-        "whitelist": [
+        "allowlist": [
           "AFL-2.1",
           "AFL-3.0",
           "APSL-2.0",
@@ -140,7 +134,7 @@
         "dependencies/not-allowed-packages",
         "dependencies/min-vulnerabilities-allow",
         "dependencies/outdated-packages",
-        "dependencies/licenses-whitelist",
+        "dependencies/licenses-allowlist",
         "dependencies/unused-packages"
       ]
     }

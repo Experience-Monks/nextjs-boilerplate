@@ -1,3 +1,5 @@
+import NextHead from 'next/head';
+
 /**
  * NOTE:
  * Jam3 Security Header Lambda@Edge function includes the same Feature Policy content below.
@@ -40,5 +42,9 @@ export default function FeaturePolicy() {
       'none';
   `.replace(/(\r\n|\n|\r)/gm, '');
 
-  return <meta httpEquiv="Feature-Policy" content={content} />;
+  return (
+    <NextHead>
+      <meta httpEquiv="Feature-Policy" content={content} />;
+    </NextHead>
+  );
 }

@@ -1,4 +1,6 @@
-import styles from '@/styles/export-vars.module.scss';
+import { device } from '@jam3/detect';
+
+import sass from '@/utils/sass';
 
 export interface Breakpoints {
   readonly mobile: boolean;
@@ -13,7 +15,7 @@ export interface BreakpointLayout extends Breakpoints {
 }
 
 function getLayout(): BreakpointLayout {
-  if (typeof window === 'undefined') {
+  if (device.node) {
     return {
       mobile: false,
       tablet: false,
@@ -24,10 +26,10 @@ function getLayout(): BreakpointLayout {
     };
   }
 
-  const TABLET_MEDIA_QUERY = `(min-width: ${styles.layoutTablet})`;
-  const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopSm})`;
-  const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopMd})`;
-  const DESKTOP_LG_MEDIA_QUERY = `(min-width: ${styles.layoutDesktopLg})`;
+  const TABLET_MEDIA_QUERY = `(min-width: ${sass.layout.tablet})`;
+  const DESKTOP_SM_MEDIA_QUERY = `(min-width: ${sass.layout.desktopSm})`;
+  const DESKTOP_MD_MEDIA_QUERY = `(min-width: ${sass.layout.desktopMd})`;
+  const DESKTOP_LG_MEDIA_QUERY = `(min-width: ${sass.layout.desktopLg})`;
 
   const TABLET_MATCH_MEDIA = window.matchMedia(TABLET_MEDIA_QUERY);
   const DESKTOP_SM_MATCH_MEDIA = window.matchMedia(DESKTOP_SM_MEDIA_QUERY);

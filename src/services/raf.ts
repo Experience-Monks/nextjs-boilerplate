@@ -1,6 +1,6 @@
-type RequestAnimationFrameListener = (delta?: number) => void;
+type RequestAnimationFrameListener = ((delta?: number) => void) | ((delta: number) => void);
 
-class RequestAnimationFrameService {
+class Service {
   listeners: RequestAnimationFrameListener[] = [];
   frameId = 0;
   elapsed = 0;
@@ -14,7 +14,10 @@ class RequestAnimationFrameService {
   };
 
   listen = (listener: RequestAnimationFrameListener) => {
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
+
     if (!this.frameId) {
       this.elapsed = Date.now();
       this.frameId = requestAnimationFrame(this.onFrame);
@@ -23,6 +26,7 @@ class RequestAnimationFrameService {
 
   dismiss = (listener: RequestAnimationFrameListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
+
     if (!this.listeners.length) {
       cancelAnimationFrame(this.frameId);
       this.frameId = 0;
@@ -30,4 +34,6 @@ class RequestAnimationFrameService {
   };
 }
 
-export default new RequestAnimationFrameService();
+const RafService = new Service();
+
+export default RafService;

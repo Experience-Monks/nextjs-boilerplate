@@ -1,6 +1,6 @@
 type OrientationListener = (e?: Event) => void;
 
-class OrientationService {
+class Service {
   listeners: OrientationListener[] = [];
 
   onOrientation = (e: Event) => {
@@ -11,15 +11,21 @@ class OrientationService {
     if (!this.listeners.length) {
       window.addEventListener('orientationchange', this.onOrientation);
     }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+
+    if (!this.listeners.includes(listener)) {
+      this.listeners.push(listener);
+    }
   };
 
   dismiss = (listener: OrientationListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener);
+
     if (!this.listeners.length) {
       window.removeEventListener('orientationchange', this.onOrientation);
     }
   };
 }
 
-export default new OrientationService();
+const OrientationService = new Service();
+
+export default OrientationService;

@@ -1,0 +1,26 @@
+@import 'shared';
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 10px;
+
+  @include media-tablet {
+    row-gap: 20px;
+    column-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .item {
+    .color {
+      height: 50px;
+      margin-bottom: 5px;
+      border: 1px dashed magenta;
+    }
+
+    .label {
+      font-family: monospace;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import Link from 'next/link';
 import classnames from 'classnames';
 
@@ -18,10 +17,8 @@ const LINKS = [
 }));
 
 function Nav() {
-  const containerRef = useRef<HTMLElement>(null);
-
   return (
-    <nav className={classnames(styles.Nav)} ref={containerRef}>
+    <nav className={classnames(styles.Nav)}>
       <div className={styles.wrapper}>
         <ul className={styles.routes}>
           <a tabIndex={0} aria-label="Skip to content" className={styles.skipToContent} href="#start-of-content">
@@ -46,6 +43,7 @@ function Nav() {
           ))}
         </ul>
       </div>
+
       <section aria-hidden="true" id="start-of-content"></section>
     </nav>
   );

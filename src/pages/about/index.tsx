@@ -11,7 +11,6 @@ type Props = {
 };
 
 function About({ className }: Props) {
-  const containerRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -23,8 +22,9 @@ function About({ className }: Props) {
   }, []);
 
   return (
-    <main className={classnames(styles.About, className)} ref={containerRef}>
+    <main className={classnames(styles.About, className)}>
       <Head title="About" />
+
       <h1 className={styles.title} ref={titleRef}>
         About Page
       </h1>

@@ -11,7 +11,6 @@ type Props = {
 };
 
 function Home({ className }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -29,8 +28,9 @@ function Home({ className }: Props) {
   }, []);
 
   return (
-    <main className={classnames(styles.Home, className)} ref={containerRef}>
+    <main className={classnames(styles.Home, className)}>
       <Head />
+
       <section className={styles.hero}>
         <h1 className={styles.title} ref={titleRef}>
           Welcome to Jam3!

@@ -30,5 +30,3 @@ ignore:
   - node_modules
   - .next
   - out
-  - examples
-  - src/components/svgs/_.stories.tsx

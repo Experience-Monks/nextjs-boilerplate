@@ -23,6 +23,8 @@ module.exports = {
         'test',
         'pxpush',
         'motion',
+        'release',
+        'tag',
         'improve'
       ]
     ]

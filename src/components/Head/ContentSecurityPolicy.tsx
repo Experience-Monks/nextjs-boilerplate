@@ -1,3 +1,4 @@
+import NextHead from 'next/head';
 /**
  * NOTE:
  * This ContentSecurityPolicy allows frontend developers to experience with Jam3 CSP rules in local environment.
@@ -7,7 +8,7 @@
 export default function ContentSecurityPolicy() {
   const content = `
     default-src
-      'self';
+      self;
     manifest-src
       'self';
     base-uri
@@ -50,5 +51,9 @@ export default function ContentSecurityPolicy() {
       'unsafe-inline';
   `.replace(/(\r\n|\n|\r)/gm, '');
 
-  return <meta httpEquiv="Content-Security-Policy" content={content} />;
+  return (
+    <NextHead>
+      <meta httpEquiv="Content-Security-Policy" content={content} />
+    </NextHead>
+  );
 }

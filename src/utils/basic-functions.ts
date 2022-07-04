@@ -7,9 +7,16 @@
  * @returns {string}
  */
 export function cleanUrl(path = '', cleanParams = false): string {
-  if (!path) return '';
-  if (cleanParams) path = path?.split('?')[0];
-  if (path === '/') return '/';
+  if (!path) {
+    return '';
+  }
+  if (cleanParams) {
+    path = path?.split('?')[0];
+  }
+  if (path === '/') {
+    return '/';
+  }
+
   return path.replace(/\/$/, '').replace(/^\//, '') || '';
 }
 
@@ -30,9 +37,9 @@ const testImages = {
 };
 
 export function checkWebpSupport(feature: keyof typeof testImages, callback: (isSupported: boolean) => void): void {
-  var img = new Image();
+  const img = new Image();
   img.onload = function () {
-    var result = img.width > 0 && img.height > 0;
+    const result = img.width > 0 && img.height > 0;
     callback(result);
   };
   img.onerror = function () {

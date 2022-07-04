@@ -1,0 +1,20 @@
+import { Meta } from '@storybook/addon-docs';
+
+import css from './2.Colors.stories.scss';
+
+import sass from '@/utils/sass';
+
+<Meta title="intro/Colors" />
+
+# Colors
+
+<div className={css.list}>
+  {Object.keys(sass.color).map((key) => (
+    <div key={key} className={css.item}>
+      <div className={css.color} style={{ background: sass.color[key] }} />
+      <div className={css.label}>
+        ${key} ({sass.color[key]})
+      </div>
+    </div>
+  ))}
+</div>

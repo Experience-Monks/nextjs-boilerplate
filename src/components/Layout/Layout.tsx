@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { device } from '@jam3/detect';
 
-import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Nav from '@/components/Nav/Nav';
 
@@ -13,8 +12,21 @@ import useCookieBanner from '@/hooks/use-cookie-banner';
 
 import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
-const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
+const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false });
+const AppAdmin = dynamic(() => import(/* webpackChunkName: 'app-admin' */ '@/components/AppAdmin/AppAdmin'), {
+  ssr: false
+});
+const FeaturePolicy = dynamic(
+  () => import(/* webpackChunkName: 'feature-policy' */ '@/components/Head/FeaturePolicy'),
+  {
+    ssr: false
+  }
+);
+const ContentSecurityPolicy = dynamic(
+  () => import(/* webpackChunkName: 'content-security-policy' */ '@/components/Head/ContentSecurityPolicy'),
+  { ssr: false }
+);
 
 export type Props = PropsWithChildren<{}>;
 
@@ -25,8 +37,10 @@ function Layout({ children }: Props) {
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner();
 
   const handleRouteChange = useCallback(
-    (url) => {
-      if (router.asPath !== url) dispatch(setPrevRoute(router.asPath));
+    (url: string) => {
+      if (router.asPath !== url) {
+        dispatch(setPrevRoute(router.asPath));
+      }
     },
     [dispatch, router.asPath]
   );
@@ -65,6 +79,13 @@ function Layout({ children }: Props) {
       )}
 
       {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
+
+      {process.env.NODE_ENV === 'development' && (
+        <>
+          <FeaturePolicy />
+          <ContentSecurityPolicy />
+        </>
+      )}
     </>
   );
 }
