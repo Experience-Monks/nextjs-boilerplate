@@ -500,15 +500,24 @@ workflows:
           requires:
             - deployment-staging
       - deployment:
-          type: approval
-          name: deployment-production
+          name: deployment-prod
           requires:
-            - pen-test
-            - accessibility-tests
-            - qa-tests
-          ci_env: 'stage'
-          s3_origin_bucket: 'am3-s3-example-stage-name'
-          cloudfront_distribution_id: 'xxxxx-stage'
+            - approve-build-prod
+          ci_env: 'production'
+          s3_origin_bucket: $S3_ORIGIN_PROD
+          cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
+          aws_env_suffix: '_PROD'
+          script_name: 'deploy.sh'
+      - deployment:
+          name: cache-invalidation-prod
+          requires:
+            - deployment-prod
+          ci_env: 'production'
+          s3_origin_bucket: $S3_ORIGIN_PROD
+          cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
+          aws_env_suffix: '_PROD'
+          script_name: 'invalidate-cache.sh'
+
       - social-test:
           requires:
             - deployment-production
