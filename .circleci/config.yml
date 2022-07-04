@@ -4,11 +4,38 @@
 # 6. Set parallelism
 # 8. Tag releases
 
+# Configuration file for Jam3 NextJS Boilerplate
+
+# This project needs to following CircleCI Environment Variables:
+# AWS_ACCESS_KEY_ID_DEV
+# AWS_ACCESS_KEY_ID_STAGE
+# AWS_ACCESS_KEY_ID_PROD
+# AWS_ACCESS_KEY_ID_CLIENT
+# AWS_SECRET_ACCESS_KEY_DEV
+# AWS_SECRET_ACCESS_KEY_STAGE
+# AWS_SECRET_ACCESS_KEY_PROD
+# AWS_REGION
+
+# ENVIRONMENT_DOMAIN_DEV = xxx.xxx.com
+# ENVIRONMENT_DOMAIN_STAGE = xxx.xxx.com
+# ENVIRONMENT_DOMAIN_PROD = xxx.xxx.com
+
+# S3_ORIGIN_DEV = jam3-xxx-xxx-xxx-xxx-origin
+# S3_ORIGIN_STAGE = jam3-xxx-xxx-xxx-xxx-origin
+# S3_ORIGIN_PROD = jam3-xxx-xxx-xxx-xxx-origin
+
+# CLOUDFRONT_ID_DEV = XXXXXXXXXXX
+# CLOUDFRONT_ID_STAGE = XXXXXXXXXXX
+# CLOUDFRONT_ID_PROD = XXXXXXXXXXX
+
+# GITHUB_PROJECT = github.com/jam3/xxxxx
+
 version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.1.0
-  github-cli: circleci/github-cli@1.0.4
+  github-cli: circleci/github-cli@2.1.0
+  slack: circleci/slack@4.10.1
 
 commands:
   configure-aws-cli:
@@ -28,7 +55,7 @@ jobs:
   envtest:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: small
     environment:
       S3_ORIGIN_BUCKET: 'test'
 
@@ -40,7 +67,9 @@ jobs:
   setup:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: medium
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1
     steps:
       - checkout
       - restore_cache:
@@ -53,17 +82,45 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+  notify-slack-deployment:
+    docker:
+      - image: 'cimg/base:stable'
+    resource_class: small
+    parameters:
+      slack_channel:
+        description: 'Slack channel id'
+        default: C03F14S148N #circle-ci-test channel by default for debugging
+        type: string
+    steps:
+      - slack/notify:
+          template: success_tagged_deploy_1
+          event: pass
+          channel: << parameters.slack_channel >>
+
   linters:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: small
+    parameters:
+      script_name:
+        description: 'NPM Linter script name'
+        type: string
+        default: 'linters-ci'
     steps:
       - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm run linters-ci
+      - run: npm run << parameters.script_name >>
+
+  secrets-key-detection:
+    docker:
+      - image: cimg/node:14.19
+    resource_class: small
+    steps:
+      - checkout
+      - run: bash <(curl -s https://raw.githubusercontent.com/zricethezav/gitleaks-ci/master/gitleaks.sh)
 
   tests:
     docker:
@@ -77,10 +134,12 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
-  artifact:
+  build:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: medium
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1
     parameters:
       git_lfs:
         description: 'Enable Git LFS'
@@ -100,17 +159,25 @@ jobs:
             - run:
                 name: Checkout binaries
                 command: git lfs pull
+            - run:
+                name : LFS cache id
+                # this generates a unique ID for LFS files which we use for cache
+                command: |
+                  git lfs ls-files -l | cut -d' ' -f1 | sort > .assets-id
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
+      - restore_cache:
+          keys:
+            - v1-lfs-assets-{{ checksum ".assets-id" }}
       - run:
-          name: Creating artifact
-          command: sh .circleci/scripts/build.sh
-      - run: tar -cvzf build.tar ~/project/out
-      - store_artifacts:
-          path: build.tar
-          destination: build.tar
+          name: Running Build Script
+          command: bash .circleci/scripts/build.sh
+      # - run: tar -cvzf build.tar ~/project/out
+      # - store_artifacts:
+      #     path: build.tar
+      #     destination: build.tar
       - persist_to_workspace:
           root: .
           paths:
@@ -119,7 +186,7 @@ jobs:
   preview-environment:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: medium
     parameters:
       aws_env_suffix:
         description: 'Dynamic env variable suffix'
@@ -137,6 +204,7 @@ jobs:
     environment:
       S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
       ENV_DOMAIN: << parameters.environment_domain >>
+      GIT_LFS_SKIP_SMUDGE: 1
 
     steps:
       - checkout
@@ -144,17 +212,20 @@ jobs:
           at: .
       - configure-aws-cli:
           aws_env_suffix: << parameters.aws_env_suffix >>
-      - github-cli/setup
+      - github-cli/setup:
+          token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
       - run: aws s3 sync ./out s3://$S3_ORIGIN_BUCKET/preview/$ENV_PREVIEW_ID
       - run:
           command: |
-            gh pr comment $CIRCLE_PR_NUMBER --body "Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENV_DOMAIN"
+            gh pr comment $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
+            
+            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENV_DOMAIN" || true
 
   storybook:
     docker:
       - image: cimg/node:14.19
-
+    resource_class: medium
     parameters:
       aws_env_suffix:
         description: 'Dynamic env variable suffix'
@@ -209,6 +280,10 @@ jobs:
         description: 'Dynamic env variable suffix'
         type: string
         default: ''
+      script_name:
+        description: 'Deployment script name'
+        type: string
+        default: 'deploy.sh'
 
     environment:
       CI_ENV: << parameters.ci_env >>
@@ -310,18 +385,26 @@ workflows:
           filters:
             branches:
               ignore: main
-      - artifact:
+      - linter:
+          name: linters
+          script_name: linters-ci
           requires:
             - setup
+      - secrets-key-detection:
+          requires:
+            - setup
+      - build:
+          requires:
+            - linters
+            - secrets-key-detection
+
       - preview-environment:
           context: GITHUB_CREDENTIALS
           s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
           environment_domain: 'dev.eduardo-devops-boilerplate.jam3.cloud.jam3.net'
           requires:
-            - artifact
-      - linters:
-          requires:
-            - setup
+            - build
+      
       - sast:
           requires:
             - setup
@@ -331,39 +414,82 @@ workflows:
 
   main:
     jobs:
-      - artifact:
+      - setup:
           filters:
             branches:
               only: main
+      - artifact:
+        name: build
+        requires:
+          - setup
       - deployment:
+          name: deployment-develop
           requires:
-            - artifact
+            - build
           ci_env: 'development'
-          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
-          cloudfront_distribution_id: 'EF37LJDOLPMA9'
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
+          aws_env_suffix: '_DEV'
+          script_name: 'deploy.sh'
+      
+      - auto-tagging:
+          requires:
+            - deployment-develop
+          context: GITHUB_CREDENTIALS
       - dast:
           requires:
-            - deployment
+            - deployment-develop
       - integration-tests:
           requires:
-            - deployment
+            - deployment-develop
       - performance-tests:
           requires:
-            - deployment
+            - deployment-develop
+
+      # todo: this should be stage only
       - storybook:
           requires:
-            - deployment
-          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
-      - deployment:
+            - deployment-develop
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          aws_env_suffix: '_DEV'
+
+       - deployment:
+          name: cache-invalidation-develop
+          requires:
+            - deployment-develop
+            - storybook
+          ci_env: 'development'
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
+          aws_env_suffix: '_DEV'
+          script_name: 'invalidate-cache.sh'
+
+      - approve-build-staging:
           type: approval
+          requires:
+            - auto-tagging
+
+       - deployment:
           name: deployment-staging
           requires:
-            - dast
-            - integration-tests
-            - performance-tests
-          ci_env: 'stage'
-          s3_origin_bucket: 'am3-s3-example-stage-name'
-          cloudfront_distribution_id: 'xxxxx-stage'
+            - approve-build-staging
+          ci_env: 'development'
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
+          aws_env_suffix: '_DEV'
+          script_name: 'deploy.sh'
+
+        - deployment:
+          name: cache-invalidation-staging
+          requires:
+            - deployment-staging
+            # - storybook-stage
+          ci_env: 'staging'
+          s3_origin_bucket: $S3_ORIGIN_STAGE
+          cloudfront_distribution_id: $CLOUDFRONT_ID_STAGE
+          aws_env_suffix: '_STAGE'
+          script_name: 'invalidate-cache.sh'
+
       - pen-test:
           requires:
             - deployment-staging

@@ -17,12 +17,5 @@ aws s3 sync ./assets s3://${S3_ORIGIN_BUCKET}/assets --metadata-directive 'REPLA
 # Sync htmls and others with no cache
 aws s3 sync ./ s3://${S3_ORIGIN_BUCKET} --exclude "favicons/*" --exclude "_next/*" --exclude "assets/*" ${DELETE_OLD_FILES}
 
-aws configure set preview.cloudfront true
-
-INVALIDATION_ID=$(aws cloudfront create-invalidation \
-  --distribution-id $DISTRIBUTION_ID \
-  --paths '/*' | jq -r '.Invalidation.Id');
-
-aws cloudfront wait invalidation-completed \
-  --distribution-id $DISTRIBUTION_ID \
-  --id $INVALIDATION_ID
+# at this point you should invaldiate cache
+# this is now in cache-invalidate.sh
