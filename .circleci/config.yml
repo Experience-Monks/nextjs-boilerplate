@@ -436,10 +436,12 @@ workflows:
           filters:
             branches:
               only: main
+      
       - artifact:
-        name: build
-        requires:
-          - setup
+          name: build
+          requires:
+            - setup
+      
       - deployment:
           name: deployment-develop
           requires:
@@ -471,7 +473,7 @@ workflows:
           s3_origin_bucket: $S3_ORIGIN_DEV
           aws_env_suffix: '_DEV'
 
-       - deployment:
+      - deployment:
           name: cache-invalidation-develop
           requires:
             - deployment-develop
@@ -487,7 +489,7 @@ workflows:
           requires:
             - auto-tagging
 
-       - deployment:
+      - deployment:
           name: deployment-staging
           requires:
             - approve-build-staging
@@ -497,7 +499,7 @@ workflows:
           aws_env_suffix: '_DEV'
           script_name: 'deploy.sh'
 
-        - deployment:
+      - deployment:
           name: cache-invalidation-staging
           requires:
             - deployment-staging
