@@ -134,6 +134,24 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
+  auto-tagging:
+    docker:
+      - image: cimg/node:14.19
+    resource_class: small
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - run: |
+          git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
+          git config user.name "${GITHUB_DEVOPS_USERNAME}"
+      - run: npm run release -- --release-as major
+      - run: |
+          git commit --allow-empty -m "build: [skip ci] Automated Release"
+      - run: git push https://$GITHUB_DEVOPS_USERNAME:$GITHUB_DEVOPS_USER_ACCESS_TOKEN@$GITHUB_PROJECT main --follow-tags
+
   build:
     docker:
       - image: cimg/node:14.19
