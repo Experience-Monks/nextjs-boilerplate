@@ -403,7 +403,7 @@ workflows:
           filters:
             branches:
               ignore: main
-      - linter:
+      - linters:
           name: linters
           script_name: linters-ci
           requires:
@@ -437,7 +437,7 @@ workflows:
             branches:
               only: main
       
-      - artifact:
+      - build:
           name: build
           requires:
             - setup
@@ -519,19 +519,25 @@ workflows:
       - qa-tests:
           requires:
             - deployment-staging
-      - deployment:
-          name: deployment-prod
+
+      - approve-build-production:
+          type: approval
           requires:
-            - approve-build-prod
+            - cache-invalidation-staging
+      - deployment:
+          name: deployment-production
+          requires:
+            - approve-build-production
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_PROD
           cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
           aws_env_suffix: '_PROD'
           script_name: 'deploy.sh'
+
       - deployment:
           name: cache-invalidation-prod
           requires:
-            - deployment-prod
+            - deployment-production
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_PROD
           cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
