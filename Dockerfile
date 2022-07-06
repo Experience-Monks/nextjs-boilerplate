@@ -3,7 +3,7 @@ LABEL maintainer_devops="michael.silva@jam3.com"
 LABEL maintainer_architect="iran.reyes@jam3.com"
 
 # Upgrade npm
-RUN npm install -g npm@8
+RUN npm install --location=global npm@8
 
 # Set working directory
 WORKDIR /usr/src/app
