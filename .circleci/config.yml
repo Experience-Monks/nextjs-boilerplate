@@ -87,7 +87,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm ci
+      - run: npm ci --only=production
       - save_cache:
           paths:
             - node_modules
@@ -431,11 +431,10 @@ workflows:
             - sast
             - secrets-key-detection
             - tests
-      # preview-environment always refers to DEV environment
       - preview-environment:
           context: GITHUB_CREDENTIALS
-          s3_origin_bucket: $S3_ORIGIN_STAGE
-          cloudfront_distribution_id: $CLOUDFRONT_ID_STAGE
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
           requires:
             - build
 
