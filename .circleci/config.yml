@@ -203,9 +203,7 @@ jobs:
 
   preview-environment:
     docker:
-      - image: cimg/node:14.19
-    environment:
-      GIT_LFS_SKIP_SMUDGE: 1      
+      - image: cimg/node:14.19  
     resource_class: medium
     parameters:
       aws_env_suffix:
