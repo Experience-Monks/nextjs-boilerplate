@@ -45,11 +45,6 @@ commands:
         type: string
         default: ''
     steps:
-      # - aws-cli/setup
-      # - run: |
-      #     echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
-      #     echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
-      #     echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.aws_env_suffix >>
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.aws_env_suffix >>
@@ -230,8 +225,7 @@ jobs:
       - configure-aws-cli:
           aws_env_suffix: '_DEV'
       - run: |
-          echo 'export S3_ORIGIN_BUCKET=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
-          echo 'export DISTRIBUTION_ID=$(echo << parameters.cloudfront_distribution_id >>)' >> $BASH_ENV
+          echo 'export S3_ORIGIN_DEV=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
       - github-cli/setup:
           token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
       - generate-preview-hash
