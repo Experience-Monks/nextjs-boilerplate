@@ -79,14 +79,9 @@ jobs:
     docker:
       - image: cimg/node:16.15.1
     resource_class: medium
-    environment:
-      GIT_LFS_SKIP_SMUDGE: 1
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+      - run: npx npe scripts.prepare ""
       - run: npm ci --only=production
       - save_cache:
           paths:
