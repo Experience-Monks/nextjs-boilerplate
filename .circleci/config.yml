@@ -45,11 +45,16 @@ commands:
         type: string
         default: ''
     steps:
-      - aws-cli/setup
-      - run: |
-          echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
-          echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
-          echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+      # - aws-cli/setup
+      # - run: |
+      #     echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+      #     echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+      #     echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.aws_env_suffix >>
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.aws_env_suffix >>
+          aws-region: AWS_REGION
+
   generate-preview-hash:
     steps:
       - run: echo $CIRCLE_PR_NUMBER
@@ -209,6 +214,15 @@ jobs:
             - ./out
 
   preview-environment:
+    parameters:
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        default: 'jam3-s3-example-name'
+        type: string
+      cloudfront_distribution_id:
+        description: 'Cloudfront Distribution ID'
+        default: 'XXXXXXXXXXXXXXXX'
+        type: string
     docker:
       - image: cimg/node:16.15.1
     resource_class: medium
@@ -220,6 +234,9 @@ jobs:
           at: .
       - configure-aws-cli:
           aws_env_suffix: '_DEV'
+      - run: |
+          echo 'export S3_ORIGIN_BUCKET=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
+          echo 'export DISTRIBUTION_ID=$(echo << parameters.cloudfront_distribution_id >>)' >> $BASH_ENV
       - github-cli/setup:
           token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
       - generate-preview-hash
@@ -417,6 +434,8 @@ workflows:
       # preview-environment always refers to DEV environment
       - preview-environment:
           context: GITHUB_CREDENTIALS
+          s3_origin_bucket: $S3_ORIGIN_STAGE
+          cloudfront_distribution_id: $CLOUDFRONT_ID_STAGE
           requires:
             - build
 
