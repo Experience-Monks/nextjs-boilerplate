@@ -1,9 +1,9 @@
-FROM node:14-bullseye
+FROM node:16.15.1-bullseye
 LABEL maintainer_devops="michael.silva@jam3.com"
 LABEL maintainer_architect="iran.reyes@jam3.com"
 
 # Upgrade npm
-RUN npm install -g npm@7
+RUN npm install --location=global npm@8
 
 # Set working directory
 WORKDIR /usr/src/app
