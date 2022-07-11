@@ -205,23 +205,10 @@ jobs:
     docker:
       - image: cimg/node:14.19  
     resource_class: medium
-    parameters:
-      aws_env_suffix:
-        description: 'Dynamic env variable suffix'
-        type: string
-        default: ''
-      s3_origin_bucket:
-        description: 'S3 origin bucket name'
-        default: 'jam3-s3-example-name'
-        type: string
-      environment_domain:
-        description: 'Domain'
-        default: 'dev.test.cloud.jam3.net'
-        type: string
 
     environment:
-      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
-      ENV_DOMAIN: << parameters.environment_domain >>
+      S3_ORIGIN_DEV: << parameters.s3_origin_bucket >>
+      ENVIRONMENT_DOMAIN_DEV: << parameters.environment_domain >>
       GIT_LFS_SKIP_SMUDGE: 1
 
     steps:
