@@ -54,7 +54,7 @@ commands:
 jobs:
   envtest:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: small
     environment:
       S3_ORIGIN_BUCKET: 'test'
@@ -64,9 +64,16 @@ jobs:
       - run: echo $CIRCLE_SHA1
       - run: echo $ENV_PREVIEW_ID
 
+  generate-preview-hash:
+    steps:
+      - run: echo $CIRCLE_PR_NUMBER
+      - run: echo $CIRCLE_PREVIOUS_BUILD_NUM
+      - run: echo $CIRCLE_PULL_REQUEST
+      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
+      
   setup:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: medium
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
@@ -99,7 +106,7 @@ jobs:
 
   linters:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: small
     parameters:
       script_name:
@@ -116,7 +123,7 @@ jobs:
 
   secrets-key-detection:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: small
     steps:
       - checkout
@@ -124,7 +131,7 @@ jobs:
 
   tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - checkout
@@ -136,7 +143,7 @@ jobs:
 
   auto-tagging:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: small
     steps:
       - checkout
@@ -154,7 +161,7 @@ jobs:
 
   build:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: medium
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
@@ -203,22 +210,19 @@ jobs:
 
   preview-environment:
     docker:
-      - image: cimg/node:14.19  
+      - image: cimg/node:16.15.1 
     resource_class: medium
-
     environment:
-      S3_ORIGIN_DEV: << parameters.s3_origin_bucket >>
-      ENVIRONMENT_DOMAIN_DEV: << parameters.environment_domain >>
       GIT_LFS_SKIP_SMUDGE: 1
-
     steps:
       - checkout
       - attach_workspace:
           at: .
       - configure-aws-cli:
-          aws_env_suffix: << parameters.aws_env_suffix >>
+          aws_env_suffix: '_DEV'
       - github-cli/setup:
-          token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
+          token: GITHUB_DEVOPS_USER_ACCESS_TOKEN      
+      - generate-preview-hash
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
       - run: aws s3 sync ./out s3://$S3_ORIGIN_DEV/preview/$ENV_PREVIEW_ID
       - run:
@@ -229,7 +233,7 @@ jobs:
 
   storybook:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
     resource_class: medium
     parameters:
       aws_env_suffix:
@@ -257,7 +261,7 @@ jobs:
 
   deployment:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     parameters:
       ci_env:
@@ -310,70 +314,70 @@ jobs:
 
   sast:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   dast:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "DAST"
 
   integration-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "Integration Tests"
 
   performance-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "Performance Tests"
 
   pen-test:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   accessibility-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   qa-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   social-test:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   content-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
 
   seo-tests:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:16.15.1
 
     steps:
       - run: echo "SAST"
@@ -410,7 +414,7 @@ workflows:
             - sast
             - secrets-key-detection
             - tests
-
+      # preview-environment always refers to DEV environment
       - preview-environment:
           context: GITHUB_CREDENTIALS
           requires:
