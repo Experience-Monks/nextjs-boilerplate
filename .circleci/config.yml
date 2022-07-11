@@ -411,27 +411,23 @@ workflows:
       - secrets-key-detection:
           requires:
             - setup
-      - build:
-          requires:
-            - linters
-            - secrets-key-detection
-
-      - preview-environment:
-          context: GITHUB_CREDENTIALS
-          # s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
-          # environment_domain: 'dev.eduardo-devops-boilerplate.jam3.cloud.jam3.net'
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
-          aws_env_suffix: '_DEV'
-          requires:
-            - build
-      
       - sast:
           requires:
             - setup
       - tests:
           requires:
-            - setup
+            - setup            
+      - build:
+          requires:
+            - linters
+            - sast
+            - secrets-key-detection
+            - tests
+
+      - preview-environment:
+          context: GITHUB_CREDENTIALS
+          requires:
+            - build  
 
   main:
     jobs:
