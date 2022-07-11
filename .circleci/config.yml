@@ -204,6 +204,8 @@ jobs:
   preview-environment:
     docker:
       - image: cimg/node:14.19
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1      
     resource_class: medium
     parameters:
       aws_env_suffix:
@@ -233,12 +235,12 @@ jobs:
       - github-cli/setup:
           token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
-      - run: aws s3 sync ./out s3://$S3_ORIGIN_BUCKET/preview/$ENV_PREVIEW_ID
+      - run: aws s3 sync ./out s3://$S3_ORIGIN_DEV/preview/$ENV_PREVIEW_ID
       - run:
           command: |
             gh pr comment $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
             
-            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENV_DOMAIN" || true
+            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN_DEV" || true
 
   storybook:
     docker:
@@ -395,10 +397,10 @@ workflows:
   version: 2
   pull-requests:
     jobs:
-      #       - envtest:
-      #           filters:
-      #             branches:
-      #               ignore: main
+      # - envtest:
+      #     filters:
+      #       branches:
+      #         ignore: main
       - setup:
           filters:
             branches:
@@ -418,8 +420,11 @@ workflows:
 
       - preview-environment:
           context: GITHUB_CREDENTIALS
-          s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
-          environment_domain: 'dev.eduardo-devops-boilerplate.jam3.cloud.jam3.net'
+          # s3_origin_bucket: 'jam3-dev-eduardo-devops-boilerplate-origin'
+          # environment_domain: 'dev.eduardo-devops-boilerplate.jam3.cloud.jam3.net'
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
+          aws_env_suffix: '_DEV'
           requires:
             - build
       
