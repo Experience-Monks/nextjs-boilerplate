@@ -50,6 +50,13 @@ commands:
           echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
           echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
           echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+  generate-preview-hash:
+    steps:
+      - run: echo $CIRCLE_PR_NUMBER
+      - run: echo $CIRCLE_PREVIOUS_BUILD_NUM
+      - run: echo $CIRCLE_PULL_REQUEST
+      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
+    
 
 jobs:
   envtest:
@@ -64,13 +71,6 @@ jobs:
       - run: echo $CIRCLE_SHA1
       - run: echo $ENV_PREVIEW_ID
 
-  generate-preview-hash:
-    steps:
-      - run: echo $CIRCLE_PR_NUMBER
-      - run: echo $CIRCLE_PREVIOUS_BUILD_NUM
-      - run: echo $CIRCLE_PULL_REQUEST
-      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
-      
   setup:
     docker:
       - image: cimg/node:16.15.1
