@@ -81,7 +81,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-node-modules-{{ checksum "package.json" }}
+          key: v1-node-modules-{{ checksum "package-lock.json" }}
 
   notify-slack-deployment:
     docker:
@@ -111,7 +111,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-{{ checksum "package-lock.json" }}
             - v1-node-modules-
       - run: npm run << parameters.script_name >>
 
@@ -134,7 +134,7 @@ jobs:
       # - checkout
       # - restore_cache:
       #     keys:
-      #       - v1-node-modules-{{ checksum "package.json" }}
+      #       - v1-node-modules-{{ checksum "package-lock.json" }}
       #       - v1-node-modules-
       # - run: npm test
 
@@ -189,7 +189,7 @@ jobs:
                   - v1-lfs-assets-{{ checksum ".assets-id" }}
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-{{ checksum "package-lock.json" }}
             - v1-node-modules-
 
       - run:
@@ -260,7 +260,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-{{ checksum "package-lock.json" }}
             - v1-node-modules-
       - run: npm run build:storybook
       - configure-aws-cli:
