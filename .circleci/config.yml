@@ -81,7 +81,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-node-modules-{{ checksum "package-lock.json" }}
+          key: v1-node-dependencies-{{ checksum "package-lock.json" }}
 
   notify-slack-deployment:
     docker:
@@ -111,8 +111,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package-lock.json" }}
-            - v1-node-modules-
+            - v1-node-dependencies-{{ checksum "package-lock.json" }}
+            - v1-node-dependencies-
       - run: npm run << parameters.script_name >>
 
   secrets-key-detection:
@@ -134,8 +134,8 @@ jobs:
       # - checkout
       # - restore_cache:
       #     keys:
-      #       - v1-node-modules-{{ checksum "package-lock.json" }}
-      #       - v1-node-modules-
+      #       - v1-node-dependencies-{{ checksum "package-lock.json" }}
+      #       - v1-node-dependencies-
       # - run: npm test
 
   # TODO: make more resilient
@@ -189,8 +189,8 @@ jobs:
                   - v1-lfs-assets-{{ checksum ".assets-id" }}
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package-lock.json" }}
-            - v1-node-modules-
+            - v1-node-dependencies-{{ checksum "package-lock.json" }}
+            - v1-node-dependencies-
 
       - run:
           name: Running Build Script
@@ -260,8 +260,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ checksum "package-lock.json" }}
-            - v1-node-modules-
+            - v1-node-dependencies-{{ checksum "package-lock.json" }}
+            - v1-node-dependencies-
       - run: npm run build:storybook
       - configure-aws-cli:
           aws_env_suffix: << parameters.aws_env_suffix >>
