@@ -73,7 +73,7 @@ jobs:
   setup:
     docker:
       - image: cimg/node:16.15.1
-    resource_class: medium
+    resource_class: small
     steps:
       - checkout
       - run: npx npe scripts.prepare ""
