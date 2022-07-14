@@ -28,6 +28,7 @@
 # CLOUDFRONT_ID_STAGE = XXXXXXXXXXX
 # CLOUDFRONT_ID_PROD = XXXXXXXXXXX
 
+# for auto tagging
 # GITHUB_PROJECT = github.com/jam3/xxxxx
 
 version: 2.1
@@ -449,9 +450,10 @@ workflows:
           script_name: 'deploy.sh'
 
       - auto-tagging:
+          context: GITHUB_CREDENTIALS
           requires:
             - deployment-develop
-          context: GITHUB_CREDENTIALS
+
       - dast:
           requires:
             - deployment-develop
