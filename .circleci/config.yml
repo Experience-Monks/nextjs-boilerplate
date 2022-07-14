@@ -316,75 +316,65 @@ jobs:
           aws_env_suffix: << parameters.aws_env_suffix >>
       - run:
           name: Deploying artifact
-          command: sh .circleci/scripts/deploy.sh
+          command: bash .circleci/scripts/deploy.sh
 
   sast:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   dast:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "DAST"
 
   integration-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "Integration Tests"
 
   performance-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "Performance Tests"
 
   pen-test:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   accessibility-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   qa-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   social-test:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   content-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
   seo-tests:
     docker:
       - image: cimg/node:16.15.1
-
     steps:
       - run: echo "SAST"
 
