@@ -129,6 +129,8 @@ jobs:
 
     steps:
       - run: echo "requires npm test"
+      # Remove comments if you have npm tests to run
+      #
       # - checkout
       # - restore_cache:
       #     keys:
@@ -136,16 +138,14 @@ jobs:
       #       - v1-dependencies-
       # - run: npm test
 
+  # TODO: make more resilient
+  # if you have multiple builds on main at the same time this will fail due to race condition
   auto-tagging:
     docker:
       - image: cimg/node:16.15.1
     resource_class: small
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - run: |
           git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
           git config user.name "${GITHUB_DEVOPS_USERNAME}"
@@ -193,11 +193,15 @@ jobs:
             - v1-lfs-assets-{{ checksum ".assets-id" }}
       - run:
           name: Running Build Script
-          command: bash .circleci/scripts/build.sh
+          command: bash .circleci/scripts/build.sh # use bash instead of sh
+      #
+      # if you want to store your builds, do it here. Note this will use a lot of storage
+      #
       # - run: tar -cvzf build.tar ~/project/out
       # - store_artifacts:
       #     path: build.tar
       #     destination: build.tar
+
       - persist_to_workspace:
           root: .
           paths:
@@ -314,6 +318,9 @@ jobs:
           at: .
       - configure-aws-cli:
           aws_env_suffix: << parameters.aws_env_suffix >>
+      - run: |
+          echo 'export S3_ORIGIN_BUCKET=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
+          echo 'export DISTRIBUTION_ID=$(echo << parameters.cloudfront_distribution_id >>)' >> $BASH_ENV
       - run:
           name: Deploying artifact
           command: bash .circleci/scripts/deploy.sh
