@@ -146,6 +146,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - restore_cache:
+        keys:
+          - v1-node-dependencies-{{ checksum "package-lock.json" }}
+          - v1-node-dependencies-
       - run: |
           git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
           git config user.name "${GITHUB_DEVOPS_USERNAME}"
