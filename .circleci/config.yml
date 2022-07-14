@@ -474,8 +474,8 @@ workflows:
             - storybook
           ci_env: 'development'
           s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
-          aws_env_suffix: '_DEV'
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
+          aws_env_suffix: '_DEV' # change to STAGE
           script_name: 'invalidate-cache.sh'
 
       - approve-build-staging:
@@ -483,14 +483,16 @@ workflows:
           requires:
             - auto-tagging
 
+      # START STAGE
+
       - deployment:
           name: deployment-staging
           requires:
             - approve-build-staging
           ci_env: 'development'
           s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
-          aws_env_suffix: '_DEV'
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
+          aws_env_suffix: '_DEV' # change to STAGE
           script_name: 'deploy.sh'
 
       - deployment:
@@ -501,8 +503,8 @@ workflows:
             # - storybook-stage
           ci_env: 'staging'
           s3_origin_bucket: $S3_ORIGIN_STAGE
-          cloudfront_distribution_id: $CLOUDFRONT_ID_STAGE
-          aws_env_suffix: '_STAGE'
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
+          aws_env_suffix: '_DEV' # change to STAGE
           script_name: 'invalidate-cache.sh'
 
       - pen-test:
@@ -528,8 +530,8 @@ workflows:
             - approve-build-production
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_PROD
-          cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
-          aws_env_suffix: '_PROD'
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to PROD
+          aws_env_suffix: '_DEV' # change to PROD
           script_name: 'deploy.sh'
 
       - deployment:
@@ -538,8 +540,8 @@ workflows:
             - deployment-production
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_PROD
-          cloudfront_distribution_id: $CLOUDFRONT_ID_PROD
-          aws_env_suffix: '_PROD'
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to PROD
+          aws_env_suffix: '_DEV' # change to PROD
           script_name: 'invalidate-cache.sh'
 
       - social-test:
