@@ -81,7 +81,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-node-modules-{{ checksum "package.json" }}
 
   notify-slack-deployment:
     docker:
@@ -111,8 +111,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-
       - run: npm run << parameters.script_name >>
 
   secrets-key-detection:
@@ -134,8 +134,8 @@ jobs:
       # - checkout
       # - restore_cache:
       #     keys:
-      #       - v1-dependencies-{{ checksum "package.json" }}
-      #       - v1-dependencies-
+      #       - v1-node-modules-{{ checksum "package.json" }}
+      #       - v1-node-modules-
       # - run: npm test
 
   # TODO: make more resilient
@@ -184,13 +184,14 @@ jobs:
                 # this generates a unique ID for LFS files which we use for cache
                 command: |
                   git lfs ls-files -l | cut -d' ' -f1 | sort > .assets-id
+            - restore_cache:
+                keys:
+                  - v1-lfs-assets-{{ checksum ".assets-id" }}
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - restore_cache:
-          keys:
-            - v1-lfs-assets-{{ checksum ".assets-id" }}
+            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-
+
       - run:
           name: Running Build Script
           command: bash .circleci/scripts/build.sh # use bash instead of sh
@@ -259,8 +260,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - v1-node-modules-{{ checksum "package.json" }}
+            - v1-node-modules-
       - run: npm run build:storybook
       - configure-aws-cli:
           aws_env_suffix: << parameters.aws_env_suffix >>
