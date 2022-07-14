@@ -77,7 +77,7 @@ jobs:
     steps:
       - checkout
       - run: npx npe scripts.prepare ""
-      - run: npm ci --only=production
+      - run: npm ci # --only=production
       - save_cache:
           paths:
             - node_modules
