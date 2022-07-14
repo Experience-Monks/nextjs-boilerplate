@@ -422,7 +422,7 @@ workflows:
       - setup:
           filters:
             branches:
-              only: main
+              only: feature/circle-new-flow
 
       - build:
           name: build
