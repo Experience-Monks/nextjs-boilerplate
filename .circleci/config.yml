@@ -255,9 +255,6 @@ jobs:
         default: 'jam3-s3-example-name'
         type: string
 
-    environment:
-      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
-
     steps:
       - checkout
       - restore_cache:
@@ -267,7 +264,7 @@ jobs:
       - run: npm run build:storybook
       - configure-aws-cli:
           aws_env_suffix: << parameters.aws_env_suffix >>
-      - run: aws s3 sync ./storybook s3://$S3_ORIGIN_BUCKET/storybook
+      - run: aws s3 sync ./storybook s3://<< parameters.s3_origin_bucket >>/storybook
 
   deployment:
     docker:
@@ -460,7 +457,9 @@ workflows:
           requires:
             - deployment-develop
 
-      # todo: this should be stage only
+      #
+      # I find this more useful on stage than on dev but this depends on your workflow
+      #
       - storybook:
           requires:
             - deployment-develop
@@ -497,6 +496,7 @@ workflows:
           name: cache-invalidation-staging
           requires:
             - deployment-staging
+            # if you do add storybook to staging, make sure you invalidate cache after it's deployed
             # - storybook-stage
           ci_env: 'staging'
           s3_origin_bucket: $S3_ORIGIN_STAGE
@@ -507,9 +507,11 @@ workflows:
       - pen-test:
           requires:
             - deployment-staging
+
       - accessibility-tests:
           requires:
             - deployment-staging
+
       - qa-tests:
           requires:
             - deployment-staging
@@ -518,6 +520,7 @@ workflows:
           type: approval
           requires:
             - cache-invalidation-staging
+
       - deployment:
           name: deployment-production
           requires:
@@ -541,9 +544,11 @@ workflows:
       - social-test:
           requires:
             - deployment-production
+
       - content-tests:
           requires:
             - deployment-production
+
       - seo-tests:
           requires:
             - deployment-production
