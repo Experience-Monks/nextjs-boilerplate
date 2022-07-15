@@ -38,6 +38,12 @@ orbs:
   github-cli: circleci/github-cli@2.1.0
   slack: circleci/slack@4.10.1
 
+#################################
+#
+# Commands start
+#
+#################################
+
 commands:
   configure-aws-cli:
     parameters:
@@ -64,6 +70,13 @@ commands:
           keys:
             - v1-node-dependencies-{{ checksum "package-lock.json" }}
             - v1-node-dependencies-
+
+#################################
+#
+# Jobs start
+#
+#################################
+
 jobs:
   envtest:
     docker:
@@ -99,6 +112,7 @@ jobs:
       slack_channel:
         description: 'Slack channel id'
         default: C03F14S148N #circle-ci-test channel by default for debugging
+        # you need to add the Jam3 CircleCI bot to your channel for this to work
         type: string
     steps:
       - slack/notify:
@@ -163,7 +177,10 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.15.1
-    resource_class: medium
+    resource_class: medium #if you can get away with using small, do that,
+    # but builds on small tend to use 100% cpu and drag so this might be the best case for medium
+    #
+    # check circle/ci -> Plan Usage for optimal balance between time/cost
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
     parameters:
@@ -223,6 +240,11 @@ jobs:
   # invalidate cache
   #
   preview-environment:
+    docker:
+      - image: cimg/node:16.15.1
+    resource_class: medium
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1
     parameters:
       s3_origin_bucket:
         description: 'S3 origin bucket name'
@@ -232,11 +254,6 @@ jobs:
         description: 'Cloudfront Distribution ID'
         default: 'XXXXXXXXXXXXXXXX'
         type: string
-    docker:
-      - image: cimg/node:16.15.1
-    resource_class: medium
-    environment:
-      GIT_LFS_SKIP_SMUDGE: 1
     steps:
       - checkout
       - attach_workspace:
@@ -397,6 +414,11 @@ jobs:
     steps:
       - run: echo "SAST"
 
+#################################
+#
+# Workflows start
+#
+#################################
 workflows:
   version: 2
   pull-requests:
@@ -441,7 +463,7 @@ workflows:
       - setup:
           filters:
             branches:
-              only: feature/circle-new-flow
+              only: main
 
       - build:
           name: build
@@ -492,6 +514,10 @@ workflows:
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
           aws_env_suffix: '_DEV' # change to STAGE
           script_name: 'invalidate-cache.sh'
+
+      - notify-slack-deployment:
+          requires:
+            - cache-invalidation-develop
 
       - approve-build-staging:
           type: approval
