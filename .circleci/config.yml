@@ -58,6 +58,12 @@ commands:
       - run: echo $CIRCLE_PULL_REQUEST
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
 
+  restore-node-modules-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-node-dependencies-{{ checksum "package-lock.json" }}
+            - v1-node-dependencies-
 jobs:
   envtest:
     docker:
@@ -77,6 +83,7 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - restore-node-modules-cache
       - run: npx npe scripts.prepare ""
       - run: npm ci # --only=production
       - save_cache:
@@ -110,10 +117,7 @@ jobs:
         default: 'linters-ci'
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-node-dependencies-{{ checksum "package-lock.json" }}
-            - v1-node-dependencies-
+      - restore-node-modules-cache
       - run: npm run << parameters.script_name >>
 
   secrets-key-detection:
@@ -147,10 +151,7 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-node-dependencies-{{ checksum "package-lock.json" }}
-            - v1-node-dependencies-
+      - restore-node-modules-cache
       - run: |
           git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
           git config user.name "${GITHUB_DEVOPS_USERNAME}"
@@ -202,6 +203,7 @@ jobs:
           command: bash .circleci/scripts/build.sh # use bash instead of sh
       #
       # if you want to store your builds, do it here. Note this will use a lot of storage
+      # so this isn't very applicable to all projects
       #
       # - run: tar -cvzf build.tar ~/project/out
       # - store_artifacts:
@@ -213,6 +215,13 @@ jobs:
           paths:
             - ./out
 
+  # this builds the preview environment on PRs
+  # right now it builds on *each* commit in a PR (make sure circleci config is to run on PR only)
+  # which crates multiple preview environments since it's based on the commit hash
+  # TODO: update this so it's based on the PR number
+  # note however if you deploy to the same PR number preview environment that you'd then need to
+  # invalidate cache
+  #
   preview-environment:
     parameters:
       s3_origin_bucket:
@@ -432,7 +441,7 @@ workflows:
       - setup:
           filters:
             branches:
-              only: feature/circle-new-flow
+              only: main
 
       - build:
           name: build
@@ -490,6 +499,12 @@ workflows:
             - auto-tagging
 
       # START STAGE
+      #
+      # Note that there is no staging or prod environment for generator currently so the below is
+      # to show general flow but is currently set to redeploy to _DEV. If you are in a project, replace
+      # _DEV below with _STAGE and _PROD *after* you have set the appropriate environment variables
+      # for the project in circleCI
+      #
 
       - deployment:
           name: deployment-staging
@@ -508,9 +523,9 @@ workflows:
             # if you do add storybook to staging, make sure you invalidate cache after it's deployed
             # - storybook-stage
           ci_env: 'staging'
-          s3_origin_bucket: $S3_ORIGIN_STAGE
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
-          aws_env_suffix: '_DEV' # change to STAGE
+          s3_origin_bucket: $S3_ORIGIN_DEV # change to _STAGE
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _STAGE
+          aws_env_suffix: '_DEV' # change to _STAGE
           script_name: 'invalidate-cache.sh'
 
       - pen-test:
@@ -535,9 +550,9 @@ workflows:
           requires:
             - approve-build-production
           ci_env: 'production'
-          s3_origin_bucket: $S3_ORIGIN_PROD
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to PROD
-          aws_env_suffix: '_DEV' # change to PROD
+          s3_origin_bucket: $S3_ORIGIN_DEV # change to _PROD
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
+          aws_env_suffix: '_DEV' # change to _PROD
           script_name: 'deploy.sh'
 
       - deployment:
@@ -545,9 +560,9 @@ workflows:
           requires:
             - deployment-production
           ci_env: 'production'
-          s3_origin_bucket: $S3_ORIGIN_PROD
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to PROD
-          aws_env_suffix: '_DEV' # change to PROD
+          s3_origin_bucket: $S3_ORIGIN_DEV # change to _DEV
+          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
+          aws_env_suffix: '_DEV' # change to _PROD
           script_name: 'invalidate-cache.sh'
 
       - social-test:
