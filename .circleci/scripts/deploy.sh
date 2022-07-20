@@ -2,10 +2,10 @@
 set -e
 
 #### Synchronizing with AWS ####
-cd /artifacts/build
+cd out
 
 # Setup
-if [ "$CI_ENV" == "develop" ]; then
+if [ "$CI_ENV" == "development" ]; then
   export DELETE_OLD_FILES=--delete
 fi
 
@@ -17,5 +17,5 @@ aws s3 sync ./assets s3://${S3_ORIGIN_BUCKET}/assets --metadata-directive 'REPLA
 # Sync htmls and others with no cache
 aws s3 sync ./ s3://${S3_ORIGIN_BUCKET} --exclude "favicons/*" --exclude "_next/*" --exclude "assets/*" ${DELETE_OLD_FILES}
 
-aws configure set preview.cloudfront true
-aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths "/*"
+# at this point you should invaldiate cache
+# this is now in cache-invalidate.sh
