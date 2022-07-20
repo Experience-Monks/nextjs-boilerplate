@@ -513,7 +513,7 @@ workflows:
           s3_origin_bucket: $S3_ORIGIN_DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
           aws_env_suffix: '_DEV' # change to STAGE
-          script_name: 'invalidate-cache.sh'
+          script_name: 'cache-invalidate.sh'
 
       - notify-slack-deployment:
           requires:
@@ -552,7 +552,7 @@ workflows:
           s3_origin_bucket: $S3_ORIGIN_DEV # change to _STAGE
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _STAGE
           aws_env_suffix: '_DEV' # change to _STAGE
-          script_name: 'invalidate-cache.sh'
+          script_name: 'cache-invalidate.sh'
 
       - pen-test:
           requires:
@@ -589,7 +589,7 @@ workflows:
           s3_origin_bucket: $S3_ORIGIN_DEV # change to _DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
           aws_env_suffix: '_DEV' # change to _PROD
-          script_name: 'invalidate-cache.sh'
+          script_name: 'cache-invalidate.sh'
 
       - social-test:
           requires:
