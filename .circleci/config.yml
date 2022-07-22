@@ -98,16 +98,23 @@ jobs:
     <<: *node-container
     resource_class: small
     parameters:
-      test:
-        description: 'Test'
-        default: ''
-        type: string
+      only-production:
+        description: 'Install only production packages'
+        default: false
+        type: boolean
     steps:
       - checkout
-      - run: echo << parameters.test >>
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - run: npm ci --only=production
+      - when:
+          condition: << parameters.only-production >>
+          steps:
+            - run: npm ci --only=production
+      - when:
+          condition:
+            equal: [ false, << parameters.only-production >> ]
+          steps:
+            - run: npm ci
       - save-project-dependencies-cache
 
   notify-slack-deployment:
@@ -384,7 +391,6 @@ workflows:
           filters:
             branches:
               ignore: main
-          test: *aws-region
       - linters:
           name: linters
           requires:
@@ -409,7 +415,7 @@ workflows:
           filters:
             branches:
               only: main
-
+          only-production: true
       - build:
           name: build
           requires:
