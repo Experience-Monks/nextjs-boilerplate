@@ -1,24 +1,17 @@
-## TODO
-# 1. Trigger artifact creation if wasn't created already
-# 5. Parse Ursus
-# 6. Set parallelism
-# 8. Tag releases
-
 # Configuration file for Jam3 NextJS Boilerplate
 
 # This project needs to following CircleCI Environment Variables:
 # AWS_ACCESS_KEY_ID_DEV
 # AWS_ACCESS_KEY_ID_STAGE
 # AWS_ACCESS_KEY_ID_PROD
-# AWS_ACCESS_KEY_ID_CLIENT
 # AWS_SECRET_ACCESS_KEY_DEV
 # AWS_SECRET_ACCESS_KEY_STAGE
 # AWS_SECRET_ACCESS_KEY_PROD
 # AWS_REGION
 
-# ENVIRONMENT_DOMAIN_DEV = xxx.xxx.com
-# ENVIRONMENT_DOMAIN_STAGE = xxx.xxx.com
-# ENVIRONMENT_DOMAIN_PROD = xxx.xxx.com
+# ENVIRONMENT_DOMAIN_DEV = xxx.xxx.com (without the protocol)
+# ENVIRONMENT_DOMAIN_STAGE = xxx.xxx.com (without the protocol)
+# ENVIRONMENT_DOMAIN_PROD = xxx.xxx.com (without the protocol)
 
 # S3_ORIGIN_DEV = jam3-xxx-xxx-xxx-xxx-origin
 # S3_ORIGIN_STAGE = jam3-xxx-xxx-xxx-xxx-origin
@@ -31,12 +24,18 @@
 # for auto tagging
 # GITHUB_PROJECT = github.com/jam3/xxxxx
 
+defaults: &node-container
+  docker:
+    - image: cimg/node:16.15.1
+
 version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.1.0
   github-cli: circleci/github-cli@2.1.0
   slack: circleci/slack@4.10.1
+  lighthouse-check: foo-software/lighthouse-check@0.0.13
+  gitleaks: upenn-libraries/gitleaks@0.1.0
 
 #################################
 #
@@ -47,29 +46,35 @@ orbs:
 commands:
   configure-aws-cli:
     parameters:
-      aws_env_suffix:
+      env_suffix:
         description: 'Dynamic env variable suffix'
-        type: string
+        type: enum
+        enum: ['', '_DEV', '_STAGE', '_PROD', '_CLIENT']
         default: ''
     steps:
       - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.aws_env_suffix >>
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.aws_env_suffix >>
+          aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.env_suffix >>
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.env_suffix >>
           aws-region: AWS_REGION
 
   generate-preview-hash:
     steps:
-      - run: echo $CIRCLE_PR_NUMBER
-      - run: echo $CIRCLE_PREVIOUS_BUILD_NUM
-      - run: echo $CIRCLE_PULL_REQUEST
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
 
-  restore-node-modules-cache:
+  save-project-dependencies-cache:
+    steps:
+      - save_cache:
+          paths:
+            - ./node_modules
+            - ./.next/cache
+          key: v1-project-dependencies-{{ checksum "package-lock.json" }}
+
+  restore-project-dependencies-cache:
     steps:
       - restore_cache:
           keys:
-            - v1-node-dependencies-{{ checksum "package-lock.json" }}
-            - v1-node-dependencies-
+            - v1-project-dependencies-{{ checksum "package-lock.json" }}
+            - v1-project-dependencies-
 
 #################################
 #
@@ -78,31 +83,15 @@ commands:
 #################################
 
 jobs:
-  envtest:
-    docker:
-      - image: cimg/node:16.15.1
-    resource_class: small
-    environment:
-      S3_ORIGIN_BUCKET: 'test'
-
-    steps:
-      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
-      - run: echo $CIRCLE_SHA1
-      - run: echo $ENV_PREVIEW_ID
-
   setup:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: small
     steps:
       - checkout
-      - restore-node-modules-cache
+      - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - run: npm ci # --only=production
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-node-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm ci --only=production
+      - save-project-dependencies-cache
 
   notify-slack-deployment:
     docker:
@@ -111,7 +100,7 @@ jobs:
     parameters:
       slack_channel:
         description: 'Slack channel id'
-        default: C03F14S148N #circle-ci-test channel by default for debugging
+        default: C03R1QXQZG9 #circle-ci-test channel by default for debugging
         # you need to add the Jam3 CircleCI bot to your channel for this to work
         type: string
     steps:
@@ -121,51 +110,26 @@ jobs:
           channel: << parameters.slack_channel >>
 
   linters:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: small
-    parameters:
-      script_name:
-        description: 'NPM Linter script name'
-        type: string
-        default: 'linters-ci'
     steps:
       - checkout
-      - restore-node-modules-cache
-      - run: npm run << parameters.script_name >>
+      - restore-project-dependencies-cache
+      - run: npm run linters-ci
 
   secrets-key-detection:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: small
     steps:
       - checkout
       - run: bash <(curl -s https://raw.githubusercontent.com/zricethezav/gitleaks-ci/master/gitleaks.sh)
 
-  tests:
-    docker:
-      - image: cimg/node:16.15.1
-
-    steps:
-      - run: echo "requires npm test"
-      # Remove comments if you have npm tests to run
-      #
-      # - checkout
-      # - restore_cache:
-      #     keys:
-      #       - v1-node-dependencies-{{ checksum "package-lock.json" }}
-      #       - v1-node-dependencies-
-      # - run: npm test
-
-  # TODO: make more resilient
-  # if you have multiple builds on main at the same time this will fail due to race condition
   auto-tagging:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: small
     steps:
       - checkout
-      - restore-node-modules-cache
+      - restore-project-dependencies-cache
       - run: |
           git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
           git config user.name "${GITHUB_DEVOPS_USERNAME}"
@@ -175,8 +139,7 @@ jobs:
       - run: git push https://$GITHUB_DEVOPS_USERNAME:$GITHUB_DEVOPS_USER_ACCESS_TOKEN@$GITHUB_PROJECT main --follow-tags
 
   build:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: medium #if you can get away with using small, do that,
     # but builds on small tend to use 100% cpu and drag so this might be the best case for medium
     #
@@ -210,22 +173,11 @@ jobs:
             - restore_cache:
                 keys:
                   - v1-lfs-assets-{{ checksum ".assets-id" }}
-      - restore_cache:
-          keys:
-            - v1-node-dependencies-{{ checksum "package-lock.json" }}
-            - v1-node-dependencies-
+      - restore-project-dependencies-cache
 
       - run:
           name: Running Build Script
-          command: bash .circleci/scripts/build.sh # use bash instead of sh
-      #
-      # if you want to store your builds, do it here. Note this will use a lot of storage
-      # so this isn't very applicable to all projects
-      #
-      # - run: tar -cvzf build.tar ~/project/out
-      # - store_artifacts:
-      #     path: build.tar
-      #     destination: build.tar
+          command: bash .circleci/scripts/build.sh
 
       - persist_to_workspace:
           root: .
@@ -240,8 +192,7 @@ jobs:
   # invalidate cache
   #
   preview-environment:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: medium
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
@@ -259,7 +210,7 @@ jobs:
       - attach_workspace:
           at: .
       - configure-aws-cli:
-          aws_env_suffix: '_DEV'
+          env_suffix: '_DEV'
       - run: |
           echo 'export S3_ORIGIN_DEV=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
       - github-cli/setup:
@@ -274,11 +225,10 @@ jobs:
             Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN_DEV" || true
 
   storybook:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     resource_class: medium
     parameters:
-      aws_env_suffix:
+      env_suffix:
         description: 'Dynamic env variable suffix'
         type: string
         default: ''
@@ -289,18 +239,14 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-node-dependencies-{{ checksum "package-lock.json" }}
-            - v1-node-dependencies-
-      - run: npm run build:storybook
       - configure-aws-cli:
-          aws_env_suffix: << parameters.aws_env_suffix >>
+          env_suffix: << parameters.env_suffix >>
+      - restore-project-dependencies-cache
+      - run: npm run build:storybook
       - run: aws s3 sync ./storybook s3://<< parameters.s3_origin_bucket >>/storybook
 
   deployment:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
 
     parameters:
       ci_env:
@@ -324,7 +270,7 @@ jobs:
         description: 'Cloudfront Distribution ID'
         default: 'XXXXXXXXXXXXXXXX'
         type: string
-      aws_env_suffix:
+      env_suffix:
         description: 'Dynamic env variable suffix'
         type: string
         default: ''
@@ -346,7 +292,7 @@ jobs:
       - attach_workspace:
           at: .
       - configure-aws-cli:
-          aws_env_suffix: << parameters.aws_env_suffix >>
+          env_suffix: << parameters.env_suffix >>
       - run: |
           echo 'export S3_ORIGIN_BUCKET=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
           echo 'export DISTRIBUTION_ID=$(echo << parameters.cloudfront_distribution_id >>)' >> $BASH_ENV
@@ -423,17 +369,12 @@ workflows:
   version: 2
   pull-requests:
     jobs:
-      # - envtest:
-      #     filters:
-      #       branches:
-      #         ignore: main
       - setup:
           filters:
             branches:
               ignore: main
       - linters:
           name: linters
-          script_name: linters-ci
           requires:
             - setup
       - secrets-key-detection:
@@ -442,15 +383,11 @@ workflows:
       - sast:
           requires:
             - setup
-      - tests:
-          requires:
-            - setup
       - build:
           requires:
             - linters
             - sast
             - secrets-key-detection
-            - tests
       - preview-environment:
           context: GITHUB_CREDENTIALS
           s3_origin_bucket: $S3_ORIGIN_DEV
@@ -477,7 +414,7 @@ workflows:
           ci_env: 'development'
           s3_origin_bucket: $S3_ORIGIN_DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
-          aws_env_suffix: '_DEV'
+          env_suffix: '_DEV'
           script_name: 'deploy.sh'
 
       - auto-tagging:
@@ -502,7 +439,7 @@ workflows:
           requires:
             - deployment-develop
           s3_origin_bucket: $S3_ORIGIN_DEV
-          aws_env_suffix: '_DEV'
+          env_suffix: '_DEV'
 
       - deployment:
           name: cache-invalidation-develop
@@ -512,7 +449,7 @@ workflows:
           ci_env: 'development'
           s3_origin_bucket: $S3_ORIGIN_DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
-          aws_env_suffix: '_DEV' # change to STAGE
+          env_suffix: '_DEV' # change to STAGE
           script_name: 'invalidate-cache.sh'
 
       - notify-slack-deployment:
@@ -539,7 +476,7 @@ workflows:
           ci_env: 'development'
           s3_origin_bucket: $S3_ORIGIN_DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
-          aws_env_suffix: '_DEV' # change to STAGE
+          env_suffix: '_DEV' # change to STAGE
           script_name: 'deploy.sh'
 
       - deployment:
@@ -551,7 +488,7 @@ workflows:
           ci_env: 'staging'
           s3_origin_bucket: $S3_ORIGIN_DEV # change to _STAGE
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _STAGE
-          aws_env_suffix: '_DEV' # change to _STAGE
+          env_suffix: '_DEV' # change to _STAGE
           script_name: 'invalidate-cache.sh'
 
       - pen-test:
@@ -578,7 +515,7 @@ workflows:
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_DEV # change to _PROD
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
-          aws_env_suffix: '_DEV' # change to _PROD
+          env_suffix: '_DEV' # change to _PROD
           script_name: 'deploy.sh'
 
       - deployment:
@@ -588,7 +525,7 @@ workflows:
           ci_env: 'production'
           s3_origin_bucket: $S3_ORIGIN_DEV # change to _DEV
           cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
-          aws_env_suffix: '_DEV' # change to _PROD
+          env_suffix: '_DEV' # change to _PROD
           script_name: 'invalidate-cache.sh'
 
       - social-test:
