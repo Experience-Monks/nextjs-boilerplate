@@ -31,7 +31,7 @@
     "lint": "next lint",
     "lint-staged": "lint-staged",
     "linters": "npm-run-all -p lint sass-lint adviser-dev ls-lint tsc",
-    "linters-ci": "npm-run-all -p lint sass-lint ls-lint tsc",
+    "linters-ci": "npm run lint & npm run sass-lint & npm run adviser-ci & npm run ls-lint & npm run tsc",
     "adviser-dev": "adviser --tags dev --verbose",
     "adviser-ci": "adviser --tags ci --verbose --quiet",
     "sass-lint": "stylelint \"./src/**/*.scss\"",

@@ -24,9 +24,8 @@
 # for auto tagging
 # GITHUB_PROJECT = github.com/jam3/xxxxx
 
-defaults: &node-container
-  docker:
-    - image: cimg/node:16.15.1
+# Other tools:
+# To include a SAST, please use SonarCloud directly
 
 version: 2.1
 
@@ -36,6 +35,18 @@ orbs:
   slack: circleci/slack@4.10.1
   lighthouse-check: foo-software/lighthouse-check@0.0.13
   gitleaks: upenn-libraries/gitleaks@0.1.0
+
+#################################
+#
+# Variables (Only not secret)
+#
+#################################
+
+default-container: &node-container
+  docker:
+    - image: cimg/node:16.15.1
+
+aws-region: &aws-region us-east-1
 
 #################################
 #
@@ -86,8 +97,14 @@ jobs:
   setup:
     <<: *node-container
     resource_class: small
+    parameters:
+      test:
+        description: 'Test'
+        default: ''
+        type: string
     steps:
       - checkout
+      - run: echo << parameters.test >>
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
       - run: npm ci --only=production
@@ -300,12 +317,6 @@ jobs:
           name: Deploying artifact
           command: bash .circleci/scripts/deploy.sh
 
-  sast:
-    docker:
-      - image: cimg/node:16.15.1
-    steps:
-      - run: echo "SAST"
-
   dast:
     docker:
       - image: cimg/node:16.15.1
@@ -373,6 +384,7 @@ workflows:
           filters:
             branches:
               ignore: main
+          test: *aws-region
       - linters:
           name: linters
           requires:
@@ -380,13 +392,9 @@ workflows:
       - secrets-key-detection:
           requires:
             - setup
-      - sast:
-          requires:
-            - setup
       - build:
           requires:
             - linters
-            - sast
             - secrets-key-detection
       - preview-environment:
           context: GITHUB_CREDENTIALS
