@@ -78,14 +78,14 @@ commands:
           paths:
             - ./node_modules
             - ./.next/cache
-          key: v1-project-dependencies-{{ checksum "package-lock.json" }}
+          key: v2-project-dependencies-{{ checksum "package-lock.json" }}
 
   restore-project-dependencies-cache:
     steps:
       - restore_cache:
           keys:
-            - v1-project-dependencies-{{ checksum "package-lock.json" }}
-            - v1-project-dependencies-
+            - v2-project-dependencies-{{ checksum "package-lock.json" }}
+            - v2-project-dependencies-
 
 #################################
 #
