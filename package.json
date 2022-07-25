@@ -1,6 +1,6 @@
 {
   "name": "jam3-dev",
-  "version": "4.0.0",
+  "version": "2.7.0",
   "private": true,
   "bugs": {
     "url": "https://github.com/Jam3/nextjs-boilerplate/issues"
@@ -11,18 +11,19 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "BROWSER=none npm-run-all --parallel start:dev storybook",
-    "start": "node scripts/server",
-    "start:dev": "NODE_OPTIONS='--inspect' node scripts/server",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 BROWSER=none npm run generate-gqty:dev && npm-run-all --parallel start:dev storybook",
+    "start": "next start",
+    "start:dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_OPTIONS='--inspect' node scripts/server",
     "\n ######################  NPM Secondary Pipeline  ######################": "",
-    "build:ssr": "next build",
-    "build:static": "next build && next export",
-    "build:storybook": "build-storybook -c .storybook -s ./public -o ./storybook -- --preview-url=/storybook/iframe.html",
+    "build": "npm run generate-gqty && next build",
+    "build:dev": "npm run generate-gqty:dev && next build",
+    "build:ssr": "npm run generate-gqty && next build",
+    "build:static": "npm run generate-gqty && next build && next export",
+    "build:storybook": "build-storybook -c .storybook -s ./public -o ./out/storybook -- --preview-url=/storybook/iframe.html",
     "postbuild:static": "npm-run-all postcss next-sitemap",
     "ci-prod-server": "serve out &",
     "next-sitemap": "next-sitemap",
     "postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
-    "release": "standard-version",
     "\n ######################  Support Development Tools  ######################": "",
     "storybook": "start-storybook --quiet -p 9001 -c .storybook -s ./public",
     "generate": "sg wizard",
@@ -36,7 +37,10 @@
     "adviser-ci": "adviser --tags ci --verbose --quiet",
     "sass-lint": "stylelint \"./src/**/*.scss\"",
     "ls-lint": "node_modules/.bin/ls-lint",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "generate-gqty:dev": "NODE_ENV=development gqty generate",
+    "generate-gqty": "NODE_ENV=production gqty generate",
+    "wpe-build": "npm run generate-gqty && next build"
   },
   "browserslist": [
     ">0.2%",
@@ -45,6 +49,8 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@faustjs/core": "^0.15.7",
+    "@faustjs/next": "^0.15.7",
     "@jam3/detect": "2.0.5",
     "@jam3/react-hooks": "1.0.1",
     "@reduxjs/toolkit": "^1.8.2",
@@ -67,6 +73,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
+    "@gqty/cli": "^3.3.1-alpha-74109b4.0",
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.10.0",
     "@next/bundle-analyzer": "12.0.7",
@@ -93,6 +100,7 @@
     "adviser-plugin-lighthouse": "1.0.1",
     "adviser-plugin-webhint": "1.0.1",
     "css-declaration-sorter": "^6.3.0",
+    "dotenv-flow": "^3.2.0",
     "eslint": "^8.19.0",
     "eslint-config-next": "^12.2.0",
     "eslint-config-prettier": "8.5.0",
@@ -128,7 +136,6 @@
     "serve": "13.0.2",
     "sharp": "^0.30.6",
     "shell-quote": "1.7.3",
-    "standard-version": "^9.3.2",
     "storybook-addon-next-router": "4.0.0",
     "storybook-jira-addon": "^2.3.1",
     "stylelint": "13.13.1",

@@ -5,6 +5,12 @@ const runtimeCaching = require('next-pwa/cache');
 const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
 
+const { withFaust } = require('@faustjs/next');
+/**
+ * @type {import('next').NextConfig}
+ **/
+module.exports = withFaust();
+
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
   imagesName: '[name]-[hash].[ext]',

@@ -6,6 +6,10 @@ import styles from './index.module.scss';
 
 import Head from '@/components/Head/Head';
 
+import sanitizer from '@/utils/sanitizer';
+
+import { client, PageIdType } from '@/client';
+
 type Props = {
   className: string;
 };
@@ -14,6 +18,18 @@ function Home({ className }: Props) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const { usePosts, usePage } = client;
+  const posts = usePosts({
+    first: 6
+  });
+  const page = usePage({
+    id: '/',
+    idType: PageIdType.URI
+  });
+
+  if (page?.blocksJSON) {
+    console.log(JSON.parse(page.blocksJSON));
+  }
 
   useEffect(() => {
     const timeline = gsap
@@ -32,9 +48,22 @@ function Home({ className }: Props) {
       <Head />
 
       <section className={styles.hero}>
+        <div className="posts">
+          <h2>Recent Posts</h2>
+          <ul>
+            {posts?.nodes?.map((post) => (
+              <li key={post?.id}>
+                <h2>{post?.title()}</h2>
+                <p>{post?.content()}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <h1 className={styles.title} ref={titleRef}>
-          Welcome to Jam3!
+          {page?.title()}
         </h1>
+        <div dangerouslySetInnerHTML={{ __html: sanitizer(page?.content()!) }} />
         <h2 className={styles.description} ref={descriptionRef}>
           To get started, edit <code>pages/index.js</code> and save to reload.
         </h2>

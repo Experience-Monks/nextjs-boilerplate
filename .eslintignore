@@ -1,1 +1,3 @@
 scripts/templates/*
+src/pages/api/faust/*
+src/client/*
