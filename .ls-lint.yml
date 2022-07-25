@@ -30,3 +30,4 @@ ignore:
   - node_modules
   - .next
   - out
+  - ./src/pages/[...pageUri].tsx
