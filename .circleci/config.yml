@@ -97,24 +97,11 @@ jobs:
   setup:
     <<: *node-container
     resource_class: small
-    parameters:
-      only-production:
-        description: 'Install only production packages'
-        default: false
-        type: boolean
     steps:
       - checkout
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - when:
-          condition: << parameters.only-production >>
-          steps:
-            - run: npm ci --only=production
-      - when:
-          condition:
-            equal: [ false, << parameters.only-production >> ]
-          steps:
-            - run: npm ci
+      - run: npm ci
       - save-project-dependencies-cache
 
   notify-slack-deployment:
@@ -415,7 +402,6 @@ workflows:
           filters:
             branches:
               only: main
-          only-production: true
       - build:
           name: build
           requires:
