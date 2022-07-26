@@ -1,5 +1,3 @@
-# Configuration file for Jam3 NextJS Boilerplate
-
 # This project needs to following CircleCI Environment Variables:
 # AWS_ACCESS_KEY_ID_DEV
 # AWS_ACCESS_KEY_ID_STAGE
@@ -24,6 +22,8 @@
 # for auto tagging
 # GITHUB_PROJECT = github.com/jam3/xxxxx
 
+# SLACK_CHANNEL_ID = XXXXXXXXXXX
+
 # Other tools:
 # To include a SAST, please use SonarCloud directly
 
@@ -38,7 +38,7 @@ orbs:
 
 #################################
 #
-# Variables (Only not secret)
+# Variables
 #
 #################################
 
@@ -46,7 +46,28 @@ default-container: &node-container
   docker:
     - image: cimg/node:16.15.1
 
-aws-region: &aws-region us-east-1
+env-suffix-parameter: &env-suffix-parameter
+  env_suffix:
+    description: 'Dynamic env variable suffix'
+    type: enum
+    enum: ['', '_DEV', '_STAGE', '_PROD', '_CLIENT']
+    default: ''
+
+slack-notification-parameters: &slack-notification-parameters
+  parameters:
+    slack_channel:
+      description: 'Slack channel id'
+      default: C03R1QXQZG9
+      type: string
+    title:
+      description: 'Slack message title'
+      default: Something unexpected happened
+      type: string
+    environment:
+      description: 'Type of message to send to slack'
+      type: enum
+      enum: ['Develop', 'Staging', 'Production']
+      default: 'Develop'
 
 #################################
 #
@@ -57,11 +78,7 @@ aws-region: &aws-region us-east-1
 commands:
   configure-aws-cli:
     parameters:
-      env_suffix:
-        description: 'Dynamic env variable suffix'
-        type: enum
-        enum: ['', '_DEV', '_STAGE', '_PROD', '_CLIENT']
-        default: ''
+      <<: *env-suffix-parameter
     steps:
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.env_suffix >>
@@ -87,6 +104,184 @@ commands:
             - v2-project-dependencies-{{ checksum "package-lock.json" }}
             - v2-project-dependencies-
 
+  slack-notification-onfail:
+    <<: *slack-notification-parameters
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":x: *Failure*: << parameters.title >>",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: fail
+          channel: << parameters.slack_channel >>
+
+  slack-notification-onsuccess-deployment:
+    <<: *slack-notification-parameters
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":white_check_mark: *Success*: << parameters.title >>",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View GitHub"
+                      },
+                      "url": "$([ -z "$CIRCLE_PULL_REQUEST" ] && echo $CIRCLE_PULL_REQUEST || echo $CIRCLE_REPOSITORY_URL)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: pass
+          channel: << parameters.slack_channel >>
+
+  slack-notification-wait-for-approval:
+    <<: *slack-notification-parameters
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":hourglass_flowing_sand: *Waiting*: << parameters.title >>",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: pass
+          channel: << parameters.slack_channel >>
+
 #################################
 #
 # Jobs start
@@ -103,22 +298,6 @@ jobs:
       - run: npx npe scripts.prepare ""
       - run: npm ci
       - save-project-dependencies-cache
-
-  notify-slack-deployment:
-    docker:
-      - image: 'cimg/base:stable'
-    resource_class: small
-    parameters:
-      slack_channel:
-        description: 'Slack channel id'
-        default: C03R1QXQZG9 #circle-ci-test channel by default for debugging
-        # you need to add the Jam3 CircleCI bot to your channel for this to work
-        type: string
-    steps:
-      - slack/notify:
-          template: success_tagged_deploy_1
-          event: pass
-          channel: << parameters.slack_channel >>
 
   linters:
     <<: *node-container
@@ -208,45 +387,28 @@ jobs:
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
     parameters:
-      s3_origin_bucket:
-        description: 'S3 origin bucket name'
-        default: 'jam3-s3-example-name'
-        type: string
-      cloudfront_distribution_id:
-        description: 'Cloudfront Distribution ID'
-        default: 'XXXXXXXXXXXXXXXX'
-        type: string
+      <<: *env-suffix-parameter
     steps:
       - checkout
       - attach_workspace:
           at: .
       - configure-aws-cli:
-          env_suffix: '_DEV'
-      - run: |
-          echo 'export S3_ORIGIN_DEV=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
+          env_suffix: << parameters.env_suffix >>
       - github-cli/setup:
           token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
       - generate-preview-hash
-      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
-      - run: aws s3 sync ./out s3://$S3_ORIGIN_DEV/preview/$ENV_PREVIEW_ID
+      - run: aws s3 sync ./out/ s3://$S3_ORIGIN<< parameters.env_suffix >>/preview/$ENV_PREVIEW_ID
       - run:
           command: |
             gh pr comment $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
 
-            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN_DEV" || true
+            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>" || true
 
   storybook:
     <<: *node-container
     resource_class: medium
     parameters:
-      env_suffix:
-        description: 'Dynamic env variable suffix'
-        type: string
-        default: ''
-      s3_origin_bucket:
-        description: 'S3 origin bucket name'
-        default: 'jam3-s3-example-name'
-        type: string
+      <<: *env-suffix-parameter
 
     steps:
       - checkout
@@ -254,12 +416,13 @@ jobs:
           env_suffix: << parameters.env_suffix >>
       - restore-project-dependencies-cache
       - run: npm run build:storybook
-      - run: aws s3 sync ./storybook s3://<< parameters.s3_origin_bucket >>/storybook
+      - run: aws s3 sync ./out/storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
 
   deployment:
     <<: *node-container
 
     parameters:
+      <<: *env-suffix-parameter
       ci_env:
         description: 'CI Environment'
         default: 'development'
@@ -269,34 +432,11 @@ jobs:
         description: 'GTM Container ID'
         default: 'GTM-0000000'
         type: string
-      website_url:
-        description: 'Full site URL, including the protocol'
-        default: 'https://PLACEHOLDER_WEBSITE_SITE_URL'
-        type: string
-      s3_origin_bucket:
-        description: 'S3 origin bucket name'
-        default: 'jam3-s3-example-name'
-        type: string
-      cloudfront_distribution_id:
-        description: 'Cloudfront Distribution ID'
-        default: 'XXXXXXXXXXXXXXXX'
-        type: string
-      env_suffix:
-        description: 'Dynamic env variable suffix'
-        type: string
-        default: ''
-      script_name:
-        description: 'Deployment script name'
-        type: string
-        default: 'deploy.sh'
 
     environment:
       CI_ENV: << parameters.ci_env >>
       NODE_ENV: << parameters.ci_env >>
       GTM_ID: << parameters.gtm_id >>
-      WEBSITE_SITE_URL: << parameters.website_url >>
-      S3_ORIGIN_BUCKET: << parameters.s3_origin_bucket >>
-      DISTRIBUTION_ID: << parameters.cloudfront_distribution_id >>
 
     steps:
       - checkout
@@ -305,65 +445,69 @@ jobs:
       - configure-aws-cli:
           env_suffix: << parameters.env_suffix >>
       - run: |
-          echo 'export S3_ORIGIN_BUCKET=$(echo << parameters.s3_origin_bucket >>)' >> $BASH_ENV
-          echo 'export DISTRIBUTION_ID=$(echo << parameters.cloudfront_distribution_id >>)' >> $BASH_ENV
+          echo 'export S3_ORIGIN_BUCKET=$(echo $S3_ORIGIN<< parameters.env_suffix >>)' >> $BASH_ENV
+          echo 'export WEBSITE_SITE_URL=$(echo https://$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>)' >> $BASH_ENV
       - run:
           name: Deploying artifact
           command: bash .circleci/scripts/deploy.sh
 
+  cache-invalidation:
+    <<: *node-container
+
+    parameters:
+      <<: *env-suffix-parameter
+
+    steps:
+      - run: |
+          echo 'export DISTRIBUTION_ID=$(echo $CLOUDFRONT_ID<< parameters.env_suffix >>)' >> $BASH_ENV
+      - run:
+          name: Deploying artifact
+          command: bash .circleci/scripts/cache-invalidate.sh
+
   dast:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
       - run: echo "DAST"
 
   integration-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
       - run: echo "Integration Tests"
 
   performance-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
       - run: echo "Performance Tests"
 
   pen-test:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "Pen Test"
 
   accessibility-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "Accessibility Test"
 
   qa-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "QA Test"
 
   social-test:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "Social Tests"
 
   content-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "Content Tests"
 
   seo-tests:
-    docker:
-      - image: cimg/node:16.15.1
+    <<: *node-container
     steps:
-      - run: echo "SAST"
+      - run: echo "SEO"
 
 #################################
 #
@@ -391,10 +535,9 @@ workflows:
             - secrets-key-detection
       - preview-environment:
           context: GITHUB_CREDENTIALS
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
           requires:
             - build
+          env_suffix: '_DEV'
 
   main:
     jobs:
@@ -403,139 +546,200 @@ workflows:
             branches:
               only: main
       - build:
-          name: build
           requires:
             - setup
-
       - deployment:
           name: deployment-develop
           requires:
             - build
           ci_env: 'development'
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV
           env_suffix: '_DEV'
-          script_name: 'deploy.sh'
-
-      - auto-tagging:
-          context: GITHUB_CREDENTIALS
-          requires:
-            - deployment-develop
-
-      - dast:
-          requires:
-            - deployment-develop
-      - integration-tests:
-          requires:
-            - deployment-develop
-      - performance-tests:
-          requires:
-            - deployment-develop
-
-      #
-      # I find this more useful on stage than on dev but this depends on your workflow
-      #
-      - storybook:
-          requires:
-            - deployment-develop
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          env_suffix: '_DEV'
-
-      - deployment:
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Develop'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Deployment Failed
+      - cache-invalidation:
           name: cache-invalidation-develop
           requires:
             - deployment-develop
-            - storybook
-          ci_env: 'development'
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
-          env_suffix: '_DEV' # change to STAGE
-          script_name: 'invalidate-cache.sh'
-
-      - notify-slack-deployment:
+          env_suffix: '_DEV'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Develop'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Cache Invalidation Failed
+            - slack-notification-onsuccess-deployment:
+              environment: 'Develop'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: 'Deployment Successful! :tada:'
+      - integration-tests:
           requires:
             - cache-invalidation-develop
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Develop'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Integration Tests Failed
+      - performance-tests:
+          requires:
+            - cache-invalidation-develop
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Develop'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Performance Tests Failed
 
+      ###### BEGIN: OPTIONAL STAGING APPROVAL GATE ######
+      ## Comment out if the approval is not needed
       - approve-build-staging:
           type: approval
           requires:
-            - auto-tagging
-
-      # START STAGE
-      #
-      # Note that there is no staging or prod environment for generator currently so the below is
-      # to show general flow but is currently set to redeploy to _DEV. If you are in a project, replace
-      # _DEV below with _STAGE and _PROD *after* you have set the appropriate environment variables
-      # for the project in circleCI
-      #
+            - integration-tests
+            - performance-tests
+          pre-steps:
+            - slack-notification-wait-for-approval:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Deployment Approval
+      ###### END: OPTIONAL STAGING APPROVAL GATE ######
 
       - deployment:
           name: deployment-staging
           requires:
             - approve-build-staging
-          ci_env: 'development'
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to STAGE
-          env_suffix: '_DEV' # change to STAGE
-          script_name: 'deploy.sh'
-
-      - deployment:
+          ci_env: 'staging'
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Deployment Failed
+      - cache-invalidation:
           name: cache-invalidation-staging
           requires:
             - deployment-staging
-            # if you do add storybook to staging, make sure you invalidate cache after it's deployed
-            # - storybook-stage
-          ci_env: 'staging'
-          s3_origin_bucket: $S3_ORIGIN_DEV # change to _STAGE
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _STAGE
-          env_suffix: '_DEV' # change to _STAGE
-          script_name: 'invalidate-cache.sh'
-
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Cache Invalidation Failed
+            - slack-notification-onsuccess-deployment:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: 'Deployment Successful! :tada:'
+      - storybook:
+          requires:
+            - deployment-staging
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Storybook Deployment Failed
+      - dast:
+          requires:
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: DAST Failed
       - pen-test:
           requires:
-            - deployment-staging
-
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Pen Test Failed
       - accessibility-tests:
           requires:
-            - deployment-staging
-
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Accessibility Tests Failed
       - qa-tests:
           requires:
-            - deployment-staging
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Staging'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Automated QA Tests Failed
 
+      ###### BEGIN: OPTIONAL PRODUCTION APPROVAL GATE ######
+      ## Comment out if the approval is not needed
       - approve-build-production:
           type: approval
           requires:
-            - cache-invalidation-staging
+            - dast
+            - accessibility-tests
+          pre-steps:
+            - slack-notification-wait-for-approval:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Deployment Approval
+      ###### END: OPTIONAL PRODUCTION APPROVAL GATE ######
 
       - deployment:
           name: deployment-production
           requires:
             - approve-build-production
           ci_env: 'production'
-          s3_origin_bucket: $S3_ORIGIN_DEV # change to _PROD
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
-          env_suffix: '_DEV' # change to _PROD
-          script_name: 'deploy.sh'
-
-      - deployment:
-          name: cache-invalidation-prod
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Deployment Failed
+      - cache-invalidation:
+          name: cache-invalidation-production
           requires:
             - deployment-production
-          ci_env: 'production'
-          s3_origin_bucket: $S3_ORIGIN_DEV # change to _DEV
-          cloudfront_distribution_id: $CLOUDFRONT_ID_DEV # change to _PROD
-          env_suffix: '_DEV' # change to _PROD
-          script_name: 'invalidate-cache.sh'
-
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Cache Invalidation Failed
+            - slack-notification-onsuccess-deployment:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: 'Deployment Successful! :tada:'
       - social-test:
           requires:
-            - deployment-production
-
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Social Tests Failed
       - content-tests:
           requires:
-            - deployment-production
-
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Content Tests Failed
       - seo-tests:
           requires:
-            - deployment-production
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: SEO Tests Failed
+      - auto-tagging:
+          context: GITHUB_CREDENTIALS
+          requires:
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+              environment: 'Production'
+              slack_channel: $SLACK_CHANNEL_ID
+              title: Autotagging Failed

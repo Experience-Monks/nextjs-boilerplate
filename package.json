@@ -88,7 +88,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@welldone-software/why-did-you-render": "^7.0.1",
-    "adviser": "0.7.7",
+    "adviser": "0.7.8",
     "adviser-plugin-dependencies": "0.6.0",
     "adviser-plugin-lighthouse": "1.0.1",
     "adviser-plugin-webhint": "1.0.1",
