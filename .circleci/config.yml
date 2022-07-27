@@ -233,7 +233,7 @@ commands:
                 {
                   "type": "header",
                   "text": {
-                    "type": "mrkdwn",
+                    "type": "plain_text",
                     "text": ":hourglass_flowing_sand: *Waiting*: << parameters.title >>",
                     "emoji": true
                   }
@@ -462,6 +462,18 @@ jobs:
           name: Invalidating cache
           command: bash .circleci/scripts/cache-invalidate.sh
 
+  slack-notification-approval:
+    <<: *node-container
+
+    parameters:
+      <<: *slack-notification-parameters
+
+    steps:
+      - slack-notification-wait-for-approval:
+          environment: << parameters.environment >>
+          slack_channel: << parameters.slack_channel >>
+          title: << parameters.title >>
+
   dast:
     <<: *node-container
     steps:
@@ -557,7 +569,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Deployment Failed
+              title: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-develop
           context: SLACK_CREDENTIALS
@@ -581,7 +593,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Integration Tests Failed
+              title: 'Integration Tests Failed'
       - performance-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -590,21 +602,24 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Performance Tests Failed
+              title: 'Performance Tests Failed'
 
       ###### BEGIN: OPTIONAL STAGING APPROVAL GATE ######
       ## Comment out if the approval is not needed
-      - approve-build-staging:
+      - slack-notification-approval:
+          name: slack-notification-approval-staging
           context: SLACK_CREDENTIALS
-          type: approval
           requires:
             - integration-tests
             - performance-tests
-          pre-steps:
-            - slack-notification-wait-for-approval:
-              environment: 'Staging'
-              slack_channel: $SLACK_CHANNEL_ID
-              title: Deployment Approval
+          environment: 'Staging'
+          slack_channel: $SLACK_CHANNEL_ID
+          title: 'Deployment Approval'
+
+      - approve-build-staging:
+          type: approval
+          requires:
+            - slack-notification-approval-staging
       ###### END: OPTIONAL STAGING APPROVAL GATE ######
 
       - deployment:
@@ -618,7 +633,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Deployment Failed
+              title: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-staging
           context: SLACK_CREDENTIALS
@@ -629,7 +644,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Cache Invalidation Failed
+              title: 'Cache Invalidation Failed'
             - slack-notification-onsuccess-deployment:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
@@ -643,7 +658,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Storybook Deployment Failed
+              title: 'Storybook Deployment Failed'
       - dast:
           context: SLACK_CREDENTIALS
           requires:
@@ -652,7 +667,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: DAST Failed
+              title: 'DAST Failed'
       - pen-test:
           context: SLACK_CREDENTIALS
           requires:
@@ -661,7 +676,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Pen Test Failed
+              title: 'Pen Test Failed'
       - accessibility-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -670,7 +685,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Accessibility Tests Failed
+              title: 'Accessibility Tests Failed'
       - qa-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -679,21 +694,25 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Automated QA Tests Failed
+              title: 'Automated QA Tests Failed'
 
       ###### BEGIN: OPTIONAL PRODUCTION APPROVAL GATE ######
       ## Comment out if the approval is not needed
+      - slack-notification-approval:
+          name: slack-notification-approval-production
+          context: SLACK_CREDENTIALS
+          requires:
+            - dast
+            - accessibility-tests
+          environment: 'Production'
+          slack_channel: $SLACK_CHANNEL_ID
+          title: 'Deployment Approval'
+
       - approve-build-production:
           context: SLACK_CREDENTIALS
           type: approval
           requires:
-            - dast
-            - accessibility-tests
-          pre-steps:
-            - slack-notification-wait-for-approval:
-              environment: 'Production'
-              slack_channel: $SLACK_CHANNEL_ID
-              title: Deployment Approval
+            - slack-notification-approval-production
       ###### END: OPTIONAL PRODUCTION APPROVAL GATE ######
 
       - deployment:
@@ -707,7 +726,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Deployment Failed
+              title: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-production
           context: SLACK_CREDENTIALS
@@ -718,7 +737,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Cache Invalidation Failed
+              title: 'Cache Invalidation Failed'
             - slack-notification-onsuccess-deployment:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
@@ -731,7 +750,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Social Tests Failed
+              title: 'Social Tests Failed'
       - content-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -740,7 +759,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Content Tests Failed
+              title: 'Content Tests Failed'
       - seo-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -749,7 +768,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: SEO Tests Failed
+              title: 'SEO Tests Failed'
       - auto-tagging:
           context:
             - GITHUB_CREDENTIALS
@@ -760,4 +779,4 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Autotagging Failed
+              title: 'Autotagging Failed'
