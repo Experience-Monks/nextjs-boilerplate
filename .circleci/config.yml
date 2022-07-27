@@ -164,7 +164,6 @@ commands:
               ]
             }
           event: fail
-          debug: true
           channel: << parameters.slack_channel >>
 
   slack-notification-onsuccess-deployment:
