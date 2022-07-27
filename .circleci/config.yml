@@ -205,7 +205,7 @@ commands:
                         "type": "plain_text",
                         "text": "View GitHub"
                       },
-                      "url": "$([ -z "$CIRCLE_PULL_REQUEST" ] && echo $CIRCLE_PULL_REQUEST || echo $CIRCLE_REPOSITORY_URL)"
+                      "url": "${CIRCLE_PULL_REQUEST}"
                     },
                     {
                       "type": "button",
@@ -459,7 +459,7 @@ jobs:
       - run: |
           echo 'export DISTRIBUTION_ID=$(echo $CLOUDFRONT_ID<< parameters.env_suffix >>)' >> $BASH_ENV
       - run:
-          name: Deploying artifact
+          name: Invalidating cache
           command: bash .circleci/scripts/cache-invalidate.sh
 
   dast:
