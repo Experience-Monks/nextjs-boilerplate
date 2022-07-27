@@ -54,20 +54,19 @@ env-suffix-parameter: &env-suffix-parameter
     default: ''
 
 slack-notification-parameters: &slack-notification-parameters
-  parameters:
-    slack_channel:
-      description: 'Slack channel id'
-      default: C03R1QXQZG9
-      type: string
-    title:
-      description: 'Slack message title'
-      default: Something unexpected happened
-      type: string
-    environment:
-      description: 'Type of message to send to slack'
-      type: enum
-      enum: ['Develop', 'Staging', 'Production']
-      default: 'Develop'
+  slack_channel:
+    description: 'Slack channel id'
+    default: C03R1QXQZG9
+    type: string
+  title:
+    description: 'Slack message title'
+    default: Something unexpected happened
+    type: string
+  environment:
+    description: 'Type of message to send to slack'
+    type: enum
+    enum: ['Develop', 'Staging', 'Production']
+    default: 'Develop'
 
 #################################
 #
@@ -105,7 +104,8 @@ commands:
             - v2-project-dependencies-
 
   slack-notification-onfail:
-    <<: *slack-notification-parameters
+    parameters:
+      <<: *slack-notification-parameters
 
     steps:
       - slack/notify:
@@ -160,7 +160,8 @@ commands:
           channel: << parameters.slack_channel >>
 
   slack-notification-onsuccess-deployment:
-    <<: *slack-notification-parameters
+    parameters:
+      <<: *slack-notification-parameters
 
     steps:
       - slack/notify:
@@ -223,7 +224,8 @@ commands:
           channel: << parameters.slack_channel >>
 
   slack-notification-wait-for-approval:
-    <<: *slack-notification-parameters
+    parameters:
+      <<: *slack-notification-parameters
 
     steps:
       - slack/notify:
