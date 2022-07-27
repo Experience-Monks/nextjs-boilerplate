@@ -144,10 +144,6 @@ commands:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Title*: << parameters.title >>"
-                    },
-                    {
-                      "type": "mrkdwn",
                       "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
                     }
                   ]
@@ -488,7 +484,6 @@ jobs:
       - slack-notification-wait-for-approval:
           environment: << parameters.environment >>
           slack_channel: << parameters.slack_channel >>
-          title: << parameters.title >>
 
   dast:
     <<: *node-container
