@@ -104,7 +104,7 @@ commands:
       <<: *slack-notification-parameters
       error_message:
         description: 'Slack message error'
-        default: Something unexpected happened
+        default: 'Something unexpected happened'
         type: string
 
     steps:
@@ -295,6 +295,11 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - run:
+          name: Run commands
+          command: |
+            echo "I will exit fail status"
+            exit 1
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
       - run: npm ci
@@ -537,6 +542,11 @@ workflows:
           filters:
             branches:
               ignore: main
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Failed'
       - linters:
           name: linters
           requires:
