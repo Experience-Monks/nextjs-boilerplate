@@ -209,14 +209,6 @@ commands:
                       "type": "button",
                       "text": {
                         "type": "plain_text",
-                        "text": "View GitHub"
-                      },
-                      "url": "${CIRCLE_REPOSITORY_URL}"
-                    },
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
                         "text": "View CircleCI Pipeline"
                       },
                       "url": "${CIRCLE_BUILD_URL}"
@@ -226,7 +218,6 @@ commands:
               ]
             }
           event: pass
-          debug: true
           channel: << parameters.slack_channel >>
 
   slack-notification-wait-for-approval:
@@ -264,6 +255,10 @@ commands:
                     {
                       "type": "mrkdwn",
                       "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Mentions*: $SLACK_PARAM_MENTIONS"
                     }
                   ]
                 },
@@ -283,6 +278,7 @@ commands:
               ]
             }
           event: pass
+          mentions: '@qa_team'
           channel: << parameters.slack_channel >>
 
 #################################
@@ -450,6 +446,11 @@ jobs:
       - run: |
           echo 'export S3_ORIGIN_BUCKET=$(echo $S3_ORIGIN<< parameters.env_suffix >>)' >> $BASH_ENV
           echo 'export WEBSITE_SITE_URL=$(echo https://$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>)' >> $BASH_ENV
+      - run:
+          name: Run commands
+          command: |
+            echo "I will exit fail status"
+            exit 1
       - run:
           name: Deploying artifact
           command: bash .circleci/scripts/deploy.sh
