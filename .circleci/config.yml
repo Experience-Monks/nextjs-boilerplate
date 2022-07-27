@@ -161,6 +161,7 @@ commands:
               ]
             }
           event: fail
+          debug: true
           channel: << parameters.slack_channel >>
 
   slack-notification-onsuccess-deployment:
@@ -176,7 +177,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":white_check_mark: << parameters.title >>",
+                    "text": ":white_check_mark: Deployment Successful! :tada:",
                     "emoji": true
                   }
                 },
@@ -225,6 +226,7 @@ commands:
               ]
             }
           event: pass
+          debug: true
           channel: << parameters.slack_channel >>
 
   slack-notification-wait-for-approval:
@@ -590,7 +592,6 @@ workflows:
             - slack-notification-onsuccess-deployment:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Successful! :tada:'
       - integration-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -620,7 +621,7 @@ workflows:
             - performance-tests
           environment: 'Staging'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Waiting for Deployment Approval'
+          title: 'Awaiting Approval :raised_hand:'
 
       - approve-build-staging:
           type: approval
@@ -654,7 +655,6 @@ workflows:
             - slack-notification-onsuccess-deployment:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Successful! :tada:'
       - storybook:
           context: SLACK_CREDENTIALS
           requires:
@@ -712,7 +712,7 @@ workflows:
             - accessibility-tests
           environment: 'Production'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Waiting for Deployment Approval'
+          title: 'Awaiting Approval :raised_hand:'
 
       - approve-build-production:
           context: SLACK_CREDENTIALS
@@ -747,7 +747,6 @@ workflows:
             - slack-notification-onsuccess-deployment:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Successful! :tada:'
       - social-test:
           context: SLACK_CREDENTIALS
           requires:
