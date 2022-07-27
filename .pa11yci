@@ -1,0 +1,12 @@
+{
+  "defaults": {
+    "reporters": [
+      "cli"
+    ],
+    "timeout": 1000,
+    "viewport": {
+      "width": 320,
+      "height": 480
+    }
+  }
+}
