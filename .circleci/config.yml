@@ -107,6 +107,9 @@ commands:
     parameters:
       <<: *slack-notification-parameters
 
+    environment:
+      MESSAGE_TITLE: << parameters.title >>
+
     steps:
       - slack/notify:
           custom: |
@@ -116,7 +119,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":heavy_multiplication_x: << parameters.title >>",
+                    "text": ":heavy_multiplication_x: << parameters.environment >> ${MESSAGE_TITLE}",
                     "emoji": true
                   }
                 },
@@ -206,7 +209,7 @@ commands:
                         "type": "plain_text",
                         "text": "View GitHub"
                       },
-                      "url": "${CIRCLE_PULL_REQUEST}"
+                      "url": "${CIRCLE_REPOSITORY_URL}"
                     },
                     {
                       "type": "button",
@@ -236,7 +239,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":hourglass_flowing_sand: *Waiting*: << parameters.title >>",
+                    "text": ":hourglass_flowing_sand: << parameters.title >>",
                     "emoji": true
                   }
                 },
@@ -253,7 +256,7 @@ commands:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Environment*: << parameters.environment >>"
+                      "text": "*Target Environment*: << parameters.environment >>"
                     },
                     {
                       "type": "mrkdwn",
@@ -413,7 +416,7 @@ jobs:
           env_suffix: << parameters.env_suffix >>
       - restore-project-dependencies-cache
       - run: npm run build:storybook
-      - run: aws s3 sync ./out/storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
+      - run: aws s3 sync ./storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
 
   deployment:
     <<: *node-container
@@ -616,7 +619,7 @@ workflows:
             - performance-tests
           environment: 'Staging'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Deployment Approval'
+          title: 'Waiting for Deployment Approval'
 
       - approve-build-staging:
           type: approval
@@ -708,7 +711,7 @@ workflows:
             - accessibility-tests
           environment: 'Production'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Deployment Approval'
+          title: 'Waiting for Deployment Approval'
 
       - approve-build-production:
           context: SLACK_CREDENTIALS
