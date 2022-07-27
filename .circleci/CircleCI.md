@@ -18,4 +18,4 @@
 
 8. [Feature] Smart invalidations, just invalidate the routes are needed. This will boost the performance for heavy traffic sites after new deployments.
 
-9. [Feature] Add slack notification for fail deployments: create command and reuse it inside jobs (when: on_fail). Also notify when some post-tests fail
+9. [Feature] Integrate Tools
