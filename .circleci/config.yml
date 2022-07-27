@@ -458,6 +458,7 @@ jobs:
       <<: *env-suffix-parameter
 
     steps:
+      - checkout
       - run: |
           echo 'export DISTRIBUTION_ID=$(echo $CLOUDFRONT_ID<< parameters.env_suffix >>)' >> $BASH_ENV
       - run:
@@ -550,6 +551,7 @@ workflows:
             - setup
       - deployment:
           name: deployment-develop
+          context: SLACK_CREDENTIALS
           requires:
             - build
           ci_env: 'development'
@@ -561,6 +563,7 @@ workflows:
               title: Deployment Failed
       - cache-invalidation:
           name: cache-invalidation-develop
+          context: SLACK_CREDENTIALS
           requires:
             - deployment-develop
           env_suffix: '_DEV'
@@ -574,6 +577,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: 'Deployment Successful! :tada:'
       - integration-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-develop
           post-steps:
@@ -582,6 +586,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Integration Tests Failed
       - performance-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-develop
           post-steps:
@@ -593,6 +598,7 @@ workflows:
       ###### BEGIN: OPTIONAL STAGING APPROVAL GATE ######
       ## Comment out if the approval is not needed
       - approve-build-staging:
+          context: SLACK_CREDENTIALS
           type: approval
           requires:
             - integration-tests
@@ -606,6 +612,7 @@ workflows:
 
       - deployment:
           name: deployment-staging
+          context: SLACK_CREDENTIALS
           requires:
             - approve-build-staging
           ci_env: 'staging'
@@ -617,6 +624,7 @@ workflows:
               title: Deployment Failed
       - cache-invalidation:
           name: cache-invalidation-staging
+          context: SLACK_CREDENTIALS
           requires:
             - deployment-staging
           env_suffix: '_STAGE'
@@ -630,6 +638,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: 'Deployment Successful! :tada:'
       - storybook:
+          context: SLACK_CREDENTIALS
           requires:
             - deployment-staging
           env_suffix: '_STAGE'
@@ -639,6 +648,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Storybook Deployment Failed
       - dast:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
           post-steps:
@@ -647,6 +657,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: DAST Failed
       - pen-test:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
           post-steps:
@@ -655,6 +666,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Pen Test Failed
       - accessibility-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
           post-steps:
@@ -663,6 +675,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Accessibility Tests Failed
       - qa-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
           post-steps:
@@ -674,6 +687,7 @@ workflows:
       ###### BEGIN: OPTIONAL PRODUCTION APPROVAL GATE ######
       ## Comment out if the approval is not needed
       - approve-build-production:
+          context: SLACK_CREDENTIALS
           type: approval
           requires:
             - dast
@@ -687,6 +701,7 @@ workflows:
 
       - deployment:
           name: deployment-production
+          context: SLACK_CREDENTIALS
           requires:
             - approve-build-production
           ci_env: 'production'
@@ -698,6 +713,7 @@ workflows:
               title: Deployment Failed
       - cache-invalidation:
           name: cache-invalidation-production
+          context: SLACK_CREDENTIALS
           requires:
             - deployment-production
           env_suffix: '_PROD'
@@ -711,6 +727,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: 'Deployment Successful! :tada:'
       - social-test:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-production
           post-steps:
@@ -719,6 +736,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Social Tests Failed
       - content-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-production
           post-steps:
@@ -727,6 +745,7 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: Content Tests Failed
       - seo-tests:
+          context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-production
           post-steps:
@@ -735,7 +754,9 @@ workflows:
               slack_channel: $SLACK_CHANNEL_ID
               title: SEO Tests Failed
       - auto-tagging:
-          context: GITHUB_CREDENTIALS
+          context:
+            - GITHUB_CREDENTIALS
+            - SLACK_CREDENTIALS
           requires:
             - cache-invalidation-production
           post-steps:
