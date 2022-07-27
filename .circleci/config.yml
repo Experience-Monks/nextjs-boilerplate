@@ -115,8 +115,8 @@ commands:
                 {
                   "type": "header",
                   "text": {
-                    "type": "mrkdwn",
-                    "text": ":x: *Failure*: << parameters.title >>",
+                    "type": "plain_text",
+                    "text": ":heavy_multiplication_x: << parameters.title >>",
                     "emoji": true
                   }
                 },
@@ -170,8 +170,8 @@ commands:
                 {
                   "type": "header",
                   "text": {
-                    "type": "mrkdwn",
-                    "text": ":white_check_mark: *Success*: << parameters.title >>",
+                    "type": "plain_text",
+                    "text": ":white_check_mark: << parameters.title >>",
                     "emoji": true
                   }
                 },
@@ -206,12 +206,7 @@ commands:
                         "text": "View GitHub"
                       },
                       "url": "$([ -z "$CIRCLE_PULL_REQUEST" ] && echo $CIRCLE_PULL_REQUEST || echo $CIRCLE_REPOSITORY_URL)"
-                    }
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
+                    },
                     {
                       "type": "button",
                       "text": {
@@ -459,6 +454,8 @@ jobs:
 
     steps:
       - checkout
+      - configure-aws-cli:
+          env_suffix: << parameters.env_suffix >>
       - run: |
           echo 'export DISTRIBUTION_ID=$(echo $CLOUDFRONT_ID<< parameters.env_suffix >>)' >> $BASH_ENV
       - run:
