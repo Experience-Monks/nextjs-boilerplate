@@ -37,7 +37,6 @@ orbs:
   aws-cli: circleci/aws-cli@2.1.0
   github-cli: circleci/github-cli@2.1.0
   slack: circleci/slack@4.10.1
-  accessibility-orb: economist-digital-solutions/accessibility-orb@1.1.0
 
 #################################
 #
@@ -73,103 +72,17 @@ commands:
             - v1-node-dependencies-
 
   accessibility-run:
-    parameters:
-      base_url:
-        default: 'http://localhost:3000'
-        description: Root url for the test
-        type: string
-      fail_on_violation:
-        default: false
-        description: Decide if job should fail on WCAG2AA violation
-        type: boolean
-      pa11y_ci_config:
-        default: .pa11yci
-        description: Location of pa11y-ci configuration
-        type: string
     steps:
       - checkout
       - run:
-          name: Install pa11y CLI
-          command: |
-            sudo apt-get update -y -q
-            sudo apt-get install \
-              jq \
-              libappindicator3-1 \
-              lsb-release -y
-            # This is done instead of using package.json.
-            # I assume because any extra files are not available in the orb YAML.
-            # Match the versions in the root package.json for matching packages.
-            # Pin to a supported version of pa11y packages.
-            npm i \
-              @octokit/core@^3.4.0 \
-              axios@^0.21.1 \
-              octokit@^1.0.3 \
-              pa11y-ci@^2.4.1 \
-              pa11y-ci-reporter-html@^3.0.3
+          name: Check build folder
+          command: ls -la out
       - run:
-          name: Build config dynamically
-          command: >
-            cat <<parameters.pa11y_ci_config>> | sed
-            's@${base_url}@<<parameters.base_url>>@g' > .pa11yci_current
+          name: Run a test web server
+          command: npm run ci-prod-server
       - run:
-          name: Produce JSON report
-          command: |
-            mkdir /tmp/screen-captures
-            set +o errexit
-            # npx pa11y-ci --config .pa11yci_current --json > ./output.json
-            npx pa11y-ci --config .pa11yci_current --json > /tmp/output.json
-            echo "export ACCESSIBILITY_ERROR_CODE=$?" >> $BASH_ENV
-            (cd /tmp && zip -r screen-captures.zip screen-captures)
-      - run:
-          name: Produce HTML report
-          command: >
-            # npx pa11y-ci-reporter-html --source ./output.json --destination
-            /tmp/html_output
-
-            npx pa11y-ci-reporter-html --source /tmp/output.json --destination
-            /tmp/html_output
-      - store_artifacts:
-          destination: html-output
-          path: /tmp/html_output
-      - store_artifacts:
-          destination: screen-captures
-          path: /tmp/screen-captures.zip
-      # - run:
-      #     name: Get PR endpoint & post Stats to GitHub PR
-      #     command: >-
-      #       pr_metadata=$(curl --location --request GET
-      #       "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open"
-      #       \
-
-      #       -u "${GITHUB_USER}":"${GITHUB_TOKEN}")
-
-      #       if [ "$(echo "${pr_metadata}" | jq length)" -eq 0 ]; then
-      #         echo "No PR found to update"
-      #         exit 0
-      #       else
-      #         is_draft=$(echo "${pr_metadata}" | jq -r ".[].draft")
-      #         if [ "$is_draft" == "true" ]; then
-      #           echo "PR still in draft, not posting comment"
-      #           exit 0
-      #         fi
-
-      #         pr_comment_url=$(echo "${pr_metadata}" | jq -r ".[]._links.comments.href")
-      #         echo "${pr_comment_url}"
-      #       fi
-
-      #       # Posting to the pull request
-
-      #       curl --silent -O
-      #       https://accessibility-orb-files-bucket.s3-eu-west-1.amazonaws.com/gitbot-report.js
-
-      #       GITHUB_ENDPOINT=$pr_comment_url node ./gitbot-report.js
-      - run:
-          name: Fail on errors if needed
-          command: |
-            if [[ "<< parameters.fail_on_violation >>" == "true" ]]; then
-              echo "failing on WCAGAA accessibility errors"
-              exit $ACCESSIBILITY_ERROR_CODE
-            fi
+          name: Run pa11y-ci.
+          command: npm run pa11y-ci 2>&1 | tee pa11y_output.txt
 
 #################################
 #
@@ -318,6 +231,8 @@ jobs:
       - run:
           name: Running Build Script
           command: bash .circleci/scripts/build.sh # use bash instead of sh
+      - accessibility-run
+
       #
       # if you want to store your builds, do it here. Note this will use a lot of storage
       # so this isn't very applicable to all projects
@@ -477,7 +392,6 @@ jobs:
       - image: cimg/node:16.15.1
     steps:
       - run: echo "Performance Tests"
-      - accessibility-run
 
   pen-test:
     docker:
