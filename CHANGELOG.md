@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0](https://github.com/Jam3/nextjs-boilerplate/compare/v6.0.0...v7.0.0) (2022-07-27)
+
+
+### Bug Fixes
+
+* adviser bumped ([071c360](https://github.com/Jam3/nextjs-boilerplate/commit/071c360b34d77d043f400572e55e830aed24642e))
+* burst cache ([e41c0cb](https://github.com/Jam3/nextjs-boilerplate/commit/e41c0cb92365ebe4f1966cad3b6eea9411ac9bae))
+* cicd cache invalidation + slack context ([0c86601](https://github.com/Jam3/nextjs-boilerplate/commit/0c86601e6e328be7303868ff7247942ca00a1a6f))
+* cicd slack messages schema ([b3b29ba](https://github.com/Jam3/nextjs-boilerplate/commit/b3b29ba7aec0212f23c387aebcf66db5aca20848))
+* cicd slack messages schema ([76825c3](https://github.com/Jam3/nextjs-boilerplate/commit/76825c34caf6dc52c0a958e00f789daf8ea125c8))
+* improve cicd ([2bd4c94](https://github.com/Jam3/nextjs-boilerplate/commit/2bd4c947a777726e000162eb169f09c102e3bbfd))
+* linters onlyprod ([6ec033c](https://github.com/Jam3/nextjs-boilerplate/commit/6ec033c473331ff351a674af73656f99d9031ac9))
+* remove only-prod flag ([3f6ebae](https://github.com/Jam3/nextjs-boilerplate/commit/3f6ebae3e80c3f6869abc09e473f697a1df97f7d))
+
 ## [6.0.0](https://github.com/Jam3/nextjs-boilerplate/compare/v5.0.0...v6.0.0) (2022-07-26)
 
 ## [5.0.0](https://github.com/Jam3/nextjs-boilerplate/compare/v4.0.0...v5.0.0) (2022-07-26)
