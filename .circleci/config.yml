@@ -58,10 +58,6 @@ slack-notification-parameters: &slack-notification-parameters
     description: 'Slack channel id'
     default: C03R1QXQZG9
     type: string
-  title:
-    description: 'Slack message title'
-    default: Something unexpected happened
-    type: string
   environment:
     description: 'Type of message to send to slack'
     type: enum
@@ -106,6 +102,10 @@ commands:
   slack-notification-onfail:
     parameters:
       <<: *slack-notification-parameters
+      error_message:
+        description: 'Slack message error'
+        default: Something unexpected happened
+        type: string
 
     steps:
       - slack/notify:
@@ -116,8 +116,15 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":heavy_multiplication_x: << parameters.environment >> << parameters.title >>",
+                    "text": ":heavy_multiplication_x: Pipeline Error",
                     "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Error Message*: << parameters.error_message >>"
                   }
                 },
                 {
@@ -233,7 +240,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":hourglass_flowing_sand: << parameters.title >>",
+                    "text": ":hourglass_flowing_sand: Awaiting Approval :raised_hand:",
                     "emoji": true
                   }
                 },
@@ -578,7 +585,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Failed'
+              error_message: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-develop
           context: SLACK_CREDENTIALS
@@ -589,7 +596,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: Cache Invalidation Failed
+              error_message: Cache Invalidation Failed
             - slack-notification-onsuccess-deployment:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
@@ -601,7 +608,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Integration Tests Failed'
+              error_message: 'Integration Tests Failed'
       - performance-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -610,7 +617,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Develop'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Performance Tests Failed'
+              error_message: 'Performance Tests Failed'
 
       ###### BEGIN: OPTIONAL STAGING APPROVAL GATE ######
       ## Comment out if the approval is not needed
@@ -622,7 +629,6 @@ workflows:
             - performance-tests
           environment: 'Staging'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Awaiting Approval :raised_hand:'
 
       - approve-build-staging:
           type: approval
@@ -641,7 +647,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Failed'
+              error_message: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-staging
           context: SLACK_CREDENTIALS
@@ -652,7 +658,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Cache Invalidation Failed'
+              error_message: 'Cache Invalidation Failed'
             - slack-notification-onsuccess-deployment:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
@@ -665,7 +671,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Storybook Deployment Failed'
+              error_message: 'Storybook Deployment Failed'
       - dast:
           context: SLACK_CREDENTIALS
           requires:
@@ -674,7 +680,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'DAST Failed'
+              error_message: 'DAST Failed'
       - pen-test:
           context: SLACK_CREDENTIALS
           requires:
@@ -683,7 +689,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Pen Test Failed'
+              error_message: 'Pen Test Failed'
       - accessibility-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -692,7 +698,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Accessibility Tests Failed'
+              error_message: 'Accessibility Tests Failed'
       - qa-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -701,7 +707,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Staging'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Automated QA Tests Failed'
+              error_message: 'Automated QA Tests Failed'
 
       ###### BEGIN: OPTIONAL PRODUCTION APPROVAL GATE ######
       ## Comment out if the approval is not needed
@@ -713,7 +719,6 @@ workflows:
             - accessibility-tests
           environment: 'Production'
           slack_channel: $SLACK_CHANNEL_ID
-          title: 'Awaiting Approval :raised_hand:'
 
       - approve-build-production:
           context: SLACK_CREDENTIALS
@@ -733,7 +738,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Deployment Failed'
+              error_message: 'Deployment Failed'
       - cache-invalidation:
           name: cache-invalidation-production
           context: SLACK_CREDENTIALS
@@ -744,7 +749,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Cache Invalidation Failed'
+              error_message: 'Cache Invalidation Failed'
             - slack-notification-onsuccess-deployment:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
@@ -756,7 +761,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Social Tests Failed'
+              error_message: 'Social Tests Failed'
       - content-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -765,7 +770,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Content Tests Failed'
+              error_message: 'Content Tests Failed'
       - seo-tests:
           context: SLACK_CREDENTIALS
           requires:
@@ -774,7 +779,7 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'SEO Tests Failed'
+              error_message: 'SEO Tests Failed'
       - auto-tagging:
           context:
             - GITHUB_CREDENTIALS
@@ -785,4 +790,4 @@ workflows:
             - slack-notification-onfail:
               environment: 'Production'
               slack_channel: $SLACK_CHANNEL_ID
-              title: 'Autotagging Failed'
+              error_message: 'Autotagging Failed'
