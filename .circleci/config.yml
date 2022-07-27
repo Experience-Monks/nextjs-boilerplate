@@ -107,9 +107,6 @@ commands:
     parameters:
       <<: *slack-notification-parameters
 
-    environment:
-      MESSAGE_TITLE: << parameters.title >>
-
     steps:
       - slack/notify:
           custom: |
@@ -119,7 +116,7 @@ commands:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": ":heavy_multiplication_x: << parameters.environment >> ${MESSAGE_TITLE}",
+                    "text": ":heavy_multiplication_x: << parameters.environment >> << parameters.title >>",
                     "emoji": true
                   }
                 },
@@ -137,6 +134,10 @@ commands:
                     {
                       "type": "mrkdwn",
                       "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Title*: << parameters.title >>"
                     },
                     {
                       "type": "mrkdwn",
