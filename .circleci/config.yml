@@ -3,7 +3,7 @@ version: 2.1
 setup: true
 
 orbs:
-  split-config: bufferings/split-config@0.1.0
+  split-config: bufferings/split-config@0.1.0 # NOTE: https://github.com/bufferings/orb-split-config
 
 workflows:
   generate-config:
