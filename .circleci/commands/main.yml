@@ -1,0 +1,49 @@
+version: 2.1
+
+#################################
+#
+# Variables
+#
+#################################
+
+env-suffix-parameter: &env-suffix-parameter
+  env_suffix:
+    description: 'Dynamic env variable suffix'
+    type: enum
+    enum: ['', '_DEV', '_STAGE', '_PROD', '_CLIENT']
+    default: ''
+
+#################################
+#
+# Commands start
+#
+#################################
+
+commands:
+  configure-aws-cli:
+    parameters:
+      <<: *env-suffix-parameter
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID<< parameters.env_suffix >>
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.env_suffix >>
+          aws-region: AWS_REGION
+
+  generate-preview-hash:
+    steps:
+      - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
+
+  save-project-dependencies-cache:
+    steps:
+      - save_cache:
+          paths:
+            - ./node_modules
+            - ./.next/cache
+          key: v2-project-dependencies-{{ checksum "package-lock.json" }}
+
+  restore-project-dependencies-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v2-project-dependencies-{{ checksum "package-lock.json" }}
+            - v2-project-dependencies-
