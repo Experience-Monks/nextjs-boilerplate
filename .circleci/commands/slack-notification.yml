@@ -1,0 +1,209 @@
+version: 2.1
+
+#################################
+#
+# Variables
+#
+#################################
+
+slack-notification-parameters: &slack-notification-parameters
+  slack_channel:
+    description: 'Slack channel id'
+    default: C03R1QXQZG9
+    type: string
+  environment:
+    description: 'Type of message to send to slack'
+    type: enum
+    enum: ['Develop', 'Staging', 'Production']
+    default: 'Develop'
+
+#################################
+#
+# Commands start
+#
+#################################
+
+commands:
+  slack-notification-onfail:
+    parameters:
+      <<: *slack-notification-parameters
+      error_message:
+        description: 'Slack message error'
+        default: 'Something unexpected happened'
+        type: string
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":heavy_multiplication_x: Pipeline Error",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Error Message*: << parameters.error_message >>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: fail
+          channel: << parameters.slack_channel >>
+
+  slack-notification-onsuccess-deployment:
+    parameters:
+      <<: *slack-notification-parameters
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":white_check_mark: Deployment Successful! :tada:",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: pass
+          channel: << parameters.slack_channel >>
+
+  slack-notification-wait-for-approval:
+    parameters:
+      <<: *slack-notification-parameters
+
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":hourglass_flowing_sand: Awaiting Approval :raised_hand:",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project*: $CIRCLE_PROJECT_REPONAME"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Target Environment*: << parameters.environment >>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit*: $(echo $CIRCLE_SHA1 | cut -c -7)"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Mentions*: $SLACK_PARAM_MENTIONS"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View CircleCI Pipeline"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
+                    }
+                  ]
+                }
+              ]
+            }
+          event: pass
+          mentions: '@qa_team'
+          channel: << parameters.slack_channel >>

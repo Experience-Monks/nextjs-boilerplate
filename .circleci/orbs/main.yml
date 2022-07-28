@@ -1,0 +1,8 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.1.0
+  github-cli: circleci/github-cli@2.1.0
+  slack: circleci/slack@4.10.1
+  lighthouse-check: foo-software/lighthouse-check@0.0.13
+  gitleaks: upenn-libraries/gitleaks@0.1.0
