@@ -1,0 +1,236 @@
+version: 2.1
+
+parameters:
+  enable-trunk-based:
+    type: boolean
+    default: true
+
+workflows:
+  version: 2
+  trunk-based:
+    when: << pipeline.parameters.enable-trunk-based >>
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only: main
+      - build:
+          requires:
+            - setup
+      - deployment:
+          name: deployment-develop
+          context: SLACK_CREDENTIALS
+          requires:
+            - build
+          ci_env: 'development'
+          env_suffix: '_DEV'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Failed'
+      - cache-invalidation:
+          name: cache-invalidation-develop
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-develop
+          env_suffix: '_DEV'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+      - integration-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-develop
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Integration Tests Failed'
+      - performance-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-develop
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Performance Tests Failed'
+
+      ###### BEGIN: OPTIONAL STAGING APPROVAL GATE ######
+      ## Comment out if the approval is not needed
+      - slack-notification-approval:
+          name: slack-notification-approval-staging
+          context: SLACK_CREDENTIALS
+          requires:
+            - integration-tests
+            - performance-tests
+          environment: 'Staging'
+          slack_channel: $SLACK_CHANNEL_ID
+
+      - approve-build-staging:
+          type: approval
+          requires:
+            - slack-notification-approval-staging
+      ###### END: OPTIONAL STAGING APPROVAL GATE ######
+
+      - deployment:
+          name: deployment-staging
+          context: SLACK_CREDENTIALS
+          requires:
+            - approve-build-staging
+          ci_env: 'staging'
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Failed'
+      - cache-invalidation:
+          name: cache-invalidation-staging
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-staging
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+      - storybook:
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-staging
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Storybook Deployment Failed'
+      - dast:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'DAST Failed'
+      - pen-test:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Pen Test Failed'
+      - accessibility-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Accessibility Tests Failed'
+      - qa-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-staging
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Automated QA Tests Failed'
+
+      ###### BEGIN: OPTIONAL PRODUCTION APPROVAL GATE ######
+      ## Comment out if the approval is not needed
+      - slack-notification-approval:
+          name: slack-notification-approval-production
+          context: SLACK_CREDENTIALS
+          requires:
+            - dast
+            - accessibility-tests
+          environment: 'Production'
+          slack_channel: $SLACK_CHANNEL_ID
+
+      - approve-build-production:
+          context: SLACK_CREDENTIALS
+          type: approval
+          requires:
+            - slack-notification-approval-production
+      ###### END: OPTIONAL PRODUCTION APPROVAL GATE ######
+
+      - deployment:
+          name: deployment-production
+          context: SLACK_CREDENTIALS
+          requires:
+            - approve-build-production
+          ci_env: 'production'
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Failed'
+      - cache-invalidation:
+          name: cache-invalidation-production
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-production
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+      - social-test:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Social Tests Failed'
+      - content-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Content Tests Failed'
+      - seo-tests:
+          context: SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'SEO Tests Failed'
+      - auto-tagging:
+          context:
+            - GITHUB_CREDENTIALS
+            - SLACK_CREDENTIALS
+          requires:
+            - cache-invalidation-production
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Autotagging Failed'

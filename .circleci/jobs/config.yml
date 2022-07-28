@@ -1,0 +1,276 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.1.0
+  github-cli: circleci/github-cli@2.1.0
+  lighthouse-check: foo-software/lighthouse-check@0.0.13
+  gitleaks: upenn-libraries/gitleaks@0.1.0
+
+#################################
+#
+# Variables
+#
+#################################
+
+default-container: &node-container
+  docker:
+    - image: cimg/node:16.15.1
+
+env-suffix-parameter: &env-suffix-parameter
+  env_suffix:
+    description: 'Dynamic env variable suffix'
+    type: enum
+    enum: ['', '_DEV', '_STAGE', '_PROD', '_CLIENT']
+    default: ''
+
+slack-notification-parameters: &slack-notification-parameters
+  slack_channel:
+    description: 'Slack channel id'
+    default: C03R1QXQZG9
+    type: string
+  environment:
+    description: 'Type of message to send to slack'
+    type: enum
+    enum: ['Develop', 'Staging', 'Production']
+    default: 'Develop'
+
+#################################
+#
+# Jobs start
+#
+#################################
+
+jobs:
+  setup:
+    <<: *node-container
+    resource_class: small
+    steps:
+      - checkout
+      - restore-project-dependencies-cache
+      - run: npx npe scripts.prepare ""
+      - run: npm ci
+      - save-project-dependencies-cache
+
+  linters:
+    <<: *node-container
+    resource_class: small
+    steps:
+      - checkout
+      - restore-project-dependencies-cache
+      - run: npm run linters-ci
+
+  secrets-key-detection:
+    <<: *node-container
+    resource_class: small
+    steps:
+      - checkout
+      - run: bash <(curl -s https://raw.githubusercontent.com/zricethezav/gitleaks-ci/master/gitleaks.sh)
+
+  auto-tagging:
+    <<: *node-container
+    resource_class: small
+    steps:
+      - checkout
+      - restore-project-dependencies-cache
+      - run: |
+          git config user.email "${GITHUB_DEVOPS_USER_EMAIL}"
+          git config user.name "${GITHUB_DEVOPS_USERNAME}"
+      - run: npm run release -- --release-as major
+      - run: |
+          git commit --allow-empty -m "build: [skip ci] Automated Release"
+      - run: git push https://$GITHUB_DEVOPS_USERNAME:$GITHUB_DEVOPS_USER_ACCESS_TOKEN@$GITHUB_PROJECT main --follow-tags
+
+  build:
+    <<: *node-container
+    resource_class: medium #if you can get away with using small, do that,
+    # but builds on small tend to use 100% cpu and drag so this might be the best case for medium
+    #
+    # check circle/ci -> Plan Usage for optimal balance between time/cost
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1
+    parameters:
+      git_lfs:
+        description: 'Enable Git LFS'
+        default: false
+        type: boolean
+
+    steps:
+      - checkout
+      - when:
+          condition: << parameters.git_lfs >>
+          steps:
+            - run:
+                name: Install Git LFS
+                command: |
+                  sudo apt-get update
+                  sudo apt-get install git-lfs
+            - run:
+                name: Checkout binaries
+                command: git lfs pull
+            - run:
+                name: LFS cache id
+                # this generates a unique ID for LFS files which we use for cache
+                command: |
+                  git lfs ls-files -l | cut -d' ' -f1 | sort > .assets-id
+            - restore_cache:
+                keys:
+                  - v1-lfs-assets-{{ checksum ".assets-id" }}
+      - restore-project-dependencies-cache
+
+      - run:
+          name: Running Build Script
+          command: bash .circleci/scripts/build.sh
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./out
+
+  # this builds the preview environment on PRs
+  # right now it builds on *each* commit in a PR (make sure circleci config is to run on PR only)
+  # which crates multiple preview environments since it's based on the commit hash
+  # TODO: update this so it's based on the PR number
+  # note however if you deploy to the same PR number preview environment that you'd then need to
+  # invalidate cache
+  #
+  preview-environment:
+    <<: *node-container
+    resource_class: medium
+    environment:
+      GIT_LFS_SKIP_SMUDGE: 1
+    parameters:
+      <<: *env-suffix-parameter
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - configure-aws-cli:
+          env_suffix: << parameters.env_suffix >>
+      - github-cli/setup:
+          token: GITHUB_DEVOPS_USER_ACCESS_TOKEN
+      - generate-preview-hash
+      - run: aws s3 sync ./out/ s3://$S3_ORIGIN<< parameters.env_suffix >>/preview/$ENV_PREVIEW_ID
+      - run:
+          command: |
+            gh pr comment $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
+
+            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>" || true
+
+  storybook:
+    <<: *node-container
+    resource_class: medium
+    parameters:
+      <<: *env-suffix-parameter
+
+    steps:
+      - checkout
+      - configure-aws-cli:
+          env_suffix: << parameters.env_suffix >>
+      - restore-project-dependencies-cache
+      - run: npm run build:storybook
+      - run: aws s3 sync ./storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
+
+  deployment:
+    <<: *node-container
+
+    parameters:
+      <<: *env-suffix-parameter
+      ci_env:
+        description: 'CI Environment'
+        default: 'development'
+        type: enum
+        enum: ['development', 'staging', 'production']
+      gtm_id:
+        description: 'GTM Container ID'
+        default: 'GTM-0000000'
+        type: string
+
+    environment:
+      CI_ENV: << parameters.ci_env >>
+      NODE_ENV: << parameters.ci_env >>
+      GTM_ID: << parameters.gtm_id >>
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - configure-aws-cli:
+          env_suffix: << parameters.env_suffix >>
+      - run: |
+          echo 'export S3_ORIGIN_BUCKET=$(echo $S3_ORIGIN<< parameters.env_suffix >>)' >> $BASH_ENV
+          echo 'export WEBSITE_SITE_URL=$(echo https://$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>)' >> $BASH_ENV
+      - run:
+          name: Deploying artifact
+          command: bash .circleci/scripts/deploy.sh
+
+  cache-invalidation:
+    <<: *node-container
+
+    parameters:
+      <<: *env-suffix-parameter
+
+    steps:
+      - checkout
+      - configure-aws-cli:
+          env_suffix: << parameters.env_suffix >>
+      - run: |
+          echo 'export DISTRIBUTION_ID=$(echo $CLOUDFRONT_ID<< parameters.env_suffix >>)' >> $BASH_ENV
+      - run:
+          name: Invalidating cache
+          command: bash .circleci/scripts/cache-invalidate.sh
+
+  slack-notification-approval:
+    <<: *node-container
+
+    parameters:
+      <<: *slack-notification-parameters
+
+    steps:
+      - slack-notification-wait-for-approval:
+          environment: << parameters.environment >>
+          slack_channel: << parameters.slack_channel >>
+
+  dast:
+    <<: *node-container
+    steps:
+      - run: echo "DAST"
+
+  integration-tests:
+    <<: *node-container
+    steps:
+      - run: echo "Integration Tests"
+
+  performance-tests:
+    <<: *node-container
+    steps:
+      - run: echo "Performance Tests"
+
+  pen-test:
+    <<: *node-container
+    steps:
+      - run: echo "Pen Test"
+
+  accessibility-tests:
+    <<: *node-container
+    steps:
+      - run: echo "Accessibility Test"
+
+  qa-tests:
+    <<: *node-container
+    steps:
+      - run: echo "QA Test"
+
+  social-test:
+    <<: *node-container
+    steps:
+      - run: echo "Social Tests"
+
+  content-tests:
+    <<: *node-container
+    steps:
+      - run: echo "Content Tests"
+
+  seo-tests:
+    <<: *node-container
+    steps:
+      - run: echo "SEO"

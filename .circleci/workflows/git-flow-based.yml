@@ -1,0 +1,84 @@
+version: 2.1
+
+parameters:
+  enable-git-flow-based:
+    type: boolean
+    default: false
+
+workflows:
+  version: 2
+  git-flow-based:
+    when: << pipeline.parameters.enable-git-flow-based >>
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - build:
+          requires:
+            - setup
+      - storybook:
+          env_suffix: '_DEV'
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+      - deployment:
+          name: deployment-develop
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+          ci_env: 'development'
+          env_suffix: '_DEV'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Fail'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+      - deployment:
+          name: deployment-staging
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - staging
+          ci_env: 'staging'
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Fail'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+      - deployment:
+          name: deployment-production
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
+          ci_env: 'production'
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Deployment Fail'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
