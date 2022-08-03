@@ -42,8 +42,9 @@ jobs:
       - checkout
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - run: npm install -g pnpm
-      - run: pnpm install
+      # - run: npm install -g pnpm
+      # - run: pnpm install
+      - run: npm install
       - save-project-dependencies-cache
 
   linters:
