@@ -145,16 +145,16 @@ jobs:
       - generate-preview-hash
       - run: aws s3 sync ./out/ s3://$S3_ORIGIN<< parameters.env_suffix >>/preview/$ENV_PREVIEW_ID
       - run:
+          name: Save PR description
           command: |
-            gh pr edit $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
-            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>" || true
+            echo GH_PR_BODY=$(gh pr view $CIRCLE_PR_NUMBER --json body --template \ '{{.body}}') >> "${BASH_ENV}"
       - run:
           command: |
-            gh pr view $CIRCLE_PR_NUMBER --json number,title,body,reviews,assignees --template \
-            '{{printf "#%v" .number}} {{.title}}
+            gh pr edit $CIRCLE_PR_NUMBER --body "$GH_PR_BODY
 
-            {{.body}}
-            '
+            [AUTOMATED] Latest version has been pushed to preview.
+            Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>" || true
+
   storybook:
     <<: *node-container
     resource_class: medium
