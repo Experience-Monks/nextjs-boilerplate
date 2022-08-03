@@ -146,7 +146,7 @@ jobs:
       - run: aws s3 sync ./out/ s3://$S3_ORIGIN<< parameters.env_suffix >>/preview/$ENV_PREVIEW_ID
       - run:
           command: |
-            gh pr comment $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
+            gh pr edit $CIRCLE_PR_NUMBER --body "[AUTOMATED] Latest version has been pushed to preview.
 
             Preview deployed at https://preview-$ENV_PREVIEW_ID.$ENVIRONMENT_DOMAIN<< parameters.env_suffix >>" || true
 
