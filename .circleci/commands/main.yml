@@ -40,11 +40,11 @@ commands:
             # - ./node_modules
             - ./.npm
             - ./.next/cache
-          key: v2-project-dependencies-{{ checksum "package-lock.json" }}
+          key: v2-project-dependencies-test-{{ checksum "package-lock.json" }}
 
   restore-project-dependencies-cache:
     steps:
       - restore_cache:
           keys:
-            - v2-project-dependencies-{{ checksum "package-lock.json" }}
+            - v2-project-dependencies-test-{{ checksum "package-lock.json" }}
             - v2-project-dependencies-

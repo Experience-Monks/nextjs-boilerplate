@@ -43,6 +43,7 @@ jobs:
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
       # - run: npm install --prefer-offline --no-audit
+      - run: npm set cache .npm
       - run: npm ci --prefer-offline --no-audit
       - save-project-dependencies-cache
 
