@@ -40,14 +40,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      # - restore-project-dependencies-cache
+      - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - restore-project-pnpm-dependencies-cache
-      - run: npm install -g pnpm
-      - run: pnpm install
-      - save-project-pnpm-dependencies-cache
       # - run: npm install --prefer-offline --no-audit
-      # - run: npm ci --prefer-offline --no-audit
+      - run: npm ci --prefer-offline --no-audit
       - save-project-dependencies-cache
 
   linters:
