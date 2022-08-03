@@ -47,3 +47,18 @@ commands:
           keys:
             - v2-project-dependencies-{{ checksum "package-lock.json" }}
             - v2-project-dependencies-
+
+  save-project-pnpm-dependencies-cache:
+    steps:
+      - save_cache:
+          paths:
+            - ./node_modules
+            - ./.next/cache
+          key: v2-project-dependencies-{{ checksum "pnpm-lock.yaml" }}
+
+  restore-project-pnpm-dependencies-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v2-project-dependencies-{{ checksum "pnpm-lock.yaml" }}
+            - v2-project-dependencies-
