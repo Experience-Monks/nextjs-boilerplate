@@ -44,7 +44,8 @@ jobs:
       - run: npx npe scripts.prepare ""
       # - run: npm install -g pnpm
       # - run: pnpm install
-      - run: npm install --prefer-offline --no-audit
+      # - run: npm install --prefer-offline --no-audit
+      - run: npm ci
       - save-project-dependencies-cache
 
   linters:
