@@ -42,7 +42,7 @@ jobs:
       - checkout
       - restore-project-dependencies-cache
       - run: npx npe scripts.prepare ""
-      - run: npm ci
+      - run: npm install --prefer-offline --no-audit
       - save-project-dependencies-cache
 
   linters:
