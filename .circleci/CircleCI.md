@@ -2,15 +2,23 @@
 
 ## Table of Contents
 
+- [Pre requirement](#pre-requirement)
 - [Usage](#usage)
 - [To do](#to-do)
+
+
+### Pre requirement
+
+1. Create a slack channel with the project name -deploy (for example: `2373-cos-de-digital-activation-deploy`).
+2. Get the channel ID and save it (going to be used on the next step [Usage](#usage)).
+3. Add CircleCI-Jam3 bot to the channel as integration app.
 
 ### Usage
 
 1. This project needs to following CircleCI Environment Variables:
 
 ```
-AWS_REGION = us-ease-1
+AWS_REGION = us-east-1
 
 AWS_ACCESS_KEY_ID_DEV = XXXXXXXXXXX
 AWS_ACCESS_KEY_ID_STAGE = XXXXXXXXXXX
