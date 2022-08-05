@@ -1,9 +1,36 @@
 const path = require('path');
-
-const withPWA = require('next-pwa');
-const runtimeCaching = require('next-pwa/cache');
-const withPlugins = require('next-compose-plugins');
 const optimizedImages = require('next-optimized-images');
+
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextJSConfig = {
+  trailingSlash: true,
+  compress: false, // NOTE: enable this when doing SSR
+  productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
+  images: {
+    loader: 'custom',
+    disableStaticImages: true
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/styles')]
+  },
+  compiler: {
+    removeConsole: process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
+  },
+  webpack: function (config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack'
+        }
+      ]
+    });
+
+    return config;
+  }
+};
 
 const optimizedImagesConfig = {
   inlineImageLimit: 1,
@@ -34,54 +61,18 @@ const optimizedImagesConfig = {
   }
 };
 
-const nextJSConfig = {
-  trailingSlash: true,
-  compress: false, // NOTE: enable this when doing SSR
-  productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
-  devIndicators: {
-    autoPrerender: false
-  },
-  images: {
-    disableStaticImages: true
-  },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'src/styles')]
-  },
-  experimental: {
-    removeConsole: process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
-  },
-  webpack: function (config, options) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: '@svgr/webpack'
-        }
-      ]
-    });
+module.exports = (phase, { defaultConfig }) => {
+  const nextPlugins = [];
 
-    return config;
+  if (process.env.BUNDLE_ANALYZE === 'true') {
+    const withBundleAnalyzer = require('@next/bundle-analyzer');
+
+    nextPlugins.push(
+      withBundleAnalyzer({
+        enabled: true
+      })
+    );
   }
+
+  return nextPlugins.reduce((acc, next) => next(acc), optimizedImages({ ...optimizedImagesConfig, ...nextJSConfig }));
 };
-
-const nextPlugins = [[optimizedImages, optimizedImagesConfig]];
-if (process.env.BUNDLE_ANALYZE === 'true') {
-  const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: true
-  });
-  nextPlugins.push(withBundleAnalyzer);
-}
-
-if (process.env.ENABLE_PWA === 'true') {
-  nextPlugins.push([
-    withPWA,
-    {
-      pwa: {
-        dest: 'public',
-        runtimeCaching
-      }
-    }
-  ]);
-}
-
-module.exports = withPlugins(nextPlugins, nextJSConfig);
