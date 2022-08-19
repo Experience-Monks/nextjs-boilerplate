@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  html-validator:
+    docker:
+      - image: python:3.6-stretch
+    steps:
+      - run:
+          name: install Java
+          command: apt-get update && apt-get install -y openjdk-8-jre
+      - run:
+          name: install
+          command: pip install html5validator
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: validate html
+          command: html5validator --root out

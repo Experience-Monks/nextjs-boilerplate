@@ -33,6 +33,9 @@ workflows:
           requires:
             - linters
             - secrets-key-detection
+      - html-validator:
+          requires:
+            - build
       - preview-environment:
           context: GITHUB_CREDENTIALS
           requires:
