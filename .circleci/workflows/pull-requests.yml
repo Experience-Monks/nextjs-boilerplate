@@ -4,6 +4,17 @@ workflows:
   version: 2
   pull-requests:
     jobs:
+      # TODO: Custom Lighthouse implementation that access to the site with basic auth or token
+      - lighthouse:
+          context: GITHUB_CREDENTIALS
+          name: lighthouse-performance
+          # requires:
+          #   - preview-environment
+          # TODO: Fast run, basic scanning, only include performance
+          environment_domain: $ENVIRONMENT_DOMAIN_DEV
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          on_pr: true
+          basic_auth_token: $BASIC_AUTH_TOKEN
       - setup:
           filters:
             branches:

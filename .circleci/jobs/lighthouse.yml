@@ -1,0 +1,72 @@
+version: 2.1
+
+jobs:
+  lighthouse:
+    executor: lighthouse-check/default
+
+    parameters:
+      target_urls:
+        description: 'URLs to test, ex "http://site", or "http://site, http://site2"'
+        type: string
+        default: ''
+      target_path:
+        description: 'Paths to test, ex "/test"'
+        default: '/'
+        type: string
+      environment_domain:
+        description: 'Domain'
+        default: 'dev.test.cloud.jam3.net'
+        type: string
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        type: string
+      aws_env_suffix:
+        description: 'Dynamic env variable suffix'
+        type: string
+        default: ''
+      on_pr:
+        description: 'Enable PR Comment'
+        default: false
+        type: boolean
+      on_merge:
+        description: 'Enable Slack Message'
+        default: false
+        type: boolean
+      slack_webhook_url:
+        description: 'Slack Webhook URL'
+        type: string
+        default: ''
+      basic_auth_token:
+        description: 'basic auth token'
+        type: string
+        default: ''
+
+    steps:
+      - run: |
+          echo AWS_ACCESS_KEY_ID=$(echo "${AWS_ACCESS_KEY_ID}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+          echo AWS_SECRET_ACCESS_KEY=$(echo "${AWS_SECRET_ACCESS_KEY}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+          echo AWS_REGION=$(echo "${AWS_REGION}<< parameters.aws_env_suffix >>") >> "${BASH_ENV}"
+      - when:
+          condition: << parameters.on_pr >>
+          steps:
+            - generate-preview-hash
+            - lighthouse-check/audit:
+                # urls: https://preview-$ENV_PREVIEW_ID.<< parameters.environment_domain >><< parameters.target_path >>
+                # urls: https://<< parameters.environment_domain >><< parameters.target_path >>
+                urls: https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >>,https://<< parameters.environment_domain >>/about/?token=<< parameters.basic_auth_token >>
+                prCommentAccessToken: $GITHUB_DEVOPS_USER_ACCESS_TOKEN
+                prCommentUrl: https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PULL_REQUEST##*/}/reviews
+                awsAccessKeyId: $AWS_ACCESS_KEY_ID
+                awsSecretAccessKey: $AWS_SECRET_ACCESS_KEY
+                awsRegion: $AWS_REGION
+                awsBucket: << parameters.s3_origin_bucket >>/ursus/performance/lighthouse
+      - when:
+          condition: << parameters.on_merge >>
+          steps:
+            - lighthouse-check/audit:
+                urls: << parameters.target_urls >>
+                awsAccessKeyId: $AWS_ACCESS_KEY_ID
+                awsSecretAccessKey: $AWS_SECRET_ACCESS_KEY
+                awsRegion: $AWS_REGION
+                awsBucket: << parameters.s3_origin_bucket >>/ursus/performance/lighthouse
+                slackWebhookUrl: << parameters.slack_webhook_url >>
