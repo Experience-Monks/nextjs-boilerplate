@@ -1,0 +1,51 @@
+version: 2.1
+
+jobs:
+  dast:
+    docker:
+      - image: owasp/zap2docker-stable
+
+    parameters:
+      environment_domain:
+        description: 'URL to test, ex http://site'
+        type: string
+      target_path:
+        description: 'Paths to test, ex "/test"'
+        default: '/'
+        type: string
+      basic_auth_token:
+        description: 'basic auth token'
+        type: string
+        default: ''
+      scan_type:
+        description: 'Zap type of scan, more info in https://www.zaproxy.org/docs/docker/'
+        default: 'baseline'
+        type: enum
+        enum: ['full', 'baseline']
+      s3_origin_bucket:
+        description: 'S3 origin bucket name'
+        default: 'jam3-s3-example-name'
+        type: string
+
+    environment:
+      ZAP_AUTH_HEADER_SITE: << parameters.environment_domain >>
+
+    steps:
+      - checkout
+      - run: mkdir /zap/wrk
+      - when:
+          condition:
+            equal: ['baseline', << parameters.scan_type >>]
+          steps:
+            - run: zap-baseline.py -c ../../home/zap/project/.circleci/pipeline/dast/zap-config.conf -p ../../home/zap/project/.circleci/pipeline/dast/zap-progress.json -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+      - when:
+          condition:
+            equal: ['full', << parameters.scan_type >>]
+          steps:
+            - run: zap-full-scan.py -c ../../home/zap/project/.circleci/pipeline/dast/zap-config.conf -p ../../home/zap/project/.circleci/pipeline/dast/zap-progress.json -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+      - store_artifacts:
+          path: /zap/wrk
+          destination: zap-report
+      # - run:
+      #     command: aws s3 sync /zap/wrk s3://<< parameters.s3_origin_bucket >>/ursus/security
+      #     when: on_fail

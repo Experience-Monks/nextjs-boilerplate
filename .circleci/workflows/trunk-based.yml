@@ -119,6 +119,7 @@ workflows:
           context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
+          environment_domain: $ENVIRONMENT_DOMAIN_PROD
           post-steps:
             - slack-notification-onfail:
                 environment: 'Staging'

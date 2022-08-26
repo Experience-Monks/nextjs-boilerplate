@@ -1,0 +1,28 @@
+version: 2.1
+
+jobs:
+  w3c-checklinks:
+    docker:
+      - image: stupchiy/checklink
+
+    parameters:
+      environment_domain:
+        description: 'Domain'
+        default: 'dev.test.cloud.jam3.net'
+        type: string
+      target_path:
+        description: 'Paths to test, ex "/test"'
+        default: '/'
+        type: string
+      basic_auth_token:
+        description: 'basic auth token'
+        type: string
+        default: ''
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: validate html
+          command: checklink -H checklink.html  https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >>
