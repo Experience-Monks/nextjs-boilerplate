@@ -7,7 +7,7 @@ jobs:
 
     parameters:
       environment_domain:
-        description: 'URL to test, ex http://site'
+        description: 'URL to test, ex site.com'
         type: string
       target_path:
         description: 'Paths to test, ex "/test"'
@@ -42,10 +42,7 @@ jobs:
           condition:
             equal: ['full', << parameters.scan_type >>]
           steps:
-            - run: zap-full-scan.py -c ../../home/zap/project/.circleci/pipeline/dast/zap-config.conf -p ../../home/zap/project/.circleci/pipeline/dast/zap-progress.json -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
-      - store_artifacts:
-          path: /zap/wrk
-          destination: zap-report
+            - run: zap-full-scan.py -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
       # - run:
       #     command: aws s3 sync /zap/wrk s3://<< parameters.s3_origin_bucket >>/ursus/security
       #     when: on_fail
