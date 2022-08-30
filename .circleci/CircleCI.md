@@ -6,7 +6,6 @@
 - [Usage](#usage)
 - [To do](#to-do)
 
-
 ### Pre requirement
 
 1. Create a slack channel with the project name -deploy (for example: `2373-cos-de-digital-activation-deploy`).
@@ -44,6 +43,9 @@ GITHUB_PROJECT = github.com/jam3/xxxxx
 
 // for sending a slack notification
 SLACK_CHANNEL_ID = XXXXXXXXXXX
+
+// token to skip basic auth
+BASIC_AUTH_TOKEN = XXXXXXXXXXXX
 
 // Other tools:
 // To include a SAST, please use SonarCloud directly

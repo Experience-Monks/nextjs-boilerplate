@@ -4,65 +4,64 @@ workflows:
   version: 2
   pull-requests:
     jobs:
-      - lighthouse:
-          context: GITHUB_CREDENTIALS
-          name: lighthouse-performance
-          # requires:
-          #   - deployment-production
-          # TODO: Fast run, basic scanning, only include performance
-          environment_domain: $ENVIRONMENT_DOMAIN_DEV
-          basic_auth_token: $BASIC_AUTH_TOKEN
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          on_pr: true
-
-      - w3c-checklinks:
-          environment_domain: $ENVIRONMENT_DOMAIN_DEV
-          basic_auth_token: $BASIC_AUTH_TOKEN
-
-      - html-validator:
-          requires:
-            - build
-
-      - mozilla-observatory:
-          # requires:
-          #   - deployment-production
-          environment_domain: $ENVIRONMENT_DOMAIN_DEV
-          basic_auth_token: $BASIC_AUTH_TOKEN
-
       - dast:
           # requires:
           #   - deployment-production
           environment_domain: $ENVIRONMENT_DOMAIN_DEV
           basic_auth_token: $BASIC_AUTH_TOKEN
           s3_origin_bucket: $S3_ORIGIN_DEV
-          scan_type: 'full'
 
-      - webhint:
-          #     requires:
-          #       - deployment-production
-          environment_domain: $ENVIRONMENT_DOMAIN_DEV
-          basic_auth_token: $BASIC_AUTH_TOKEN
+      # - lighthouse:
+      #     context: GITHUB_CREDENTIALS
+      #     name: lighthouse-performance
+      #     # requires:
+      #     #   - deployment-production
+      #     # TODO: Fast run, basic scanning, only include performance
+      #     environment_domain: $ENVIRONMENT_DOMAIN_DEV
+      #     basic_auth_token: $BASIC_AUTH_TOKEN
+      #     s3_origin_bucket: $S3_ORIGIN_DEV
+      #     on_pr: true
 
-      - setup:
-          filters:
-            branches:
-              ignore:
-                - develop
-                - staging
-                - main
-      - linters:
-          name: linters
-          requires:
-            - setup
-      - secrets-key-detection:
-          requires:
-            - setup
-      - build:
-          requires:
-            - linters
-            - secrets-key-detection
-      - preview-environment:
-          context: GITHUB_CREDENTIALS
-          requires:
-            - build
-          env_suffix: '_DEV'
+      # - w3c-checklinks:
+      #     environment_domain: $ENVIRONMENT_DOMAIN_DEV
+      #     basic_auth_token: $BASIC_AUTH_TOKEN
+
+      # - html-validator:
+      #     requires:
+      #       - build
+
+      # - mozilla-observatory:
+      #     # requires:
+      #     #   - deployment-production
+      #     environment_domain: $ENVIRONMENT_DOMAIN_DEV
+      #     basic_auth_token: $BASIC_AUTH_TOKEN
+
+      # - webhint:
+      #     #     requires:
+      #     #       - deployment-production
+      #     environment_domain: $ENVIRONMENT_DOMAIN_DEV
+      #     basic_auth_token: $BASIC_AUTH_TOKEN
+
+      # - setup:
+      #     filters:
+      #       branches:
+      #         ignore:
+      #           - develop
+      #           - staging
+      #           - main
+      # - linters:
+      #     name: linters
+      #     requires:
+      #       - setup
+      # - secrets-key-detection:
+      #     requires:
+      #       - setup
+      # - build:
+      #     requires:
+      #       - linters
+      #       - secrets-key-detection
+      # - preview-environment:
+      #     context: GITHUB_CREDENTIALS
+      #     requires:
+      #       - build
+      #     env_suffix: '_DEV'
