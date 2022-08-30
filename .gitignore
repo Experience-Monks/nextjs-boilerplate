@@ -15,10 +15,6 @@ codeship.aes
 /out
 tsconfig.tsbuildinfo
 
-# pwa - service worker
-/public/sw.*
-/public/workbox*
-
 # misc
 .idea
 .vscode

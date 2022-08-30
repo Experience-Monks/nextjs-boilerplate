@@ -16,7 +16,7 @@ function Head({ title, description = siteDescription, keywords = siteKeywords }:
   const router = useRouter();
 
   const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
-  const ogDefaultImage = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/assets/images/share-image.jpg`;
+  const ogDefaultImage = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/common/assets/images/share-image.jpg`;
   const fullTitle = title ? `${title} ${TITLE_SEPARATOR} ${siteName}` : `${siteName} ${TITLE_SEPARATOR} ${siteSlogan}`;
 
   return (
@@ -28,13 +28,13 @@ function Head({ title, description = siteDescription, keywords = siteKeywords }:
       {/* Generate favicons in https://realfavicongenerator.net */}
       <meta name="theme-color" content="#ffffff" />
       <meta name="msapplication-TileColor" content="#ffffff" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
-      <link rel="manifest" href="/favicons/site.webmanifest" crossOrigin="use-credentials" />
-      <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#000000" />
-      <link rel="shortcut icon" href="/favicons/favicon.ico" />
-      <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/common/favicons/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/common/favicons/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/common/favicons/favicon-16x16.png" />
+      <link rel="manifest" href="/common/favicons/site.webmanifest" crossOrigin="use-credentials" />
+      <link rel="mask-icon" href="/common/favicons/safari-pinned-tab.svg" color="#000000" />
+      <link rel="shortcut icon" href="/common/favicons/favicon.ico" />
+      <meta name="msapplication-config" content="/common/favicons/browserconfig.xml" />
       {/* Share meta tags */}
       <meta property="og:locale" content="en_US" />
       <meta property="og:title" content={fullTitle} />
