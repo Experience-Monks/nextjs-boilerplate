@@ -37,12 +37,15 @@ jobs:
           condition:
             equal: ['baseline', << parameters.scan_type >>]
           steps:
-            - run: zap-baseline.py -c ../../home/zap/project/.circleci/pipeline/dast/zap-config.conf -p ../../home/zap/project/.circleci/pipeline/dast/zap-progress.json -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+            - run: zap-baseline.py -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
       - when:
           condition:
             equal: ['full', << parameters.scan_type >>]
           steps:
             - run: zap-full-scan.py -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+      - store_artifacts:
+          path: /zap/wrk
+          destination: zap-report
       # - run:
       #     command: aws s3 sync /zap/wrk s3://<< parameters.s3_origin_bucket >>/ursus/security
       #     when: on_fail
