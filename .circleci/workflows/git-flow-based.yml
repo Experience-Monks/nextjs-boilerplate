@@ -46,6 +46,20 @@ workflows:
             - slack-notification-onsuccess-deployment:
                 environment: 'Develop'
                 slack_channel: $SLACK_CHANNEL_ID
+      - cache-invalidation:
+          name: cache-invalidation-develop
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-develop
+          env_suffix: '_DEV'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Develop'
+                slack_channel: $SLACK_CHANNEL_ID
       - deployment:
           name: deployment-staging
           requires:
@@ -64,6 +78,20 @@ workflows:
             - slack-notification-onsuccess-deployment:
                 environment: 'Staging'
                 slack_channel: $SLACK_CHANNEL_ID
+      - cache-invalidation:
+          name: cache-invalidation-staging
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-staging
+          env_suffix: '_STAGE'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Staging'
+                slack_channel: $SLACK_CHANNEL_ID
       - deployment:
           name: deployment-production
           requires:
@@ -79,6 +107,20 @@ workflows:
                 environment: 'Production'
                 slack_channel: $SLACK_CHANNEL_ID
                 error_message: 'Deployment Fail'
+            - slack-notification-onsuccess-deployment:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+      - cache-invalidation:
+          name: cache-invalidation-production
+          context: SLACK_CREDENTIALS
+          requires:
+            - deployment-production
+          env_suffix: '_PROD'
+          post-steps:
+            - slack-notification-onfail:
+                environment: 'Production'
+                slack_channel: $SLACK_CHANNEL_ID
+                error_message: 'Cache Invalidation Failed'
             - slack-notification-onsuccess-deployment:
                 environment: 'Production'
                 slack_channel: $SLACK_CHANNEL_ID
