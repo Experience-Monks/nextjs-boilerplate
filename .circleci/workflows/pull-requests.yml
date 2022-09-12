@@ -10,7 +10,7 @@ workflows:
           environment_domain: $ENVIRONMENT_DOMAIN_DEV
           basic_auth_token: $BASIC_AUTH_TOKEN
           s3_origin_bucket: $S3_ORIGIN_DEV
-          scan_type: 'baseline'
+          scan_type: 'full'
 
       # - lighthouse:
       #     context: GITHUB_CREDENTIALS

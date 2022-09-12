@@ -29,6 +29,8 @@ jobs:
 
     environment:
       ZAP_AUTH_HEADER_SITE: << parameters.environment_domain >>
+      ZAP_AUTH_HEADER: Authorization
+      ZAP_AUTH_HEADER_VALUE: << parameters.basic_auth_token >>
 
     steps:
       - checkout
