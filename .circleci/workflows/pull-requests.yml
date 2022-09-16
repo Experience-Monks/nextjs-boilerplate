@@ -7,7 +7,7 @@ workflows:
       - dast:
           # requires:
           #   - deployment-production
-          environment_domain: $ENVIRONMENT_DOMAIN_DEV
+          environment_domain: $ENVIRONMENT_DOMAIN_PROD
           basic_auth_token: $BASIC_AUTH_TOKEN
           s3_origin_bucket: $S3_ORIGIN_DEV
           scan_type: 'full'

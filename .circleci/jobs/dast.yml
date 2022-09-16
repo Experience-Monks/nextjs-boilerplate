@@ -39,12 +39,13 @@ jobs:
           condition:
             equal: ['baseline', << parameters.scan_type >>]
           steps:
-            - run: zap-baseline.py -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+            - run: zap-baseline.py -t https://<< parameters.environment_domain >><< parameters.target_path >> -r report.html -I -c ../../home/zap/project/.circleci/tools/dast/zap-config.conf -p ../../home/zap/project/.circleci/tools/dast/zap-progress.json
       - when:
           condition:
             equal: ['full', << parameters.scan_type >>]
           steps:
-            - run: zap-full-scan.py -t https://<< parameters.environment_domain >><< parameters.target_path >>?token=<< parameters.basic_auth_token >> -r report.html
+            # Documentation: https://www.zaproxy.org/docs/docker/full-scan/
+            - run: zap-full-scan.py -t https://<< parameters.environment_domain >><< parameters.target_path >> -r report.html -I -c ../../home/zap/project/.circleci/tools/dast/zap-config.conf -p ../../home/zap/project/.circleci/tools/dast/zap-progress.json
       - store_artifacts:
           path: /zap/wrk
           destination: zap-report
