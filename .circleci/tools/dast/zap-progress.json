@@ -1,0 +1,10 @@
+{
+  "issues": [
+    {
+      "id": "90022",
+      "name": "Application Error Disclosure",
+      "state": "inprogress",
+      "link": "https://www.example.com/bugtracker/issue=1234"
+    }
+  ]
+}

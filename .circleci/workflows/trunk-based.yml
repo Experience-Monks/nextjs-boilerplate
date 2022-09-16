@@ -119,6 +119,10 @@ workflows:
           context: SLACK_CREDENTIALS
           requires:
             - cache-invalidation-staging
+          environment_domain: $ENVIRONMENT_DOMAIN_STAGE
+          basic_auth_token: $BASIC_AUTH_TOKEN_STAGE
+          s3_origin_bucket: $S3_ORIGIN_DEV
+          scan_type: 'full'
           post-steps:
             - slack-notification-onfail:
                 environment: 'Staging'

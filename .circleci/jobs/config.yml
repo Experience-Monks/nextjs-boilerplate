@@ -224,11 +224,6 @@ jobs:
           environment: << parameters.environment >>
           slack_channel: << parameters.slack_channel >>
 
-  dast:
-    <<: *node-container
-    steps:
-      - run: echo "DAST"
-
   integration-tests:
     <<: *node-container
     steps:
