@@ -4,13 +4,24 @@ workflows:
   version: 2
   pull-requests:
     jobs:
-      - dast:
-          # requires:
-          #   - deployment-production
-          environment_domain: $ENVIRONMENT_DOMAIN_PROD
-          basic_auth_token: $BASIC_AUTH_TOKEN
-          s3_origin_bucket: $S3_ORIGIN_DEV
-          scan_type: 'full'
+      - setup:
+          filters:
+            branches:
+              ignore:
+                - develop
+                - staging
+                - main
+      - build:
+          requires:
+            - setup
+      - html-validator:
+          requires:
+            - build
+      # - dast:
+      #     environment_domain: $ENVIRONMENT_DOMAIN_PROD
+      #     basic_auth_token: $BASIC_AUTH_TOKEN
+      #     s3_origin_bucket: $S3_ORIGIN_DEV
+      #     scan_type: 'full'
 
       # - lighthouse:
       #     context: GITHUB_CREDENTIALS
@@ -26,10 +37,6 @@ workflows:
       # - w3c-checklinks:
       #     environment_domain: $ENVIRONMENT_DOMAIN_DEV
       #     basic_auth_token: $BASIC_AUTH_TOKEN
-
-      # - html-validator:
-      #     requires:
-      #       - build
 
       # - mozilla-observatory:
       #     # requires:

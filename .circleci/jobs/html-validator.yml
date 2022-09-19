@@ -12,8 +12,12 @@ jobs:
           name: install
           command: pip install html5validator
       - checkout
+      - run: mkdir /html5validator
       - attach_workspace:
           at: .
       - run:
           name: validate html
-          command: html5validator --root out
+          command: html5validator --root out --format json > /html5validator/report.json
+      - store_artifacts:
+          path: /html5validator
+          destination: html5validator-report
