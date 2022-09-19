@@ -22,6 +22,10 @@ workflows:
           requires:
             - linters
             - secrets-key-detection
+      - html-validator:
+          requires:
+            - build
+          s3_origin_bucket: $S3_ORIGIN_DEV
       - preview-environment:
           context: GITHUB_CREDENTIALS
           requires:
