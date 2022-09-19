@@ -24,8 +24,10 @@ jobs:
           at: .
       - run:
           name: validate html
-          command: |
-            html5validator --root out --format json > /html5validator/report.json
-            cat /html5validator/report.json
+          command: html5validator --root out --format json > /html5validator/report.json | cat
       - run:
           command: aws s3 sync /html5validator s3://<< parameters.s3_origin_bucket >>/report/html
+          when: always
+      - store_artifacts:
+          path: /html5validator
+          destination: html5validator-report
