@@ -46,8 +46,9 @@ jobs:
           steps:
             # Documentation: https://www.zaproxy.org/docs/docker/full-scan/
             - run: zap-full-scan.py -t https://<< parameters.environment_domain >><< parameters.target_path >> -r report.html -I -c ../../home/zap/project/.circleci/tools/dast/zap-config.conf -p ../../home/zap/project/.circleci/tools/dast/zap-progress.json
+      - run:
+          command: aws s3 sync /zap/wrk s3://<< parameters.s3_origin_bucket >>/report/security/dast
+          when: always
       - store_artifacts:
           path: /zap/wrk
           destination: zap-report
-      - run:
-          command: aws s3 sync /zap/wrk s3://<< parameters.s3_origin_bucket >>/report/security/dast
