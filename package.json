@@ -69,6 +69,7 @@
     "@jam3/stats": "^1.0.1",
     "@ls-lint/ls-lint": "1.10.0",
     "@next/bundle-analyzer": "12.0.7",
+    "@playwright/test": "^1.26.0",
     "@storybook/addon-a11y": "6.5.10",
     "@storybook/addon-actions": "6.5.10",
     "@storybook/addon-controls": "6.5.10",
