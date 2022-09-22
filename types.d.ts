@@ -16,10 +16,6 @@ declare module '@jam3/stats' {
   export default function stats(): Stats;
 }
 
-declare module '@jam3/react-hooks' {
-  export function useWindowSize(debounce: number): { innerWidth: number; innerHeight: number };
-}
-
 declare module '*.svg' {
   const src: (props: React.SVGProps<SVGElement>) => React.ReactElement;
   export default src;

@@ -1,9 +1,10 @@
 import { memo, useState } from 'react';
-import { useWindowSize } from 'react-use';
 import { browser, device, os } from '@jam3/detect';
 import classnames from 'classnames';
 
 import styles from './AppAdmin.module.scss';
+
+import { useWindowSize } from '@/hooks';
 
 function AppAdmin() {
   const [removed, setRemoved] = useState(false);
