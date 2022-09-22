@@ -49,7 +49,7 @@
           ["^react", "^next", "^@jam3", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
           ["^.+\\.scss$", "^@/styles/.+\\.scss$"], // css & scss
           ["^@/pages", "^@/components"], // components
-          ["^@/services", "^@/utils", "^@/hooks", "^@/types"], // utils
+          ["^@/services", "^@/hooks", "^@/utils", "^@/types"], // utils
           ["^@/redux"], // redux
           ["^@/components/svgs", "^@/data", "^@/assets"], // data
           ["^@/"], // other basePaths

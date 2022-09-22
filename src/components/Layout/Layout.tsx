@@ -6,9 +6,9 @@ import { device } from '@jam3/detect';
 import Footer from '@/components/Footer/Footer';
 import Nav from '@/components/Nav/Nav';
 
+import { useCookieBanner } from '@/hooks';
 import { GtmScript } from '@/utils/analytics';
 import { checkWebpSupport } from '@/utils/basic-functions';
-import useCookieBanner from '@/hooks/use-cookie-banner';
 
 import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
