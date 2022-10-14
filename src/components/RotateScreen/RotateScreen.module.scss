@@ -1,6 +1,6 @@
 @import 'shared';
 
-.RotateScreen {
+.root {
   @include position-100(fixed);
   display: none;
   @include z-index(rotate);
