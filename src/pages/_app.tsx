@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import 'normalize.css';
 import '@/utils/why-did-you-render';
 
 import '@/styles/global.scss';
+
+import { PageProps } from '@/data/types';
 
 import Layout from '@/components/Layout/Layout';
 
@@ -18,9 +20,7 @@ require('focus-visible');
 gsapInit();
 
 // This default export is required in a new `pages/_app.js` file.
-function App({ Component, pageProps }: AppProps) {
-  const { isUnsupported, ...componentProps } = pageProps;
-
+const App: FC<AppProps<PageProps>> = (props) => {
   useEffect(() => {
     setBodyClasses();
   }, []);
@@ -32,17 +32,11 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, []);
 
-  if (isUnsupported) {
-    return <Component {...componentProps} />;
-  }
-
   return (
     <Provider store={store}>
-      <Layout>
-        <Component {...componentProps} />
-      </Layout>
+      <Layout {...props} />
     </Provider>
   );
-}
+};
 
 export default App;

@@ -1,9 +1,13 @@
-import { memo, PropsWithChildren, useCallback, useEffect } from 'react';
+import { FC, memo, PropsWithChildren, useCallback, useEffect } from 'react';
+import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { device } from '@jam3/detect';
 
+import { PageProps } from '@/data/types';
+
 import Footer from '@/components/Footer/Footer';
+import Head from '@/components/Head/Head';
 import Nav from '@/components/Nav/Nav';
 
 import { useCookieBanner } from '@/hooks';
@@ -14,23 +18,11 @@ import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false });
-const AppAdmin = dynamic(() => import(/* webpackChunkName: 'app-admin' */ '@/components/AppAdmin/AppAdmin'), {
-  ssr: false
-});
-const FeaturePolicy = dynamic(
-  () => import(/* webpackChunkName: 'feature-policy' */ '@/components/Head/FeaturePolicy'),
-  {
-    ssr: false
-  }
-);
-const ContentSecurityPolicy = dynamic(
-  () => import(/* webpackChunkName: 'content-security-policy' */ '@/components/Head/ContentSecurityPolicy'),
-  { ssr: false }
-);
+const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false });
 
 export type Props = PropsWithChildren<{}>;
 
-function Layout({ children }: Props) {
+const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -61,9 +53,11 @@ function Layout({ children }: Props) {
     <>
       <GtmScript consent={cookieConsent?.statistics} />
 
+      <Head {...pageProps.head} />
+
       <Nav />
 
-      {children}
+      <Component {...pageProps} />
 
       <Footer />
 
@@ -79,15 +73,8 @@ function Layout({ children }: Props) {
       )}
 
       {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
-
-      {process.env.NODE_ENV === 'development' && (
-        <>
-          <FeaturePolicy />
-          <ContentSecurityPolicy />
-        </>
-      )}
     </>
   );
-}
+};
 
 export default memo(Layout);

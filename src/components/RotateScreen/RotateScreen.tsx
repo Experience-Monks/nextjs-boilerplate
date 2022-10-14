@@ -1,17 +1,17 @@
-import { memo, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { device } from '@jam3/detect';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
-import styles from './RotateScreen.module.scss';
+import css from './RotateScreen.module.scss';
 
 import resize from '@/services/resize';
 
-export type Props = {
+export interface RotateScreenProps {
   className?: string;
-};
+}
 
-function RotateScreen({ className }: Props) {
-  const [enable, setEnable] = useState(device.phone && device.landscape);
+const RotateScreen: FC<RotateScreenProps> = ({ className }) => {
+  const [enable, setEnable] = useState(process.env.STORYBOOK || (device.phone && device.landscape));
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,7 +25,9 @@ function RotateScreen({ className }: Props) {
     };
   }, []);
 
-  return <div className={classnames(styles.RotateScreen, { [styles.enabled]: enable }, className)}>Rotate Screen</div>;
-}
+  return (
+    <div className={classNames('RotateScreen', css.root, className, { [css.enabled]: enable })}>Rotate Screen</div>
+  );
+};
 
 export default memo(RotateScreen);

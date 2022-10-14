@@ -1,15 +1,11 @@
-import Component from './Footer';
+import { Story } from '@storybook/react';
+
+import Footer, { FooterProps } from './Footer';
 
 export default { title: 'components/Footer' };
 
-export const Default = (args: {}) => <Component {...args} />;
+export const Default: Story<FooterProps> = (args) => <Footer {...args} />;
 
 Default.args = {};
 
 Default.argTypes = {};
-
-Default.parameters = {
-  jira: {
-    id: 'SON-145'
-  }
-};
