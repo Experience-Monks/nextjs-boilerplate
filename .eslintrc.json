@@ -48,8 +48,9 @@
         "groups": [
           ["^react", "^next", "^@jam3", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
           ["^.+\\.scss$", "^@/styles/.+\\.scss$"], // css & scss
+          ["^@/data"], // data
           ["^@/pages", "^@/components"], // components
-          ["^@/services", "^@/hooks", "^@/utils", "^@/types"], // utils
+          ["^@/services", "^@/hooks", "^@/utils"], // utils
           ["^@/redux"], // redux
           ["^@/components/svgs", "^@/data", "^@/assets"], // data
           ["^@/"], // other basePaths

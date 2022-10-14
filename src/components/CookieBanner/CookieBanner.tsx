@@ -1,8 +1,8 @@
-import { memo, PropsWithChildren, useCallback, useState } from 'react';
-import classnames from 'classnames';
+import { FC, memo, PropsWithChildren, useCallback, useState } from 'react';
+import classNames from 'classnames';
 import noop from 'no-op';
 
-import styles from './CookieBanner.module.scss';
+import css from './CookieBanner.module.scss';
 
 const copy = {
   settings: 'Cookie Settings',
@@ -34,7 +34,7 @@ type CookieConsentProps = {
   thirdParty: boolean;
 };
 
-export type Props = PropsWithChildren<{
+export type CookieBannerProps = PropsWithChildren<{
   className?: string;
   defaultText?: string;
   acceptCta?: string;
@@ -45,7 +45,7 @@ export type Props = PropsWithChildren<{
   onReject(): void;
 }>;
 
-function CookieBanner({
+const CookieBanner: FC<CookieBannerProps> = ({
   className,
   defaultText = copy.defaultText,
   acceptCta = copy.accept,
@@ -55,7 +55,7 @@ function CookieBanner({
   onAccept = noop,
   onReject = noop,
   children
-}: Props) {
+}) => {
   const [cookieSettings, setCookieSettings] = useState(cookieConsent);
   const [showCookieSetting, setShowCookieSettings] = useState(false);
 
@@ -84,23 +84,23 @@ function CookieBanner({
   );
 
   return (
-    <div className={classnames(styles.CookieBanner, className)}>
-      <p className={styles.description}>{children || defaultText}</p>
+    <div className={classNames('CookieBanner', css.root, className)}>
+      <p className={css.description}>{children || defaultText}</p>
 
-      <div className={styles.buttonContainer}>
+      <div className={css.buttonContainer}>
         <button onClick={handleAcceptAllCookies}>{acceptCta}</button>
         <button onClick={handleDeclineAllCookies}>{rejectCta}</button>
         <button onClick={handleCookieSettingsClick}>{copy.settings}</button>
       </div>
 
       {showCookieSetting && (
-        <div className={styles.cookieSettings}>
-          <button className={styles.cookieSettingsClose} onClick={handleCookieSettingsClose}>
+        <div className={css.cookieSettings}>
+          <button className={css.cookieSettingsClose} onClick={handleCookieSettingsClose}>
             {copy.close}
           </button>
 
-          <div className={styles.cookieSettingsContent}>
-            <p className={styles.cookieSettingsDescription}>{copy.description}</p>
+          <div className={css.cookieSettingsContent}>
+            <p className={css.cookieSettingsDescription}>{copy.description}</p>
 
             <ul>
               <li>
@@ -140,6 +140,6 @@ function CookieBanner({
       )}
     </div>
   );
-}
+};
 
 export default memo(CookieBanner);

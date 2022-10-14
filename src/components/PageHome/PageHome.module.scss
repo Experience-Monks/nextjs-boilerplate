@@ -1,11 +1,11 @@
 @import 'shared';
 
-.Home {
-  > .hero {
+.root {
+  .hero {
     width: 100%;
     color: #333;
 
-    > .title {
+    .title {
       @include typography-h1;
       margin: 0;
       width: 100%;
@@ -13,12 +13,12 @@
       padding-bottom: px(24);
     }
 
-    > .title,
-    > .description {
+    .title,
+    .description {
       text-align: center;
     }
 
-    > .row {
+    .row {
       max-width: px(800);
       margin: px(80) auto px(40);
       display: flex;
@@ -26,7 +26,7 @@
       justify-content: space-around;
       flex-wrap: wrap;
 
-      > li {
+      li {
         margin: px(10);
 
         .card {
@@ -43,11 +43,11 @@
             border-color: #067df7;
           }
 
-          > h3 {
+          h3 {
             font-size: px(18);
           }
 
-          > p {
+          p {
             @include typography-paragraph;
             padding: px(12) 0 0;
             color: #333;

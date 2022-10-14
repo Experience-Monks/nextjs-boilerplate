@@ -4,7 +4,7 @@ $cookie-banner-bg-color: #202020;
 $cookie-banner-overlay-bg-color: lighten($cookie-banner-bg-color, 10%);
 $cookie-banner-padding: px(20);
 
-.CookieBanner {
+.root {
   display: flex;
   flex-flow: column;
   justify-content: space-between;

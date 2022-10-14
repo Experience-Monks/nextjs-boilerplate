@@ -1,10 +1,10 @@
-@import '../../styles/shared.scss';
+@import 'shared';
 
 // IMPORTANT: use safe styles here. avoid flex and other latest CSS as this page is intended to be shown in legacy browsers aka IE9/10/11
-.Unsupported {
+.root {
   text-align: center;
 
-  > .title {
+  .title {
     margin: 0;
     width: 100%;
     padding-top: px(80);

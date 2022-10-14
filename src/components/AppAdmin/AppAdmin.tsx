@@ -1,12 +1,16 @@
-import { memo, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import { browser, device, os } from '@jam3/detect';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
-import styles from './AppAdmin.module.scss';
+import css from './AppAdmin.module.scss';
 
 import { useWindowSize } from '@/hooks';
 
-function AppAdmin() {
+export interface AppAdminProps {
+  className?: string;
+}
+
+const AppAdmin: FC<AppAdminProps> = ({ className }) => {
   const [removed, setRemoved] = useState(false);
   const [open, setOpen] = useState(true);
   const [deviceOpen, deviceSetOpen] = useState(true);
@@ -14,17 +18,17 @@ function AppAdmin() {
   const { width, height } = useWindowSize();
 
   return !removed ? (
-    <div className={styles.AppAdmin}>
+    <div className={classNames('AppAdmin', css.root, className)}>
       <button onClick={() => setOpen(!open)}>{open ? 'Close ' : 'Open '} Admin</button>
       {open && (
         <>
-          <section className={styles.adminSection}>
-            <h3 className={styles.adminSectionTitle} onClick={() => setRemoved(true)}>
+          <section className={css.adminSection}>
+            <h3 className={css.adminSectionTitle} onClick={() => setRemoved(true)}>
               Remove Admin from DOM
             </h3>
           </section>
-          <section className={classnames(styles.adminSection, { [styles.closed]: deviceOpen })}>
-            <h3 className={styles.adminSectionTitle} onClick={() => deviceSetOpen(!deviceOpen)}>
+          <section className={classNames(css.adminSection, { [css.closed]: deviceOpen })}>
+            <h3 className={css.adminSectionTitle} onClick={() => deviceSetOpen(!deviceOpen)}>
               Device info
             </h3>
             {deviceOpen && (
@@ -41,8 +45,8 @@ function AppAdmin() {
               </ul>
             )}
           </section>
-          <section className={classnames(styles.adminSection, { [styles.closed]: buildOpen })}>
-            <h3 className={styles.adminSectionTitle} onClick={() => buildSetOpen(!buildOpen)}>
+          <section className={classNames(css.adminSection, { [css.closed]: buildOpen })}>
+            <h3 className={css.adminSectionTitle} onClick={() => buildSetOpen(!buildOpen)}>
               Build info
             </h3>
             {buildOpen && (
@@ -66,6 +70,6 @@ function AppAdmin() {
       )}
     </div>
   ) : null;
-}
+};
 
 export default memo(AppAdmin);

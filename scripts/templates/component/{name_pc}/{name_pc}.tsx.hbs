@@ -1,0 +1,18 @@
+import { FC, memo } from 'react';
+import classNames from 'classnames';
+
+import css from './{{name_pc}}.module.scss';
+
+export type {{name_pc}}Props = {
+  className?: string;
+};
+
+const {{name_pc}}: FC<{{name_pc}}Props> = ({ className }) => {
+  return (
+    <div className={classNames('{{name_pc}}', css.root, className)}>
+      <p>{{name_pc}} component</p>
+    </div>
+  );
+};
+
+export default memo({{name_pc}});
