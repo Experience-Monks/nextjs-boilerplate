@@ -1,9 +1,9 @@
 import * as vars from '../styles/export-vars.module.scss';
 
-const sassVars = vars as unknown as { [key: string]: string };
+const sassVars = vars.default as unknown as { [key: string]: string };
 
 function getVariables(prefix: string) {
-  return Object.keys(vars)
+  return Object.keys(sassVars)
     .filter((key) => key.startsWith(prefix))
     .reduce((obj, key) => {
       obj[key.split('-')[1]] = sassVars[key];
