@@ -9,6 +9,7 @@ interface State {
   up: boolean;
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function useScrollDirection(throttle = 100, target?: Element | RefObject<Element>, fallbackToWindowScroll = true) {
   const [state, setState] = useState<State>({
     down: false,

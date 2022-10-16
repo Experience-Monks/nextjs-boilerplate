@@ -1,5 +1,4 @@
 import { Provider } from 'react-redux';
-import { RouterContext } from 'next/dist/shared/lib/router-context'; // next 11.2
 
 import '../src/styles/global.scss';
 
@@ -21,7 +20,7 @@ export const decorators = [
 export const parameters = {
   options: {
     storySort: {
-      order: ['intro', ['*', 'SVG'], 'containers', 'components']
+      order: ['intro', ['Readme', 'Copy', 'Typography', 'Colors', 'Effects', 'SVG'], 'pages', 'screens', 'components']
     }
   },
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -81,8 +80,5 @@ export const parameters = {
         type: 'tablet'
       }
     }
-  },
-  nextRouter: {
-    Provider: RouterContext.Provider
   }
 };

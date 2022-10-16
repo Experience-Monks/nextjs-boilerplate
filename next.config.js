@@ -1,78 +1,43 @@
 const path = require('path');
-const optimizedImages = require('next-optimized-images');
+const withVideos = require('next-videos');
 
-/**
- * @type {import('next').NextConfig}
- */
 const nextJSConfig = {
   trailingSlash: true,
   compress: false, // NOTE: enable this when doing SSR
-  productionBrowserSourceMaps: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
-  images: {
-    loader: 'custom',
-    disableStaticImages: true
-  },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'src/styles')]
-  },
-  compiler: {
-    removeConsole: process.env.NEXT_PUBLIC_ENVIRONMENT === 'production'
-  },
+  productionBrowserSourceMaps: process.env.NODE_ENV === 'development',
+  devIndicators: { buildActivity: false },
+  sassOptions: { includePaths: [path.join(__dirname, 'src/styles')] },
+  distDir: process.env.NEXT_PUBLIC_DIST_DIR || '.next',
   webpack: function (config, options) {
+    config.module.rules.push({ test: /\.svg$/, use: [{ loader: '@svgr/webpack' }] });
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.(mp3|wav)$/,
       use: [
         {
-          loader: '@svgr/webpack'
+          loader: 'file-loader',
+          options: {
+            publicPath: `/_next/static/sounds/`,
+            outputPath: `static/sounds/`,
+            name: '[name]-[hash].[ext]',
+            esModule: false
+          }
         }
       ]
     });
-
     return config;
   }
 };
 
-const optimizedImagesConfig = {
-  inlineImageLimit: 1,
-  imagesName: '[name]-[hash].[ext]',
-  handleImages: ['jpeg', 'png', 'webp', 'gif'],
-  optimizeImages: process.env.OPTIMIZE_IMAGES === 'true',
-  optimizeImagesInDev: process.env.OPTIMIZE_IMAGES === 'true',
-  mozjpeg: {
-    quality: 85
-  },
-  optipng: {
-    optimizationLevel: 3
-  },
-  pngquant: false,
-  gifsicle: {
-    interlaced: true,
-    optimizationLevel: 3
-  },
-  webp: {
-    preset: 'default',
-    quality: 85
-  },
-  // if using sizes attr, optimization goes through `responsive-loader` using `sharp`
-  responsive: {
-    disable: process.env.OPTIMIZE_IMAGES !== 'true',
-    adapter: require('responsive-loader/sharp'),
-    quality: 85
-  }
-};
+const nextPlugins = [withVideos];
 
-module.exports = (phase, { defaultConfig }) => {
-  const nextPlugins = [];
+if (process.env.BUNDLE_ANALYZE === 'true') {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: true });
+  nextPlugins.push(withBundleAnalyzer);
+}
 
-  if (process.env.BUNDLE_ANALYZE === 'true') {
-    const withBundleAnalyzer = require('@next/bundle-analyzer');
+const finalConfig = nextPlugins.reduce((config, plugin) => {
+  if (typeof plugin === 'function') return plugin(config);
+  return plugin[0]({ ...config, ...plugin[1] });
+}, nextJSConfig);
 
-    nextPlugins.push(
-      withBundleAnalyzer({
-        enabled: true
-      })
-    );
-  }
-
-  return nextPlugins.reduce((acc, next) => next(acc), optimizedImages({ ...optimizedImagesConfig, ...nextJSConfig }));
-};
+module.exports = finalConfig;

@@ -1,8 +1,8 @@
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 
-import sanitizer from '@/utils/sanitizer';
-
 import { hideStaticHtml } from '@/data/settings';
+
+import sanitizer from '@/utils/sanitizer';
 
 // if JS is available we hide the page immediately to prevent static content flash.
 const hideStaticHtmlScript = `
