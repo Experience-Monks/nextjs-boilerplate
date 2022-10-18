@@ -5,16 +5,16 @@ import { useRouter } from 'next/router';
 import { device } from '@jam3/detect';
 
 import { PageProps } from '@/data/types';
+import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
+
+import { GtmScript } from '@/utils/analytics';
+import { checkWebpSupport } from '@/utils/basic-functions';
+
+import { useCookieBanner } from '@/hooks';
 
 import Footer from '@/components/Footer/Footer';
 import Head from '@/components/Head/Head';
 import Nav from '@/components/Nav/Nav';
-
-import { useCookieBanner } from '@/hooks';
-import { GtmScript } from '@/utils/analytics';
-import { checkWebpSupport } from '@/utils/basic-functions';
-
-import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux';
 
 const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false });
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false });

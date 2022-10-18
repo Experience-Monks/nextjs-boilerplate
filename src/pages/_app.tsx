@@ -7,13 +7,12 @@ import '@/utils/why-did-you-render';
 import '@/styles/global.scss';
 
 import { PageProps } from '@/data/types';
-
-import Layout from '@/components/Layout/Layout';
+import { store } from '@/redux';
 
 import gsapInit from '@/utils/gsap-init';
 import setBodyClasses from '@/utils/set-body-classes';
 
-import { store } from '@/redux';
+import Layout from '@/components/Layout/Layout';
 
 require('default-passive-events');
 require('focus-visible');

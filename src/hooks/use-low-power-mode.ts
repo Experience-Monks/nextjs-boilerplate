@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { os } from '@jam3/detect';
 
 import visibility from '@/services/visibility';
+
 import getLowPowerMode from '@/utils/detect-low-power-mode';
 
 let cachedResult = false;

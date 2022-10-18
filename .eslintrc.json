@@ -6,7 +6,8 @@
     "plugin:import/typescript",
     "prettier",
     "plugin:prettier/recommended",
-    "plugin:sonarjs/recommended"
+    "plugin:sonarjs/recommended",
+    "plugin:storybook/recommended"
   ],
   "plugins": ["jam3", "simple-import-sort", "sonarjs", "promise"],
   "parser": "@typescript-eslint/parser",
@@ -30,13 +31,14 @@
     }
   },
   "rules": {
+    "jsx-a11y/anchor-has-content": "off",
+    "jsx-a11y/heading-has-content": "off",
     "import/no-webpack-loader-syntax": "off",
     "import/no-anonymous-default-export": "off",
     "import/no-unresolved": ["error", { "ignore": ["svg-inline-loader"] }],
     "import/named": "error",
     "import/default": "error",
     "import/first": "error",
-    "import/order": ["error", { "groups": ["builtin", "external", ["parent", "sibling", "index"]] }],
     "import/no-extraneous-dependencies": [
       "warn",
       { "devDependencies": true, "optionalDependencies": true, "peerDependencies": false }
@@ -48,11 +50,14 @@
         "groups": [
           ["^react", "^next", "^@jam3", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
           ["^.+\\.scss$", "^@/styles/.+\\.scss$"], // css & scss
-          ["^@/data"], // data
-          ["^@/pages", "^@/components"], // components
-          ["^@/services", "^@/hooks", "^@/utils"], // utils
-          ["^@/redux"], // redux
-          ["^@/components/svgs", "^@/data", "^@/assets"], // data
+          ["^@/data", "^@/redux"], // data
+          ["^@/services"],
+          ["^@/utils"],
+          ["^@/hooks"],
+          ["^@/components/Layout, ^@/components/Page", "^@/components/Screen"], // containers
+          ["^@/components"], // components
+          ["^@/svgs"], // svgs
+          ["^@/assets"], // assets
           ["^@/"], // other basePaths
           ["^"] // rest
         ]

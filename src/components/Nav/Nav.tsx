@@ -1,13 +1,12 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import classNames from 'classnames';
 
 import css from './Nav.module.scss';
 
 import routes from '@/data/routes';
 
+import BaseButton from '@/components/BaseButton/BaseButton';
 import BaseImage from '@/components/BaseImage/BaseImage';
-
 import SvgThreeLogo from '@/components/svgs/three-logo.svg';
 
 const LINKS = [
@@ -32,18 +31,16 @@ const Nav: FC<NavProps> = ({ className }) => {
           </a>
           {Object.values(routes).map(({ path, title }) => (
             <li key={path}>
-              <Link href={path}>
-                <a aria-label="Home">{path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}</a>
-              </Link>
+              <BaseButton href={path}>{path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}</BaseButton>
             </li>
           ))}
         </ul>
         <ul className={css.links}>
           {LINKS.map(({ key, href, label, data }) => (
             <li key={key}>
-              <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+              <BaseButton href={href} aria-label={label}>
                 <BaseImage data={data} alt={label} />
-              </a>
+              </BaseButton>
             </li>
           ))}
         </ul>

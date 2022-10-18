@@ -4,6 +4,8 @@ import noop from 'no-op';
 
 import css from './CookieBanner.module.scss';
 
+import BaseButton from '@/components/BaseButton/BaseButton';
+
 const copy = {
   settings: 'Cookie Settings',
   close: 'close',
@@ -88,16 +90,16 @@ const CookieBanner: FC<CookieBannerProps> = ({
       <p className={css.description}>{children || defaultText}</p>
 
       <div className={css.buttonContainer}>
-        <button onClick={handleAcceptAllCookies}>{acceptCta}</button>
-        <button onClick={handleDeclineAllCookies}>{rejectCta}</button>
-        <button onClick={handleCookieSettingsClick}>{copy.settings}</button>
+        <BaseButton onClick={handleAcceptAllCookies}>{acceptCta}</BaseButton>
+        <BaseButton onClick={handleDeclineAllCookies}>{rejectCta}</BaseButton>
+        <BaseButton onClick={handleCookieSettingsClick}>{copy.settings}</BaseButton>
       </div>
 
       {showCookieSetting && (
         <div className={css.cookieSettings}>
-          <button className={css.cookieSettingsClose} onClick={handleCookieSettingsClose}>
+          <BaseButton className={css.cookieSettingsClose} onClick={handleCookieSettingsClose}>
             {copy.close}
-          </button>
+          </BaseButton>
 
           <div className={css.cookieSettingsContent}>
             <p className={css.cookieSettingsDescription}>{copy.description}</p>

@@ -5,8 +5,9 @@ import noop from 'no-op';
 
 import css from './BaseImage.module.scss';
 
-import useCombinedRefs from '@/hooks/use-combined-refs';
 import getOptimizedImageURL, { OptmizedImageEdits } from '@/utils/get-optimized-image-url';
+
+import useCombinedRefs from '@/hooks/use-combined-refs';
 
 export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   // supports both src (for public images) or data (for imported images)

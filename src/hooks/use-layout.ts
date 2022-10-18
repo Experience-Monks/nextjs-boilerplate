@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useWindowSize } from '@/hooks';
 import layout, { Breakpoints } from '@/utils/layout';
+
+import { useWindowSize } from '@/hooks';
 
 /**
  * Layout hook

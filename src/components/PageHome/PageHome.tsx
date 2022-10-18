@@ -6,6 +6,8 @@ import css from './PageHome.module.scss';
 
 import { PageProps } from '@/data/types';
 
+import BaseButton from '@/components/BaseButton/BaseButton';
+
 export interface PageHomeProps extends PageProps {
   className?: string;
 }
@@ -38,21 +40,16 @@ const PageHome: FC<PageHomeProps> = ({ className }) => {
         </h2>
         <ul className={css.row} ref={listRef}>
           <li>
-            <a
-              href="https://github.com/Jam3?q=&type=source"
-              className={css.card}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <BaseButton href="https://github.com/Jam3?q=&type=source" className={css.card}>
               <h3>Visit out GitHub</h3>
               <p>See our contributions to Open Source community</p>
-            </a>
+            </BaseButton>
           </li>
           <li>
-            <a href="https://jam3.dev" className={css.card} target="_blank" rel="noopener noreferrer">
+            <BaseButton href="https://jam3.dev" className={css.card}>
               <h3>Jam3.dev</h3>
               <p>Learn more about Jam3.dev</p>
-            </a>
+            </BaseButton>
           </li>
         </ul>
       </section>

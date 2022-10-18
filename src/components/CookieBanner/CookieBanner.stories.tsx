@@ -1,5 +1,7 @@
 import { Story } from '@storybook/react';
 
+import BaseButton from '@/components/BaseButton/BaseButton';
+
 import CookieBanner, { CookieBannerProps } from './CookieBanner';
 
 export default { title: 'components/CookieBanner' };
@@ -16,9 +18,9 @@ Default.argTypes = {};
 export const WithChildren: Story<CookieBannerProps> = (args) => (
   <CookieBanner {...args}>
     We use cookies on this website to improve your experience. Learn more on our{' '}
-    <a href="https://www.jam3.com/privacy" target="_blank'">
+    <BaseButton href="https://www.jam3.com/privacy" target="_blank'">
       Privacy Policy
-    </a>
+    </BaseButton>
     .
   </CookieBanner>
 );
