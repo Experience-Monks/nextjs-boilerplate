@@ -14,7 +14,7 @@ const PageAbout: FC<PageAboutProps> = ({ className }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const timeline = gsap.timeline().fadeIn(titleRef.current, 0.2);
+    const timeline = gsap.timeline().fadeFrom(titleRef.current, { duration: 0.667, y: 20 }, 0.2);
     return () => {
       timeline.kill();
     };

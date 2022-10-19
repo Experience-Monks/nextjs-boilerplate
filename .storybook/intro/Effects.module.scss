@@ -1,0 +1,5 @@
+@import 'shared';
+
+.root {
+  @include typography-h1;
+}
