@@ -3,10 +3,10 @@ import { Provider } from 'react-redux';
 import '../src/styles/global.scss';
 
 import { store } from '../src/redux';
-import gsapInit from '../src/utils/gsap-init';
+import initGsap from '../src/utils/init-gsap';
 import setBodyClasses from '../src/utils/set-body-classes';
 
-gsapInit();
+initGsap();
 setBodyClasses();
 
 export const decorators = [

@@ -18,9 +18,9 @@ const PageHome: FC<PageHomeProps> = ({ className }) => {
   useEffect(() => {
     const timeline = gsap
       .timeline()
-      .fadeIn(titleRef.current, 0.2)
-      .fadeIn(descriptionRef.current, 0.4)
-      .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.6);
+      .fadeFrom(titleRef.current, { duration: 0.667, y: 20 }, 0.2)
+      .fadeFrom(descriptionRef.current, { duration: 0.667, y: 20 }, 0.4)
+      .fadeFrom(listRef.current!.childNodes, { duration: 0.667, y: 20, stagger: 0.1 }, 0.6);
 
     return () => {
       timeline?.kill();
