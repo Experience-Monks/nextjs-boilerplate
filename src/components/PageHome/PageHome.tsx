@@ -6,8 +6,6 @@ import css from './PageHome.module.scss';
 
 import { PageProps } from '@/data/types';
 
-import useDarkMode from '@/hooks/use-dark-mode';
-
 export interface PageHomeProps extends PageProps {
   className?: string;
 }
@@ -16,9 +14,6 @@ const PageHome: FC<PageHomeProps> = ({ className }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
-  const darkMode = useDarkMode();
-
-  console.log(darkMode);
 
   useEffect(() => {
     const timeline = gsap
