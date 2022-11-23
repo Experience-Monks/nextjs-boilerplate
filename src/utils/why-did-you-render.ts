@@ -6,5 +6,5 @@ if (process.env.NODE_ENV === 'development' && device.browser) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
 
   // Call WDYR
-  whyDidYouRender(React, { trackAllPureComponents: true });
+  whyDidYouRender(React, { trackAllPureComponents: true, exclude: [/^AppAdmin/] });
 }
