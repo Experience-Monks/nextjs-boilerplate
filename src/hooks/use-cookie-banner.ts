@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 
 const COOKIE_BANNER_NAME = 'SITE_COOKIE_CONSENT';
