@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux';
+import { RouterContext } from 'next/dist/shared/lib/router-context';
 
 import '../src/styles/global.scss';
 
@@ -10,6 +11,11 @@ gsapInit();
 setBodyClasses();
 
 export const decorators = [
+  (Story) => {
+    require('default-passive-events');
+    require('focus-visible');
+    return Story();
+  },
   (Story) => (
     <Provider store={store}>
       <Story />
@@ -80,5 +86,8 @@ export const parameters = {
         type: 'tablet'
       }
     }
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider
   }
 };
