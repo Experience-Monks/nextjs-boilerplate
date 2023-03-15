@@ -5,13 +5,13 @@ ls:
   .config.js: kebab-case
   src:
     assets:
-      .png: kebab-case
-      .jpg: kebab-case
-      .jpeg: kebab-case
-      .webp: kebab-case
-      .svg: kebab-case
-      .mp4: kebab-case
-      .webm: kebab-case
+      .png: kebab-case | regex:[^+]
+      .jpg: kebab-case | regex:[^+]
+      .jpeg: kebab-case | regex:[^+]
+      .webp: kebab-case | regex:[^+]
+      .svg: kebab-case | regex:[^+]
+      .mp4: kebab-case | regex:[^+]
+      .webm: kebab-case | regex:[^+]
     components:
       .js: PascalCase
       .tsx: PascalCase
