@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 
 const COOKIE_BANNER_NAME = 'SITE_COOKIE_CONSENT';
@@ -38,22 +38,22 @@ const useCookieBanner = () => {
   const initialConsent = typeof validCookie === 'string' ? JSON.parse(validCookie) : DEFAULT_COOKIE_CONSENT;
   const [cookieConsent, setCookieConsent] = useState(initialConsent);
 
-  const updateCookies = (cookieSettings: typeof DEFAULT_COOKIE_CONSENT) => {
+  const updateCookies = useCallback((cookieSettings: typeof DEFAULT_COOKIE_CONSENT) => {
     Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(cookieSettings));
     setCookieConsent(cookieSettings);
-  };
+  }, []);
 
-  const acceptAllCookies = () => {
+  const acceptAllCookies = useCallback(() => {
     const newCookieValue = explicitSetCookieValue(true);
     Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(newCookieValue), COOKIE_BANNER_OPTIONS);
     setCookieConsent(newCookieValue);
-  };
+  }, []);
 
-  const rejectAllCookies = () => {
+  const rejectAllCookies = useCallback(() => {
     const newCookieValue = explicitSetCookieValue(false);
     Cookies.set(COOKIE_BANNER_NAME, JSON.stringify(newCookieValue), COOKIE_BANNER_OPTIONS);
     setCookieConsent(newCookieValue);
-  };
+  }, []);
 
   return { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies };
 };
