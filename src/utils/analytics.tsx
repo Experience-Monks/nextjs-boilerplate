@@ -29,16 +29,18 @@ type Props = {
  */
 /* const isDev =
   typeof window !== 'undefined'
-    ? process.env.NODE_ENV === 'development' || window.location.href.includes('dev')
+    ? process.env.NODE_ENV === 'development' || RegExp(/^https?:[/][/]dev\..*$/).test(window.location.href.toLowerCase())
     : false; */
-const isStaging = typeof window !== 'undefined' ? window.location.href.includes('stage') : false;
-const isProd = typeof window !== 'undefined' ? window.location.href.includes('prod') : false;
+const isStage =
+  typeof window !== 'undefined' ? RegExp(/^https?:[/][/]stage\..*$/).test(window.location.href.toLowerCase()) : false;
+const isProd =
+  typeof window !== 'undefined' ? RegExp(/^https?:[/][/]prod\..*$/).test(window.location.href.toLowerCase()) : false;
 
 let QUERY_PARAMS = '';
 if (isProd) {
   // production env
   QUERY_PARAMS = ``;
-} else if (isStaging) {
+} else if (isStage) {
   // staging env
   QUERY_PARAMS = `+ '&gtm_auth=0C7oXHwDSkkVPTB79Nkerg&gtm_preview=env-4&gtm_cookies_win=x'`;
 } else {
