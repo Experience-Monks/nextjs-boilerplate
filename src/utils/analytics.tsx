@@ -27,14 +27,10 @@ type Props = {
 /**
  * GTM code snippet in head
  */
-/* const isDev =
-  typeof window !== 'undefined'
-    ? process.env.NODE_ENV === 'development' || RegExp(/^https?:[/][/]dev\..*$/).test(window.location.href.toLowerCase())
-    : false; */
 const isStage =
-  typeof window !== 'undefined' ? RegExp(/^https?:[/][/]stage\..*$/).test(window.location.href.toLowerCase()) : false;
+  typeof window !== 'undefined' ? RegExp(/^https?:\/\/stage\..*$/).test(window.location.href.toLowerCase()) : false;
 const isProd =
-  typeof window !== 'undefined' ? RegExp(/^https?:[/][/]prod\..*$/).test(window.location.href.toLowerCase()) : false;
+  typeof window !== 'undefined' ? RegExp(/^https?:\/\/prod\..*$/).test(window.location.href.toLowerCase()) : false;
 
 let QUERY_PARAMS = '';
 if (isProd) {
