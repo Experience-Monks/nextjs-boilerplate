@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.0.0](https://github.com/Jam3/nextjs-boilerplate/compare/v7.0.0...v8.0.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* add orb split config github url ([24ef2b9](https://github.com/Jam3/nextjs-boilerplate/commit/24ef2b9601f4d5bdbc1e8de77c746f300824ba1e))
+* add pnpm lock ([0ee379d](https://github.com/Jam3/nextjs-boilerplate/commit/0ee379d291aa2155010bb2224d9dbcacbd875da5))
+* cache pnpm ([fd6a414](https://github.com/Jam3/nextjs-boilerplate/commit/fd6a414032ebfb6f4fd2560941449d1ad24b6cff))
+* cicd slack messages schema ([9a58b34](https://github.com/Jam3/nextjs-boilerplate/commit/9a58b3487b7b291156eebec4e8845766a8e9e2af))
+* cicd slack messages schema ([5c87dcc](https://github.com/Jam3/nextjs-boilerplate/commit/5c87dcc2461fa3d000349b34f8ca0de334c2d011))
+* cicd slack messages schema ([50ff4bf](https://github.com/Jam3/nextjs-boilerplate/commit/50ff4bfd2ce4dd4637d514165733cf0c52ba195b))
+* cicd slack messages schema ([6f03c15](https://github.com/Jam3/nextjs-boilerplate/commit/6f03c1560f6035d3499b13c4515cc62ab0b03625))
+* circleci schema ([b8d79b7](https://github.com/Jam3/nextjs-boilerplate/commit/b8d79b7c33f17280a7ca6a9cdd0bca171aa2cf65))
+* circleci schema ([d3ce645](https://github.com/Jam3/nextjs-boilerplate/commit/d3ce6450e5759a884aedaa676069be3ccbd8a911))
+* circleci schema ([5071cf1](https://github.com/Jam3/nextjs-boilerplate/commit/5071cf1d42c959bcdc0c8dad9f74753753db46fb))
+* collect common files for new cloudfront behaviour ([0808066](https://github.com/Jam3/nextjs-boilerplate/commit/080806620a6d7ed4d0cee8c2ccd4fc516295735f))
+* create orbs ([bb13732](https://github.com/Jam3/nextjs-boilerplate/commit/bb137321d8ad3c414ad14ad5e11d2680833cd8e4))
+* more strict URL matching to determine environment ([27ce73f](https://github.com/Jam3/nextjs-boilerplate/commit/27ce73f775b8c763fd55bb927305e6ef8296146a))
+* move circleci to do to issues ([d515afb](https://github.com/Jam3/nextjs-boilerplate/commit/d515afbbce52d193d568f9ca8908d9c1a89a27ed))
+* remove anything about codeship in readme ([805242f](https://github.com/Jam3/nextjs-boilerplate/commit/805242fe9707c45e481832d0558a5520fd980da6))
+* replace install command ([35be339](https://github.com/Jam3/nextjs-boilerplate/commit/35be339ecaa7190728abdb953a347b6687de3fd7))
+* rollback ([7f57d63](https://github.com/Jam3/nextjs-boilerplate/commit/7f57d63b7ab3f771d5af9ee74186ba4346df68d2))
+* set npm cache ([59222da](https://github.com/Jam3/nextjs-boilerplate/commit/59222da48abcf083810b95dbdc39ceff057ae5c6))
+* slack fail message ([6a1b221](https://github.com/Jam3/nextjs-boilerplate/commit/6a1b221ea4de85805b0b1542c9471e33dad37cef))
+* test npm ci po na ([9b2b796](https://github.com/Jam3/nextjs-boilerplate/commit/9b2b796a7485642ec656ec97bbb480f811700369))
+* test npm ci without saving node modules folder ([8236d23](https://github.com/Jam3/nextjs-boilerplate/commit/8236d238f04edb04a4a52c7dabc3f6157e41f745))
+* test npm install ([968adaf](https://github.com/Jam3/nextjs-boilerplate/commit/968adaf9806ba3fa46c900889b1626e5e70edcd9))
+* test npm install po na ([36d523a](https://github.com/Jam3/nextjs-boilerplate/commit/36d523a35360a87b21fb7ab05040089c269cd025))
+* test pnpm ([75ce751](https://github.com/Jam3/nextjs-boilerplate/commit/75ce751e95f955dba3e0b399c47d347328c4a584))
+* test pnpm install ([1fb925c](https://github.com/Jam3/nextjs-boilerplate/commit/1fb925c3fbe6814bf540903c39bd85744bdbb8b8))
+* testing aws cache invalidate ([206b9f9](https://github.com/Jam3/nextjs-boilerplate/commit/206b9f91201f169bdf80d6d48dbb6c5a0e13ce52))
+* update deploy script ([403c2bd](https://github.com/Jam3/nextjs-boilerplate/commit/403c2bd013d75a3f8e7aee02984922c255f695f1))
+* update next config ([81a4bb9](https://github.com/Jam3/nextjs-boilerplate/commit/81a4bb9f0e470a6db431e5d043287f54e6871327))
+* update package-lock ([74679fc](https://github.com/Jam3/nextjs-boilerplate/commit/74679fc5ba10eade9ad10612305296fd78baee31))
+* upgrade storybook 6.5.10 ([cdf6e75](https://github.com/Jam3/nextjs-boilerplate/commit/cdf6e75ed91e8bc6e6f68cd28f84b0456350e3b3))
+* upgrade storybook 6.5.9 ([039aaa1](https://github.com/Jam3/nextjs-boilerplate/commit/039aaa1f693f1a7e8e617146424f939468f24fee))
+
 ## [7.0.0](https://github.com/Jam3/nextjs-boilerplate/compare/v6.0.0...v7.0.0) (2022-07-27)
 
 ### Bug Fixes
