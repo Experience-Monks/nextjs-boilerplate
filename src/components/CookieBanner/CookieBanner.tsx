@@ -61,27 +61,40 @@ const CookieBanner: FC<CookieBannerProps> = ({
 
   const handleAcceptAllCookies = useCallback(() => {
     onAccept();
+    handleCookieBannerInteraction();
   }, [onAccept]);
 
   const handleDeclineAllCookies = useCallback(() => {
     onReject();
+    handleCookieBannerInteraction();
   }, [onReject]);
 
   const handleCookieSettingsClick = useCallback(() => {
     setShowCookieSettings(true);
+    handleCookieBannerInteraction();
   }, []);
 
   const handleCookieSettingsClose = useCallback(() => {
     setShowCookieSettings(false);
     onUpdate(cookieSettings);
+    handleCookieBannerInteraction();
   }, [onUpdate, cookieSettings]);
 
   const handleCookieUpdate = useCallback(
     (key: string, value: boolean) => {
       setCookieSettings({ ...cookieSettings, [key]: value });
+      handleCookieBannerInteraction();
     },
     [cookieSettings]
   );
+
+  const handleCookieBannerInteraction = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'cookieBanner'
+    });
+    console.log('TRIGGERED: handleCookieBannerInteraction');
+  };
 
   return (
     <div className={classNames('CookieBanner', css.root, className)}>
@@ -104,7 +117,13 @@ const CookieBanner: FC<CookieBannerProps> = ({
 
             <ul>
               <li>
-                <input type="checkbox" id="cookie-necessary" checked={cookieSettings?.necessary} readOnly />
+                <input
+                  type="checkbox"
+                  id="cookie-necessary"
+                  checked={cookieSettings?.necessary}
+                  onClick={() => handleCookieBannerInteraction()}
+                  readOnly
+                />
                 <label htmlFor="cookie-necessary">{copy.purpose.necessary}</label>
               </li>
               <li>
@@ -113,6 +132,7 @@ const CookieBanner: FC<CookieBannerProps> = ({
                   id="cookie-preference"
                   checked={cookieSettings?.preference}
                   onChange={(e) => handleCookieUpdate('preference', e.target.checked)}
+                  // onClick={() => handleCookieBannerInteraction()}
                 />
                 <label htmlFor="cookie-preference">{copy.purpose.preference}</label>
               </li>
@@ -122,6 +142,7 @@ const CookieBanner: FC<CookieBannerProps> = ({
                   id="cookie-statistics"
                   checked={cookieSettings?.statistics}
                   onChange={(e) => handleCookieUpdate('statistics', e.target.checked)}
+                  // onClick={() => handleCookieBannerInteraction()}
                 />
                 <label htmlFor="cookie-statistics">{copy.purpose.statistics}</label>
               </li>
@@ -131,6 +152,7 @@ const CookieBanner: FC<CookieBannerProps> = ({
                   id="cookie-marketing"
                   checked={cookieSettings?.marketing}
                   onChange={(e) => handleCookieUpdate('marketing', e.target.checked)}
+                  // onClick={() => handleCookieBannerInteraction()}
                 />
                 <label htmlFor="cookie-marketing">{copy.purpose.marketing}</label>
               </li>
