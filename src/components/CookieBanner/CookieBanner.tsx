@@ -93,7 +93,7 @@ const CookieBanner: FC<CookieBannerProps> = ({
     window.dataLayer.push({
       event: 'cookieBanner'
     });
-    console.log('TRIGGERED: handleCookieBannerInteraction');
+    console.log(window.dataLayer);
   };
 
   return (
