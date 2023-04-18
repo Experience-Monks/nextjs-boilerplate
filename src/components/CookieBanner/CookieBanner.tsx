@@ -96,6 +96,11 @@ const CookieBanner: FC<CookieBannerProps> = ({
     console.log(window.dataLayer);
   };
 
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'CookieBanner.tsx'
+  });
+
   return (
     <div className={classNames('CookieBanner', css.root, className)}>
       <p className={css.description}>{children || defaultText}</p>
