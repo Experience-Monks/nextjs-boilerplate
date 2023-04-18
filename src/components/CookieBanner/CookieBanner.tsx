@@ -1,4 +1,4 @@
-import { FC, memo, PropsWithChildren, useCallback, useState } from 'react';
+import { FC, memo, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import noop from 'no-op';
 
@@ -96,10 +96,12 @@ const CookieBanner: FC<CookieBannerProps> = ({
     console.log(window.dataLayer);
   };
 
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'CookieBanner.tsx'
-  });
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'CookieBanner.tsx'
+    });
+  }, []);
 
   return (
     <div className={classNames('CookieBanner', css.root, className)}>

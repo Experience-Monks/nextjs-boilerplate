@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Script from 'next/script';
 import { device } from '@jam3/detect';
 
@@ -29,10 +30,12 @@ type Props = {
  */
 
 export function GtmScript({ consent }: Props) {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'Analytics.tsx'
-  });
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Analytics.tsx'
+    });
+  }, []);
 
   console.log(`Cookie consent: ${consent}`);
   return (
