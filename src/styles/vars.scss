@@ -1,23 +1,22 @@
+@use 'sass:map';
+
 @import 'layout';
 
 // Variables
-//
 // Add global variables here, color palette, those variables shared by components all applied to global styling
 
 // ====================================================================
 // Breakpoints
-//
 // Window breakpoints
 // ====================================================================
-$layout-mobile: map-get($layout, mobile) + px;
-$layout-tablet: map-get($layout, tablet) + px;
-$layout-desktopSm: map-get($layout, desktopSm) + px;
-$layout-desktopMd: map-get($layout, desktopMd) + px;
-$layout-desktopLg: map-get($layout, desktopLg) + px;
+$layout-mobile: map.get($layout, mobile) + px;
+$layout-tablet: map.get($layout, tablet) + px;
+$layout-desktop-sm: map.get($layout, desktop-sm) + px;
+$layout-desktop-md: map.get($layout, desktop-md) + px;
+$layout-desktop-lg: map.get($layout, desktop-lg) + px;
 
 // ====================================================================
 // Base palette
-//
 // Grayscale and brand colors for use across the site.
 // ====================================================================
 $white: #fff;
@@ -25,12 +24,11 @@ $black: #000;
 
 // ====================================================================
 // General
-//
 // Global color variables, used usually in sections
 // Global variables used across the web app
 // ====================================================================
 $page-bg-color: $white;
-$element-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.04);
+$element-shadow: 0 16px 16px 0 rgb(0 0 0 / 4%);
 
 // ====================================================================
 // Nav bar

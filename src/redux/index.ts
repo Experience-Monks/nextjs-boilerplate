@@ -1,5 +1,5 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const { actions, reducer } = createSlice({
   name: 'app',
@@ -9,18 +9,18 @@ const { actions, reducer } = createSlice({
   },
   reducers: {
     setPrevRoute(state, action: PayloadAction<string>) {
-      state.prevRoute = action.payload;
+      state.prevRoute = action.payload
     },
     setIsWebpSupported(state, action: PayloadAction<boolean>) {
-      state.isWebpSupported = action.payload;
+      state.isWebpSupported = action.payload
     }
   }
-});
+})
 
-export const { setPrevRoute, setIsWebpSupported } = actions;
+export const { setPrevRoute, setIsWebpSupported } = actions
 
-export const store = configureStore({ reducer, devTools: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' });
+export const store = configureStore({ reducer, devTools: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' })
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
-export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector;
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>()
+export const useAppSelector: TypedUseSelectorHook<ReturnType<typeof store.getState>> = useSelector

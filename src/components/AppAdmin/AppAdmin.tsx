@@ -1,21 +1,22 @@
-import { FC, memo, useState } from 'react';
-import { browser, device, os } from '@jam3/detect';
-import classNames from 'classnames';
+import { FC, memo, useState } from 'react'
+import classNames from 'classnames'
 
-import css from './AppAdmin.module.scss';
+import css from './AppAdmin.module.scss'
 
-import { useWindowSize } from '@/hooks';
+import { browser, device, os } from '@/utils/detect'
+
+import useWindowSize from '@/hooks/use-window-size'
 
 export interface AppAdminProps {
-  className?: string;
+  className?: string
 }
 
 const AppAdmin: FC<AppAdminProps> = ({ className }) => {
-  const [removed, setRemoved] = useState(false);
-  const [open, setOpen] = useState(true);
-  const [deviceOpen, deviceSetOpen] = useState(true);
-  const [buildOpen, buildSetOpen] = useState(true);
-  const { width, height } = useWindowSize();
+  const [removed, setRemoved] = useState(false)
+  const [open, setOpen] = useState(true)
+  const [deviceOpen, deviceSetOpen] = useState(true)
+  const [buildOpen, buildSetOpen] = useState(true)
+  const { width, height } = useWindowSize()
 
   return !removed ? (
     <div className={classNames('AppAdmin', css.root, className)}>
@@ -69,7 +70,7 @@ const AppAdmin: FC<AppAdminProps> = ({ className }) => {
         </>
       )}
     </div>
-  ) : null;
-};
+  ) : null
+}
 
-export default memo(AppAdmin);
+export default memo(AppAdmin)

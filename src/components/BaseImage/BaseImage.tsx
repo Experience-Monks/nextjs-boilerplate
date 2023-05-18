@@ -1,23 +1,24 @@
-import { forwardRef, ImgHTMLAttributes, memo, useEffect, useMemo, useRef, useState } from 'react';
-import { StaticImageData } from 'next/image';
-import classNames from 'classnames';
-import noop from 'no-op';
+import { forwardRef, ImgHTMLAttributes, memo, useEffect, useMemo, useRef, useState } from 'react'
+import { StaticImageData } from 'next/image'
+import classNames from 'classnames'
 
-import css from './BaseImage.module.scss';
+import css from './BaseImage.module.scss'
 
-import useCombinedRefs from '@/hooks/use-combined-refs';
-import getOptimizedImageURL, { OptmizedImageEdits } from '@/utils/get-optimized-image-url';
+import { noop } from '@/utils/basic-functions'
+import getOptimizedImageURL, { OptmizedImageEdits } from '@/utils/get-optimized-image-url'
+
+import useCombinedRefs from '@/hooks/use-combined-refs'
 
 export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   // supports both src (for public images) or data (for imported images)
-  src?: string;
-  data?: StaticImageData;
+  src?: string
+  data?: StaticImageData
   // ---
-  options?: OptmizedImageEdits;
-  srcWidths?: number[];
-  fetchpriority?: 'high' | 'low' | 'auto';
-  skipOptimization?: boolean;
-  onLoad?: () => void;
+  options?: OptmizedImageEdits
+  srcWidths?: number[]
+  fetchpriority?: 'high' | 'low' | 'auto'
+  skipOptimization?: boolean
+  onLoad?: () => void
 }
 
 const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
@@ -36,88 +37,87 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       ...props
     },
     ref
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
-    const [size, setSize] = useState('1px');
-    const [loaded, setLoaded] = useState(false);
+    const [size, setSize] = useState('1px')
+    const [loaded, setLoaded] = useState(false)
 
-    const rootRef = useRef<HTMLImageElement>(null);
-    const combinedRef = useCombinedRefs(ref, rootRef);
+    const rootRef = useRef<HTMLImageElement>(null)
+    const combinedRef = useCombinedRefs(ref, rootRef)
 
-    const imgSrc = useMemo(() => (data?.src || src)!, [data, src]);
+    const imgSrc = useMemo(() => (data?.src || src)!, [data, src])
 
     const shouldGetOptimizedUrl = useMemo(
       () => !skipOptimization && imgSrc.startsWith('/') && !imgSrc.toLowerCase().endsWith('gif'),
       [imgSrc, skipOptimization]
-    );
+    )
 
     const optimizedSrc = useMemo(() => {
-      return shouldGetOptimizedUrl ? getOptimizedImageURL(imgSrc, options) : imgSrc;
-    }, [imgSrc, shouldGetOptimizedUrl, options]);
+      return shouldGetOptimizedUrl ? getOptimizedImageURL(imgSrc, options) : imgSrc
+    }, [imgSrc, shouldGetOptimizedUrl, options])
 
     const imgSrcWidths = useMemo(() => {
-      if (!imgSrc) return [];
+      if (!imgSrc) return []
       if (data?.width) {
-        if (srcWidths) return srcWidths?.filter((w) => w <= data.width);
-        const base = 320;
-        if (data.width < base) return [];
-        const hops = Math.floor(data.width / base);
-        const sizes = [...Array(hops)].map((_, i) => (i + 1) * base);
-        return Array.from(new Set([data.width, ...sizes])).sort((a, b) => (a > b ? 1 : -1));
+        if (srcWidths) return srcWidths?.filter((w) => w <= data.width)
+        const base = 320
+        if (data.width < base) return []
+        const hops = Math.floor(data.width / base)
+        const sizes = [...Array(hops)].map((_, i) => (i + 1) * base)
+        return Array.from(new Set([data.width, ...sizes])).sort((a, b) => (a > b ? 1 : -1))
       }
-      return srcWidths || [320, 640, 960, 1280, 1600, 1920];
-    }, [imgSrc, data, srcWidths]);
+      return srcWidths || [320, 640, 960, 1280, 1600, 1920]
+    }, [imgSrc, data, srcWidths])
 
     const optimizedSrcSet = useMemo(() => {
-      if (!shouldGetOptimizedUrl || !imgSrcWidths.length || options?.resize) return undefined;
-      const opt = options || {};
+      if (!shouldGetOptimizedUrl || !imgSrcWidths.length || options?.resize) return undefined
+      const opt = options || {}
       return imgSrcWidths
         .map((w) => {
-          const o = { ...opt, resize: { ...opt.resize, width: w } };
-          const url = getOptimizedImageURL(imgSrc, o);
-          return `${url} ${w}w`;
+          const o = { ...opt, resize: { ...opt.resize, width: w } }
+          const url = getOptimizedImageURL(imgSrc, o)
+          return `${url} ${w}w`
         })
-        .join(', ');
-    }, [shouldGetOptimizedUrl, imgSrcWidths, options, imgSrc]);
+        .join(', ')
+    }, [shouldGetOptimizedUrl, imgSrcWidths, options, imgSrc])
 
     useEffect(() => {
-      const root = rootRef.current!;
-      let observer: ResizeObserver;
+      const root = rootRef.current!
+      let observer: ResizeObserver
       if (imgSrcWidths.length && window.ResizeObserver) {
         observer = new ResizeObserver(() => {
-          const matchedWidth = imgSrcWidths.find((s) => s >= root.clientWidth);
-          if (matchedWidth) setSize(`${matchedWidth}px`);
-        });
-        observer.observe(root);
+          const matchedWidth = imgSrcWidths.find((s) => s >= root.clientWidth)
+          if (matchedWidth) setSize(`${matchedWidth}px`)
+        })
+        observer.observe(root)
       }
       return () => {
-        observer?.unobserve(root);
-      };
-    }, [imgSrcWidths]);
+        observer?.unobserve(root)
+      }
+    }, [imgSrcWidths])
 
     useEffect(() => {
-      const img = rootRef.current!;
+      const img = rootRef.current!
       const handleLoad = () => {
-        img.removeEventListener('load', handleLoad);
-        img.removeEventListener('loadedmetadata', handleLoad);
-        setLoaded(true);
-        onLoad();
-      };
+        img.removeEventListener('load', handleLoad)
+        img.removeEventListener('loadedmetadata', handleLoad)
+        setLoaded(true)
+        onLoad()
+      }
       if (!loaded && optimizedSrc) {
-        const loaded = Boolean(img.complete);
+        const loaded = Boolean(img.complete)
         if (loaded) {
-          setLoaded(true);
-          onLoad();
+          setLoaded(true)
+          onLoad()
         } else {
-          img.addEventListener('load', handleLoad);
-          img.addEventListener('loadedmetadata', handleLoad);
+          img.addEventListener('load', handleLoad)
+          img.addEventListener('loadedmetadata', handleLoad)
         }
       }
       return () => {
-        img.removeEventListener('load', handleLoad);
-        img.removeEventListener('loadedmetadata', handleLoad);
-      };
-    }, [optimizedSrc, loaded, onLoad]);
+        img.removeEventListener('load', handleLoad)
+        img.removeEventListener('loadedmetadata', handleLoad)
+      }
+    }, [optimizedSrc, loaded, onLoad])
 
     return (
       <img
@@ -132,10 +132,10 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         {...(data ? { width: `${data.width}px`, height: `${data.height}px` } : {})}
         {...props}
       />
-    );
+    )
   }
-);
+)
 
-BaseImage.displayName = 'BaseImage';
+BaseImage.displayName = 'BaseImage'
 
-export default memo(BaseImage);
+export default memo(BaseImage)

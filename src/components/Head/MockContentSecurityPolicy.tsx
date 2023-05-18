@@ -1,4 +1,4 @@
-import NextHead from 'next/head';
+import NextHead from 'next/head'
 /**
  * NOTE:
  * This ContentSecurityPolicy allows frontend developers to experience with Jam3 CSP rules in local environment.
@@ -49,11 +49,11 @@ export default function ContentSecurityPolicy() {
       blob:
       data:
       'unsafe-inline';
-  `.replace(/(\r\n|\n|\r)/gm, '');
+  `.replace(/(\r\n|\n|\r)/gm, '')
 
   return (
     <NextHead>
       <meta httpEquiv="Content-Security-Policy" content={content} />
     </NextHead>
-  );
+  )
 }

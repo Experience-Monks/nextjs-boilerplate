@@ -1,11 +1,11 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
 
-import Footer, { FooterProps } from './Footer';
+import Footer, { FooterProps } from './Footer'
 
-export default { title: 'components/Footer' };
+export default { title: 'components/Footer' }
 
-export const Default: Story<FooterProps> = (args) => <Footer {...args} />;
+export const Default: StoryFn<FooterProps> = (args) => <Footer {...args} />
 
-Default.args = {};
+Default.args = {}
 
-Default.argTypes = {};
+Default.argTypes = {}

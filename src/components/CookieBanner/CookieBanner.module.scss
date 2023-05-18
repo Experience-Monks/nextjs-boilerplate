@@ -1,7 +1,9 @@
+@use 'sass:color';
+
 @import 'shared';
 
 $cookie-banner-bg-color: #202020;
-$cookie-banner-overlay-bg-color: lighten($cookie-banner-bg-color, 10%);
+$cookie-banner-overlay-bg-color: color.adjust($cookie-banner-bg-color, $lightness: 10%);
 $cookie-banner-padding: px(20);
 
 .root {
@@ -23,7 +25,7 @@ $cookie-banner-padding: px(20);
     color: $white;
 
     a {
-      color: currentColor;
+      color: currentcolor;
     }
   }
 
@@ -65,7 +67,7 @@ $cookie-banner-padding: px(20);
     line-height: px(16);
     white-space: nowrap;
     cursor: pointer;
-    color: currentColor;
+    color: currentcolor;
     background-color: $black;
 
     &:first-of-type {

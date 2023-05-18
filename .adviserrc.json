@@ -3,47 +3,40 @@
   "rules": {
     "package-json-properties": [
       "error",
-      {
-        "required": ["name", "private", "scripts", "engines", "dependencies", "browserslist"]
-      }
+      { "required": ["name", "private", "scripts", "engines", "dependencies", "browserslist"] }
     ],
     "root-files": [
       "error",
       {
         "required": [
           ".husky",
-          ".gitignore",
-          "commitlint.config.js",
           ".editorconfig",
+          ".envrc",
+          ".eslintignore",
           ".eslintrc.json",
+          ".gitattributes",
+          ".gitignore",
+          ".ls-lint.yml",
+          ".nvmrc",
+          ".prettierignore",
           ".prettierrc",
+          ".senggenerator",
+          ".stylelintignore",
           ".stylelintrc",
-          "README.md"
+          "commitlint.config.js",
+          "lint-staged.config.js",
+          "next-env.d.ts",
+          "next.config.js",
+          "README.md",
+          "tsconfig.json",
+          "types.d.ts"
         ],
         "blacklist": []
       }
     ],
-    "dependencies/not-allowed-packages": [
-      "error",
-      {
-        "packages": ["jquery", "lodash"]
-      }
-    ],
-    "dependencies/min-vulnerabilities-allow": [
-      "error",
-      {
-        "production": true,
-        "level": "critical",
-        "skip": ["immer"]
-      }
-    ],
-    "dependencies/outdated-packages": [
-      "warn",
-      {
-        "criteria": "major",
-        "exclude": ["gsap"]
-      }
-    ],
+    "dependencies/not-allowed-packages": ["error", { "packages": ["jquery", "lodash"] }],
+    "dependencies/min-vulnerabilities-allow": ["error", { "production": true, "level": "critical", "skip": [""] }],
+    "dependencies/outdated-packages": ["warn", { "criteria": "major", "exclude": [""] }],
     "dependencies/unused-packages": ["warn"],
     "dependencies/licenses-allowlist": [
       "warn",
@@ -101,21 +94,7 @@
           "(BSD-2-Clause OR MIT OR Apache-2.0)",
           "(MIT AND BSD-3-Clause)"
         ],
-        "excludePackage": [
-          "async-foreach@0.1.3",
-          "fast-shallow-equal@1.0.0",
-          "rework@1.0.1",
-          "use-subscription@1.4.1",
-          "gsap@3.5.0",
-          "ignore-loader@0.1.2",
-          "nano-css@5.3.0",
-          "json-schema@0.2.3",
-          "jam3-dev@0.1.0",
-          "react-universal-interface@0.6.2",
-          "tslib@1.13.0",
-          "tslib@2.0.1",
-          "type-fest@0.7.1"
-        ],
+        "excludePackage": [],
         "includeNoProdPackages": false
       }
     ]

@@ -1,11 +1,11 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
 
-import PageNotFound, { PageNotFoundProps } from './PageNotFound';
+import PageNotFound, { PageNotFoundProps } from './PageNotFound'
 
-export default { title: 'components/PageNotFound' };
+export default { title: 'components/PageNotFound' }
 
-export const Default: Story<PageNotFoundProps> = (args) => <PageNotFound {...args} />;
+export const Default: StoryFn<PageNotFoundProps> = (args) => <PageNotFound {...args} />
 
-Default.args = {};
+Default.args = {}
 
-Default.argTypes = {};
+Default.argTypes = {}

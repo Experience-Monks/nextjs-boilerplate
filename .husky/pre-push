@@ -1,4 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+. scripts/fix-lfs-hooks.sh
+. .husky/lfs-hooks/pre-push $@
 
-echo "Pre-push checks..." && npm run linters
+echo "Pre-push checks..."
+
+npm run lint-dev

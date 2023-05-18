@@ -1,11 +1,9 @@
-import React, { FC, Fragment } from 'react';
-import { Story } from '@storybook/react';
+import React, { FC, Fragment } from 'react'
+import { StoryFn } from '@storybook/react'
 
-import css from './Typography.module.scss';
+import css from './Typography.module.scss'
 
-export default {
-  title: 'intro/Typography'
-};
+export default { title: 'intro/Typography' }
 
 const Typographies: FC<{ chars: string }> = ({ chars }) => {
   return (
@@ -20,11 +18,11 @@ const Typographies: FC<{ chars: string }> = ({ chars }) => {
         </Fragment>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export const Default: Story<{ chars: string }> = (args) => <Typographies {...args} />;
+export const Default: StoryFn<{ chars: string }> = (args) => <Typographies {...args} />
 
 Default.args = {
   chars: 'The relentless\npursuit of better'
-};
+}

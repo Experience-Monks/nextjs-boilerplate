@@ -7,6 +7,6 @@ export BUILD_STRING_TIME=$(date +"%T")
 
 rm -rf ./out
 
-npm run build:static
+npm run build:next
 
 echo "$CIRCLE_SHA1/$CIRCLE_BUILD_NUM" > out/VERSION.txt

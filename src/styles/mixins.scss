@@ -1,5 +1,6 @@
+@use 'sass:list';
+
 // Sass Mixins
-//
 // More information about mixins in:
 // http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins
 // Add comment to every function
@@ -61,9 +62,9 @@
 ///     @include position-100(absolute);
 ///   }
 @mixin position-100($pos: relative) {
-  position: $pos;
   @include position-0;
   @include box(100%);
+  position: $pos;
 }
 
 /// Set display flex and center children horizontally and vertically
@@ -134,7 +135,7 @@
 ///     @include z-index(preloader);
 ///   }
 @mixin z-index($id) {
-  z-index: index($elements, $id);
+  z-index: list.index($elements, $id);
 }
 
 /// Reset button's look
@@ -155,7 +156,6 @@
   display: inline-block;
   margin: 0;
   text-decoration: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  color: currentColor;
+  appearance: none;
+  color: currentcolor;
 }

@@ -1,9 +1,9 @@
 $layout: (
   mobile: 375,
   tablet: 768,
-  desktopSm: 1024,
-  desktopMd: 1440,
-  desktopLg: 1920
+  desktop-sm: 1024,
+  desktop-md: 1440,
+  desktop-lg: 1920
 );
 
 /// Set breakpoint via media queries
@@ -36,20 +36,20 @@ $layout: (
   }
 }
 
-@mixin media-desktopSm() {
-  @include breakpoint(desktopSm) {
+@mixin media-desktop-sm() {
+  @include breakpoint(desktop-sm) {
     @content;
   }
 }
 
-@mixin media-desktopMd() {
-  @include breakpoint(desktopMd) {
+@mixin media-desktop-md() {
+  @include breakpoint(desktop-md) {
     @content;
   }
 }
 
-@mixin media-desktopLg() {
-  @include breakpoint(desktopLg) {
+@mixin media-desktop-lg() {
+  @include breakpoint(desktop-lg) {
     @content;
   }
 }

@@ -1,16 +1,14 @@
-import React, { FC } from 'react';
-import { Story } from '@storybook/react';
+import React, { FC } from 'react'
+import { StoryFn } from '@storybook/react'
 
-import css from './Colors.module.scss';
+import css from './Colors.module.scss'
 
-import sass from '../../src/utils/sass';
+import sass from '../../src/utils/sass'
 
-export default {
-  title: 'intro/Colors'
-};
+export default { title: 'intro/Colors' }
 
 const Typographies: FC<{}> = () => {
-  console.log(sass.color);
+  console.log(sass.color)
 
   return (
     <div className={css.root} style={{ width: '90%', padding: '30px' }}>
@@ -23,9 +21,9 @@ const Typographies: FC<{}> = () => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export const Default: Story<{}> = (args) => <Typographies {...args} />;
+export const Default: StoryFn<{}> = (args) => <Typographies {...args} />
 
-Default.args = {};
+Default.args = {}

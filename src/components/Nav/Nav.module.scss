@@ -1,6 +1,8 @@
 @import 'shared';
 
 .root {
+  @include z-index(main-nav);
+  @include flex-center-vert;
   position: fixed;
   top: 0;
   left: 0;
@@ -8,11 +10,9 @@
   padding: 0 px(20);
   box-shadow: $element-shadow;
   background-color: $white;
-  @include z-index(main-nav);
-  @include flex-center-vert;
   height: $navbar-height-mobile;
 
-  @include media-desktopSm {
+  @include media-desktop-sm {
     height: $navbar-height-desktop;
   }
 
@@ -39,8 +39,8 @@
     width: 100%;
 
     > ul {
-      flex-grow: 1;
       @include flex-center-vert;
+      flex-grow: 1;
 
       &.routes {
         justify-content: flex-start;

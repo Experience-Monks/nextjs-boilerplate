@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+. scripts/fix-lfs-hooks.sh
+. .husky/lfs-hooks/post-checkout $@
+
+echo "Post-checkout checks..."

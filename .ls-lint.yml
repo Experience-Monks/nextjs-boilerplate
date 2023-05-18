@@ -14,13 +14,34 @@ ls:
       .webm: kebab-case | regex:[^+]
     components:
       .js: PascalCase
+      .ts: PascalCase
       .tsx: PascalCase
+      .scss: PascalCase
+      .module.scss: PascalCase
       .stories.js: PascalCase
       .stories.tsx: PascalCase
-      .svg: kebab-case
+    data:
+      .js: kebab-case
+      .ts: kebab-case
+      .json: kebab-case
+    hooks:
+      .js: kebab-case
+      .ts: kebab-case
     pages:
       .js: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
       .tsx: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
+    services:
+      .js: kebab-case
+      .ts: kebab-case
+    styles:
+      .scss: kebab-case
+      .module.scss: kebab-case
+    utils:
+      .js: kebab-case
+      .ts: kebab-case
+      .d.ts: kebab-case
+    svgs:
+      .svg: PascalCase
   scripts:
     templates:
       .js: PascalCase

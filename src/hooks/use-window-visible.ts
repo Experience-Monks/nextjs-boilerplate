@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import visibility from '@/services/visibility';
+import visibility from '@/services/visibility'
 
 const useWindowVisible = () => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(true)
 
   useEffect(() => {
     const update = (e: Event) => {
       if (e && e.type === 'blur') {
-        setVisible(false);
+        setVisible(false)
       } else {
-        setVisible(!document.hidden);
+        setVisible(!document.hidden)
       }
-    };
+    }
 
-    visibility.listen(update);
+    visibility.listen(update)
 
     return () => {
-      visibility.dismiss(update);
-    };
-  }, []);
+      visibility.dismiss(update)
+    }
+  }, [])
 
-  return visible;
-};
+  return visible
+}
 
-export default useWindowVisible;
+export default useWindowVisible

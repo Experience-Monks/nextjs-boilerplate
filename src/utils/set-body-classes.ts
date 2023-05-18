@@ -1,6 +1,6 @@
-import { browser, device, os } from '@jam3/detect';
+import { hideStaticHtml } from '@/data/settings'
 
-import { hideStaticHtml } from '@/data/settings';
+import { browser, device, os } from '@/utils/detect'
 
 function setBodyClasses() {
   const classes = [
@@ -9,13 +9,13 @@ function setBodyClasses() {
     device.type,
     browser.name,
     os.name
-  ].filter(Boolean);
-  classes.forEach((c) => document.body.classList.add(c.toLowerCase().split(' ').join('-')));
+  ].filter(Boolean)
+  classes.forEach((c) => document.body.classList.add(c.toLowerCase().split(' ').join('-')))
 
   // un-hide page once application kicked in
   if (hideStaticHtml) {
-    document.documentElement.classList.remove('hide-static-html');
+    document.documentElement.classList.remove('hide-static-html')
   }
 }
 
-export default setBodyClasses;
+export default setBodyClasses

@@ -6,7 +6,7 @@
 
 declare namespace gsap {
   interface EffectsMap {
-    fadeIn: CallEffect<{ duration: number; y: number; delay: number; stagger: number }>;
+    fadeIn: CallEffect<{ duration: number; y: number; delay: number; stagger: number }>
   }
 
   /*
@@ -14,22 +14,22 @@ declare namespace gsap {
     ignore them if you're just trying to register a new effect.
   */
 
-  type CallEffect<Config> = (targets: TweenTarget, config: Partial<Config>) => core.Tween;
+  type CallEffect<Config> = (targets: TweenTarget, config: Partial<Config>) => core.Tween
 
   type EffectConfigMap = {
     [EffectName in keyof EffectsMap as string extends EffectName ? never : EffectName]: Parameters<
       EffectsMap[EffectName]
-    >[1];
-  };
+    >[1]
+  }
 
   type RegisterEffect = (
     effect: {
       [EffectName in keyof EffectConfigMap]: {
-        name: EffectName;
-        effect: EffectsMap[EffectName];
-        defaults: Required<EffectConfigMap[EffectName]>;
-        extendTimeline?: boolean;
-      };
+        name: EffectName
+        effect: EffectsMap[EffectName]
+        defaults: Required<EffectConfigMap[EffectName]>
+        extendTimeline?: boolean
+      }
     }[keyof EffectConfigMap]
-  ) => void;
+  ) => void
 }

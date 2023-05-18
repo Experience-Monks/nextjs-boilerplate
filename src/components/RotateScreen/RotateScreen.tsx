@@ -1,33 +1,32 @@
-import { FC, memo, useEffect, useState } from 'react';
-import { device } from '@jam3/detect';
-import classNames from 'classnames';
+import { FC, memo, useEffect, useState } from 'react'
+import classNames from 'classnames'
 
-import css from './RotateScreen.module.scss';
+import css from './RotateScreen.module.scss'
 
-import resize from '@/services/resize';
+import resize from '@/services/resize'
+
+import { device } from '@/utils/detect'
 
 export interface RotateScreenProps {
-  className?: string;
+  className?: string
 }
 
 const RotateScreen: FC<RotateScreenProps> = ({ className }) => {
-  const [enable, setEnable] = useState(process.env.STORYBOOK || (device.phone && device.landscape));
+  const [enable, setEnable] = useState(process.env.STORYBOOK || (device.phone && device.landscape))
 
   useEffect(() => {
     const handleResize = () => {
-      setEnable(device.phone && device.landscape);
-    };
+      setEnable(device.phone && device.landscape)
+    }
 
-    resize.listen(handleResize);
+    resize.listen(handleResize)
 
     return () => {
-      resize.dismiss(handleResize);
-    };
-  }, []);
+      resize.dismiss(handleResize)
+    }
+  }, [])
 
-  return (
-    <div className={classNames('RotateScreen', css.root, className, { [css.enabled]: enable })}>Rotate Screen</div>
-  );
-};
+  return <div className={classNames('RotateScreen', css.root, className, { [css.enabled]: enable })}>Rotate Screen</div>
+}
 
-export default memo(RotateScreen);
+export default memo(RotateScreen)

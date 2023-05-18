@@ -1,67 +1,67 @@
-import { MutableRefObject, RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { getScrollTop } from 'get-scroll';
+import { MutableRefObject, RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
-import scroll from '@/services/scroll';
+import scroll from '@/services/scroll'
+
+import { getScrollTop } from '@/utils/basic-functions'
 
 interface State {
-  down: boolean;
-  top: boolean;
-  up: boolean;
+  down: boolean
+  top: boolean
+  up: boolean
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function useScrollDirection(throttle = 100, target?: Element | RefObject<Element>, fallbackToWindowScroll = true) {
   const [state, setState] = useState<State>({
     down: false,
     top: true,
     up: false
-  });
+  })
 
   const element = useMemo(
     () => target && ((target as MutableRefObject<Element>).current || (target as Element)),
     [target]
-  );
+  )
 
-  const lastScrollY = useRef(element ? element.scrollTop : typeof window !== 'undefined' ? getScrollTop() : 0);
+  const lastScrollY = useRef(element ? element.scrollTop : typeof window !== 'undefined' ? getScrollTop() : 0)
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout
 
     const handleScroll = () => {
-      if (timeout) clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout)
 
       timeout = setTimeout(() => {
-        const scrollY = element ? element.scrollTop : getScrollTop();
+        const scrollY = element ? element.scrollTop : getScrollTop()
 
         setState({
           down: scrollY > lastScrollY.current,
           top: scrollY === 0,
           up: scrollY < lastScrollY.current
-        });
+        })
 
-        lastScrollY.current = scrollY;
-      }, throttle);
-    };
+        lastScrollY.current = scrollY
+      }, throttle)
+    }
 
-    handleScroll();
+    handleScroll()
 
     if (element) {
-      element.addEventListener('scroll', handleScroll);
+      element.addEventListener('scroll', handleScroll)
     } else if (fallbackToWindowScroll) {
-      scroll.listen(handleScroll);
+      scroll.listen(handleScroll)
     }
 
     return () => {
-      if (timeout) clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout)
       if (element) {
-        element.removeEventListener('scroll', handleScroll);
+        element.removeEventListener('scroll', handleScroll)
       } else if (fallbackToWindowScroll) {
-        scroll.dismiss(handleScroll);
+        scroll.dismiss(handleScroll)
       }
-    };
-  }, [element, throttle, fallbackToWindowScroll]);
+    }
+  }, [element, throttle, fallbackToWindowScroll])
 
-  return state;
+  return state
 }
 
-export default useScrollDirection;
+export default useScrollDirection

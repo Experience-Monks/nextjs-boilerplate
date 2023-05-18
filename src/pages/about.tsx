@@ -1,13 +1,13 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps } from 'next'
 
-import PageAbout, { PageAboutProps } from '@/components/PageAbout/PageAbout';
+import PageAbout, { PageAboutProps } from '@/components/PageAbout/PageAbout'
 
 export const getStaticProps: GetStaticProps<PageAboutProps> = async () => {
   return {
     props: {
       head: { title: 'About' }
     }
-  };
-};
+  }
+}
 
-export default PageAbout;
+export default PageAbout

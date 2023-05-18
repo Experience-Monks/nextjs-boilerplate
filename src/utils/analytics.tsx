@@ -1,8 +1,9 @@
-import Script from 'next/script';
-import { device } from '@jam3/detect';
+import Script from 'next/script'
+
+import { device } from '@/utils/detect'
 
 if (device.browser) {
-  window.dataLayer = window.dataLayer || [];
+  window.dataLayer = window.dataLayer || []
 }
 
 /**
@@ -16,32 +17,32 @@ export function gtmEvent(action = false, payload = {}): void {
     window.dataLayer.push({
       event: action,
       payload
-    });
+    })
   }
 }
 
 type Props = {
-  consent: boolean;
-};
+  consent: boolean
+}
 
 /**
  * GTM code snippet in head
  */
 const isStage =
-  typeof window !== 'undefined' ? RegExp(/^https?:\/\/stage\..*$/).test(window.location.href.toLowerCase()) : false;
+  typeof window !== 'undefined' ? RegExp(/^https?:\/\/stage\..*$/).test(window.location.href.toLowerCase()) : false
 const isProd =
-  typeof window !== 'undefined' ? RegExp(/^https?:\/\/prod\..*$/).test(window.location.href.toLowerCase()) : false;
+  typeof window !== 'undefined' ? RegExp(/^https?:\/\/prod\..*$/).test(window.location.href.toLowerCase()) : false
 
-let QUERY_PARAMS = '';
+let QUERY_PARAMS = ''
 if (isProd) {
   // production env
-  QUERY_PARAMS = ``;
+  QUERY_PARAMS = ``
 } else if (isStage) {
   // staging env
-  QUERY_PARAMS = `+ '&gtm_auth=0C7oXHwDSkkVPTB79Nkerg&gtm_preview=env-4&gtm_cookies_win=x'`;
+  QUERY_PARAMS = `+ '&gtm_auth=0C7oXHwDSkkVPTB79Nkerg&gtm_preview=env-4&gtm_cookies_win=x'`
 } else {
   // development && local env
-  QUERY_PARAMS = `+ '&gtm_auth=kCBpKoRDhvSr9u1LuPWC1g&gtm_preview=env-3&gtm_cookies_win=x'`;
+  QUERY_PARAMS = `+ '&gtm_auth=kCBpKoRDhvSr9u1LuPWC1g&gtm_preview=env-3&gtm_cookies_win=x'`
 }
 
 export function GtmScript({ consent }: Props) {
@@ -49,7 +50,6 @@ export function GtmScript({ consent }: Props) {
     <Script
       id="google-tag-manager"
       strategy="afterInteractive"
-      // eslint-disable-next-line jam3/no-sanitizer-with-danger
       dangerouslySetInnerHTML={{
         __html: `
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -60,5 +60,5 @@ export function GtmScript({ consent }: Props) {
       `
       }}
     />
-  ) : null;
+  ) : null
 }

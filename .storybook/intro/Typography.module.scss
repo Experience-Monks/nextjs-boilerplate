@@ -1,15 +1,14 @@
 @import 'shared';
 
 .root {
-  text-align: left;
+  width: 100%;
   display: grid;
-  grid-template-columns: 20% 80%;
-  width: '100%';
-  padding: '30px';
+  text-align: left;
+  grid-template-columns: 25% 75%;
 
   .item {
-    border-bottom: 1px solid rgba($black, 0.2);
-    padding: px(30) 0;
+    border-bottom: 1px solid rgba($white, 0.4);
+    padding: px(30) px(15);
     font-family: monospace;
 
     .figma {
@@ -23,8 +22,8 @@
   }
 
   p {
-    border-bottom: 1px solid rgba($black, 0.2);
-    padding: px(30) 0;
+    border-bottom: 1px solid rgba($white, 0.4);
+    padding: px(30) px(15);
     word-break: break-all;
   }
 

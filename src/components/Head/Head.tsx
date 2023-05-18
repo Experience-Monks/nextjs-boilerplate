@@ -1,24 +1,24 @@
-import { FC, memo } from 'react';
-import dynamic from 'next/dynamic';
-import NextHead from 'next/head';
-import { useRouter } from 'next/router';
+import { FC, memo } from 'react'
+import dynamic from 'next/dynamic'
+import NextHead from 'next/head'
+import { useRouter } from 'next/router'
 
-import * as settings from '@/data/settings';
-import { HeadProps } from '@/data/types';
+import * as settings from '@/data/settings'
+import { HeadProps } from '@/data/types'
 
-const MockFeaturePolicy = dynamic(() => import('@/components/Head/MockFeaturePolicy'), { ssr: false });
-const MockContentSecurityPolicy = dynamic(() => import('@/components/Head/MockContentSecurityPolicy'), { ssr: false });
+const MockFeaturePolicy = dynamic(() => import('@/components/Head/MockFeaturePolicy'), { ssr: false })
+const MockContentSecurityPolicy = dynamic(() => import('@/components/Head/MockContentSecurityPolicy'), { ssr: false })
 
-const TITLE_SEPARATOR = '|';
+const TITLE_SEPARATOR = '|'
 
 const Head: FC<HeadProps> = ({ title, keywords, description, siteName, image }) => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`;
-  const ogDefaultImage = image || `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/common/assets/images/share-image.jpg`;
+  const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`
+  const ogDefaultImage = image || `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/common/assets/images/share-image.jpg`
   const fullTitle = title
     ? `${title} ${TITLE_SEPARATOR} ${siteName || settings.siteName}`
-    : `${siteName} ${TITLE_SEPARATOR} ${settings.siteSlogan}`;
+    : `${siteName} ${TITLE_SEPARATOR} ${settings.siteSlogan}`
 
   return (
     <NextHead>
@@ -55,7 +55,7 @@ const Head: FC<HeadProps> = ({ title, keywords, description, siteName, image }) 
 
       {process.env.NEXT_PUBLIC_DNS_PREFETCH && (
         <>
-          <link rel="preconnect" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} crossOrigin="true" />
+          <link rel="preconnect" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} crossOrigin="anonymous" />
           <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
         </>
       )}
@@ -67,7 +67,7 @@ const Head: FC<HeadProps> = ({ title, keywords, description, siteName, image }) 
         </>
       )}
     </NextHead>
-  );
-};
+  )
+}
 
-export default memo(Head);
+export default memo(Head)
