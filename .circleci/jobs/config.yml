@@ -82,6 +82,7 @@ jobs:
     # check circle/ci -> Plan Usage for optimal balance between time/cost
     environment:
       GIT_LFS_SKIP_SMUDGE: 1
+      VERSION_NUMBER: << pipeline.number >>
     parameters:
       git_lfs:
         description: 'Enable Git LFS'
@@ -153,6 +154,8 @@ jobs:
   storybook:
     <<: *node-container
     resource_class: medium
+    environment:
+      VERSION_NUMBER: << pipeline.number >>
     parameters:
       <<: *env-suffix-parameter
 

@@ -1,6 +1,10 @@
+import { useEffect, useState } from 'react'
 import Script from 'next/script'
 
+import config from '@/data/config.json'
+
 import { device } from '@/utils/detect'
+import { getRuntimeEnv } from '@/utils/runtime-env'
 
 if (device.browser) {
   window.dataLayer = window.dataLayer || []
@@ -46,7 +50,15 @@ if (isProd) {
 }
 
 export function GtmScript({ consent }: Props) {
-  return consent ? (
+  const [gtmId, setGtmId] = useState('')
+
+  useEffect(() => {
+    const env = getRuntimeEnv()
+    const gtmId = config.analytics.gtmIds[env]
+    if (consent && gtmId) setGtmId(gtmId)
+  }, [consent])
+
+  return gtmId ? (
     <Script
       id="google-tag-manager"
       strategy="afterInteractive"
@@ -56,7 +68,7 @@ export function GtmScript({ consent }: Props) {
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl${QUERY_PARAMS};f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer', '${process.env.NEXT_PUBLIC_GTM_ID}');
+        })(window,document,'script','dataLayer', '${gtmId}');
       `
       }}
     />

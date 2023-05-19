@@ -3,8 +3,10 @@ import dynamic from 'next/dynamic'
 import NextHead from 'next/head'
 import { useRouter } from 'next/router'
 
-import * as settings from '@/data/settings'
+import config from '@/data/config.json'
 import { HeadProps } from '@/data/types'
+
+import { getRuntimeEnv } from '@/utils/runtime-env'
 
 const MockFeaturePolicy = dynamic(() => import('@/components/Head/MockFeaturePolicy'), { ssr: false })
 const MockContentSecurityPolicy = dynamic(() => import('@/components/Head/MockContentSecurityPolicy'), { ssr: false })
@@ -14,18 +16,21 @@ const TITLE_SEPARATOR = '|'
 const Head: FC<HeadProps> = ({ title, keywords, description, siteName, image }) => {
   const router = useRouter()
 
-  const ogUrl = `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}${router.asPath}`
-  const ogDefaultImage = image || `${process.env.NEXT_PUBLIC_WEBSITE_SITE_URL}/common/assets/images/share-image.jpg`
+  const env = getRuntimeEnv()
+  const websiteUrl = config.websiteUrl[env]
+
+  const ogUrl = `${websiteUrl}${router.asPath}`
+  const ogDefaultImage = image || `${websiteUrl}/common/assets/images/share-image.jpg`
   const fullTitle = title
-    ? `${title} ${TITLE_SEPARATOR} ${siteName || settings.siteName}`
-    : `${siteName} ${TITLE_SEPARATOR} ${settings.siteSlogan}`
+    ? `${title} ${TITLE_SEPARATOR} ${siteName || config.siteName}`
+    : `${siteName} ${TITLE_SEPARATOR} ${config.siteSlogan}`
 
   return (
     <NextHead>
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <title>{fullTitle}</title>
-      <meta name="description" content={description || settings.siteDescription} />
-      <meta name="keywords" content={(keywords || settings.siteKeywords).join(', ')} />
+      <meta name="description" content={description || config.siteDescription} />
+      <meta name="keywords" content={(keywords || config.siteKeywords).join(', ')} />
       {/* Generate favicons in https://realfavicongenerator.net */}
       <meta name="theme-color" content="#ffffff" />
       <meta name="msapplication-TileColor" content="#ffffff" />
@@ -53,12 +58,12 @@ const Head: FC<HeadProps> = ({ title, keywords, description, siteName, image }) 
       {/* Other recommends */}
       <link rel="canonical" href={ogUrl} />
 
-      {process.env.NEXT_PUBLIC_DNS_PREFETCH && (
+      {config.dnsPrefetch[process.env.NODE_ENV]?.map((href: string) => (
         <>
-          <link rel="preconnect" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} crossOrigin="anonymous" />
-          <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_DNS_PREFETCH} />
+          <link rel="preconnect" href={href} crossOrigin="anonymous" />
+          <link rel="dns-prefetch" href={href} />
         </>
-      )}
+      ))}
 
       {process.env.NODE_ENV === 'development' && (
         <>

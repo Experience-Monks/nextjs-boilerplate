@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e
 
-export COMMIT_ID=$(git rev-parse --short HEAD)
-export COMMIT_COUNT=$(git rev-list --no-merges --count HEAD)
-export BUILD_STRING_TIME=$(date +"%T")
+export COMMIT_ID=$(git log --pretty="%h" --no-merges -1)
+export COMMIT_DATE="$(git log --date=format:'%Y-%m-%d %H:%M' --pretty="%cd" --no-merges -1)"
+
+echo "ARTIFACT VERSION $VERSION_NUMBER"
 
 rm -rf ./out
 

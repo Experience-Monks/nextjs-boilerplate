@@ -1,0 +1,22 @@
+{
+  "resizeDebounceTime": 10,
+  "hideStaticHtml": false,
+  "siteName": "Jam3 Generator",
+  "siteSlogan": "The Relentless Pursuit of Better",
+  "siteDescription": "Default Description",
+  "siteKeywords": ["Jam3", "Web App", "React", "NextJS"],
+  "websiteUrl": {
+    "prod": "https://prod.nextjs-boilerplate.jam3.cloud.jam3.net",
+    "stage": "https://stage.nextjs-boilerplate.jam3.cloud.jam3.net",
+    "dev": "https://dev.nextjs-boilerplate.jam3.cloud.jam3.net",
+    "local": "https://localhost:3000"
+  },
+  "dnsPrefetch": {
+    "development": [],
+    "production": ["https://www.google-analytics.com", "https://www.googletagmanager.com"],
+    "test": []
+  },
+  "analytics": {
+    "gtmIds": { "prod": "GTM-0000000", "stage": "GTM-0000000", "dev": "GTM-0000000", "local": "" }
+  }
+}

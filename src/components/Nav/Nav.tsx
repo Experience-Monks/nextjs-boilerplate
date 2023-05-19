@@ -7,7 +7,8 @@ import css from './Nav.module.scss'
 import routes from '@/data/routes'
 
 import BaseImage from '@/components/BaseImage/BaseImage'
-import SvgThreeLogo from '@/components/svgs/three-logo.svg'
+
+import SvgThreeLogo from '@/svgs/ThreeLogo.svg'
 
 const LINKS = [
   { href: 'https://jam3.com', label: 'Jam3', data: require('@/assets/images/three-logo.jpeg').default },

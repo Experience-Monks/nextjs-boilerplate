@@ -4,43 +4,58 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  width: px(180);
-  display: flex;
-  flex-direction: column;
-  font: 11px 'Lucida Grande', sans-serif;
+  font-size: 12px;
+  font-family: monospace !important;
+  text-align: left;
+  background: rgba($black, 0.8);
+  border-radius: 10px 0 0;
   color: $white;
-  background-color: $black;
-  z-index: 10000000;
+  z-index: 10000010;
 
-  button {
-    width: 100%;
-    height: px(20);
-    margin: 0;
-    padding: 0;
-    border: none;
-    overflow: visible;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-    appearance: none;
-  }
+  .basic {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 
-  section.adminSection {
-    text-align: left;
-    padding: 0 px(10);
-    border-top: 1px solid #303030;
+    &.open {
+      padding: 0 0 0 10px;
 
-    .adminSectionTitle {
-      font-size: inherit;
-      padding: px(7) 0;
-      cursor: pointer;
+      div {
+        margin: 0 auto 0 0;
+      }
     }
 
-    ul li {
-      padding: px(7) 0 px(7) px(10);
+    button {
+      @include flex-center;
+      @include box(20px, 30px);
+    }
+  }
+
+  .details {
+    position: relative;
+    border-top: 1px solid rgba($white, 0.2);
+
+    .content {
+      .section {
+        padding: 0 10px;
+
+        &:not(:last-child) {
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgba($white, 0.2);
+        }
+
+        .title {
+          font-size: inherit;
+          padding: 10px 0;
+          cursor: pointer;
+        }
+
+        ul {
+          li {
+            padding: 0 0 5px 10px;
+          }
+        }
+      }
     }
   }
 }

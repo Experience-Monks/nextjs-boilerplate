@@ -1,4 +1,4 @@
-import { hideStaticHtml } from '@/data/settings'
+import config from '@/data/config.json'
 
 import { browser, device, os } from '@/utils/detect'
 
@@ -13,7 +13,7 @@ function setBodyClasses() {
   classes.forEach((c) => document.body.classList.add(c.toLowerCase().split(' ').join('-')))
 
   // un-hide page once application kicked in
-  if (hideStaticHtml) {
+  if (config.hideStaticHtml) {
     document.documentElement.classList.remove('hide-static-html')
   }
 }

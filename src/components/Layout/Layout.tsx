@@ -71,7 +71,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
         />
       )}
 
-      {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
+      <AppAdmin />
     </>
   )
 }

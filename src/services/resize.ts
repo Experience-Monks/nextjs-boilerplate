@@ -1,4 +1,4 @@
-import { resizeDebounceTime } from '@/data/settings'
+import config from '@/data/config.json'
 
 import { device } from '@/utils/detect'
 
@@ -15,7 +15,7 @@ class Service {
       () => {
         this.listeners.forEach((listener) => listener(e))
       },
-      device.mobile ? 500 : resizeDebounceTime // some mobile browsers only update window dimensions when the rotate animation finishes
+      device.mobile ? 500 : config.resizeDebounceTime // some mobile browsers only update window dimensions when the rotate animation finishes
     )
   }
 

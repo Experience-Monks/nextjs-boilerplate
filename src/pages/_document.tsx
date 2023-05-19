@@ -1,6 +1,6 @@
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 
-import { hideStaticHtml } from '@/data/settings'
+import config from '@/data/config.json'
 
 import sanitizer from '@/utils/sanitizer'
 
@@ -19,7 +19,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        {hideStaticHtml && (
+        {config.hideStaticHtml && (
           <script data-cfasync="false" dangerouslySetInnerHTML={{ __html: sanitizer(hideStaticHtmlScript) }} />
         )}
         <body>
