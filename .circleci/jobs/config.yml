@@ -51,7 +51,7 @@ jobs:
     steps:
       - checkout
       - restore-project-dependencies-cache
-      - run: npm run linters-ci
+      - run: npm run lint-ci
 
   secrets-key-detection:
     <<: *node-container
