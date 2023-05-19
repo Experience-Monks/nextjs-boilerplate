@@ -1,4 +1,4 @@
-import { FC, memo, PropsWithChildren, useCallback, useEffect } from 'react'
+import { FC, memo, useCallback, useEffect } from 'react'
 import { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'

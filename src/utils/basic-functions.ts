@@ -1,11 +1,13 @@
-export function noop() {}
+export function noop() {
+  // no op function
+}
 
 export function getScrollTop() {
-  return window.pageYOffset || document.body.scrollTop
+  return window.scrollY || document.body.scrollTop
 }
 
 export function getScrollLeft() {
-  return window.pageXOffset || document.body.scrollLeft
+  return window.scrollX || document.body.scrollLeft
 }
 
 /**

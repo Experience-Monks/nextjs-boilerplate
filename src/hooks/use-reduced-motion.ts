@@ -12,15 +12,10 @@ const useReducedMotion = () => {
       const element = event.target as MediaQueryList
       setReducedMotion(element.matches)
     }
-    if (mediaQuery) {
-      mediaQuery.addEventListener ? mediaQuery.addEventListener('change', onChange) : mediaQuery.addListener(onChange)
-    }
+    mediaQuery?.addEventListener('change', onChange)
+
     return () => {
-      if (mediaQuery) {
-        mediaQuery.removeEventListener
-          ? mediaQuery.removeEventListener('change', onChange)
-          : mediaQuery.removeListener(onChange)
-      }
+      mediaQuery?.removeEventListener('change', onChange)
     }
   }, [])
 

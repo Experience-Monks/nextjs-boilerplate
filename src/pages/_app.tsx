@@ -25,7 +25,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
   }, [])
 
   /** NOTE: this is where dev tools and helper modules can be placed */
-  useEffect(() => {}, [])
+  // useEffect(() => {}, [])
 
   return (
     <Provider store={store}>

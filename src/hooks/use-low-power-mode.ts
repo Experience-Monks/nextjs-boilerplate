@@ -13,14 +13,17 @@ const useLowPowerMode = () => {
   useEffect(() => {
     let timeout: NodeJS.Timeout
 
-    const update = async () => {
-      const isLowPower = await getLowPowerMode()
-      setLowPower(isLowPower)
+    const update = () => {
+      getLowPowerMode()
+        .then((isLowPower) => {
+          setLowPower(isLowPower)
 
-      clearTimeout(timeout)
-      timeout = setTimeout(() => {
-        update()
-      }, 1000 * 5) // Check every 5 seconds
+          clearTimeout(timeout)
+          timeout = setTimeout(() => {
+            update()
+          }, 1000 * 5) // Check every 5 seconds
+        })
+        .catch(console.log)
     }
 
     if (os.ios) {

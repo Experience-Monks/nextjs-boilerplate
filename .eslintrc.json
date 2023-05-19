@@ -2,13 +2,14 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
-    "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
+    "plugin:sonarjs/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
-    "plugin:import/typescript",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:import/typescript"
   ],
   "plugins": ["eslint-comments", "prettier", "react", "react-hooks", "jsx-a11y", "simple-import-sort", "sonarjs"],
   "env": { "es2021": true, "browser": true, "node": true },
@@ -58,14 +59,15 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parser": "@typescript-eslint/parser",
-      "extends": ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
+      "parserOptions": { "project": ["./tsconfig.json"] },
+      "extends": ["plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/eslint-recommended"],
       "rules": {
         "react/prop-types": "off",
-        "@typescript-eslint/no-unused-vars": "off",
+        "sonarjs/cognitive-complexity": "off",
         "@typescript-eslint/no-var-requires": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-misused-promises": "error",
+        "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/naming-convention": [
