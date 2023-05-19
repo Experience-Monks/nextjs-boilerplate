@@ -85,7 +85,7 @@ jobs:
     parameters:
       git_lfs:
         description: 'Enable Git LFS'
-        default: false
+        default: true
         type: boolean
 
     steps:
