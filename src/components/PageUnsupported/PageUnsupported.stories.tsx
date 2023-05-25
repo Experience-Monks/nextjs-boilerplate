@@ -1,11 +1,11 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
 
-import PageUnsupported, { PageUnsupportedProps } from './PageUnsupported';
+import PageUnsupported, { PageUnsupportedProps } from './PageUnsupported'
 
-export default { title: 'components/PageUnsupported' };
+export default { title: 'components/PageUnsupported' }
 
-export const Default: Story<PageUnsupportedProps> = (args) => <PageUnsupported {...args} />;
+export const Default: StoryFn<PageUnsupportedProps> = (args) => <PageUnsupported {...args} />
 
-Default.args = {};
+Default.args = {}
 
-Default.argTypes = {};
+Default.argTypes = {}

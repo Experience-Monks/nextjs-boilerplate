@@ -1,13 +1,8 @@
-// Sass Mixins
-//
-// More information about mixins in:
-// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins
-// Add comment to every function
-
 @use 'sass:math';
+
 @import 'vars';
 
-$generic-fonts: system-ui, Helvetica, Arial, sans-serif;
+$generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
 
 /// Check if two scss values are safe to add, subtract, or multiply.
 /// @example scss Input
@@ -18,9 +13,9 @@ $generic-fonts: system-ui, Helvetica, Arial, sans-serif;
 ///  }
 @function is-compatible($a, $b) {
   // Check if both values are numbers, for scss values like 3% or 10px count as numbers
-  @if (type-of($a) == 'number' and type-of($b) == 'number') {
+  @if type-of($a) == 'number' and type-of($b) == 'number' {
     // Check if they are unitless so we can do transformations
-    @if (math.is-unitless($a) and math.is-unitless($b)) {
+    @if math.is-unitless($a) and math.is-unitless($b) {
       // Extra check to make sure they are compatible for math.div later on
       @return math.compatible($a, $b);
     } @else {
@@ -136,7 +131,7 @@ $generic-fonts: system-ui, Helvetica, Arial, sans-serif;
     @include font-size(32);
   }
 
-  @include breakpoint(desktopSm) {
+  @include breakpoint(desktop-sm) {
     @include font-size(42);
   }
 }

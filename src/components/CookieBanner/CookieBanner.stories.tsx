@@ -1,19 +1,19 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
 
-import CookieBanner, { CookieBannerProps } from './CookieBanner';
+import CookieBanner, { CookieBannerProps } from './CookieBanner'
 
-export default { title: 'components/CookieBanner' };
+export default { title: 'components/CookieBanner' }
 
-export const Default: Story<CookieBannerProps> = (args) => <CookieBanner {...args} />;
+export const Default: StoryFn<CookieBannerProps> = (args) => <CookieBanner {...args} />
 
 Default.args = {
   onAccept: () => console.log('accept'),
   onReject: () => console.log('reject')
-};
+}
 
-Default.argTypes = {};
+Default.argTypes = {}
 
-export const WithChildren: Story<CookieBannerProps> = (args) => (
+export const WithChildren: StoryFn<CookieBannerProps> = (args) => (
   <CookieBanner {...args}>
     We use cookies on this website to improve your experience. Learn more on our{' '}
     <a href="https://www.jam3.com/privacy" target="_blank'">
@@ -21,8 +21,8 @@ export const WithChildren: Story<CookieBannerProps> = (args) => (
     </a>
     .
   </CookieBanner>
-);
+)
 
-WithChildren.args = { ...Default.args };
+WithChildren.args = { ...Default.args }
 
-Default.argTypes = {};
+Default.argTypes = {}

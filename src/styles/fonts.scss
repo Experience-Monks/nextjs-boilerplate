@@ -1,7 +1,7 @@
 // Fonts
-//
+
 // Location of all the font-families and font-related css
-//
+
 // Best practices:
 // 1. Avoid loading as many fonts as possible, e.x font styles, font families
 // 2. Optimize the font, remove the characters set that the site won't use: languages
@@ -25,7 +25,7 @@
 @import 'vars';
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 100;
   font-display: swap;
@@ -34,7 +34,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 100;
   font-display: swap;
@@ -43,7 +43,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 200;
   font-display: swap;
@@ -52,7 +52,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 200;
   font-display: swap;
@@ -61,7 +61,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 300;
   font-display: swap;
@@ -70,7 +70,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 300;
   font-display: swap;
@@ -79,7 +79,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -88,7 +88,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 400;
   font-display: swap;
@@ -97,7 +97,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 500;
   font-display: swap;
@@ -106,7 +106,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 500;
   font-display: swap;
@@ -115,7 +115,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 600;
   font-display: swap;
@@ -124,7 +124,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 600;
   font-display: swap;
@@ -133,7 +133,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -142,7 +142,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 700;
   font-display: swap;
@@ -151,7 +151,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 800;
   font-display: swap;
@@ -160,7 +160,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 800;
   font-display: swap;
@@ -169,7 +169,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: normal;
   font-weight: 900;
   font-display: swap;
@@ -178,7 +178,7 @@
 }
 
 @font-face {
-  font-family: 'WorkSans';
+  font-family: WorkSans;
   font-style: italic;
   font-weight: 900;
   font-display: swap;

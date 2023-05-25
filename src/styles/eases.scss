@@ -1,19 +1,10 @@
-// Custom and Static CSS Easing
-// More information about eases in:
-// https://matthewlein.com/tools/ceaser
-
-// Custom Easing Mixin
-// Example:
-// @include customEase(0.25, 0.25, 0.75, 0.75);
-@mixin customEase($timing...) {
-  transition-timing-function: cubic-bezier($timing);
-}
+@use 'sass:map';
 
 // Standard Eases Mixin
 // Example:
 // @include ease(in-out-quad);
 @mixin ease($easeType) {
-  $easeMap: (
+  $ease-map: (
     linear: cubic-bezier(0.25, 0.25, 0.75, 0.75),
     default: cubic-bezier(0.25, 0.1, 0.25, 1),
     in: cubic-bezier(0.42, 0, 1, 1),
@@ -44,5 +35,6 @@
     in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86),
     in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55)
   );
-  transition-timing-function: map-get($easeMap, $easeType);
+
+  transition-timing-function: map.get($ease-map, $easeType);
 }

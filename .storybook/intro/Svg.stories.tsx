@@ -1,26 +1,28 @@
-import React, { FC, ReactElement, SVGProps } from 'react';
-import { storiesOf } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
+import React, { FC, ReactElement, SVGProps } from 'react'
 
-type SvgComponent = (props: SVGProps<SVGElement>) => ReactElement<{}, string>;
+export default { title: 'intro/SVG' }
 
-let icons: { class: SvgComponent; name: string }[] = [];
+type SvgComponent = (props: SVGProps<SVGElement>) => ReactElement<{}, string>
 
-const req = require.context('../../src/components/svgs', false, /^.\/.*svg$/);
+let icons: { class: SvgComponent; name: string }[] = []
+
+const req = require.context('../../src/components/svgs', false, /^.\/.*svg$/)
 
 req.keys().forEach((key) => {
-  const name = key.replace('./', '');
-  const Svg = req(key).default as SvgComponent;
+  const name = key.replace('./', '')
+  const Svg = req(key).default as SvgComponent
   icons.push({
     class: Svg,
     name
-  });
-});
+  })
+})
 
-icons = icons.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1));
+icons = icons.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
 
 interface SvgCatalogProps {
-  viewbox: boolean;
-  color: string;
+  viewbox: boolean
+  color: string
 }
 const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
   return (
@@ -58,36 +60,19 @@ const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
               {icon.name}
             </div>
           </div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-storiesOf(`intro/SVG`, module).add('CATALOG', (args: unknown) => <SvgCatalog {...(args as SvgCatalogProps)} />, {
-  args: { viewbox: true, color: '#000000' },
-  argTypes: { color: { control: { type: 'color' } } }
-});
+export const Catalog: StoryFn<SvgCatalogProps> = (args) => <SvgCatalog {...args} />
 
-icons.forEach((icon) => {
-  storiesOf(`intro/SVG`, module).add(
-    icon.name,
-    (args: unknown) => {
-      const { viewbox, color } = args as SvgCatalogProps;
-      return (
-        <icon.class
-          style={{
-            width: '90vw',
-            height: '90vh',
-            border: viewbox ? '1px dashed magenta' : 'none',
-            color: color
-          }}
-        />
-      );
-    },
-    {
-      args: { viewbox: false, color: '#000000' },
-      argTypes: { color: { control: { type: 'color' } } }
-    }
-  );
-});
+Catalog.args = {
+  viewbox: true,
+  color: '#000000'
+}
+
+Catalog.argTypes = {
+  color: { control: { type: 'color' } }
+}

@@ -1,8 +1,9 @@
-import { FC, memo, PropsWithChildren, useCallback, useState } from 'react';
-import classNames from 'classnames';
-import noop from 'no-op';
+import { FC, memo, PropsWithChildren, useCallback, useState } from 'react'
+import classNames from 'classnames'
 
-import css from './CookieBanner.module.scss';
+import css from './CookieBanner.module.scss'
+
+import { noop } from '@/utils/basic-functions'
 
 const copy = {
   settings: 'Cookie Settings',
@@ -18,32 +19,32 @@ const copy = {
   defaultText: 'We use cookies on this website to improve your experience.',
   accept: 'Accept All',
   reject: 'Reject All'
-};
+}
 
 type CookieConsentProps = {
   // duration
-  session: boolean;
-  persistent: boolean;
+  session: boolean
+  persistent: boolean
   // purpose
-  necessary: boolean;
-  preference: boolean;
-  statistics: boolean;
-  marketing: boolean;
+  necessary: boolean
+  preference: boolean
+  statistics: boolean
+  marketing: boolean
   // provenance
-  firstParty: boolean;
-  thirdParty: boolean;
-};
+  firstParty: boolean
+  thirdParty: boolean
+}
 
 export type CookieBannerProps = PropsWithChildren<{
-  className?: string;
-  defaultText?: string;
-  acceptCta?: string;
-  rejectCta?: string;
-  cookieConsent: CookieConsentProps;
-  onAccept(): void;
-  onUpdate(arg0: CookieConsentProps): void;
-  onReject(): void;
-}>;
+  className?: string
+  defaultText?: string
+  acceptCta?: string
+  rejectCta?: string
+  cookieConsent: CookieConsentProps
+  onAccept(): void
+  onUpdate(arg0: CookieConsentProps): void
+  onReject(): void
+}>
 
 const CookieBanner: FC<CookieBannerProps> = ({
   className,
@@ -56,32 +57,32 @@ const CookieBanner: FC<CookieBannerProps> = ({
   onReject = noop,
   children
 }) => {
-  const [cookieSettings, setCookieSettings] = useState(cookieConsent);
-  const [showCookieSetting, setShowCookieSettings] = useState(false);
+  const [cookieSettings, setCookieSettings] = useState(cookieConsent)
+  const [showCookieSetting, setShowCookieSettings] = useState(false)
 
   const handleAcceptAllCookies = useCallback(() => {
-    onAccept();
-  }, [onAccept]);
+    onAccept()
+  }, [onAccept])
 
   const handleDeclineAllCookies = useCallback(() => {
-    onReject();
-  }, [onReject]);
+    onReject()
+  }, [onReject])
 
   const handleCookieSettingsClick = useCallback(() => {
-    setShowCookieSettings(true);
-  }, []);
+    setShowCookieSettings(true)
+  }, [])
 
   const handleCookieSettingsClose = useCallback(() => {
-    setShowCookieSettings(false);
-    onUpdate(cookieSettings);
-  }, [onUpdate, cookieSettings]);
+    setShowCookieSettings(false)
+    onUpdate(cookieSettings)
+  }, [onUpdate, cookieSettings])
 
   const handleCookieUpdate = useCallback(
     (key: string, value: boolean) => {
-      setCookieSettings({ ...cookieSettings, [key]: value });
+      setCookieSettings({ ...cookieSettings, [key]: value })
     },
     [cookieSettings]
-  );
+  )
 
   return (
     <div className={classNames('CookieBanner', css.root, className)}>
@@ -139,7 +140,7 @@ const CookieBanner: FC<CookieBannerProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default memo(CookieBanner);
+export default memo(CookieBanner)

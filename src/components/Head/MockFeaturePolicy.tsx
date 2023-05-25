@@ -1,4 +1,4 @@
-import NextHead from 'next/head';
+import NextHead from 'next/head'
 
 /**
  * NOTE:
@@ -40,11 +40,11 @@ export default function FeaturePolicy() {
       'none';
     microphone
       'none';
-  `.replace(/(\r\n|\n|\r)/gm, '');
+  `.replace(/(\r\n|\n|\r)/gm, '')
 
   return (
     <NextHead>
       <meta httpEquiv="Feature-Policy" content={content} />;
     </NextHead>
-  );
+  )
 }

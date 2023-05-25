@@ -1,12 +1,12 @@
-import { FC, memo } from 'react';
-import classNames from 'classnames';
+import { FC, memo } from 'react'
+import classNames from 'classnames'
 
-import css from './PageUnsupported.module.scss';
+import css from './PageUnsupported.module.scss'
 
-import { PageProps } from '@/data/types';
+import { PageProps } from '@/data/types'
 
 export interface PageUnsupportedProps extends PageProps {
-  className?: string;
+  className?: string
 }
 
 const PageUnsupported: FC<PageUnsupportedProps> = ({ className }) => {
@@ -14,7 +14,7 @@ const PageUnsupported: FC<PageUnsupportedProps> = ({ className }) => {
     <main className={classNames('PageUnsupported', css.root, className)}>
       <h1 className={css.title}>Your browser is not supported.</h1>
     </main>
-  );
-};
+  )
+}
 
-export default memo(PageUnsupported);
+export default memo(PageUnsupported)

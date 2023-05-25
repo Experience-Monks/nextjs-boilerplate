@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react'
 
-import { useWindowSize } from '@/hooks';
-import layout, { Breakpoints } from '@/utils/layout';
+import layout, { Breakpoints } from '@/utils/layout'
+
+import useWindowSize from '@/hooks/use-window-size'
 
 /**
  * Layout hook
@@ -13,24 +14,24 @@ import layout, { Breakpoints } from '@/utils/layout';
  * const { layout } = useLayout();
  */
 function useLayout(): { layout: Breakpoints } {
-  const { width } = useWindowSize();
-  const [currentLayout, setCurrentLayout] = useState<Breakpoints>(layout.all);
+  const { width } = useWindowSize()
+  const [currentLayout, setCurrentLayout] = useState<Breakpoints>(layout.all)
 
   const handleResize = useCallback(() => {
-    const breakpoints = Object.keys(layout.all) as (keyof Breakpoints)[];
+    const breakpoints = Object.keys(layout.all) as (keyof Breakpoints)[]
 
     if (breakpoints.filter((key) => currentLayout[key] !== layout[key]).length) {
-      setCurrentLayout(layout.all);
+      setCurrentLayout(layout.all)
     }
-  }, [currentLayout, setCurrentLayout]);
+  }, [currentLayout, setCurrentLayout])
 
   useEffect(() => {
-    handleResize();
-  }, [handleResize, width]);
+    handleResize()
+  }, [handleResize, width])
 
   return {
     layout: currentLayout
-  };
+  }
 }
 
-export default useLayout;
+export default useLayout

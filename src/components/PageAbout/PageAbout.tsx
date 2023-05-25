@@ -1,24 +1,24 @@
-import { FC, memo, useEffect, useRef } from 'react';
-import classNames from 'classnames';
-import gsap from 'gsap';
+import { FC, memo, useEffect, useRef } from 'react'
+import classNames from 'classnames'
+import gsap from 'gsap'
 
-import css from './PageAbout.module.scss';
+import css from './PageAbout.module.scss'
 
-import { PageProps } from '@/data/types';
+import { PageProps } from '@/data/types'
 
 export interface PageAboutProps extends PageProps {
-  className?: string;
+  className?: string
 }
 
 const PageAbout: FC<PageAboutProps> = ({ className }) => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    const timeline = gsap.timeline().fadeIn(titleRef.current, 0.2);
+    const timeline = gsap.timeline().fadeIn(titleRef.current, 0.2)
     return () => {
-      timeline.kill();
-    };
-  }, []);
+      timeline.kill()
+    }
+  }, [])
 
   return (
     <main className={classNames('PageAbout', css.root, className)}>
@@ -26,7 +26,7 @@ const PageAbout: FC<PageAboutProps> = ({ className }) => {
         About Page
       </h1>
     </main>
-  );
-};
+  )
+}
 
-export default memo(PageAbout);
+export default memo(PageAbout)

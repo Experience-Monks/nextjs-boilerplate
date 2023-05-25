@@ -2,8 +2,8 @@
 
 .root {
   @include position-100(fixed);
-  display: none;
   @include z-index(rotate);
+  display: none;
   color: $white;
   background-color: $black;
 

@@ -1,11 +1,11 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react'
 
-import PageAbout, { PageAboutProps } from './PageAbout';
+import PageAbout, { PageAboutProps } from './PageAbout'
 
-export default { title: 'components/PageAbout' };
+export default { title: 'components/PageAbout' }
 
-export const Default: Story<PageAboutProps> = (args) => <PageAbout {...args} />;
+export const Default: StoryFn<PageAboutProps> = (args) => <PageAbout {...args} />
 
-Default.args = {};
+Default.args = {}
 
-Default.argTypes = {};
+Default.argTypes = {}

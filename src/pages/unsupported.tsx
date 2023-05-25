@@ -1,6 +1,6 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps } from 'next'
 
-import PageUnsupported, { PageUnsupportedProps } from '@/components/PageUnsupported/PageUnsupported';
+import PageUnsupported, { PageUnsupportedProps } from '@/components/PageUnsupported/PageUnsupported'
 
 export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => {
   return {
@@ -8,7 +8,7 @@ export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => 
       head: { title: 'Not Supported' },
       unsupported: true
     }
-  };
-};
+  }
+}
 
-export default PageUnsupported;
+export default PageUnsupported

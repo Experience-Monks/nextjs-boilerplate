@@ -1,31 +1,31 @@
-import { FC, memo, useEffect, useRef } from 'react';
-import classNames from 'classnames';
-import gsap from 'gsap';
+import { FC, memo, useEffect, useRef } from 'react'
+import classNames from 'classnames'
+import gsap from 'gsap'
 
-import css from './PageHome.module.scss';
+import css from './PageHome.module.scss'
 
-import { PageProps } from '@/data/types';
+import { PageProps } from '@/data/types'
 
 export interface PageHomeProps extends PageProps {
-  className?: string;
+  className?: string
 }
 
 const PageHome: FC<PageHomeProps> = ({ className }) => {
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLHeadingElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLHeadingElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
     const timeline = gsap
       .timeline()
       .fadeIn(titleRef.current, 0.2)
       .fadeIn(descriptionRef.current, 0.4)
-      .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.6);
+      .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.6)
 
     return () => {
-      timeline?.kill();
-    };
-  }, []);
+      timeline?.kill()
+    }
+  }, [])
 
   return (
     <main className={classNames('PageHome', css.root, className)}>
@@ -57,7 +57,7 @@ const PageHome: FC<PageHomeProps> = ({ className }) => {
         </ul>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default memo(PageHome);
+export default memo(PageHome)

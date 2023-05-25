@@ -51,7 +51,7 @@ jobs:
     steps:
       - checkout
       - restore-project-dependencies-cache
-      - run: npm run linters-ci
+      - run: npm run lint-ci
 
   secrets-key-detection:
     <<: *node-container
@@ -85,7 +85,7 @@ jobs:
     parameters:
       git_lfs:
         description: 'Enable Git LFS'
-        default: false
+        default: true
         type: boolean
 
     steps:
@@ -162,7 +162,7 @@ jobs:
           env_suffix: << parameters.env_suffix >>
       - restore-project-dependencies-cache
       - run: npm run build:storybook
-      - run: aws s3 sync ./storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
+      - run: aws s3 sync ./out-storybook s3://$S3_ORIGIN<< parameters.env_suffix >>/storybook
 
   deployment:
     <<: *node-container

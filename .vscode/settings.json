@@ -1,0 +1,6 @@
+{
+  "sonarlint.connectedMode.project": {
+    "connectionId": "jam3",
+    "projectKey": "Jam3_nextjs-boilerplate"
+  }
+}

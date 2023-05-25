@@ -1,31 +1,31 @@
-type ScrollListener = (e?: Event) => void;
+type ScrollListener = (e?: Event) => void
 
 class Service {
-  listeners: ScrollListener[] = [];
+  listeners: ScrollListener[] = []
 
   onScroll = (e: Event) => {
-    this.listeners.forEach((listener) => listener(e));
-  };
+    this.listeners.forEach((listener) => listener(e))
+  }
 
   listen = (listener: ScrollListener) => {
     if (!this.listeners.length) {
-      window.addEventListener('scroll', this.onScroll, { passive: false });
+      window.addEventListener('scroll', this.onScroll, { passive: false })
     }
 
     if (!this.listeners.includes(listener)) {
-      this.listeners.push(listener);
+      this.listeners.push(listener)
     }
-  };
+  }
 
   dismiss = (listener: ScrollListener) => {
-    this.listeners = this.listeners.filter((l) => l !== listener);
+    this.listeners = this.listeners.filter((l) => l !== listener)
 
     if (!this.listeners.length) {
-      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('scroll', this.onScroll)
     }
-  };
+  }
 }
 
-const ScrollService = new Service();
+const ScrollService = new Service()
 
-export default ScrollService;
+export default ScrollService

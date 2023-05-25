@@ -1,14 +1,13 @@
-import { FC } from 'react';
-import Link from 'next/link';
-import classNames from 'classnames';
+import { FC } from 'react'
+import Link from 'next/link'
+import classNames from 'classnames'
 
-import css from './Nav.module.scss';
+import css from './Nav.module.scss'
 
-import routes from '@/data/routes';
+import routes from '@/data/routes'
 
-import BaseImage from '@/components/BaseImage/BaseImage';
-
-import SvgThreeLogo from '@/components/svgs/three-logo.svg';
+import BaseImage from '@/components/BaseImage/BaseImage'
+import SvgThreeLogo from '@/components/svgs/three-logo.svg'
 
 const LINKS = [
   { href: 'https://jam3.com', label: 'Jam3', data: require('@/assets/images/three-logo.jpeg').default },
@@ -16,10 +15,10 @@ const LINKS = [
 ].map((link) => ({
   ...link,
   key: `nav-link-${link.href}-${link.label}`
-}));
+}))
 
 export interface NavProps {
-  className?: string;
+  className?: string
 }
 
 const Nav: FC<NavProps> = ({ className }) => {
@@ -32,8 +31,8 @@ const Nav: FC<NavProps> = ({ className }) => {
           </a>
           {Object.values(routes).map(({ path, title }) => (
             <li key={path}>
-              <Link href={path}>
-                <a aria-label="Home">{path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}</a>
+              <Link href={path} aria-label="Home">
+                {path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}
               </Link>
             </li>
           ))}
@@ -51,7 +50,7 @@ const Nav: FC<NavProps> = ({ className }) => {
 
       <section aria-hidden="true" id="start-of-content"></section>
     </nav>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav
