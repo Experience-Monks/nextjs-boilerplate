@@ -1,0 +1,19 @@
+import { GetStaticProps } from 'next'
+
+import content from '@/data/content.json'
+
+import generateHeadProps from '@/utils/generate-head-props'
+
+import Page{{name_pc}}, { Page{{name_pc}}Props } from '@/components/Page{{name_pc}}/Page{{name_pc}}'
+
+export const getStaticProps: GetStaticProps<Page{{name_pc}}Props> = async () => {
+  return {
+    props: {
+      head: generateHeadProps(content.page{{name_pc}}.head.title, content.page{{name_pc}}.head.description),
+      common: content.common,
+      content: content.page{{name_pc}}
+    }
+  }
+}
+
+export default Page{{name_pc}}

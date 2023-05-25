@@ -1,18 +1,79 @@
-import { FC, memo } from 'react';
-import classNames from 'classnames';
+{{#if forwardRef}}
+{{#if imperativeHandle}}
+import { ForwardedRef, forwardRef, memo, useImperativeHandle } from 'react'
+{{else}}
+import { forwardRef, memo } from 'react'
+{{/if}}
+{{else}}
+{{#if imperativeHandle}}
+import { FC, ForwardedRef, memo, useImperativeHandle } from 'react'
+{{else}}
+import { FC, memo } from 'react'
+{{/if}}
+{{/if}}
+import classNames from 'classnames'
 
-import css from './{{name_pc}}.module.scss';
+import css from './{{name_pc}}.module.scss'
 
-export type {{name_pc}}Props = {
-  className?: string;
-};
+{{#if imperativeHandle}}
+export type {{name_pc}}Handle = {
+  someMethod: () => void
+}
 
-const {{name_pc}}: FC<{{name_pc}}Props> = ({ className }) => {
+{{/if}}
+export interface {{name_pc}}Props {
+  className?: string
+{{#if imperativeHandle}}
+  handleRef?: ForwardedRef<{{name_pc}}Handle>
+{{/if}}
+}
+
+export interface ViewProps extends {{name_pc}}Props {}
+
+// View (pure and testable component, receives props from the controller)
+{{#if forwardRef}}
+export const View = forwardRef<HTMLDivElement, ViewProps>(({ className{{#if imperativeHandle}}, handleRef{{/if}} }, ref) => {
+{{#if imperativeHandle}}
+  useImperativeHandle(handleRef, () => ({
+    someMethod: () => {}
+  }))
+
+{{/if}}
+  return (
+    <div className={classNames('{{name_pc}}', css.root, className)} ref={ref}>
+      <p>&lt;{{name_pc}} /&gt;</p>
+    </div>
+  )
+})
+{{else}}
+export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleRef{{/if}} }) => {
+{{#if imperativeHandle}}
+  useImperativeHandle(handleRef, () => ({
+    someMethod: () => {}
+  }))
+
+{{/if}}
   return (
     <div className={classNames('{{name_pc}}', css.root, className)}>
-      <p>{{name_pc}} component</p>
+      <p>&lt;{{name_pc}} /&gt;</p>
     </div>
-  );
-};
+  )
+}
+{{/if}}
 
-export default memo({{name_pc}});
+View.displayName = '{{name_pc}}-View'
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+{{#if forwardRef}}
+const {{name_pc}} = forwardRef<HTMLDivElement, {{name_pc}}Props>((props, ref) => {
+  return <View {...props} ref={ref} />
+})
+
+{{name_pc}}.displayName = '{{name_pc}}'
+{{else}}
+const {{name_pc}}: FC<{{name_pc}}Props> = (props) => {
+  return <View {...props} />
+}
+{{/if}}
+
+export default memo({{name_pc}})
