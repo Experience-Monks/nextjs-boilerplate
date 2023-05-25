@@ -1,6 +1,10 @@
 @import 'shared';
 
 .root {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+
   .hero {
     width: 100%;
     color: #333;

@@ -9,7 +9,7 @@ module.exports = {
   // ========================
   // sitemap.xml
   // ========================
-  siteUrl: config.websiteUrl.prod || 'https://something-is-wrong-if-you-see-this.com',
+  siteUrl: config.websiteUrl || 'https://something-is-wrong-if-you-see-this.com',
   changefreq: 'daily', // always hourly daily weekly monthly yearly never
   priority: 0.7, // between 0 and 1
   sitemapSize: 5000,

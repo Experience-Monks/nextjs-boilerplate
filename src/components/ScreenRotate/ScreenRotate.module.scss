@@ -3,11 +3,12 @@
 .root {
   @include position-100(fixed);
   @include z-index(rotate);
-  display: none;
+  @include flex-center;
   color: $white;
   background-color: $black;
 
-  &.enabled {
-    @include flex-center;
+  .title {
+    @include typography-h1;
+    margin: 0 0 px(20);
   }
 }

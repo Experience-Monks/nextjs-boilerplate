@@ -1,0 +1,82 @@
+{
+  "head": {
+    "title": "{title} | Next.js boilerplate",
+    "siteName": "Next.js boilerplate",
+    "description": "{description}"
+  },
+  "common": {
+    "nav": {
+      "routes": [
+        { "path": "/", "title": "Home" },
+        { "path": "/about/", "title": "About" }
+      ],
+      "links": [
+        { "href": "https://jam3.com", "label": "Jam3", "image": "@/assets/images/three-logo.jpeg" },
+        { "href": "https://github.com/jam3", "label": "GitHub", "image": "@/assets/images/github-icon-64b.png" }
+      ]
+    },
+    "footer": {
+      "routes": [
+        { "path": "/", "title": "Home" },
+        { "path": "/about/", "title": "About" }
+      ]
+    },
+    "screenNoScript": {
+      "title": "Missing JavaScript",
+      "description": "This website requires JavaScript in order to work properly.\nPlease re-enable JavaScript in your browser settings."
+    },
+    "screenRotate": {
+      "title": "Please rotate your screen",
+      "description": "Rotate your screen to enjoy the full experience."
+    }
+  },
+  "pageHome": {
+    "head": {
+      "title": "",
+      "description": "Some landing page description"
+    },
+    "body": {
+      "title": "Welcome to Jam3!",
+      "description": "To get started, edit <code>pages/index.js</code> and save to reload.",
+      "cards": [
+        {
+          "title": "Visit out GitHub",
+          "description": "See our contributions to Open Source community",
+          "href": "https://github.com/Jam3?q=&type=source"
+        },
+        {
+          "title": "Jam3.dev",
+          "description": "Learn more about Jam3.dev",
+          "href": "https://jam3.dev"
+        }
+      ]
+    }
+  },
+  "pageAbout": {
+    "head": {
+      "title": "About",
+      "description": "Some about page description"
+    },
+    "body": {
+      "title": "About Page"
+    }
+  },
+  "pageNotFound": {
+    "head": {
+      "title": "404",
+      "description": "Some 404 page description"
+    },
+    "body": {
+      "title": "404 Page"
+    }
+  },
+  "pageUnsupported": {
+    "head": {
+      "title": "Unsupported",
+      "description": "Some unsupported page description"
+    },
+    "body": {
+      "title": "Your browser is not supported."
+    }
+  }
+}

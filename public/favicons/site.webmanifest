@@ -3,17 +3,17 @@
   "short_name": "React App",
   "icons": [
     {
-      "src": "/common/favicons/android-chrome-192x192.png",
+      "src": "/favicons/favicon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/common/favicons/android-chrome-384x384.png",
+      "src": "/favicons/favicon-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "/common/favicons/android-chrome-512x512.png",
+      "src": "/favicons/favicon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

@@ -31,31 +31,3 @@ export function cleanUrl(path = '', cleanParams = false): string {
 
   return path.replace(/\/$/, '').replace(/^\//, '') || ''
 }
-
-/**
- * check whether user browser supports webp format or not
- *
- * @export
- * @param {keyof typeof testImages} feature
- * @param {(isSupported: boolean) => void} callback
- */
-const testImages = {
-  lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-  lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
-  alpha:
-    'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
-  animation:
-    'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
-}
-
-export function checkWebpSupport(feature: keyof typeof testImages, callback: (isSupported: boolean) => void): void {
-  const img = new Image()
-  img.onload = function () {
-    const result = img.width > 0 && img.height > 0
-    callback(result)
-  }
-  img.onerror = function () {
-    callback(false)
-  }
-  img.src = 'data:image/webp;base64,' + testImages[feature]
-}

@@ -11,6 +11,7 @@
   box-shadow: $element-shadow;
   background-color: $white;
   height: $navbar-height-mobile;
+  opacity: 0;
 
   @include media-desktop-sm {
     height: $navbar-height-desktop;

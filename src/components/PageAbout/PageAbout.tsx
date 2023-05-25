@@ -1,32 +1,46 @@
-import { FC, memo, useEffect, useRef } from 'react'
+import { FC, memo, useEffect, useImperativeHandle, useRef } from 'react'
 import classNames from 'classnames'
 import gsap from 'gsap'
 
 import css from './PageAbout.module.scss'
 
-import { PageProps } from '@/data/types'
+import { Content, PageHandle, PageProps } from '@/data/types'
+
+import copy from '@/utils/copy'
 
 export interface PageAboutProps extends PageProps {
-  className?: string
+  content: Content['pageAbout']
 }
+export interface ViewProps extends PageAboutProps {}
 
-const PageAbout: FC<PageAboutProps> = ({ className }) => {
-  const titleRef = useRef<HTMLHeadingElement>(null)
+// View (pure and testable component, receives props from the controller)
+export const View: FC<ViewProps> = ({ content, onReady }) => {
+  const rootRef = useRef<HTMLElement>(null)
+  const handleRef = useRef<PageHandle>(null)
 
   useEffect(() => {
-    const timeline = gsap.timeline().fadeIn(titleRef.current, 0.2)
-    return () => {
-      timeline.kill()
-    }
-  }, [])
+    onReady?.(handleRef)
+  }, [onReady])
+
+  useImperativeHandle(handleRef, () => ({
+    animateIn: () => gsap.timeline().to(rootRef.current, { opacity: 1 }),
+    animateOut: () => gsap.timeline().to(rootRef.current, { opacity: 0 })
+  }))
 
   return (
-    <main className={classNames('PageAbout', css.root, className)}>
-      <h1 className={css.title} ref={titleRef}>
-        About Page
-      </h1>
+    <main className={classNames('PageAbout', css.root)} ref={rootRef}>
+      <h1 className={css.title} {...copy.html(content.body.title)} />
     </main>
   )
 }
+
+View.displayName = 'PageAbout-View'
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+const PageAbout: FC<PageAboutProps> = (props) => {
+  return <View {...props} />
+}
+
+PageAbout.displayName = 'PageAbout'
 
 export default memo(PageAbout)

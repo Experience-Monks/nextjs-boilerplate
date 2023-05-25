@@ -12,14 +12,11 @@ const { actions, reducer } = createSlice({
   reducers: {
     setPrevRoute(state, action: PayloadAction<string>) {
       state.prevRoute = action.payload
-    },
-    setIsWebpSupported(state, action: PayloadAction<boolean>) {
-      state.isWebpSupported = action.payload
     }
   }
 })
 
-export const { setPrevRoute, setIsWebpSupported } = actions
+export const { setPrevRoute } = actions
 
 export const store = configureStore({ reducer, devTools: isDevEnv() })
 

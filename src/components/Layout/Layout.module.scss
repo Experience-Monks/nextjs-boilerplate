@@ -1,0 +1,12 @@
+@import 'shared';
+
+.root {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}

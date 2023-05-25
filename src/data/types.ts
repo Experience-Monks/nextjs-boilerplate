@@ -1,12 +1,25 @@
+import { RefObject } from 'react'
+
+import content from '@/data/content.json'
+
+export type Content = typeof content
+export type CommonContent = typeof content.common
+
 export type HeadProps = {
   title: string
   image?: string
-  keywords?: string[]
   siteName?: string
   description?: string
 }
 
 export type PageProps = {
   head: HeadProps
-  unsupported?: boolean
+  common: CommonContent
+  noLayout?: boolean
+  onReady?: (handle: RefObject<PageHandle>) => void
+}
+
+export type PageHandle = {
+  animateIn: () => gsap.core.TimelineChild
+  animateOut: () => gsap.core.TimelineChild
 }
