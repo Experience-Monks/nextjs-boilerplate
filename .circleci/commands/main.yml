@@ -91,14 +91,14 @@ commands:
           name: Run Scripts
           command: |
             npm run scripts
-            cat src/.generated/* > .generated-id
+            cat .generated/* > .generated-id
 
   save-generated-data-cache:
     steps:
       - save_cache:
           key: v2-generated-{{ checksum ".generated-id" }}
           paths:
-            - src/.generated
+            - .generated
 
   restore-generated-data-cache:
     steps:
