@@ -39,7 +39,6 @@ jobs:
     <<: *node-container
     resource_class: small
     environment:
-      NODE_ENV: production
       VERSION_NUMBER: << pipeline.number >>
       GIT_LFS_SKIP_SMUDGE: 1
     steps:
