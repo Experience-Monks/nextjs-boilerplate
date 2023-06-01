@@ -5,7 +5,7 @@ const assetsDir = path.join(__dirname, '../src/assets/')
 
 let output = 'export default {\n'
 
-async function readRecursively(directory, base) {
+function readRecursively(directory, base) {
   if (fs.existsSync(directory)) {
     const dirents = fs.readdirSync(directory, { withFileTypes: true })
 

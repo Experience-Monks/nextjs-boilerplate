@@ -6,7 +6,7 @@ const publicPath = path.join(__dirname, '../public')
 
 const output = {}
 
-async function readRecursively(directory) {
+function readRecursively(directory) {
   const dirents = fs.readdirSync(directory, { withFileTypes: true })
 
   for (const dirent of dirents) {
