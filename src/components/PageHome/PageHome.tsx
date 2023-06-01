@@ -44,8 +44,8 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
         <h1 className={css.title} {...copy.html(content.body.title)} ref={titleRef} />
         <h2 className={css.description} {...copy.html(content.body.description)} ref={descriptionRef} />
         <ul className={css.row} ref={listRef}>
-          {content.body.cards.map(({ title, description, href }, i) => (
-            <li key={i}>
+          {content.body.cards.map(({ title, description, href }) => (
+            <li key={title}>
               <a href={href} className={css.card} target="_blank" rel="noopener noreferrer">
                 <h3 {...copy.html(title)} />
                 <p {...copy.html(description)} />

@@ -38,8 +38,8 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           <a tabIndex={0} aria-label="Skip to content" className={css.skipToContent} href="#start-of-content">
             Skip to content
           </a>
-          {content.routes.map(({ path, title }, i) => (
-            <li key={i}>
+          {content.routes.map(({ path, title }) => (
+            <li key={title}>
               <Link href={path} aria-label="Home">
                 {path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}
               </Link>
@@ -47,8 +47,8 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           ))}
         </ul>
         <ul className={css.links}>
-          {content.links.map(({ href, label, image }, i) => (
-            <li key={i}>
+          {content.links.map(({ href, label, image }) => (
+            <li key={label}>
               <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
                 <BaseImage src={image} alt={label} />
               </a>

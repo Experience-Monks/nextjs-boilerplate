@@ -30,7 +30,7 @@ const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
       {icons.map((icon, i) => {
         return (
           <div
-            key={i}
+            key={icon.name}
             style={{
               display: 'inline-flex',
               alignItems: 'center',

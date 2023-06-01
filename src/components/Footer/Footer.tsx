@@ -18,8 +18,8 @@ export const View: FC<ViewProps> = ({ className, content }) => {
   return (
     <div className={classNames('Footer', css.root, className)}>
       <ul>
-        {content.routes.map(({ path, title }, i) => (
-          <li key={i}>
+        {content.routes.map(({ path, title }) => (
+          <li key={title}>
             <Link href={path}>{title}</Link>
           </li>
         ))}
