@@ -7,6 +7,7 @@ $cookie-banner-overlay-bg-color: color.adjust($cookie-banner-bg-color, $lightnes
 $cookie-banner-padding: px(20);
 
 .root {
+  @include z-index(notification);
   display: flex;
   flex-flow: column;
   justify-content: space-between;

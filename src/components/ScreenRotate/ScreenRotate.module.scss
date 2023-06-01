@@ -2,7 +2,7 @@
 
 .root {
   @include position-100(fixed);
-  @include z-index(rotate);
+  @include z-index(nonfunctional);
   @include flex-center;
   color: $white;
   background-color: $black;

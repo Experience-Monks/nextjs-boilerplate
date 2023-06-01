@@ -1,7 +1,7 @@
 @import 'shared';
 
 .root {
-  @include z-index(main-nav);
+  @include z-index(nav);
   @include flex-center-vert;
   position: fixed;
   top: 0;

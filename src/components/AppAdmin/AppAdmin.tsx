@@ -13,16 +13,16 @@ export interface AppAdminProps {
   className?: string
 }
 
-export interface ViewProps extends AppAdminProps {}
+export interface ViewProps extends AppAdminProps {
+  env: string
+  date: string
+  commit: string
+  version: string
+}
 
 // View (pure and testable component, receives props from the controller)
-export const View: FC<ViewProps> = ({ className }) => {
+export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
-
-  const env = useMemo(() => getRuntimeEnv(), [])
-  const date = useMemo(() => process.env.NEXT_PUBLIC_COMMIT_DATE || '', [])
-  const commit = useMemo(() => process.env.NEXT_PUBLIC_COMMIT_ID || '', [])
-  const version = useMemo(() => process.env.NEXT_PUBLIC_VERSION_NUMBER || '', [])
 
   const [open, setOpen] = useState(!!process.env.STORYBOOK || env !== 'local')
   const [render, setRender] = useState(false)
@@ -124,7 +124,17 @@ View.displayName = 'AppAdmin-View'
 
 // Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
 const AppAdmin: FC<AppAdminProps> = (props) => {
-  return <View {...props} />
+  const env = useMemo(() => getRuntimeEnv(), [])
+
+  return (
+    <View
+      {...props}
+      env={env}
+      date={process.env.NEXT_PUBLIC_COMMIT_DATE || ''}
+      commit={process.env.NEXT_PUBLIC_COMMIT_ID || ''}
+      version={process.env.NEXT_PUBLIC_VERSION_NUMBER || ''}
+    />
+  )
 }
 
 export default memo(AppAdmin)

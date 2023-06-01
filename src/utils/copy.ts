@@ -28,7 +28,11 @@ class Copy {
       .replace(/< \/([^>]*>)/gi, '</$1') // Example: < /li> -> </li>
       .replace(/\n|<br>|<br\/>/g, removeLineBreaks ? ' ' : '{br}')
     const formatted = format(s, v) || s
-    return this.sanitize(removeHTML ? formatted.replace(/<[^>]*>/g, '') : formatted)
+    return this.sanitize(
+      removeHTML
+        ? formatted.replace(/<[^<>]{1,255}>/g, '') // note: increase range if needed
+        : formatted
+    )
   }
 
   plain(string: string | undefined, values = {}) {
@@ -49,14 +53,14 @@ class Copy {
     let html = this.parse(string, values, removeLineBreaks) || ''
 
     if (killWidows) {
-      const texts = html.split(/<[^>]*>/g)
+      const texts = html.split(/<[^<>]{1,255}>/g) // note: increase range if needed
       texts.forEach((text) => {
         const n = 10 // minimum character count for the final word
         const line = text.replace(/\s/g, ' ')
         const chunk = line.substr(-n)
         const fixed =
           line.substr(0, line.length - chunk.length) +
-          chunk.replace(/(\s+$)|\s/g, function (_, $1) {
+          chunk.replace(/(\s{1,5}$)|\s/g, function (_, $1) {
             // keep the last space of the chunk, replace the others
             return $1 ? $1 : '&nbsp;'
           })

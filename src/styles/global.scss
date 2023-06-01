@@ -36,7 +36,6 @@ body {
   position: relative;
   min-height: 100vh;
   background-color: $page-bg-color;
-  z-index: 0;
 }
 
 *,
@@ -50,7 +49,6 @@ body {
 }
 
 main {
-  @include z-index(pages);
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
 
