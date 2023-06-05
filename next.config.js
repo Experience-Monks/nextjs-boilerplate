@@ -3,6 +3,8 @@
 const path = require('path')
 
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   sassOptions: { includePaths: [path.join(__dirname, 'src/styles')] },
   webpack(config) {
     config.module.rules.push({ test: /\.svg$/i, use: [{ loader: '@svgr/webpack' }] })

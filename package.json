@@ -7,7 +7,7 @@
     "dev": "npm run scripts && run-p dev:*",
     "dev:next": "node scripts/dev-server",
     "dev:storybook": "storybook dev --no-open --quiet -p 9001",
-    "build:next": "next build && next export",
+    "build:next": "next build",
     "build:postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
     "build:sitemap": "next-sitemap",
     "build:storybook": "storybook build -c .storybook -o ./out-storybook",
