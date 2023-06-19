@@ -14,6 +14,8 @@ import { GtmScript } from '@/utils/analytics'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
+import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
+
 import Footer from '@/components/Footer/Footer'
 import Head from '@/components/Head/Head'
 import Nav, { NavHandle } from '@/components/Nav/Nav'
@@ -104,6 +106,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       )}
 
       <ScreenRotate content={pageProps.common.screenRotate} />
+      <ScreenNoScript content={pageProps.common.screenNoScript} />
 
       <AppAdmin />
     </div>
