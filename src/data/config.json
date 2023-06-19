@@ -11,6 +11,7 @@
     "test": []
   },
   "analytics": {
-    "gtmIds": { "prod": "GTM-0000000", "stage": "GTM-0000000", "dev": "GTM-0000000", "local": "" }
+    "gtmIds": { "prod": "GTM-0000000", "stage": "GTM-0000000", "dev": "GTM-0000000", "local": "" },
+    "gtmParams": { "prod": "", "stage": "", "dev": "", "local": "" }
   }
 }

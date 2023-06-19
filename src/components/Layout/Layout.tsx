@@ -10,7 +10,7 @@ import css from './Layout.module.scss'
 
 import { PageHandle, PageProps } from '@/data/types'
 
-import { GtmScript } from '@/utils/analytics'
+import AnalyticsService from '@/services/analytics'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
@@ -84,10 +84,13 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     }
   }, [Component, pageProps])
 
+  // start analytics
+  useEffect(() => {
+    if (cookieConsent?.statistics) AnalyticsService.start()
+  }, [cookieConsent])
+
   return (
     <div className={classNames('Layout', css.root)}>
-      <GtmScript consent={cookieConsent?.statistics} />
-
       <Head {...pageProps.head} />
 
       <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
