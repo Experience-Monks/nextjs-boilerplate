@@ -211,7 +211,7 @@ Put here items that need to be publicly accessible and not hashed, like favicons
 If you need to reference them in your code, just use a simple url, like:
 
 ```html
-<link rel="shortcut icon" href="/favicons/favicon.ico" />
+<link rel="shortcut icon" href="/common/favicons/favicon.ico" />
 ```
 
 > **WARNING**: Never import / require files from this folder. This would result in duplicated files in the output directory.

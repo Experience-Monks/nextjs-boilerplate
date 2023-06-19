@@ -26,19 +26,19 @@ const Head: FC<HeadProps> = ({ title, description, siteName, image }) => {
       <meta name="description" content={description} />
 
       {/* Favicons - generate favicons in https://realfavicongenerator.net */}
-      <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="144x144" href="/favicons/favicon-144x144.png" />
-      <link rel="icon" type="image/png" sizes="150x150" href="/favicons/favicon-150x150.png" />
-      <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png" />
-      <link rel="icon" type="image/png" sizes="384x384" href="/favicons/favicon-384x384.png" />
-      <link rel="icon" type="image/png" sizes="512x512" href="/favicons/favicon-512x512.png" />
-      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-      <link rel="shortcut icon" href="/favicons/favicon.ico" />
-      <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#000" />
-      <link rel="manifest" href="/favicons/site.webmanifest" crossOrigin="use-credentials" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/common/favicons/favicon-16x16.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/common/favicons/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="144x144" href="/common/favicons/favicon-144x144.png" />
+      <link rel="icon" type="image/png" sizes="150x150" href="/common/favicons/favicon-150x150.png" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/common/favicons/favicon-192x192.png" />
+      <link rel="icon" type="image/png" sizes="384x384" href="/common/favicons/favicon-384x384.png" />
+      <link rel="icon" type="image/png" sizes="512x512" href="/common/favicons/favicon-512x512.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/common/favicons/apple-touch-icon.png" />
+      <link rel="shortcut icon" href="/common/favicons/favicon.ico" />
+      <link rel="mask-icon" href="/common/favicons/safari-pinned-tab.svg" color="#000" />
+      <link rel="manifest" href="/common/favicons/site.webmanifest" crossOrigin="use-credentials" />
       <meta name="theme-color" content="#1c1c1c" />
-      <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
+      <meta name="msapplication-config" content="/common/favicons/browserconfig.xml" />
 
       {/* Share meta tags */}
       <meta property="og:url" content={fullPath} />

@@ -6,6 +6,6 @@ addons.setConfig({
     base: 'dark',
     brandTitle: 'Jam3 NextJS Boilerplate',
     brandUrl: 'https://jam3.com',
-    brandImage: '/favicons/favicon-32x32.png'
+    brandImage: '/common/favicons/favicon-32x32.png'
   })
 })

@@ -6,7 +6,7 @@ import copy from '@/utils/copy'
 const generateHeadProps = (
   title = '',
   description = '',
-  image = `/assets/images/share-image.jpg?v${process.env.NEXT_PUBLIC_VERSION_NUMBER}`
+  image = `/common/assets/images/share-image.jpg?v${process.env.NEXT_PUBLIC_VERSION_NUMBER}`
 ): HeadProps => {
   const parsedTitle = copy
     .parse(

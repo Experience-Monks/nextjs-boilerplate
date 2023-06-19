@@ -28,8 +28,9 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  const [currentPage, setCurrentPage] = useState<ReactNode>(<Component {...pageProps} />)
+  const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
+  const isFirstPageRef = useRef(true)
   const pageHandleRef = useRef<PageHandle | null>(null)
   const navHandleRef = useRef<NavHandle | null>(null)
 
@@ -64,7 +65,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
       setCurrentPage(
         <Component
-          key={nanoid()}
+          key={isFirstPageRef.current ? 'first-page' : nanoid()}
           {...pageProps}
           onReady={(pageHandle?: RefObject<PageHandle>) => {
             pageHandleRef.current = pageHandle?.current || null
@@ -73,6 +74,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
           }}
         />
       )
+      isFirstPageRef.current = false
     })
 
     return () => {
