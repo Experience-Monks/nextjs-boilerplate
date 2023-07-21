@@ -14,11 +14,6 @@ html {
   text-size-adjust: none;
   font-size: 10px;
   text-align: center;
-
-  @if $supports-no-js != true {
-    visibility: hidden;
-    opacity: 0;
-  }
 }
 
 body {
@@ -28,14 +23,6 @@ body {
   padding: 0;
   font-size: px(16);
   word-break: keep-all;
-}
-
-#root {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-height: 100vh;
-  background-color: $page-bg-color;
 }
 
 *,

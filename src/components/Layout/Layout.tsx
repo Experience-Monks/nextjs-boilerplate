@@ -35,6 +35,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
+  const rootRef = useRef<HTMLDivElement>(null)
   const navHandleRef = useRef<NavHandle | null>(null)
   const pageHandleRef = useRef<PageHandle | null>(null)
   const isFirstPageRef = useRef(true)
@@ -61,6 +62,12 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       router.events.off('routeChangeStart', handleRouteChange)
     }
   }, [router.events, handleRouteChange])
+
+  // make sure the page us un-hidden once application kicks in
+  useEffect(() => {
+    gsap.set(document.documentElement, { autoAlpha: 1 })
+    gsap.set(rootRef.current, { autoAlpha: 1 })
+  }, [])
 
   // handle scroll history
   useEffect(() => {
@@ -128,30 +135,28 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   }, [cookieConsent])
 
   return (
-    <div className={classNames('Layout', css.root)}>
+    <>
       <Head {...pageProps.head} />
 
-      <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
-
-      <div className={css.content}>{currentPage}</div>
-
-      <Footer content={pageProps.common.footer} />
-
-      {!validCookie && (
-        <CookieBanner
-          cookieConsent={cookieConsent}
-          onAccept={acceptAllCookies}
-          onUpdate={updateCookies}
-          onReject={rejectAllCookies}
-        />
-      )}
-
-      <ScreenRotate content={pageProps.common.screenRotate} />
-
-      {!config.supportsNoJs && <ScreenNoScript content={pageProps.common.screenNoScript} />}
+      <div className={classNames('Layout', css.root)} ref={rootRef}>
+        <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
+        <div className={css.content}>{currentPage}</div>
+        <Footer content={pageProps.common.footer} />
+        {!validCookie && (
+          <CookieBanner
+            cookieConsent={cookieConsent}
+            onAccept={acceptAllCookies}
+            onUpdate={updateCookies}
+            onReject={rejectAllCookies}
+          />
+        )}
+      </div>
 
       <AppAdmin />
-    </div>
+
+      <ScreenRotate content={pageProps.common.screenRotate} />
+      {!config.supportsNoJs && <ScreenNoScript content={pageProps.common.screenNoScript} />}
+    </>
   )
 }
 
