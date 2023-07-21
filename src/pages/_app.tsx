@@ -24,9 +24,6 @@ const App: FC<AppProps<PageProps>> = (props) => {
     // Body class names
     setBodyClasses()
 
-    // Disable automatic scroll restoration
-    window.history.scrollRestoration = 'manual'
-
     // Fix https://github.com/vercel/next.js/issues/17464
     document.querySelectorAll('head > link[rel="stylesheet"]').forEach((node) => {
       node.removeAttribute('data-n-g')

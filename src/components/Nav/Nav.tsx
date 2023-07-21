@@ -40,7 +40,7 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           </a>
           {content.routes.map(({ path, title }) => (
             <li key={title}>
-              <Link href={path} aria-label="Home">
+              <Link href={path} aria-label="Home" scroll={false}>
                 {path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}
               </Link>
             </li>

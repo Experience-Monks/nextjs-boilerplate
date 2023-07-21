@@ -13,6 +13,8 @@ import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
 
+import { getScrollTop } from '@/utils/basic-functions'
+
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
 import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
@@ -33,9 +35,13 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
-  const isFirstPageRef = useRef(true)
-  const pageHandleRef = useRef<PageHandle | null>(null)
   const navHandleRef = useRef<NavHandle | null>(null)
+  const pageHandleRef = useRef<PageHandle | null>(null)
+  const isFirstPageRef = useRef(true)
+  const isGoingBackRef = useRef(false)
+  const scrollHistoryRef = useRef<{ pathname: string; value: number }[]>([])
+  const currentPathnameRef = useRef(router.asPath.split('#')[0].split('?')[0])
+  const scrollRestorationTimeoutRef = useRef<NodeJS.Timeout>()
 
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner()
 
@@ -56,6 +62,25 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     }
   }, [router.events, handleRouteChange])
 
+  // handle scroll history
+  useEffect(() => {
+    history.scrollRestoration = 'manual'
+    currentPathnameRef.current = router.asPath.split('#')[0].split('?')[0]
+    const onBeforeHistoryChange = () => {
+      if (!isGoingBackRef.current) {
+        scrollHistoryRef.current.push({ pathname: currentPathnameRef.current, value: getScrollTop() })
+      }
+    }
+    router.beforePopState(() => {
+      isGoingBackRef.current = true
+      return true
+    })
+    router.events.on('beforeHistoryChange', onBeforeHistoryChange)
+    return () => {
+      router.events.off('beforeHistoryChange', onBeforeHistoryChange)
+    }
+  }, [router])
+
   // handle page transitions
   useEffect(() => {
     const transitionTimeline = gsap.timeline()
@@ -72,6 +97,18 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
           {...pageProps}
           onReady={(pageHandle?: RefObject<PageHandle>) => {
             pageHandleRef.current = pageHandle?.current || null
+            // restore scroll
+            if (isGoingBackRef.current) {
+              const lastScrollHistory = scrollHistoryRef.current.pop()
+              if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
+                gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
+              }
+            }
+            clearTimeout(scrollRestorationTimeoutRef.current)
+            scrollRestorationTimeoutRef.current = setTimeout(() => {
+              isGoingBackRef.current = false
+            }, 400)
+            // animate in
             pageHandleRef.current?.animateIn?.()
             navHandleRef.current?.animateIn?.()
           }}

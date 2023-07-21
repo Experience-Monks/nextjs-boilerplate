@@ -20,7 +20,9 @@ export const View: FC<ViewProps> = ({ className, content }) => {
       <ul>
         {content.routes.map(({ path, title }) => (
           <li key={title}>
-            <Link href={path}>{title}</Link>
+            <Link href={path} scroll={false}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
