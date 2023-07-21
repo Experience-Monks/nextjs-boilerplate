@@ -15,7 +15,7 @@ html {
   font-size: 10px;
   text-align: center;
 
-  &.hide-static-html {
+  @if $supports-no-js != true {
     visibility: hidden;
     opacity: 0;
   }

@@ -8,6 +8,7 @@ import { gsap } from 'gsap'
 
 import css from './Layout.module.scss'
 
+import config from '@/data/config.json'
 import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
@@ -109,7 +110,8 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       )}
 
       <ScreenRotate content={pageProps.common.screenRotate} />
-      <ScreenNoScript content={pageProps.common.screenNoScript} />
+
+      {!config.supportsNoJs && <ScreenNoScript content={pageProps.common.screenNoScript} />}
 
       <AppAdmin />
     </div>

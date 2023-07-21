@@ -1,11 +1,17 @@
 /** @type {import('next').NextConfig} */
 
 const path = require('path')
+const config = require('./src/data/config.json')
 
 const nextConfig = {
   output: process.env.OUTPUT,
+  assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || undefined,
   trailingSlash: true,
-  sassOptions: { includePaths: [path.join(__dirname, 'src/styles')] },
+  reactStrictMode: false,
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/styles')],
+    prependData: `$supports-no-js: ${config.supportsNoJs};`
+  },
   webpack(config) {
     config.module.rules.push({ test: /\.svg$/i, use: [{ loader: '@svgr/webpack' }] })
     return config

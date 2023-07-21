@@ -1,3 +1,7 @@
+import { gsap } from 'gsap'
+
+import config from '@/data/config.json'
+
 import ResizeService from '@/services/resize'
 
 import { browser, device, os } from '@/utils/detect'
@@ -18,6 +22,9 @@ function setBodyClasses() {
   }
   ResizeService.listen(calculateVh)
   calculateVh()
+
+  // un-hide page once application kicked in
+  if (!config.supportsNoJs) gsap.set(document.documentElement, { autoAlpha: 1 })
 }
 
 export default setBodyClasses

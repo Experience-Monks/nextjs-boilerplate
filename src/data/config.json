@@ -1,9 +1,6 @@
 {
+  "supportsNoJs": false,
   "resizeDebounceTime": 10,
-  "siteName": "Jam3 Generator",
-  "siteSlogan": "The Relentless Pursuit of Better",
-  "siteDescription": "Default Description",
-  "siteKeywords": ["Jam3", "Web App", "React", "NextJS"],
   "websiteUrl": "https://localhost:3000",
   "dnsPrefetch": {
     "development": [],

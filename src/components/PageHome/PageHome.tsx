@@ -23,6 +23,7 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   const handleRef = useRef<PageHandle>(null)
 
   useEffect(() => {
+    gsap.set(rootRef.current, { opacity: 0 })
     onReady?.(handleRef)
   }, [onReady])
 
