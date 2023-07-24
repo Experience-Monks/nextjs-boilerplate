@@ -4,11 +4,6 @@
   display: flex;
   flex-direction: column;
 
-  @if $supports-no-js != true {
-    visibility: hidden;
-    opacity: 0;
-  }
-
   .content {
     position: relative;
     width: 100%;

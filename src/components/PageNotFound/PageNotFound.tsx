@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useImperativeHandle, useRef } from 'react'
 import classNames from 'classnames'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 import css from './PageNotFound.module.scss'
 

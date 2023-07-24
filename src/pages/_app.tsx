@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AppProps } from 'next/app'
+import { gsap } from 'gsap'
 import 'normalize.css'
 
 import '@/styles/global.scss'
@@ -30,6 +31,9 @@ const App: FC<AppProps<PageProps>> = (props) => {
       node.removeAttribute('data-n-p')
     })
 
+    // FOUC prevention step 2/2: Make sure the page us un-hidden once application kicks in
+    gsap.set(document.documentElement, { autoAlpha: 1 })
+
     new MutationObserver((mutations) => {
       mutations.forEach(({ target }) => {
         const t = target as Element
@@ -41,7 +45,11 @@ const App: FC<AppProps<PageProps>> = (props) => {
   /** NOTE: this is where dev tools and helper modules can be placed */
   // useEffect(() => {}, [])
 
-  return <Provider store={store}>{props.pageProps.noLayout ? <props.Component /> : <Layout {...props} />}</Provider>
+  return (
+    <Provider store={store}>
+      {props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />}
+    </Provider>
+  )
 }
 
 export default App

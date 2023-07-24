@@ -6,8 +6,7 @@ import { isDevEnv } from '@/utils/runtime-env'
 const { actions, reducer } = createSlice({
   name: 'app',
   initialState: {
-    prevRoute: '',
-    isWebpSupported: true
+    prevRoute: ''
   },
   reducers: {
     setPrevRoute(state, action: PayloadAction<string>) {

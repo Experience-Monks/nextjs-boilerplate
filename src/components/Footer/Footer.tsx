@@ -16,7 +16,7 @@ export interface ViewProps extends FooterProps {}
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, content }) => {
   return (
-    <div className={classNames('Footer', css.root, className)}>
+    <footer className={classNames('Footer', css.root, className)}>
       <ul>
         {content.routes.map(({ path, title }) => (
           <li key={title}>
@@ -26,7 +26,7 @@ export const View: FC<ViewProps> = ({ className, content }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </footer>
   )
 }
 

@@ -11,7 +11,8 @@ export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => 
     props: {
       head: generateHeadProps(content.pageUnsupported.head.title, content.pageUnsupported.head.description),
       common: content.common,
-      content: content.pageUnsupported
+      content: content.pageUnsupported,
+      noLayout: true
     }
   }
 }

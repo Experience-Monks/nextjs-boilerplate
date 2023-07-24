@@ -3,6 +3,7 @@ import classNames from 'classnames'
 
 import css from './ScreenNoScript.module.scss'
 
+import config from '@/data/config.json'
 import { Content } from '@/data/types'
 
 import copy from '@/utils/copy'
@@ -30,7 +31,7 @@ View.displayName = 'ScreenNoScript-View'
 
 // Controller (handle global state, router, data fetching, etc. Feeds props to the view component)
 const ScreenNoScript: FC<ScreenNoScriptProps> = (props) => {
-  return <View {...props} />
+  return config.supportsNoJs ? null : <View {...props} />
 }
 
 export default memo(ScreenNoScript)

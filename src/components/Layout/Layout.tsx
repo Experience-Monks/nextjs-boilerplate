@@ -8,7 +8,6 @@ import { gsap } from 'gsap'
 
 import css from './Layout.module.scss'
 
-import config from '@/data/config.json'
 import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
@@ -63,18 +62,17 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     }
   }, [router.events, handleRouteChange])
 
-  // make sure the page us un-hidden once application kicks in
-  useEffect(() => {
-    gsap.set(document.documentElement, { autoAlpha: 1 })
-    gsap.set(rootRef.current, { autoAlpha: 1 })
-  }, [])
-
   // handle scroll history
   useEffect(() => {
     history.scrollRestoration = 'manual'
     currentPathnameRef.current = router.asPath.split('#')[0].split('?')[0]
     const onBeforeHistoryChange = () => {
-      if (!isGoingBackRef.current) {
+      if (isGoingBackRef.current) {
+        const currentScroll = getScrollTop()
+        setTimeout(() => {
+          gsap.set(window, { scrollTo: { x: 0, y: currentScroll, autoKill: false } })
+        }, 1)
+      } else {
         scrollHistoryRef.current.push({ pathname: currentPathnameRef.current, value: getScrollTop() })
       }
     }
@@ -135,28 +133,29 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   }, [cookieConsent])
 
   return (
-    <>
+    <div className={classNames('Layout', css.root)} ref={rootRef}>
       <Head {...pageProps.head} />
 
-      <div className={classNames('Layout', css.root)} ref={rootRef}>
-        <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
-        <div className={css.content}>{currentPage}</div>
-        <Footer content={pageProps.common.footer} />
-        {!validCookie && (
-          <CookieBanner
-            cookieConsent={cookieConsent}
-            onAccept={acceptAllCookies}
-            onUpdate={updateCookies}
-            onReject={rejectAllCookies}
-          />
-        )}
-      </div>
+      <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
+
+      <div className={css.content}>{currentPage}</div>
+
+      <Footer content={pageProps.common.footer} />
+
+      {!validCookie && (
+        <CookieBanner
+          cookieConsent={cookieConsent}
+          onAccept={acceptAllCookies}
+          onUpdate={updateCookies}
+          onReject={rejectAllCookies}
+        />
+      )}
 
       <AppAdmin />
 
       <ScreenRotate content={pageProps.common.screenRotate} />
-      {!config.supportsNoJs && <ScreenNoScript content={pageProps.common.screenNoScript} />}
-    </>
+      <ScreenNoScript content={pageProps.common.screenNoScript} />
+    </div>
   )
 }
 
