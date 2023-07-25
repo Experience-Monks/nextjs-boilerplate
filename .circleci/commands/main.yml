@@ -29,6 +29,16 @@ commands:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY<< parameters.env_suffix >>
           aws-region: AWS_REGION
 
+  install-dependencies:
+    steps:
+      - run:
+          name: Install Dependencies
+          command: |
+            npm set-script preinstall ""
+            npm set-script prepare ""
+            npm set cache .npm
+            npm install --prefer-offline --no-audit
+
   generate-preview-hash:
     steps:
       - run: echo ENV_PREVIEW_ID=$(echo $CIRCLE_SHA1 | cut -c -7) >> "${BASH_ENV}"
@@ -47,3 +57,51 @@ commands:
           keys:
             - v2-project-dependencies-{{ checksum "package-lock.json" }}
             - v2-project-dependencies-
+
+  restore-project-lfs:
+    steps:
+      - run:
+          name: Install Git LFS
+          command: |
+            sudo apt-get update
+            sudo apt-get install git-lfs
+      - run:
+          name: LFS cache id
+          # this generates a unique ID for LFS files which we use for cache
+          command: |
+            git lfs ls-files -l | cut -d' ' -f1 | sort > .assets-id
+      - restore_cache:
+          keys:
+            - v2-lfs-assets-{{ checksum ".assets-id" }}
+            - v2-lfs-assets-
+      - run:
+          name: Checkout LFS binaries
+          command: git lfs pull
+
+  save-project-lfs-cache:
+    steps:
+      - save_cache:
+          key: v2-lfs-assets-{{ checksum ".assets-id" }}
+          paths:
+            - .git/lfs
+
+  generate-data:
+    steps:
+      - run:
+          name: Run Scripts
+          command: |
+            npm run scripts
+            cat .generated/* > .generated-id
+
+  save-generated-data-cache:
+    steps:
+      - save_cache:
+          key: v2-generated-{{ checksum ".generated-id" }}
+          paths:
+            - .generated
+
+  restore-generated-data-cache:
+    steps:
+      - restore_cache:
+          keys:
+            - v2-generated-

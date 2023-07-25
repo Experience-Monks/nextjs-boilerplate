@@ -1,13 +1,6 @@
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 
-import { hideStaticHtml } from '@/data/settings'
-
-import sanitizer from '@/utils/sanitizer'
-
-// if JS is available we hide the page immediately to prevent static content flash.
-const hideStaticHtmlScript = `
-  if (typeof window !== 'undefined') document.documentElement.classList.add('hide-static-html');
-`
+import copy from '@/utils/copy'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -19,9 +12,18 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        {hideStaticHtml && (
-          <script data-cfasync="false" dangerouslySetInnerHTML={{ __html: sanitizer(hideStaticHtmlScript) }} />
-        )}
+        {/* FOUC prevention step 1/2: hide the page immediately. */}
+        <script
+          data-cfasync="false"
+          dangerouslySetInnerHTML={{
+            __html: copy.sanitize(
+              `if (typeof window !== 'undefined') {
+                  document.documentElement.style.opacity = 0
+                  document.documentElement.style.visibility = 'hidden'
+                }`
+            )
+          }}
+        />
         <body>
           <Main />
           <NextScript />

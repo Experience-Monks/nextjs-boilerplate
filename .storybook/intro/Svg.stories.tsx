@@ -7,7 +7,7 @@ type SvgComponent = (props: SVGProps<SVGElement>) => ReactElement<{}, string>
 
 let icons: { class: SvgComponent; name: string }[] = []
 
-const req = require.context('../../src/components/svgs', false, /^.\/.*svg$/)
+const req = require.context('../../src/svgs', false, /^.\/.*svg$/)
 
 req.keys().forEach((key) => {
   const name = key.replace('./', '')
@@ -30,7 +30,7 @@ const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
       {icons.map((icon, i) => {
         return (
           <div
-            key={i}
+            key={icon.name}
             style={{
               display: 'inline-flex',
               alignItems: 'center',

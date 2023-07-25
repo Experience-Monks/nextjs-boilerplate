@@ -1,11 +1,18 @@
 import { StoryFn } from '@storybook/react'
 
-import PageUnsupported, { PageUnsupportedProps } from './PageUnsupported'
+import content from '@/data/content.json'
 
-export default { title: 'components/PageUnsupported' }
+import { View, ViewProps } from './PageUnsupported'
 
-export const Default: StoryFn<PageUnsupportedProps> = (args) => <PageUnsupported {...args} />
+export default { title: 'pages/PageUnsupported' }
 
-Default.args = {}
+export const Default: StoryFn<ViewProps> = (args) => {
+  return <View {...args} />
+}
+
+Default.args = {
+  content: content.pageUnsupported,
+  common: content.common
+}
 
 Default.argTypes = {}

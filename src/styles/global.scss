@@ -14,11 +14,6 @@ html {
   text-size-adjust: none;
   font-size: 10px;
   text-align: center;
-
-  &.hide-static-html {
-    visibility: hidden;
-    opacity: 0;
-  }
 }
 
 body {
@@ -30,23 +25,17 @@ body {
   word-break: keep-all;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-height: 100vh;
-  background-color: $page-bg-color;
-  z-index: 0;
-}
-
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+
+  .mobile & {
+    user-select: none;
+  }
 }
 
 main {
-  @include z-index(pages);
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
 
@@ -83,19 +72,43 @@ blockquote {
   padding: 0;
 }
 
+button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  text-align: inherit;
+  letter-spacing: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  appearance: none;
+  color: currentcolor;
+}
+
 button,
 input,
+select,
 a {
+  &:focus {
+    outline-offset: 4px;
+  }
+
   &:focus:not(.focus-visible) {
     outline: none;
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @include font-header;
+i {
+  font-style: normal;
+}
+
+svg {
+  display: block;
+  overflow: visible;
+  fill: currentcolor;
 }

@@ -4,24 +4,37 @@ import classNames from 'classnames'
 
 import css from './Footer.module.scss'
 
-import routes from '@/data/routes'
+import { Content } from '@/data/types'
 
 export interface FooterProps {
   className?: string
+  content: Content['common']['footer']
 }
 
-const Footer: FC<FooterProps> = ({ className }) => {
+export interface ViewProps extends FooterProps {}
+
+// View (pure and testable component, receives props from the controller)
+export const View: FC<ViewProps> = ({ className, content }) => {
   return (
     <footer className={classNames('Footer', css.root, className)}>
       <ul>
-        {Object.values(routes).map(({ path, title }) => (
-          <li key={path}>
-            <Link href={path}>{title}</Link>
+        {content.routes.map(({ path, title }) => (
+          <li key={title}>
+            <Link href={path} scroll={false}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
     </footer>
   )
+}
+
+View.displayName = 'Footer-View'
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+const Footer: FC<FooterProps> = (props) => {
+  return <View {...props} />
 }
 
 export default memo(Footer)

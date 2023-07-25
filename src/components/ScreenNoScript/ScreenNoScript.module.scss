@@ -1,0 +1,15 @@
+@import 'shared';
+
+.root {
+  @include position-100(fixed);
+  @include z-index(noscript);
+  @include flex-center;
+  flex-direction: column;
+  color: $black;
+  background-color: $white;
+
+  .title {
+    @include typography-h1;
+    margin: 0 0 px(20);
+  }
+}

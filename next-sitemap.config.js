@@ -3,11 +3,13 @@
 // for more config options;
 // https://www.npmjs.com/package/next-sitemap#configuration-options
 
+const config = require('./src/data/config.json')
+
 module.exports = {
   // ========================
   // sitemap.xml
   // ========================
-  siteUrl: process.env.WEBSITE_SITE_URL || 'https://something-is-wrong-if-you-see-this.com',
+  siteUrl: config.websiteUrl || 'https://something-is-wrong-if-you-see-this.com',
   changefreq: 'daily', // always hourly daily weekly monthly yearly never
   priority: 0.7, // between 0 and 1
   sitemapSize: 5000,

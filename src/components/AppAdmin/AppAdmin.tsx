@@ -1,9 +1,11 @@
-import { FC, memo, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './AppAdmin.module.scss'
 
 import { browser, device, os } from '@/utils/detect'
+import { productionLog } from '@/utils/log'
+import { getRuntimeEnv, isDevEnv } from '@/utils/runtime-env'
 
 import useWindowSize from '@/hooks/use-window-size'
 
@@ -11,66 +13,128 @@ export interface AppAdminProps {
   className?: string
 }
 
-const AppAdmin: FC<AppAdminProps> = ({ className }) => {
-  const [removed, setRemoved] = useState(false)
-  const [open, setOpen] = useState(true)
-  const [deviceOpen, deviceSetOpen] = useState(true)
-  const [buildOpen, buildSetOpen] = useState(true)
+export interface ViewProps extends AppAdminProps {
+  env: string
+  date: string
+  commit: string
+  version: string
+}
+
+// View (pure and testable component, receives props from the controller)
+export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
 
-  return !removed ? (
-    <div className={classNames('AppAdmin', css.root, className)}>
-      <button onClick={() => setOpen(!open)}>{open ? 'Close ' : 'Open '} Admin</button>
-      {open && (
-        <>
-          <section className={css.adminSection}>
-            <h3 className={css.adminSectionTitle} onClick={() => setRemoved(true)}>
-              Remove Admin from DOM
-            </h3>
-          </section>
-          <section className={classNames(css.adminSection, { [css.closed]: deviceOpen })}>
-            <h3 className={css.adminSectionTitle} onClick={() => deviceSetOpen(!deviceOpen)}>
-              Device info
-            </h3>
-            {deviceOpen && (
-              <ul>
-                <li>
-                  {device.type} ({width} x {height})
-                </li>
-                <li>
-                  {os.name} {os.version}
-                </li>
-                <li>
-                  {browser.name} {browser.version}
-                </li>
-              </ul>
-            )}
-          </section>
-          <section className={classNames(css.adminSection, { [css.closed]: buildOpen })}>
-            <h3 className={css.adminSectionTitle} onClick={() => buildSetOpen(!buildOpen)}>
-              Build info
-            </h3>
-            {buildOpen && (
-              <ul>
-                <li>
-                  {process.env.NEXT_PUBLIC_PR_NUMBER}.{process.env.NEXT_PUBLIC_COMMIT_COUNT}
-                </li>
-                <li>{process.env.NEXT_PUBLIC_COMMIT_ID?.slice(0, 6)}</li>
-                <li>{process.env.NEXT_PUBLIC_BUILD_TIME}</li>
-                {process.env.NEXT_PUBLIC_PULL_REQUEST && (
-                  <li>
-                    <a href={process.env.NEXT_PUBLIC_PULL_REQUEST} rel="noopener noreferrer" target="_blank">
-                      PR link
-                    </a>
-                  </li>
+  const [open, setOpen] = useState(!!process.env.STORYBOOK || env !== 'local')
+  const [render, setRender] = useState(false)
+  const [removed, setRemoved] = useState(false)
+  const [expanded, setExpanded] = useState(!!process.env.STORYBOOK)
+  const [buildOpen, buildSetOpen] = useState(true)
+  const [deviceOpen, deviceSetOpen] = useState(true)
+
+  const toggleOpen = useCallback(() => {
+    if (open) setExpanded(false)
+    setOpen(!open)
+  }, [open])
+
+  const toggleExpanded = useCallback(() => setExpanded((e) => !e), [])
+
+  useEffect(() => {
+    productionLog(env, `${version}`)
+  }, [commit, env, version])
+
+  useEffect(() => {
+    setRender(isDevEnv() && !removed)
+  }, [env, removed])
+
+  return render ? (
+    <>
+      <div className={classNames('AppAdmin', css.root, className)} aria-hidden>
+        <div className={classNames(css.basic, { [css.open]: open, [css.closed]: !open })}>
+          {open ? (
+            <>
+              <div>
+                {env} | {version} |
+              </div>
+              &nbsp;
+              <button onClick={toggleExpanded}>
+                <div>{expanded ? '▼' : '▲'}</div>
+              </button>
+              <button onClick={toggleOpen}>
+                <div>▶</div>
+              </button>
+            </>
+          ) : (
+            <button onClick={toggleOpen}>
+              <div>◀</div>
+            </button>
+          )}
+        </div>
+
+        {expanded ? (
+          <div className={css.details}>
+            <div className={css.content}>
+              <div className={classNames(css.section, { [css.closed]: deviceOpen })}>
+                <h3 className={css.title} onClick={() => deviceSetOpen(!deviceOpen)}>
+                  Device info
+                </h3>
+                {deviceOpen && (
+                  <ul>
+                    <li>{device.type}</li>
+                    <li>
+                      {width} x {height}
+                    </li>
+                    <li>
+                      {os.name} {os.version}
+                    </li>
+                    <li>
+                      {browser.name} {browser.version}
+                    </li>
+                  </ul>
                 )}
-              </ul>
-            )}
-          </section>
-        </>
-      )}
-    </div>
+              </div>
+
+              <div className={classNames(css.section, { [css.closed]: buildOpen })}>
+                <h3 className={css.title} onClick={() => buildSetOpen(!buildOpen)}>
+                  Build info
+                </h3>
+                {buildOpen && (
+                  <ul>
+                    <li>{env}</li>
+                    <li>{version}</li>
+                    <li>{commit}</li>
+                    <li>{date}</li>
+                  </ul>
+                )}
+              </div>
+
+              <div className={css.section}>
+                <h3 className={css.title} onClick={() => setRemoved(true)}>
+                  Remove Admin from DOM
+                </h3>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </>
   ) : null
+}
+
+View.displayName = 'AppAdmin-View'
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+const AppAdmin: FC<AppAdminProps> = (props) => {
+  const env = useMemo(() => getRuntimeEnv(), [])
+
+  return (
+    <View
+      {...props}
+      env={env}
+      date={process.env.NEXT_PUBLIC_COMMIT_DATE || ''}
+      commit={process.env.NEXT_PUBLIC_COMMIT_ID || ''}
+      version={process.env.NEXT_PUBLIC_VERSION_NUMBER || ''}
+    />
+  )
 }
 
 export default memo(AppAdmin)

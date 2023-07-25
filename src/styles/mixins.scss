@@ -132,9 +132,10 @@
 /// Set z-index value in order of $element variable
 /// @example scss Input
 ///   element {
-///     @include z-index(preloader);
+///     @include z-index(modal);
 ///   }
 @mixin z-index($id) {
+  $elements: pages, nav, modal, notification, nonfunctional, noscript;
   z-index: list.index($elements, $id);
 }
 

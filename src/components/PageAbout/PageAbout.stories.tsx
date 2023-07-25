@@ -1,11 +1,27 @@
+import { FC, RefObject, useCallback } from 'react'
 import { StoryFn } from '@storybook/react'
 
-import PageAbout, { PageAboutProps } from './PageAbout'
+import content from '@/data/content.json'
+import { PageHandle } from '@/data/types'
 
-export default { title: 'components/PageAbout' }
+import { View, ViewProps } from './PageAbout'
 
-export const Default: StoryFn<PageAboutProps> = (args) => <PageAbout {...args} />
+export default { title: 'pages/PageAbout' }
 
-Default.args = {}
+const Template: FC<ViewProps> = ({ ...args }) => {
+  const handleReady = useCallback((pageHandle?: RefObject<PageHandle>) => {
+    pageHandle?.current?.animateIn()
+  }, [])
+  return <View {...args} onReady={handleReady} />
+}
+
+export const Default: StoryFn<ViewProps> = (args) => {
+  return <Template {...args} />
+}
+
+Default.args = {
+  content: content.pageAbout,
+  common: content.common
+}
 
 Default.argTypes = {}

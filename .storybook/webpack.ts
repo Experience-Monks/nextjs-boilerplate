@@ -38,7 +38,5 @@ export const webpackFinal = async (config: Configuration) => {
 
   config.plugins?.push(new webpack.ProvidePlugin({ Buffer: ['buffer', 'Buffer'] }))
 
-  // if (process.env.NODE_ENV === 'production') config.output.publicPath = '/storybook/'
-
   return config
 }

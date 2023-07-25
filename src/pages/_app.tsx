@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AppProps } from 'next/app'
+import { gsap } from 'gsap'
 import 'normalize.css'
 
 import '@/styles/global.scss'
@@ -21,7 +22,24 @@ gsapInit()
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {
   useEffect(() => {
+    // Body class names
     setBodyClasses()
+
+    // Fix https://github.com/vercel/next.js/issues/17464
+    document.querySelectorAll('head > link[rel="stylesheet"]').forEach((node) => {
+      node.removeAttribute('data-n-g')
+      node.removeAttribute('data-n-p')
+    })
+
+    // FOUC prevention step 2/2: Make sure the page us un-hidden once application kicks in
+    gsap.set(document.documentElement, { autoAlpha: 1 })
+
+    new MutationObserver((mutations) => {
+      mutations.forEach(({ target }) => {
+        const t = target as Element
+        if (t.nodeName === 'STYLE' && t.getAttribute('media') === 'x') t.removeAttribute('media')
+      })
+    }).observe(document.head, { subtree: true, attributeFilter: ['media'] })
   }, [])
 
   /** NOTE: this is where dev tools and helper modules can be placed */
@@ -29,7 +47,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
 
   return (
     <Provider store={store}>
-      <Layout {...props} />
+      {props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />}
     </Provider>
   )
 }

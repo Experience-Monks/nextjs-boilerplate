@@ -1,0 +1,14 @@
+{
+  "supportsNoJs": false,
+  "resizeDebounceTime": 10,
+  "websiteUrl": "https://localhost:3000",
+  "dnsPrefetch": {
+    "development": [],
+    "production": ["https://www.google-analytics.com", "https://www.googletagmanager.com"],
+    "test": []
+  },
+  "analytics": {
+    "gtmIds": { "prod": "GTM-0000000", "stage": "GTM-0000000", "dev": "GTM-0000000", "local": "" },
+    "gtmParams": { "prod": "", "stage": "", "dev": "", "local": "" }
+  }
+}

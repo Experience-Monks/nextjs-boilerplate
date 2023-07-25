@@ -1,29 +1,47 @@
-import { FC, memo, useCallback, useEffect } from 'react'
+import { FC, memo, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 import { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import { nanoid } from '@reduxjs/toolkit'
+import classNames from 'classnames'
+import { gsap } from 'gsap'
 
-import { PageProps } from '@/data/types'
+import css from './Layout.module.scss'
 
-import { GtmScript } from '@/utils/analytics'
-import { checkWebpSupport } from '@/utils/basic-functions'
-import { device } from '@/utils/detect'
+import { PageHandle, PageProps } from '@/data/types'
+
+import AnalyticsService from '@/services/analytics'
+
+import { getScrollTop } from '@/utils/basic-functions'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
+import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
+
 import Footer from '@/components/Footer/Footer'
 import Head from '@/components/Head/Head'
-import Nav from '@/components/Nav/Nav'
+import Nav, { NavHandle } from '@/components/Nav/Nav'
 
-import { setIsWebpSupported, setPrevRoute, useAppDispatch } from '@/redux'
+import { setPrevRoute, useAppDispatch } from '@/redux'
 
-const RotateScreen = dynamic(() => import('@/components/RotateScreen/RotateScreen'), { ssr: false })
+const ScreenRotate = dynamic(() => import('@/components/ScreenRotate/ScreenRotate'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false })
 const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false })
 
 const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
+
+  const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
+
+  const rootRef = useRef<HTMLDivElement>(null)
+  const navHandleRef = useRef<NavHandle | null>(null)
+  const pageHandleRef = useRef<PageHandle | null>(null)
+  const isFirstPageRef = useRef(true)
+  const isGoingBackRef = useRef(false)
+  const scrollHistoryRef = useRef<{ pathname: string; value: number }[]>([])
+  const currentPathnameRef = useRef(router.asPath.split('#')[0].split('?')[0])
+  const scrollRestorationTimeoutRef = useRef<NodeJS.Timeout>()
 
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner()
 
@@ -44,23 +62,85 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     }
   }, [router.events, handleRouteChange])
 
+  // handle scroll history
   useEffect(() => {
-    checkWebpSupport('lossy', (isSupported) => dispatch(setIsWebpSupported(isSupported)))
-  }, [dispatch])
+    history.scrollRestoration = 'manual'
+    currentPathnameRef.current = router.asPath.split('#')[0].split('?')[0]
+    const onBeforeHistoryChange = () => {
+      if (isGoingBackRef.current) {
+        const currentScroll = getScrollTop()
+        setTimeout(() => {
+          gsap.set(window, { scrollTo: { x: 0, y: currentScroll, autoKill: false } })
+        }, 1)
+      } else {
+        scrollHistoryRef.current.push({ pathname: currentPathnameRef.current, value: getScrollTop() })
+      }
+    }
+    router.beforePopState(() => {
+      isGoingBackRef.current = true
+      return true
+    })
+    router.events.on('beforeHistoryChange', onBeforeHistoryChange)
+    return () => {
+      router.events.off('beforeHistoryChange', onBeforeHistoryChange)
+    }
+  }, [router])
+
+  // handle page transitions
+  useEffect(() => {
+    const transitionTimeline = gsap.timeline()
+
+    // if the current page has an animateOut(), do it
+    if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
+
+    // after the out animation, set the new page
+    transitionTimeline.add(() => {
+      gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
+      setCurrentPage(
+        <Component
+          key={isFirstPageRef.current ? 'first-page' : nanoid()}
+          {...pageProps}
+          onReady={(pageHandle?: RefObject<PageHandle>) => {
+            pageHandleRef.current = pageHandle?.current || null
+            // restore scroll
+            if (isGoingBackRef.current) {
+              const lastScrollHistory = scrollHistoryRef.current.pop()
+              if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
+                gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
+              }
+            }
+            clearTimeout(scrollRestorationTimeoutRef.current)
+            scrollRestorationTimeoutRef.current = setTimeout(() => {
+              isGoingBackRef.current = false
+            }, 400)
+            // animate in
+            pageHandleRef.current?.animateIn?.()
+            navHandleRef.current?.animateIn?.()
+          }}
+        />
+      )
+      isFirstPageRef.current = false
+    })
+
+    return () => {
+      transitionTimeline.kill()
+    }
+  }, [Component, pageProps])
+
+  // start analytics
+  useEffect(() => {
+    if (cookieConsent?.statistics) AnalyticsService.start()
+  }, [cookieConsent])
 
   return (
-    <>
-      <GtmScript consent={cookieConsent?.statistics} />
-
+    <div className={classNames('Layout', css.root)} ref={rootRef}>
       <Head {...pageProps.head} />
 
-      <Nav />
+      <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
 
-      <Component {...pageProps} />
+      <div className={css.content}>{currentPage}</div>
 
-      <Footer />
-
-      {!device.desktop && <RotateScreen />}
+      <Footer content={pageProps.common.footer} />
 
       {!validCookie && (
         <CookieBanner
@@ -71,8 +151,11 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
         />
       )}
 
-      {process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production' && <AppAdmin />}
-    </>
+      <AppAdmin />
+
+      <ScreenRotate content={pageProps.common.screenRotate} />
+      <ScreenNoScript content={pageProps.common.screenNoScript} />
+    </div>
   )
 }
 

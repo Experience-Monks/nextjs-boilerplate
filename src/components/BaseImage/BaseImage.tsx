@@ -9,11 +9,12 @@ import getOptimizedImageURL, { OptmizedImageEdits } from '@/utils/get-optimized-
 
 import useCombinedRefs from '@/hooks/use-combined-refs'
 
+import assetImports from '#/asset-imports'
+import publicImageSizes from '#/public-image-sizes.json'
+
 export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  // supports both src (for public images) or data (for imported images)
   src?: string
   data?: StaticImageData
-  // ---
   options?: OptmizedImageEdits
   srcWidths?: number[]
   fetchpriority?: 'high' | 'low' | 'auto'
@@ -44,32 +45,44 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
     const rootRef = useRef<HTMLImageElement>(null)
     const combinedRef = useCombinedRefs(ref, rootRef)
 
-    const imgSrc = useMemo(() => (data?.src || src)!, [data, src])
+    const imgData = useMemo<StaticImageData | undefined>(() => {
+      if (data) return data
+      if (src) {
+        if (assetImports[src]) return assetImports[src] as unknown as StaticImageData
+        const s = src.split('?')[0].split('#')[0]
+        const p = publicImageSizes as { [key: string]: { width: number; height: number } | undefined }
+        const publicSize = p[src] || p[s]
+        if (publicSize) return { src, ...publicSize }
+      }
+      return undefined
+    }, [data, src])
 
-    const shouldGetOptimizedUrl = useMemo(
+    const imgSrc = useMemo(() => (imgData?.src || src)!, [imgData, src])
+
+    const optimize = useMemo(
       () => !skipOptimization && imgSrc.startsWith('/') && !imgSrc.toLowerCase().endsWith('gif'),
       [imgSrc, skipOptimization]
     )
 
     const optimizedSrc = useMemo(() => {
-      return shouldGetOptimizedUrl ? getOptimizedImageURL(imgSrc, options) : imgSrc
-    }, [imgSrc, shouldGetOptimizedUrl, options])
+      return optimize ? getOptimizedImageURL(imgSrc, options) : imgSrc
+    }, [imgSrc, optimize, options])
 
     const imgSrcWidths = useMemo(() => {
       if (!imgSrc) return []
-      if (data?.width) {
-        if (srcWidths) return srcWidths?.filter((w) => w <= data.width)
+      if (imgData?.width) {
+        if (srcWidths) return srcWidths?.filter((w) => w <= imgData.width)
         const base = 320
-        if (data.width < base) return []
-        const hops = Math.floor(data.width / base)
+        if (imgData.width < base) return []
+        const hops = Math.floor(imgData.width / base)
         const sizes = [...Array(hops)].map((_, i) => (i + 1) * base)
-        return Array.from(new Set([data.width, ...sizes])).sort((a, b) => (a > b ? 1 : -1))
+        return Array.from(new Set([imgData.width, ...sizes])).sort((a, b) => (a > b ? 1 : -1))
       }
       return srcWidths || [320, 640, 960, 1280, 1600, 1920]
-    }, [imgSrc, data, srcWidths])
+    }, [imgSrc, imgData, srcWidths])
 
     const optimizedSrcSet = useMemo(() => {
-      if (!shouldGetOptimizedUrl || !imgSrcWidths.length || options?.resize) return undefined
+      if (!optimize || !imgSrcWidths.length || options?.resize) return undefined
       const opt = options || {}
       return imgSrcWidths
         .map((w) => {
@@ -78,15 +91,16 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
           return `${url} ${w}w`
         })
         .join(', ')
-    }, [shouldGetOptimizedUrl, imgSrcWidths, options, imgSrc])
+    }, [optimize, imgSrcWidths, options, imgSrc])
 
     useEffect(() => {
       const root = rootRef.current!
       let observer: ResizeObserver
       if (imgSrcWidths.length && window.ResizeObserver) {
         observer = new ResizeObserver(() => {
-          const matchedWidth = imgSrcWidths.find((s) => s >= root.clientWidth)
-          if (matchedWidth) setSize(`${matchedWidth}px`)
+          const elSize = root.clientWidth
+          const curSize = imgSrcWidths.find((s) => s >= elSize)
+          if (curSize) setSize(`${curSize}px`)
         })
         observer.observe(root)
       }
@@ -129,7 +143,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         ref={combinedRef}
         alt={alt}
         sizes={size}
-        {...(data ? { width: `${data.width}px`, height: `${data.height}px` } : {})}
+        {...(imgData ? { width: `${imgData.width}px`, height: `${imgData.height}px` } : {})}
         {...props}
       />
     )

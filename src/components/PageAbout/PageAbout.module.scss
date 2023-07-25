@@ -1,10 +1,31 @@
 @import 'shared';
 
 .root {
+  position: relative;
+  width: 100%;
+
   .title {
     @include typography-h1;
-    margin: 0;
-    width: 100%;
     padding-top: px(80);
+  }
+
+  .description {
+    width: px(240);
+    margin: 0 auto;
+    padding: px(80) 0;
+    text-align: left;
+
+    h2 {
+      margin: 0 0 px(40);
+    }
+
+    h3 {
+      margin: 0 0 px(30);
+    }
+
+    p,
+    li {
+      margin: 0 0 px(20);
+    }
   }
 }

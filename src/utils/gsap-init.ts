@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 

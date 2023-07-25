@@ -1,4 +1,4 @@
-import { hideStaticHtml } from '@/data/settings'
+import ResizeService from '@/services/resize'
 
 import { browser, device, os } from '@/utils/detect'
 
@@ -12,10 +12,12 @@ function setBodyClasses() {
   ].filter(Boolean)
   classes.forEach((c) => document.body.classList.add(c.toLowerCase().split(' ').join('-')))
 
-  // un-hide page once application kicked in
-  if (hideStaticHtml) {
-    document.documentElement.classList.remove('hide-static-html')
+  // Fix vh problem on mobile
+  const calculateVh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight / 100}px`)
   }
+  ResizeService.listen(calculateVh)
+  calculateVh()
 }
 
 export default setBodyClasses
