@@ -1,7 +1,6 @@
 // Globals
 
 // Global styling, normalize overwritten
-@import 'fonts';
 @import 'polyfills';
 @import 'shared';
 
@@ -17,7 +16,6 @@ html {
 }
 
 body {
-  @include font-body;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -28,6 +26,7 @@ body {
 *,
 *::before,
 *::after {
+  @include font-body;
   box-sizing: inherit;
 
   .mobile & {
@@ -70,6 +69,15 @@ p,
 blockquote {
   margin: 0;
   padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include font-heading;
 }
 
 button {

@@ -444,7 +444,6 @@ In this project, services are [singleton](https://refactoring.guru/design-patter
 ```
 src/
     styles/
-        fonts.scss
         global.scss
         mixins.scss
         ...
