@@ -1,0 +1,21 @@
+@import 'shared';
+
+.wrapper {
+  @include flex-center;
+  @include box(80vw, 80vh);
+  padding: px(40);
+}
+
+.cards {
+  @include flex-center;
+  @include box(px(200), px(300));
+  position: relative;
+  background-color: rgba($black, 0.15);
+  overflow: hidden;
+}
+
+.image {
+  @include box(100%);
+  position: absolute;
+  object-fit: cover;
+}

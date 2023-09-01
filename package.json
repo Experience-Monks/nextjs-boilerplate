@@ -63,6 +63,7 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
     "string-format": "^2.0.0",
+    "swiper": "^10.1.0",
     "xss": "^1.0.14"
   },
   "devDependencies": {
