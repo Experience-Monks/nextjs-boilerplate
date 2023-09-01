@@ -1,0 +1,149 @@
+@import 'shared';
+
+.root {
+  // Spacing
+  --line-width: 2px;
+  --dot-width: 12px;
+  --padding: 50px;
+  --gap: 40px;
+
+  // Palette
+  --text-color: #333333;
+  --background-color: #f7f8fa;
+  --dot-color: #2a74da;
+  --line-background: #e0e0e0;
+  --line-growing-line: #5a5a5a;
+
+  width: 100%;
+  padding: var(--padding);
+  text-align: left;
+  color: var(--text-color);
+  background-color: var(--background-color);
+
+  .instructions {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+
+    p {
+      text-transform: none;
+    }
+  }
+
+  .eases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    margin-top: var(--gap);
+
+    .curveContainer {
+      outline: 1px dashed magenta;
+      border-radius: 5px;
+      padding: calc(var(--padding) / 2);
+      width: min-content;
+
+      .titleContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 30px;
+      }
+
+      .graphContainer {
+        width: min-content;
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        gap: var(--ui-gap);
+        gap: 40px;
+
+        p {
+          color: var(--secondary-text-color);
+        }
+
+        :global(.background),
+        :global(.line) {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform-origin: bottom left;
+        }
+
+        :global(.background) {
+          background-color: var(--line-background);
+        }
+
+        :global(.line) {
+          background-color: var(--line-growing-line);
+        }
+
+        :global(.dot) {
+          @include transform-center-horiz;
+          background-color: var(--dot-color);
+          position: absolute;
+          bottom: calc(var(--dot-width) / 2 * -1);
+          width: var(--dot-width);
+          height: var(--dot-width);
+          z-index: 1;
+          border-radius: 50%;
+        }
+
+        .vertical {
+          height: var(--size);
+          width: var(--line-width);
+          position: relative;
+
+          > p {
+            position: absolute;
+            left: -3em;
+            bottom: 50%;
+            transform: rotate(-90deg);
+          }
+        }
+
+        .horizontal {
+          position: relative;
+          width: var(--size);
+          height: var(--line-width);
+
+          > p {
+            position: absolute;
+            top: -2em;
+            @include transform-center-horiz;
+          }
+        }
+
+        .graph {
+          path {
+            stroke-width: var(--line-width);
+            fill: none;
+          }
+
+          .mainPath {
+            stroke: var(--line-growing-line);
+          }
+
+          .grid {
+            stroke: var(--line-background);
+          }
+        }
+      }
+    }
+  }
+
+  pre {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-radius: 2px;
+    padding: 3px 9px;
+    margin: 0;
+    width: fit-content;
+    font-size: 12px;
+  }
+
+  p {
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+}

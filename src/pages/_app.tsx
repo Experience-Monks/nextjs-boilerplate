@@ -8,11 +8,11 @@ import '@/styles/global.scss'
 
 import { PageProps } from '@/data/types'
 
-import gsapInit from '@/utils/gsap-init'
 import setBodyClasses from '@/utils/set-body-classes'
 
 import Layout from '@/components/Layout/Layout'
 
+import gsapInit from '@/motion/gsap-init'
 import { store } from '@/redux'
 
 require('default-passive-events')

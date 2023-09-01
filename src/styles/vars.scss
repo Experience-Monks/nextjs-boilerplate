@@ -35,3 +35,13 @@ $element-shadow: 0 16px 16px 0 rgb(0 0 0 / 4%);
 // ====================================================================
 $navbar-height-mobile: px(60);
 $navbar-height-desktop: px(80);
+
+// ====================================================================
+// Eases
+// ====================================================================
+$ease-translate-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-translate-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-opacity-in: cubic-bezier(0.47, 0, 0.745, 0.715);
+$ease-opacity-out: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-swipe-in: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$ease-swipe-out: cubic-bezier(0.19, 1, 0.22, 1);
