@@ -15,18 +15,18 @@ class Service {
     try {
       const config: AwsRumConfig = {
         sessionSampleRate: 1,
-        guestRoleArn: 'arn:aws:iam::319077079874:role/RUM-Monitor-us-east-2-319077079874-9590424274961-Unauth',
-        identityPoolId: 'us-east-2:22b9cadb-77d7-4345-9b6c-88d161a3ea82',
-        endpoint: 'https://dataplane.rum.us-east-2.amazonaws.com',
+        guestRoleArn: process.env.NEXT_PUBLIC_GUEST_ROLE_ARN,
+        identityPoolId: process.env.NEXT_PUBLIC_IDENTITY_POOL,
+        endpoint: process.env.NEXT_PUBLIC_ENDPOINT,
         telemetries: ['performance', 'errors', 'http'],
         allowCookies: cookieConsent,
         enableXRay: false,
         disableAutoPageView: true
       }
 
-      const APPLICATION_ID = 'c1d58c9f-d7f1-4f63-944c-9a939f3562e9'
-      const APPLICATION_VERSION = '1.0.0'
-      const APPLICATION_REGION = 'us-east-2'
+      const APPLICATION_ID = process.env.NEXT_PUBLIC_APP_ID || ''
+      const APPLICATION_VERSION = process.env.NEXT_PUBLIC_APP_VERSION || ''
+      const APPLICATION_REGION = process.env.NEXT_PUBLIC_APP_REGION || ''
 
       this.awsRum = new AwsRum(APPLICATION_ID, APPLICATION_VERSION, APPLICATION_REGION, config)
     } catch (error) {
