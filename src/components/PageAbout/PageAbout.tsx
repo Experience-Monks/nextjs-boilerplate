@@ -6,8 +6,6 @@ import css from './PageAbout.module.scss'
 
 import { Content, PageHandle, PageProps } from '@/data/types'
 
-import AWSRumService from '@/services/aws-rum'
-
 import copy from '@/utils/copy'
 
 export interface PageAboutProps extends PageProps {
@@ -22,10 +20,6 @@ export interface ViewProps extends PageAboutProps {
 export const View: FC<ViewProps> = ({ content, onReady }) => {
   const rootRef = useRef<HTMLElement>(null)
   const handleRef = useRef<PageHandle>(null)
-
-  useEffect(() => {
-    AWSRumService.RecordPageView()
-  }, [])
 
   useEffect(() => {
     gsap.set(rootRef.current, { opacity: 0 })

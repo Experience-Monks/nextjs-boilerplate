@@ -132,7 +132,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   useEffect(() => {
     if (cookieConsent?.statistics) {
       AnalyticsService.start()
-      AWSRumService.start(cookieConsent?.preference)
+      if (process.env.NEXT_PUBLIC_ALLOW_AWS_RUM === 'true') AWSRumService.start(cookieConsent?.preference)
     }
   }, [cookieConsent])
 
