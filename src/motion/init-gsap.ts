@@ -1,28 +1,20 @@
 import { gsap } from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
-import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
-import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
-import { isDevEnv } from '@/utils/runtime-env'
-
-import { customEases } from '@/motion/eases'
+import { customEases } from './eases/eases'
 
 const registerEffect: gsap.RegisterEffect = gsap.registerEffect
 
-function gsapInit() {
+function initGsap() {
   if (typeof window === 'undefined') return
 
-  gsap.registerPlugin(CustomEase, ScrollToPlugin, ScrollTrigger)
-  gsap.defaults({ ease: 'power2.out', duration: 0.333 })
-  gsap.config({ nullTargetWarn: false })
+  gsap.registerPlugin(CustomEase)
+
+  gsap.defaults({ ease: 'none', duration: 1 })
 
   customEases.forEach((ease) => {
     CustomEase.create(ease.name, ease.ease)
   })
-
-  if (isDevEnv()) {
-    window.CustomEase = CustomEase
-  }
 
   registerEffect({
     name: 'fadeIn',
@@ -40,4 +32,4 @@ function gsapInit() {
   })
 }
 
-export default gsapInit
+export default initGsap

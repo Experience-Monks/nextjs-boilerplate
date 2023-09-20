@@ -8,13 +8,15 @@
   --gap: 40px;
 
   // Palette
-  --text-color: #333333;
+  --text-color: #333;
   --background-color: #f7f8fa;
   --dot-color: #2a74da;
   --line-background: #e0e0e0;
   --line-growing-line: #5a5a5a;
+  --curve-color: magenta;
 
   width: 100%;
+  min-height: 100svh;
   padding: var(--padding);
   text-align: left;
   color: var(--text-color);
@@ -29,6 +31,26 @@
     p {
       text-transform: none;
     }
+
+    select {
+      @include font-body;
+      background-color: var(--background-color);
+      border: var(--line-width) solid var(--line-background);
+      border-radius: px(8);
+      color: var(--text-color);
+      padding: px(3) px(10) px(3) px(5);
+      min-width: px(100);
+      max-width: fit-content;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.3s;
+
+      &:hover,
+      &:focus {
+        border-color: var(--dot-color);
+        outline: none;
+      }
+    }
   }
 
   .eases {
@@ -38,7 +60,7 @@
     margin-top: var(--gap);
 
     .curveContainer {
-      outline: 1px dashed magenta;
+      outline: 1px dashed var(--curve-color);
       border-radius: 5px;
       padding: calc(var(--padding) / 2);
       width: min-content;
@@ -108,9 +130,9 @@
           height: var(--line-width);
 
           > p {
+            @include transform-center-horiz;
             position: absolute;
             top: -2em;
-            @include transform-center-horiz;
           }
         }
 

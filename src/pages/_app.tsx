@@ -12,7 +12,7 @@ import setBodyClasses from '@/utils/set-body-classes'
 
 import Layout from '@/components/Layout/Layout'
 
-import gsapInit from '@/motion/gsap-init'
+import gsapInit from '@/motion/init-gsap'
 import { store } from '@/redux'
 
 require('default-passive-events')
