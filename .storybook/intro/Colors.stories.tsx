@@ -7,7 +7,7 @@ import sass from '../../src/utils/sass'
 
 export default { title: 'intro/Colors' }
 
-const Typographies: FC<{}> = () => {
+const Colors: FC<{}> = () => {
   console.log(sass.color)
 
   return (
@@ -24,6 +24,6 @@ const Typographies: FC<{}> = () => {
   )
 }
 
-export const Default: StoryFn<{}> = (args) => <Typographies {...args} />
+export const Default: StoryFn<{}> = (args) => <Colors {...args} />
 
 Default.args = {}

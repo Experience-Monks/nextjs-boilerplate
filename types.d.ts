@@ -1,4 +1,6 @@
 interface Window {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  CustomEase: any
   trustedTypes: any
   fbAsyncInit: any
   dataLayer: Array<object>
@@ -7,4 +9,5 @@ interface Window {
   fbq: any
   FB: any
   WM: any
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 }
