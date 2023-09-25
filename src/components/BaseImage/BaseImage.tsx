@@ -9,7 +9,7 @@ import getOptimizedImageURL, { OptmizedImageEdits } from '@/utils/get-optimized-
 
 import useCombinedRefs from '@/hooks/use-combined-refs'
 
-import assetImports from '#/asset-imports'
+import imageImports from '#/image-imports'
 import publicImageSizes from '#/public-image-sizes.json'
 
 export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
@@ -17,6 +17,7 @@ export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   data?: StaticImageData
   options?: OptmizedImageEdits
   srcWidths?: number[]
+  allowRetina?: boolean
   fetchpriority?: 'high' | 'low' | 'auto'
   skipOptimization?: boolean
   onLoad?: () => void
@@ -34,6 +35,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       decoding = 'async',
       srcWidths,
       skipOptimization = false,
+      allowRetina = true,
       onLoad = noop,
       ...props
     },
@@ -48,7 +50,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
     const imgData = useMemo<StaticImageData | undefined>(() => {
       if (data) return data
       if (src) {
-        if (assetImports[src]) return assetImports[src] as unknown as StaticImageData
+        if (imageImports[src]) return imageImports[src] as unknown as StaticImageData
         const s = src.split('?')[0].split('#')[0]
         const p = publicImageSizes as { [key: string]: { width: number; height: number } | undefined }
         const publicSize = p[src] || p[s]
@@ -72,13 +74,13 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       if (!imgSrc) return []
       if (imgData?.width) {
         if (srcWidths) return srcWidths?.filter((w) => w <= imgData.width)
-        const base = 320
-        if (imgData.width < base) return []
+        if (imgData.width < 32) return []
+        const base = imgData.width > 320 ? 320 : 32
         const hops = Math.floor(imgData.width / base)
         const sizes = [...Array(hops)].map((_, i) => (i + 1) * base)
         return Array.from(new Set([imgData.width, ...sizes])).sort((a, b) => (a > b ? 1 : -1))
       }
-      return srcWidths || [320, 640, 960, 1280, 1600, 1920]
+      return srcWidths || [64, 128, 320, 640, 960, 1280, 1600, 1920]
     }, [imgSrc, imgData, srcWidths])
 
     const optimizedSrcSet = useMemo(() => {
@@ -99,15 +101,17 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       if (imgSrcWidths.length && window.ResizeObserver) {
         observer = new ResizeObserver(() => {
           const elSize = root.clientWidth
-          const curSize = imgSrcWidths.find((s) => s >= elSize)
-          if (curSize) setSize(`${curSize}px`)
+          const curSize = imgSrcWidths.find((s) => s >= elSize) || elSize
+          if (curSize) setSize(`${curSize / (allowRetina ? 1 : window.devicePixelRatio || 1)}px`)
         })
         observer.observe(root)
+      } else if (imgSrc) {
+        setSize('2px')
       }
       return () => {
         observer?.unobserve(root)
       }
-    }, [imgSrcWidths])
+    }, [allowRetina, imgSrc, imgSrcWidths])
 
     useEffect(() => {
       const img = rootRef.current!
@@ -117,7 +121,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         setLoaded(true)
         onLoad()
       }
-      if (!loaded && optimizedSrc) {
+      if (!loaded && optimizedSrc && size !== '1px') {
         const loaded = Boolean(img.complete)
         if (loaded) {
           setLoaded(true)
@@ -131,7 +135,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         img.removeEventListener('load', handleLoad)
         img.removeEventListener('loadedmetadata', handleLoad)
       }
-    }, [optimizedSrc, loaded, onLoad])
+    }, [optimizedSrc, loaded, onLoad, size])
 
     return (
       <img

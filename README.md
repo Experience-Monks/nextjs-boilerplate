@@ -261,10 +261,12 @@ We know sometimes it is hard to keep everything pure. With this in mind our gene
 // MyComponent.tsx
 
 export interface MyComponentProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
 }
 
 export interface ViewProps extends MyComponentProps {
+  // List here the private props that are only settable by the controller component.
   loggedIn: boolean
 }
 

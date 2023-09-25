@@ -9,10 +9,13 @@ import { Content } from '@/data/types'
 import copy from '@/utils/copy'
 
 export interface ScreenNoScriptProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
   content: Content['common']['screenNoScript']
 }
-export interface ViewProps extends ScreenNoScriptProps {}
+export interface ViewProps extends ScreenNoScriptProps {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, content }) => {

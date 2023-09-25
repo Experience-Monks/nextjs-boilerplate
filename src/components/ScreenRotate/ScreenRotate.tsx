@@ -11,11 +11,14 @@ import copy from '@/utils/copy'
 import { device } from '@/utils/detect'
 
 export interface ScreenRotateProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
   content: Content['common']['screenRotate']
 }
 
-export interface ViewProps extends ScreenRotateProps {}
+export interface ViewProps extends ScreenRotateProps {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, content }) => {

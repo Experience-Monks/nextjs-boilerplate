@@ -32,7 +32,9 @@ export const webpackFinal = async (config: Configuration) => {
           }
         ]
       },
-      { test: /\.svg$/i, use: ['@svgr/webpack'] }
+      { test: /\.svg$/i, use: ['@svgr/webpack'] },
+      { test: /\.(glb|gltf|bin|fbx|hdr|exr|woff2|riv|wasm)$/i, type: 'asset/resource' },
+      { test: /\.(glsl|hlsl|vert|frag)$/i, type: 'asset/source' }
     )
   }
 
