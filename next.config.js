@@ -7,11 +7,11 @@ const nextConfig = {
   assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || undefined,
   trailingSlash: true,
   reactStrictMode: false,
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'src/styles')]
-  },
+  sassOptions: { includePaths: [path.join(__dirname, 'src/styles')] },
   webpack(config) {
     config.module.rules.push({ test: /\.svg$/i, use: [{ loader: '@svgr/webpack' }] })
+    config.module.rules.push({ test: /\.(glb|gltf|bin|fbx|hdr|exr|woff2|riv|wasm)$/i, type: 'asset/resource' })
+    config.module.rules.push({ test: /\.(glsl|hlsl|vert|frag)$/i, type: 'asset/source' })
     return config
   }
 }

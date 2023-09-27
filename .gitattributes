@@ -154,6 +154,7 @@ Procfile          text
 *.[tT][iI][fF][fF]  filter=lfs diff=lfs merge=lfs -text
 *.[wW][bB][mM][pP]  filter=lfs diff=lfs merge=lfs -text
 *.[wW][eE][bB][pP]  filter=lfs diff=lfs merge=lfs -text
+*.[rR][iI][vV]      filter=lfs diff=lfs merge=lfs -text
 
 # 3D formats
 *.3[dD][mM]         filter=lfs diff=lfs merge=lfs -text

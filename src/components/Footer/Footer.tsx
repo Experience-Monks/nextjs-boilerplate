@@ -7,11 +7,14 @@ import css from './Footer.module.scss'
 import { Content } from '@/data/types'
 
 export interface FooterProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
   content: Content['common']['footer']
 }
 
-export interface ViewProps extends FooterProps {}
+export interface ViewProps extends FooterProps {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, content }) => {

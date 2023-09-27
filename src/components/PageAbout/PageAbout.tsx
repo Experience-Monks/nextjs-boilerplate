@@ -9,9 +9,12 @@ import { Content, PageHandle, PageProps } from '@/data/types'
 import copy from '@/utils/copy'
 
 export interface PageAboutProps extends PageProps {
+  // List here all props that are public and settable by the Layout component.
   content: Content['pageAbout']
 }
-export interface ViewProps extends PageAboutProps {}
+export interface ViewProps extends PageAboutProps {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ content, onReady }) => {

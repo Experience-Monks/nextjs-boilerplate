@@ -16,12 +16,15 @@ export type NavHandle = {
 }
 
 export interface NavProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
   handleRef?: ForwardedRef<NavHandle>
   content: Content['common']['nav']
 }
 
-export interface ViewProps extends NavProps {}
+export interface ViewProps extends NavProps {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, content, handleRef }) => {

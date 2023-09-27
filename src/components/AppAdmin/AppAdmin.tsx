@@ -10,10 +10,12 @@ import { getRuntimeEnv, isDevEnv } from '@/utils/runtime-env'
 import useWindowSize from '@/hooks/use-window-size'
 
 export interface AppAdminProps {
+  // List here all props that are public and settable by the parent component.
   className?: string
 }
 
 export interface ViewProps extends AppAdminProps {
+  // List here the private props that are only settable by the controller component.
   env: string
   date: string
   commit: string

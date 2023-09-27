@@ -22,13 +22,16 @@ export type {{name_pc}}Handle = {
 
 {{/if}}
 export interface {{name_pc}}Props {
+  // List here all props that are public and settable by the parent component.
   className?: string
 {{#if imperativeHandle}}
   handleRef?: ForwardedRef<{{name_pc}}Handle>
 {{/if}}
 }
 
-export interface ViewProps extends {{name_pc}}Props {}
+export interface ViewProps extends {{name_pc}}Props {
+  // List here the private props that are only settable by the controller component.
+}
 
 // View (pure and testable component, receives props from the controller)
 {{#if forwardRef}}

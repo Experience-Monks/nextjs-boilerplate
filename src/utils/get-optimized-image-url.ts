@@ -39,6 +39,7 @@ export type OptmizedImageEdits = {
   ensureAlpha?: number
   extractChannel?: 'red' | 'green' | 'blue' | 'alpha'
   bandbool?: 'and' | 'or' | 'eor'
+  webp?: { quality: number; effort: 0 | 1 | 2 | 3 | 4 | 5 | 6 }
 }
 
 function getOptimizedImageURL(src: string, edits?: OptmizedImageEdits) {
@@ -51,7 +52,10 @@ function getOptimizedImageURL(src: string, edits?: OptmizedImageEdits) {
     return src
   }
 
-  let settings = JSON.stringify({ key: `${src.replace(/\//, '')}`, edits })
+  let settings = JSON.stringify({
+    key: `${src.replace(/\//, '')}`,
+    edits: { ...(edits || {}), webp: edits?.webp || { quality: 90, effort: 5 } }
+  })
 
   // https://stackoverflow.com/a/36941639
   // Base64 will add a / if we have a question mark in a position divisible by three.
