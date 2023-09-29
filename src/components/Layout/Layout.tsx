@@ -13,6 +13,7 @@ import { PageHandle, PageProps } from '@/data/types'
 import AnalyticsService from '@/services/analytics'
 
 import { getScrollTop } from '@/utils/basic-functions'
+import { fontVariables } from '@/utils/fonts'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
@@ -133,7 +134,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   }, [cookieConsent])
 
   return (
-    <div className={classNames('Layout', css.root)} ref={rootRef}>
+    <div className={classNames('Layout', css.root, fontVariables)} ref={rootRef}>
       <Head {...pageProps.head} />
 
       <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
