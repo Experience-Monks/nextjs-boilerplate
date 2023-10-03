@@ -1,0 +1,270 @@
+# BASED ON 
+# https://github.com/alexkaratarakis/gitattributes/blob/master/Web.gitattributes
+# https://gist.github.com/inikitin/7dff06ef9b776b2d9ab92983f525c256
+
+# Details per file setting:
+#   text    These files should be normalized (i.e. convert CRLF to LF).
+#   binary  These files are binary and should be left untouched.
+#
+# Note that binary is a macro for -text -diff.
+######################################################################
+
+# Auto detect
+##   Handle line endings automatically for files detected as
+##   text and leave all files detected as binary untouched.
+##   This will handle all files NOT defined below.
+*                 text=auto
+
+# Source code
+*.bash            text eol=lf
+*.bat             text eol=crlf
+*.cmd             text eol=crlf
+*.coffee          text
+*.css             text diff=css
+*.htm             text diff=html
+*.html            text diff=html
+*.inc             text
+*.ini             text
+*.js              text
+*.json            text
+*.jsx             text
+*.less            text
+*.ls              text
+*.map             text -diff
+*.od              text
+*.onlydata        text
+*.php             text diff=php
+*.pl              text
+*.ps1             text eol=crlf
+*.py              text diff=python
+*.rb              text diff=ruby
+*.sass            text
+*.scm             text
+*.scss            text diff=css
+*.sh              text eol=lf
+.husky/*          text eol=lf
+*.sql             text
+*.styl            text
+*.tag             text
+*.ts              text
+*.tsx             text
+*.xml             text
+*.xhtml           text diff=html
+
+# Docker
+Dockerfile        text
+
+# Documentation
+*.ipynb           text
+*.markdown        text diff=markdown
+*.md              text diff=markdown
+*.mdwn            text diff=markdown
+*.mdown           text diff=markdown
+*.mkd             text diff=markdown
+*.mkdn            text diff=markdown
+*.mdtxt           text
+*.mdtext          text
+*.txt             text
+AUTHORS           text
+CHANGELOG         text
+CHANGES           text
+CONTRIBUTING      text
+COPYING           text
+copyright         text
+*COPYRIGHT*       text
+INSTALL           text
+license           text
+LICENSE           text
+NEWS              text
+readme            text
+*README*          text
+TODO              text
+
+# Templates
+*.dot             text
+*.ejs             text
+*.erb             text
+*.haml            text
+*.handlebars      text
+*.hbs             text
+*.hbt             text
+*.jade            text
+*.latte           text
+*.mustache        text
+*.njk             text
+*.phtml           text
+*.svelte          text
+*.tmpl            text
+*.tpl             text
+*.twig            text
+*.vue             text
+
+# Configs
+*.cnf             text
+*.conf            text
+*.config          text
+.editorconfig     text
+.env              text
+.gitattributes    text
+.gitconfig        text
+.htaccess         text
+*.lock            text -diff
+package.json      text eol=lf
+package-lock.json text eol=lf -diff
+pnpm-lock.yaml    text eol=lf -diff
+.prettierrc       text
+yarn.lock         text -diff
+*.toml            text
+*.yaml            text
+*.yml             text
+browserslist      text
+[mM]akefile       text
+
+# Heroku
+Procfile          text
+
+# Graphics
+*.[aA][iI]          filter=lfs diff=lfs merge=lfs -text
+*.[aA][pP][nN][gG]  filter=lfs diff=lfs merge=lfs -text
+*.[aA][vV][iI][fF]  filter=lfs diff=lfs merge=lfs -text
+*.[bB][mM][pP]      filter=lfs diff=lfs merge=lfs -text
+*.[dD][dD][sS]      filter=lfs diff=lfs merge=lfs -text
+*.[eE][pP][sS]      filter=lfs diff=lfs merge=lfs -text
+*.[eE][xX][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[gG][iI][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[gG][iI][fF][vV]  filter=lfs diff=lfs merge=lfs -text
+*.[hH][dD][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[iI][cC][oO]      filter=lfs diff=lfs merge=lfs -text
+*.[iI][fF][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[jJ][nN][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[jJ][pP]2         filter=lfs diff=lfs merge=lfs -text
+*.[jJ][pP][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[jJ][pP][eE][gG]  filter=lfs diff=lfs merge=lfs -text
+*.[jJ][pP][xX]      filter=lfs diff=lfs merge=lfs -text
+*.[jJ][xX][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][dD][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][iI][cC][tT]  filter=lfs diff=lfs merge=lfs -text
+*.[pP][nN][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][sS][bB]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][sS][dD]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][vV][gG]      text
+*.[sS][vV][gG][zZ]  filter=lfs diff=lfs merge=lfs -text
+*.[tT][gG][aA]      filter=lfs diff=lfs merge=lfs -text
+*.[tT][iI][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[tT][iI][fF][fF]  filter=lfs diff=lfs merge=lfs -text
+*.[wW][bB][mM][pP]  filter=lfs diff=lfs merge=lfs -text
+*.[wW][eE][bB][pP]  filter=lfs diff=lfs merge=lfs -text
+*.[rR][iI][vV]      filter=lfs diff=lfs merge=lfs -text
+
+# 3D formats
+*.3[dD][mM]         filter=lfs diff=lfs merge=lfs -text
+*.3[dD][sS]         filter=lfs diff=lfs merge=lfs -text
+*.[aA][bB][cC]      filter=lfs diff=lfs merge=lfs -text
+*.[bB][lL][eE][nN][dD] filter=lfs diff=lfs merge=lfs -text
+*.[cC]4[dD]         filter=lfs diff=lfs merge=lfs -text
+*.[cC][oO][lL][lL][aA][dD][aA] filter=lfs diff=lfs merge=lfs -text
+*.[dD][aA][eE]      filter=lfs diff=lfs merge=lfs -text
+*.[dD][xX][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[fF][bB][xX]      filter=lfs diff=lfs merge=lfs -text
+*.[gG][lL][bB]      filter=lfs diff=lfs merge=lfs -text
+*.[jJ][aA][sS]      filter=lfs diff=lfs merge=lfs -text
+*.[lL][wW][oO]      filter=lfs diff=lfs merge=lfs -text
+*.[lL][wW][oO]2     filter=lfs diff=lfs merge=lfs -text
+*.[lL][wW][sS]      filter=lfs diff=lfs merge=lfs -text
+*.[lL][xX][oO]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][aA]          filter=lfs diff=lfs merge=lfs -text
+*.[mM][aA][xX]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][bB]          filter=lfs diff=lfs merge=lfs -text
+*.[oO][bB][jJ]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][lL][yY]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][kK][pP]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][tT][lL]      filter=lfs diff=lfs merge=lfs -text
+*.[zZ][tT][lL]      filter=lfs diff=lfs merge=lfs -text
+
+# Audio
+*.[aA][iI][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[aA][iI][fF][fF]  filter=lfs diff=lfs merge=lfs -text
+*.[bB][aA][nN][kK]  filter=lfs diff=lfs merge=lfs -text
+*.[iI][tT]          filter=lfs diff=lfs merge=lfs -text
+*.[kK][aA][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[mM]4[aA]         filter=lfs diff=lfs merge=lfs -text
+*.[mM][iI][dD]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][iI][dD][iI]  filter=lfs diff=lfs merge=lfs -text
+*.[mM][oO][dD]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][pP]3         filter=lfs diff=lfs merge=lfs -text
+*.[oO][gG][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[rR][aA]          filter=lfs diff=lfs merge=lfs -text
+*.[sS]3[mM]         filter=lfs diff=lfs merge=lfs -text
+*.[wW][aA][vV]      filter=lfs diff=lfs merge=lfs -text
+*.[xX][mM]          filter=lfs diff=lfs merge=lfs -text
+
+# Video
+*.3[gG][pP]         filter=lfs diff=lfs merge=lfs -text
+*.3[gG][pP][pP]     filter=lfs diff=lfs merge=lfs -text
+*.[aA][sS]          filter=lfs diff=lfs merge=lfs -text
+*.[aA][sS][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[aA][sS][xX]      filter=lfs diff=lfs merge=lfs -text
+*.[aA][vV][iI]      filter=lfs diff=lfs merge=lfs -text
+*.[fF][lL][aA]      filter=lfs diff=lfs merge=lfs -text
+*.[fF][lL][vV]      filter=lfs diff=lfs merge=lfs -text
+*.[mM]4[vV]         filter=lfs diff=lfs merge=lfs -text
+*.[mM][nN][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][oO][vV]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][pP]4         filter=lfs diff=lfs merge=lfs -text
+*.[mM][pP][eE][gG]  filter=lfs diff=lfs merge=lfs -text
+*.[mM][pP][gG]      filter=lfs diff=lfs merge=lfs -text
+*.[oO][gG][vV]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][wW][cC]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][wW][fF]      filter=lfs diff=lfs merge=lfs -text
+*.[wW][eE][bB][mM]  filter=lfs diff=lfs merge=lfs -text
+*.[wW][mM][vV]      filter=lfs diff=lfs merge=lfs -text
+
+# Archives
+*.7[zZ]             filter=lfs diff=lfs merge=lfs -text
+*.[bB][zZ]2         filter=lfs diff=lfs merge=lfs -text
+*.[gG][zZ]          filter=lfs diff=lfs merge=lfs -text
+*.[jJ][aA][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[rR][aA][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[tT][aA][rR]      filter=lfs diff=lfs merge=lfs -text
+*.[tT][aA][rR].[gG][zZ] filter=lfs diff=lfs merge=lfs -text
+*.[zZ][iI][pP]      filter=lfs diff=lfs merge=lfs -text
+
+# Build
+*.[dD][lL][lL]      filter=lfs diff=lfs merge=lfs -text
+*.[mM][dD][bB]      filter=lfs diff=lfs merge=lfs -text
+*.[pP][dD][bB]      filter=lfs diff=lfs merge=lfs -text
+*.[sS][oO]          filter=lfs diff=lfs merge=lfs -text
+
+# Fonts
+*.[tT][tT][fF]      binary
+*.[eE][oO][tT]      binary
+*.[oO][tT][fF]      binary
+*.[wW][oO][fF][fF]  binary
+*.[wW][oO][fF][fF]2 binary
+
+# Executables
+*.[eE][xX][eE]      binary
+*.[pP][yY][cC]      binary
+
+# RC files (like .babelrc or .eslintrc)
+*.*rc               text
+
+# Ignore files (like .npmignore or .gitignore)
+*.*ignore           text
+
+docs/logo.jpg                                 binary
+public/common/assets/images/share-image.jpg   binary
+public/common/favicons/apple-touch-icon.png   binary
+public/common/favicons/favicon-144x144.png    binary
+public/common/favicons/favicon-150x150.png    binary
+public/common/favicons/favicon-16x16.png      binary
+public/common/favicons/favicon-192x192.png    binary
+public/common/favicons/favicon-32x32.png      binary
+public/common/favicons/favicon-384x384.png    binary
+public/common/favicons/favicon-512x512.png    binary
+public/common/favicons/favicon.ico            binary
+src/assets/images/github-icon-64.png          binary
+src/assets/images/github-icon-64b.png         binary
+src/assets/images/jam3-logo-500.png           binary
+src/assets/images/npm-icon-64b.png            binary
+src/assets/images/three-logo.jpeg             binary
