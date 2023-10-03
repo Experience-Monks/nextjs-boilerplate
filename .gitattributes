@@ -251,3 +251,21 @@ Procfile          text
 
 # Ignore files (like .npmignore or .gitignore)
 *.*ignore           text
+
+# Ignore boilerplate binary files
+docs/logo.jpg                                 binary
+public/common/assets/images/share-image.jpg   binary
+public/common/favicons/apple-touch-icon.png   binary
+public/common/favicons/favicon-144x144.png    binary
+public/common/favicons/favicon-150x150.png    binary
+public/common/favicons/favicon-16x16.png      binary
+public/common/favicons/favicon-192x192.png    binary
+public/common/favicons/favicon-32x32.png      binary
+public/common/favicons/favicon-384x384.png    binary
+public/common/favicons/favicon-512x512.png    binary
+public/common/favicons/favicon.ico            binary
+src/assets/images/github-icon-64.png          binary
+src/assets/images/github-icon-64b.png         binary
+src/assets/images/jam3-logo-500.png           binary
+src/assets/images/npm-icon-64b.png            binary
+src/assets/images/three-logo.jpeg             binary
