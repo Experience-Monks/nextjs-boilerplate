@@ -8,6 +8,8 @@ import '@/styles/global.scss'
 import gsapInit from '@/motion/init-gsap'
 import setBodyClasses from '@/utils/set-body-classes'
 
+import { fontVariables } from '@/utils/fonts'
+
 export const parameters = {
   options: {
     storySort: {
@@ -70,9 +72,11 @@ export const decorators = [
   },
   (Story: StoryFn) => {
     return (
-      <Provider store={store}>
-        <Story />
-      </Provider>
+      <div className={fontVariables}>
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      </div>
     )
   }
 ]
