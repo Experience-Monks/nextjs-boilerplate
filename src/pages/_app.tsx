@@ -1,12 +1,15 @@
 import { FC, useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
 import 'normalize.css'
 
 import '@/styles/global.scss'
 
 import { PageProps } from '@/data/types'
+
+import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
@@ -21,6 +24,12 @@ gsapInit()
 
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_ALLOW_AWS_RUM === 'true') AWSRumService.RecordPageView(router.pathname)
+  }, [router])
+
   useEffect(() => {
     // Body class names
     setBodyClasses()

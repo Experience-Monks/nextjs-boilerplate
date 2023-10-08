@@ -34,8 +34,7 @@ class Service {
     }
   }
 
-  RecordPageView() {
-    const location = window.location.pathname
+  RecordPageView(location: string) {
     this.awsRum?.recordPageView(location)
   }
 }
