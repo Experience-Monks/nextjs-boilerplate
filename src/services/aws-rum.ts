@@ -16,9 +16,9 @@ class Service {
       const config: AwsRumConfig = {
         sessionSampleRate: 1,
         guestRoleArn: process.env.NEXT_PUBLIC_GUEST_ROLE_ARN,
-        identityPoolId: process.env.NEXT_PUBLIC_IDENTITY_POOL,
+        identityPoolId: process.env.NEXT_PUBLIC_IDENTITY_POOL_ID,
         endpoint: process.env.NEXT_PUBLIC_ENDPOINT,
-        telemetries: ['performance', 'errors', 'http'],
+        telemetries: ['http', 'errors', 'performance'],
         allowCookies: cookieConsent,
         enableXRay: false,
         disableAutoPageView: true
