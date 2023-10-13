@@ -1,4 +1,4 @@
-# BASED ON 
+# BASED ON
 # https://github.com/alexkaratarakis/gitattributes/blob/master/Web.gitattributes
 # https://gist.github.com/inikitin/7dff06ef9b776b2d9ab92983f525c256
 
@@ -266,6 +266,6 @@ public/common/favicons/favicon-512x512.png    !filter !diff !merge binary
 public/common/favicons/favicon.ico            !filter !diff !merge binary
 src/assets/images/github-icon-64.png          !filter !diff !merge binary
 src/assets/images/github-icon-64b.png         !filter !diff !merge binary
-src/assets/images/jam3-logo-500.png           !filter !diff !merge binary
+src/assets/images/experience-logo-500.png     !filter !diff !merge binary
 src/assets/images/npm-icon-64b.png            !filter !diff !merge binary
-src/assets/images/three-logo.jpeg             !filter !diff !merge binary
+src/assets/images/x-logo.png                  !filter !diff !merge binary
