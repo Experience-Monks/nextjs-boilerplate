@@ -1,7 +1,7 @@
 import NextHead from 'next/head'
 /**
  * NOTE:
- * This ContentSecurityPolicy allows frontend developers to experience with Jam3 CSP rules in local environment.
+ * This ContentSecurityPolicy allows frontend developers to experience with Experience.Monks CSP rules in local environment.
  * The benefit is that frontend developer can identify what CSP problems will occur in the live environment in advance.
  * When modifying CSP content below, please tell TA or Devops developer in the project to update the Security Header lambda@Edge function.
  */

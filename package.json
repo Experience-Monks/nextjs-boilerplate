@@ -1,5 +1,5 @@
 {
-  "name": "jam3-dev",
+  "name": "experience-monks-dev",
   "version": "9.0.0",
   "license": "MIT",
   "private": true,
@@ -38,11 +38,11 @@
     "npm": ">=8.11.0"
   },
   "bugs": {
-    "url": "https://github.com/Jam3/nextjs-boilerplate/issues"
+    "url": "https://github.com/Experience-Monks/nextjs-boilerplate/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jam3/nextjs-boilerplate.git"
+    "url": "git+https://github.com/Experience-Monks/nextjs-boilerplate.git"
   },
   "browserslist": [
     ">0.2%",
