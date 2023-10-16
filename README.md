@@ -4,11 +4,11 @@
   </a>
 </p>
 
-# Jam3 NextJS Generator
+# Experience.Monks NextJS Generator
 
-![GitHub](https://img.shields.io/github/license/jam3/nyg-nextjs)
+![GitHub](https://img.shields.io/github/license/Experience-Monks/nextjs-boilerplate)
 
-> Boilerplate for React, Static and Server Side Rendered projects with NextJS
+> NextJS Boilerplate for static and server side rendered projects
 
 > https://generator.jam3.net
 
@@ -113,7 +113,7 @@ In order to save time developing it is highly recommended to have proper linters
 ## Clone the GitHub repository
 
 ```properties
-$ git clone git@github.com:Jam3/prj-3-248-jam3-lab-coding-with-ai-frontend.git
+$ git clone git@github.com:Experience-Monks/nextjs-boilerplate.git
 ```
 
 ### &nbsp;

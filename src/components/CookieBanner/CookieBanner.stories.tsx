@@ -16,7 +16,7 @@ Default.argTypes = {}
 export const WithChildren: StoryFn<CookieBannerProps> = (args) => (
   <CookieBanner {...args}>
     We use cookies on this website to improve your experience. Learn more on our{' '}
-    <a href="https://www.jam3.com/privacy" target="_blank'">
+    <a href="https://media.monks.com/privacy-policy" target="_blank'">
       Privacy Policy
     </a>
     .

@@ -1,4 +1,4 @@
-# Jam3 Generator Developer Guide
+# Experience.Monks Generator Developer Guide
 
 In this guide you will find the explanation behind every feature of the boilerplate and how to use it. To checkout the
 [base user guide](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md)
@@ -6,29 +6,25 @@ follow the link.
 
 ## Table of Contents
 
-* [Folder Structure](#folder-structure)
-* [NPM Dependencies](#npm-dependencies)
-* [Code styling](#code-styling)
-* [Nodejs and npm](#nodejs-and-npm)
-* [Git and LFS](#git-and-lfs)
-* [Build scripts](#build-scripts)
-* [Built-in Customizations](#built-in-customizations)
-* [Components creation](#components-creation)
-* [Storybook](#storybook)
-* [Performance](#performance)
-* [Responsiveness](#responsiveness)
-* [Unsupporting strategy](#unsupporting-strategy)
-* [Animations](#animations)
-* [React-Redux-Router](#react-redux-router)
-* [Assets](#assets)
-* [General documentation](#general-documentation)
-* [Styling structure](#styling-structure)
+- [Folder Structure](#folder-structure)
+- [NPM Dependencies](#npm-dependencies)
+- [Code styling](#code-styling)
+- [Nodejs and npm](#nodejs-and-npm)
+- [Git and LFS](#git-and-lfs)
+- [Build scripts](#build-scripts)
+- [Built-in Customizations](#built-in-customizations)
+- [Components creation](#components-creation)
+- [Storybook](#storybook)
+- [Performance](#performance)
+- [Responsiveness](#responsiveness)
+- [Unsupporting strategy](#unsupporting-strategy)
+- [Animations](#animations)
+- [React-Redux-Router](#react-redux-router)
+- [Assets](#assets)
+- [General documentation](#general-documentation)
+- [Styling structure](#styling-structure)
 
 ## Folder Structure
-
-The idea of the generator is don't create magic in order to compose the final boilerplate, based on that idea everything
-that is inside [templates](https://github.com/Jam3/nyg-jam3/tree/master/templates) will be what we will
-generate.
 
 ## NPM Dependencies
 
@@ -68,9 +64,9 @@ generate.
 
 The dependendencies are structured in the following way:
 
-* dependencies: Actual packages used in the final bundle, let's keep it clean
-* devDependencies: Dependencies used to create the final bundle, including linting, security, etc
-* optionalDependencies: Dependencies used in development but not needed it to create the final bundle, also help scripts
+- dependencies: Actual packages used in the final bundle, let's keep it clean
+- devDependencies: Dependencies used to create the final bundle, including linting, security, etc
+- optionalDependencies: Dependencies used in development but not needed it to create the final bundle, also help scripts
 
 ### CI
 
@@ -81,12 +77,12 @@ Strongly recommend to run `npm i --no-optional --no-package-lock` in your CI pro
 
 In order to ensure the same code styling across the duration of the project we are using the next technologies:
 
-* ESLint - JS Linter, `.eslintrc`
-* StyleLint - Sass Linter, `.stylelintrc`
-* Prettier - Code Formatter, `.prettierrc`
-* EditorConfig - IDE|Editor configuration, `.editorconfig`
+- ESLint - JS Linter, `.eslintrc`
+- StyleLint - Sass Linter, `.stylelintrc`
+- Prettier - Code Formatter, `.prettierrc`
+- EditorConfig - IDE|Editor configuration, `.editorconfig`
 
-More information about the linters [here](https://github.com/Jam3/standards/blob/master/LINTERS_STANDARDS.md)
+More information about the linters [here](https://github.com/Experience-Monks/standards/blob/master/LINTERS_STANDARDS.md)
 
 ## Nodejs and npm
 
@@ -99,15 +95,15 @@ control updates. More information [here](https://docs.npmjs.com/files/npmrc)
 
 ## Git and LFS
 
-To know more about the (Jam3 Git Standards)[https://github.com/Jam3/standards/blob/master/GIT_STANDARD.md] follow the
+To know more about the (Experience.Monks Git Standards)[https://github.com/Experience-Monks/standards/blob/master/GIT_STANDARD.md] follow the
 link.
 
 We have included a default `.gitignore` ordered by topic, please follow this format to keep it consistent.
 
 You will find the Git LFS configuration in `.gitattribute`, currently we are tracking the files inside:
 
-* src/assets/sounds
-* src/assets/videos
+- src/assets/sounds
+- src/assets/videos
 
 Before you add your files to Git LFS have in mind a couple options:
 
