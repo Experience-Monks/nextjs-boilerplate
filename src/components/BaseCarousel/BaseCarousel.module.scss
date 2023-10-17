@@ -1,0 +1,28 @@
+@import 'shared';
+
+.root {
+  --ease: 'ease-out';
+
+  display: block;
+  width: 100%;
+  touch-action: pan-y;
+
+  .swiperContainer {
+    z-index: 1; // @NOTE: Fix for web-kit flickering
+    display: block;
+    cursor: grab;
+
+    .swiperWrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.3s var(--ease);
+
+      .swiperSlide {
+        flex-shrink: 0;
+        transition: transform 0.3s var(--ease);
+      }
+    }
+  }
+}
