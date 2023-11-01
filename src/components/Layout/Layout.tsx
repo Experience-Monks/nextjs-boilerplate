@@ -11,7 +11,6 @@ import css from './Layout.module.scss'
 import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
-import AWSRumService from '@/services/aws-rum'
 
 import { getScrollTop } from '@/utils/basic-functions'
 
@@ -130,10 +129,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   // start analytics
   useEffect(() => {
-    if (cookieConsent?.statistics) {
-      AnalyticsService.start()
-      if (process.env.NEXT_PUBLIC_ALLOW_AWS_RUM === 'true') AWSRumService.start(cookieConsent?.preference)
-    }
+    if (cookieConsent?.statistics) AnalyticsService.start()
   }, [cookieConsent])
 
   return (
