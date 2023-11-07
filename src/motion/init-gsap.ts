@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
 
-import { customEases } from './eases/eases'
+import { customEases, favouriteEases } from './eases/eases'
 
 const registerEffect: gsap.RegisterEffect = gsap.registerEffect
 
@@ -11,6 +11,10 @@ function initGsap() {
   gsap.registerPlugin(CustomEase)
 
   gsap.defaults({ ease: 'none', duration: 1 })
+
+  favouriteEases.forEach((ease) => {
+    CustomEase.create(ease.name, ease.ease)
+  })
 
   customEases.forEach((ease) => {
     CustomEase.create(ease.name, ease.ease)
