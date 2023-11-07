@@ -14,11 +14,7 @@ function initGsap() {
     CustomEase.create(ease.name, ease.ease)
   })
 
-  if (!process.env.STORYBOOK) {
-    // Register only the effects you need.
-    // Storybook will register all effects in .storybook/intro/Effects.stories.tsx
-    gsap.registerEffect(require('@/motion/effects/fade/fadeIn/fadeIn').default)
-  }
+  gsap.registerEffect(require('@/motion/effects/fade/fadeIn/fadeIn').default)
 }
 
 export default initGsap
