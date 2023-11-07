@@ -10,7 +10,7 @@ import getLayout, { ssrLayout } from '@/utils/get-layout'
  * @returns {object} Current layout object
  *
  * Example:
- * import useLayout from '@/utils/use-layout';
+ * import useLayout from '@/hooks/use-layout';
  * const layout = useLayout();
  */
 function useLayout() {
