@@ -1,9 +1,7 @@
+/* stylelint-disable custom-property-pattern */
 @use 'sass:list';
+@use 'sass:string';
 
-// Sass Mixins
-// More information about mixins in:
-// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#mixins
-// Add comment to every function
 @import 'vars';
 
 /// Media queries
@@ -86,12 +84,69 @@
   height: $height;
 }
 
+/// position, top, left, width, height shorthand
+/// @example scss Input
+///   element {
+///     @include rect(absolute, 0, 0, 100%, 100%);
+///   }
+@mixin rect($position: null, $top: null, $left: null, $width: null, $height: null) {
+  @if $position {
+    position: $position;
+  }
+
+  @if $top {
+    top: $top;
+  }
+
+  @if $left {
+    left: $left;
+  }
+
+  @include box($width, $height);
+}
+
+/// opacity and visibility shorthand
+/// @example scss Input
+///   element {
+///     @include auto-alpha(1);
+///   }
+@mixin auto-alpha($value: 1, $time: null, $easing: $ease-out-expo) {
+  opacity: $value;
+  visibility: if($value <= 0.01, hidden, visible);
+  pointer-events: if($value <= 0.01, none, auto);
+
+  @if $time {
+    transition: opacity $time $easing, visibility $time $easing, pointer-events $time $easing;
+  }
+}
+
+/// text-shadow shorthand with defaults
+/// @example scss Input
+///   .title {
+///     @include text-shadow;
+///   }
+@mixin text-shadow($x: 0, $y: 0, $blur: px(20), $color: rgba($black, 0.1)) {
+  text-shadow: $x $y $blur $color;
+}
+
+/// box-shadow shorthand with defaults
+/// @example scss Input
+///   .content {
+///     @include box-shadow;
+///   }
+@mixin box-shadow($x: 0, $y: 0, $blur: px(20), $color: rgba($black, 0.1)) {
+  box-shadow: $x $y $blur $color;
+}
+
 /// Set top and left to 0
 /// @example scss Input
 ///   element {
 ///     @include position-0;
 ///   }
-@mixin position-0 {
+@mixin position-0($position: null) {
+  @if $position {
+    position: $position;
+  }
   top: 0;
   left: 0;
 }
@@ -102,10 +157,9 @@
 ///   element {
 ///     @include position-100(absolute);
 ///   }
-@mixin position-100($pos: relative) {
-  @include position-0;
+@mixin position-100($position: relative) {
+  @include position-0($position);
   @include box(100%);
-  position: $pos;
 }
 
 /// Set display flex and center children horizontally and vertically
@@ -113,10 +167,14 @@
 ///   element {
 ///     @include flex-center;
 ///   }
-@mixin flex-center {
+@mixin flex-center($direction: null) {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @if $direction {
+    flex-direction: $direction;
+  }
 }
 
 /// Set display flex and center children vertically
@@ -144,10 +202,13 @@
 ///   element {
 ///     @include transform-center;
 ///   }
-@mixin transform-center {
+@mixin transform-center($position: null, $extra-transform: null) {
+  @if $position {
+    position: $position;
+  }
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate3d(-50%, -50%, 0) $extra-transform;
 }
 
 /// Set vertical center of its element
@@ -155,9 +216,12 @@
 ///   element {
 ///     @include transform-center-vert;
 ///   }
-@mixin transform-center-vert {
+@mixin transform-center-vert($position: null, $extra-transform: null) {
+  @if $position {
+    position: $position;
+  }
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0) $extra-transform;
 }
 
 /// Set horizontal center of its element
@@ -165,9 +229,12 @@
 ///   element {
 ///     @include transform-center-horiz;
 ///   }
-@mixin transform-center-horiz {
+@mixin transform-center-horiz($position: null, $extra-transform: null) {
+  @if $position {
+    position: $position;
+  }
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0) $extra-transform;
 }
 
 /// Set z-index value in order of $element variable
@@ -176,28 +243,51 @@
 ///     @include z-index(modal);
 ///   }
 @mixin z-index($id) {
-  $elements: pages, nav, modal, notification, nonfunctional, noscript;
+  $elements: pages, nav, modal, notification, loading, nonfunctional, cookie, noscript;
   z-index: list.index($elements, $id);
 }
 
-/// Reset button's look
-/// @example scss Input
-///   button {
-///     @include reset-button;
-///   }
-@mixin reset-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-color: transparent;
-  padding: 0;
-  text-align: inherit;
-  letter-spacing: inherit;
-  font-size: inherit;
-  text-transform: inherit;
-  display: inline-block;
-  margin: 0;
-  text-decoration: none;
-  appearance: none;
-  color: currentcolor;
+@mixin default-outline() {
+  outline: 1px dotted #212121;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+@mixin discreet-scrollbar() {
+  --scrollbar-width: 10px;
+  --scrollbar-color: rgba(255, 255, 255, 0.4);
+  --scrollbar-color-hover: rgba(255, 255, 255, 0.4);
+  --scrollbar-track-color: transparent;
+
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+  }
+
+  &::-webkit-scrollbar-track {
+    // Track
+    background-color: var(--scrollbar-track-color);
+    padding: 0 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    // Handle
+    background-color: var(--scrollbar-color);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    border: 3px solid var(--scrollbar-track-color);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    // Handle on hover
+    background-color: var(--scrollbar-color-hover);
+  }
+
+  /* Firefox */
+  scrollbar-color: var(--scrollbar-color) var(--scrollbar-track-color);
+  scrollbar-width: thin; // none
+}
+
+@mixin text-outline($color: $white, $size: 1px) {
+  -webkit-text-stroke-width: $size;
+  -webkit-text-stroke-color: $color;
+  color: transparent;
 }
