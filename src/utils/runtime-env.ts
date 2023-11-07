@@ -9,15 +9,15 @@ export function getRuntimeEnv(): RuntimeEnv {
   const prefix = window.location.hostname.split('.')[0]
 
   if (/^(localhost|\d)/i.test(prefix)) {
-    result = 'local';
+    result = 'local'
   } else if (/^(uat|prd|prod|www|or-the-project-subdomain)/i.test(prefix)) {
-    result = 'prod';
+    result = 'prod'
   } else if (/^(stag|stg)/i.test(prefix)) {
-    result = 'stage';
+    result = 'stage'
   } else if (/^(dev)/i.test(prefix)) {
-    result = 'dev';
+    result = 'dev'
   } else {
-    result = prefix as RuntimeEnv;
+    result = prefix as RuntimeEnv
   }
 
   return result
