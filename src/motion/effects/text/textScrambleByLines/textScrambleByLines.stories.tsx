@@ -8,7 +8,7 @@ import eases from '@/motion/eases/eases'
 
 import textScrambleByLines from './textScrambleByLines'
 
-export default { title: 'motion/effects/text/textScrambleByLines' }
+export default { title: 'motion/Effects/text/textScrambleByLines' }
 
 gsap.registerEffect(textScrambleByLines)
 

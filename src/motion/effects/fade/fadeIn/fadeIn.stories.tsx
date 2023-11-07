@@ -8,7 +8,7 @@ import BaseImage from '@/components/BaseImage/BaseImage'
 
 import fadeIn from './fadeIn'
 
-export default { title: 'motion/effects/fade/fadeIn' }
+export default { title: 'motion/Effects/fade/fadeIn' }
 
 gsap.registerEffect(fadeIn)
 

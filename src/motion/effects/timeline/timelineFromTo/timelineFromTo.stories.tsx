@@ -8,7 +8,7 @@ import BaseImage from '@/components/BaseImage/BaseImage'
 
 import timelineFromTo from './timelineFromTo'
 
-export default { title: 'motion/effects/timeline/timelineFromTo' }
+export default { title: 'motion/Effects/timeline/timelineFromTo' }
 
 gsap.registerEffect(timelineFromTo)
 

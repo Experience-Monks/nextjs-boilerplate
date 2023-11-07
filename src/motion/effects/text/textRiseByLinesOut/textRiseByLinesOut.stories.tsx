@@ -8,7 +8,7 @@ import eases from '@/motion/eases/eases'
 
 import textRiseByLinesOut from './textRiseByLinesOut'
 
-export default { title: 'motion/effects/text/textRiseByLinesOut' }
+export default { title: 'motion/Effects/text/textRiseByLinesOut' }
 
 gsap.registerEffect(textRiseByLinesOut)
 

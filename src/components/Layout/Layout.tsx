@@ -25,6 +25,7 @@ import Nav, { NavHandle } from '@/components/Nav/Nav'
 
 import { setPrevRoute, useAppDispatch } from '@/redux'
 
+const ScreenIntro = dynamic(() => import('@/components/ScreenIntro/ScreenIntro'), { ssr: false })
 const ScreenRotate = dynamic(() => import('@/components/ScreenRotate/ScreenRotate'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false })
 const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false })
@@ -33,6 +34,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
+  const [introComplete, setIntroComplete] = useState(false)
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
   const rootRef = useRef<HTMLDivElement>(null)
@@ -45,6 +47,10 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const scrollRestorationTimeoutRef = useRef<NodeJS.Timeout>()
 
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner()
+
+  const handleIntroComplete = useCallback(() => {
+    setIntroComplete(true)
+  }, [])
 
   const handleRouteChange = useCallback(
     (url: string) => {
@@ -91,42 +97,44 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   useEffect(() => {
     const transitionTimeline = gsap.timeline()
 
-    // if the current page has an animateOut(), do it
-    if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
+    if (introComplete) {
+      // if the current page has an animateOut(), do it
+      if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
 
-    // after the out animation, set the new page
-    transitionTimeline.add(() => {
-      gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
-      setCurrentPage(
-        <Component
-          key={isFirstPageRef.current ? 'first-page' : nanoid()}
-          {...pageProps}
-          onReady={(pageHandle?: RefObject<PageHandle>) => {
-            pageHandleRef.current = pageHandle?.current || null
-            // restore scroll
-            if (isGoingBackRef.current) {
-              const lastScrollHistory = scrollHistoryRef.current.pop()
-              if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
-                gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
+      // after the out animation, set the new page
+      transitionTimeline.add(() => {
+        gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
+        setCurrentPage(
+          <Component
+            key={isFirstPageRef.current ? 'first-page' : nanoid()}
+            {...pageProps}
+            onReady={(pageHandle?: RefObject<PageHandle>) => {
+              pageHandleRef.current = pageHandle?.current || null
+              // restore scroll
+              if (isGoingBackRef.current) {
+                const lastScrollHistory = scrollHistoryRef.current.pop()
+                if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
+                  gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
+                }
               }
-            }
-            clearTimeout(scrollRestorationTimeoutRef.current)
-            scrollRestorationTimeoutRef.current = setTimeout(() => {
-              isGoingBackRef.current = false
-            }, 400)
-            // animate in
-            pageHandleRef.current?.animateIn?.()
-            navHandleRef.current?.animateIn?.()
-          }}
-        />
-      )
-      isFirstPageRef.current = false
-    })
+              clearTimeout(scrollRestorationTimeoutRef.current)
+              scrollRestorationTimeoutRef.current = setTimeout(() => {
+                isGoingBackRef.current = false
+              }, 400)
+              // animate in
+              pageHandleRef.current?.animateIn?.()
+              navHandleRef.current?.animateIn?.()
+            }}
+          />
+        )
+        isFirstPageRef.current = false
+      })
+    }
 
     return () => {
       transitionTimeline.kill()
     }
-  }, [Component, pageProps])
+  }, [Component, introComplete, pageProps])
 
   // start analytics
   useEffect(() => {
@@ -152,10 +160,12 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
         />
       )}
 
-      <AppAdmin />
+      {!introComplete ? <ScreenIntro onComplete={handleIntroComplete} /> : null}
 
       <ScreenRotate content={pageProps.common.screenRotate} />
       <ScreenNoScript content={pageProps.common.screenNoScript} />
+
+      <AppAdmin />
     </div>
   )
 }

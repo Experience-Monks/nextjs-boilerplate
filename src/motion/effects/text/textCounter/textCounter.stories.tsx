@@ -6,7 +6,7 @@ import eases from '@/motion/eases/eases'
 
 import textCounter from './textCounter'
 
-export default { title: 'motion/effects/text/textCounter' }
+export default { title: 'motion/Effects/text/textCounter' }
 
 gsap.registerEffect(textCounter)
 

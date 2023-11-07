@@ -8,7 +8,7 @@ import BaseImage from '@/components/BaseImage/BaseImage'
 
 import maskWipeOut from './maskWipeOut'
 
-export default { title: 'motion/effects/mask/maskWipeOut' }
+export default { title: 'motion/Effects/mask/maskWipeOut' }
 
 gsap.registerEffect(maskWipeOut)
 

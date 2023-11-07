@@ -8,7 +8,7 @@ import eases from '@/motion/eases/eases'
 
 import textRiseByCharsIn from './textRiseByCharsIn'
 
-export default { title: 'motion/effects/text/textRiseByCharsIn' }
+export default { title: 'motion/Effects/text/textRiseByCharsIn' }
 
 gsap.registerEffect(textRiseByCharsIn)
 

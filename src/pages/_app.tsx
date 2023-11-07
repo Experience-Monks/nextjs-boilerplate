@@ -11,6 +11,7 @@ import { PageProps } from '@/data/types'
 import setBodyClasses from '@/utils/set-body-classes'
 
 import gsapInit from '@/motion/core/init-gsap'
+import initRive from '@/motion/core/init-rive'
 
 import Layout from '@/components/Layout/Layout'
 
@@ -18,6 +19,7 @@ import { store } from '@/redux'
 
 require('default-passive-events')
 require('focus-visible')
+initRive()
 gsapInit()
 
 // This default export is required in a new `pages/_app.js` file.

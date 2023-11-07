@@ -8,7 +8,7 @@ import eases from '@/motion/eases/eases'
 
 import textFadeByWordsOut from './textFadeByWordsOut'
 
-export default { title: 'motion/effects/text/textFadeByWordsOut' }
+export default { title: 'motion/Effects/text/textFadeByWordsOut' }
 
 gsap.registerEffect(textFadeByWordsOut)
 

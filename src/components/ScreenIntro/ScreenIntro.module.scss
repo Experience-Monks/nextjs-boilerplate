@@ -1,0 +1,7 @@
+@import 'shared';
+
+.root {
+  @include position-100(fixed);
+  @include z-index(intro);
+  pointer-events: none;
+}

@@ -135,7 +135,7 @@
 ///     @include z-index(modal);
 ///   }
 @mixin z-index($id) {
-  $elements: pages, nav, modal, notification, nonfunctional, noscript;
+  $elements: pages, nav, modal, notification, nonfunctional, intro, noscript;
   z-index: list.index($elements, $id);
 }
 
