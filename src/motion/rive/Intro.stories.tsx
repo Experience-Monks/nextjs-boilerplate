@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react'
 
 import { Intro } from './Intro'
 
-export default { title: 'motion/rive/Intro' }
+export default { title: 'motion/Rive/Intro' }
 
 export const Default: StoryFn = () => {
   return (

@@ -5,10 +5,11 @@ import { StoryFn } from '@storybook/react'
 import { store } from '@/redux'
 
 import '@/styles/global.scss'
-import gsapInit from '@/motion/core/init-gsap'
+import initGsap from '@/motion/core/init-gsap'
 import setBodyClasses from '@/utils/set-body-classes'
 
 import { fontVariables } from '@/utils/fonts'
+import initRive from '@/motion/core/init-rive'
 
 export const parameters = {
   options: {
@@ -61,7 +62,8 @@ export const parameters = {
   }
 }
 
-gsapInit()
+initGsap()
+initRive()
 setBodyClasses()
 
 export const decorators = [
