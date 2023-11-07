@@ -7,6 +7,7 @@ import { browser, device, os } from '@/utils/detect'
 import { productionLog } from '@/utils/log'
 import { getRuntimeEnv, isDevEnv } from '@/utils/runtime-env'
 
+import useAppAdmin from '@/hooks/use-app-admin'
 import useWindowSize from '@/hooks/use-window-size'
 
 export interface AppAdminProps {
@@ -26,12 +27,15 @@ export interface ViewProps extends AppAdminProps {
 export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
 
+  const { options, changeOption, resetOptions } = useAppAdmin()
+
   const [open, setOpen] = useState(!!process.env.STORYBOOK || env !== 'local')
   const [render, setRender] = useState(false)
   const [removed, setRemoved] = useState(false)
   const [expanded, setExpanded] = useState(!!process.env.STORYBOOK)
   const [buildOpen, buildSetOpen] = useState(true)
   const [deviceOpen, deviceSetOpen] = useState(true)
+  const [optionsOpen, optionsSetOpen] = useState(true)
 
   const toggleOpen = useCallback(() => {
     if (open) setExpanded(false)
@@ -109,9 +113,34 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
                 )}
               </div>
 
+              <div className={classNames(css.section, { [css.closed]: optionsOpen })}>
+                <h3 className={css.title} onClick={() => optionsSetOpen(!optionsOpen)}>
+                  Options
+                </h3>
+                {optionsOpen && (
+                  <ul>
+                    <li>
+                      <label>
+                        Animate in home
+                        <input
+                          type="checkbox"
+                          onChange={() => {
+                            changeOption('animateInHome', !options.animateInHome)
+                          }}
+                          checked={options.animateInHome as boolean}
+                        />
+                      </label>
+                    </li>
+                  </ul>
+                )}
+              </div>
+
               <div className={css.section}>
                 <h3 className={css.title} onClick={() => setRemoved(true)}>
                   Remove Admin from DOM
+                </h3>
+                <h3 className={css.title} onClick={() => resetOptions()}>
+                  Reset options
                 </h3>
               </div>
             </div>
