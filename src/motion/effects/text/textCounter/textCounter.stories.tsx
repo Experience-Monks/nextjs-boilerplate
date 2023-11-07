@@ -1,0 +1,36 @@
+import { useEffect, useRef } from 'react'
+import { StoryFn } from '@storybook/react'
+import { gsap } from 'gsap'
+
+import eases from '@/motion/eases/eases'
+
+import textCounter from './textCounter'
+
+export default { title: 'motion/effects/text/textCounter' }
+
+gsap.registerEffect(textCounter)
+
+export const Default: StoryFn = (args) => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const timeline = gsap.timeline()
+    if (ref.current) timeline.textCounter(ref.current!, args, 0.4)
+    return () => {
+      timeline.kill()
+    }
+  }, [args])
+
+  return <div ref={ref} style={{ fontSize: '10rem' }} />
+}
+
+Default.args = {
+  start: 0,
+  end: 1000,
+  duration: 2,
+  ease: 'expo.inOut'
+}
+
+Default.argTypes = {
+  ease: { options: eases.map((e) => e.name), control: { type: 'select' } }
+}

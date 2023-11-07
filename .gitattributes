@@ -269,3 +269,4 @@ src/assets/images/github-icon-64b.png         !filter !diff !merge binary
 src/assets/images/experience-logo-500.png     !filter !diff !merge binary
 src/assets/images/npm-icon-64b.png            !filter !diff !merge binary
 src/assets/images/x-logo.png                  !filter !diff !merge binary
+src/assets/images/test.png                    !filter !diff !merge binary

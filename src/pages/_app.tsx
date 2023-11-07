@@ -10,9 +10,10 @@ import { PageProps } from '@/data/types'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
+import gsapInit from '@/motion/core/init-gsap'
+
 import Layout from '@/components/Layout/Layout'
 
-import gsapInit from '@/motion/init-gsap'
 import { store } from '@/redux'
 
 require('default-passive-events')

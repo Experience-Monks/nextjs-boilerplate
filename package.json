@@ -7,7 +7,7 @@
     "dev": "npm run clean && npm run scripts && run-p dev:*",
     "dev:next": "node scripts/dev-server",
     "dev:imports": "node scripts/imports-watch.js",
-    "dev:storybook": "storybook dev --no-open --quiet -p 9001",
+    "dev:storybook": "storybook dev --no-open -p 9001",
     "build:next": "npm run scripts && next build",
     "build:postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
     "build:sitemap": "next-sitemap",

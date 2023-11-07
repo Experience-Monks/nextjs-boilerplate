@@ -35,9 +35,9 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
       return gsap
         .timeline()
         .to(rootRef.current, { opacity: 1 }, 0)
-        .fadeIn(titleRef.current, 0)
-        .fadeIn(descriptionRef.current, 0.2)
-        .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.4)
+        .fadeIn(titleRef.current, {}, 0)
+        .fadeIn(descriptionRef.current, {}, 0.2)
+        .fadeIn(listRef.current!.childNodes, { stagger: 0.1 }, 0.4)
     },
     animateOut: () => gsap.timeline().to(rootRef.current, { opacity: 0 })
   }))
