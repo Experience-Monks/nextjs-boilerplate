@@ -7,7 +7,7 @@
   row-gap: 10px;
   color: $black;
 
-  @include media-desktop-sm {
+  @include media-tablet {
     row-gap: 20px;
     column-gap: 20px;
     grid-template-columns: 1fr 1fr;

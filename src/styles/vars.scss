@@ -1,7 +1,5 @@
 @use 'sass:map';
 
-@import 'layout';
-
 // Variables
 // Add global variables here, color palette, those variables shared by components all applied to global styling
 
@@ -9,11 +7,27 @@
 // Breakpoints
 // Window breakpoints
 // ====================================================================
-$layout-mobile: map.get($layout, mobile) + px;
-$layout-tablet: map.get($layout, tablet) + px;
-$layout-desktop-sm: map.get($layout, desktop-sm) + px;
-$layout-desktop-md: map.get($layout, desktop-md) + px;
-$layout-desktop-lg: map.get($layout, desktop-lg) + px;
+$breakpoint-mobile: 375;
+$breakpoint-tablet: 768;
+$breakpoint-desktop: 1024;
+
+// ====================================================================
+// Design width
+// Used to keep px() proportional to designs
+// ====================================================================
+$design-width-mobile: 375;
+$design-width-tablet: 768;
+$design-width-desktop: 1024;
+
+// ====================================================================
+// Dynamic responsiveness.
+// Keeps everything in proportion on slightly diffeent screen sizes. When enabled we will not have to worry about
+// overlaps happening on narrow devices such as iPhone 5 (320px wide) or too much space on large devices like
+// iPhone 8 Plus (414px wide). We just need to make sure to use the px() mixing FOR EVERYTHING (except things that
+// are required to be 1px, like hairline borders). Just copy the value you see on Figma and everything should stay
+// proportional at all times.
+// ====================================================================
+$dynamic-responsiveness: false;
 
 // ====================================================================
 // Base palette

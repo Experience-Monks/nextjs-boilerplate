@@ -6,6 +6,56 @@
 // Add comment to every function
 @import 'vars';
 
+/// Media queries
+/// @example scss Input
+///   element {
+///     [...phone styles....]
+///     @include media-tablet {
+///        [...tablet styles...]
+///     }
+///     @include media-desktop {
+///        [...desktop styles...]
+///     }
+///   }
+@mixin media-mobile {
+  @media (max-width: #{$breakpoint-tablet - 1}px) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media (min-width: #{$breakpoint-tablet}px) {
+    @content;
+  }
+}
+
+@mixin media-desktop {
+  @media (min-width: #{$breakpoint-desktop}px) {
+    @content;
+  }
+}
+
+@mixin media-aspect-vertical {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin media-aspect-horizontal {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+/// Convert the pixels to rem for in a specific resolution, usually 1440px wide
+/// @example scss Input
+///   section {
+///     height: px(200);
+///   }
+@function px($px) {
+  @return $px * 0.1rem;
+}
+
 /// Improve animation performance for containers
 /// @example scss Input
 ///   .card {
@@ -34,15 +84,6 @@
 @mixin box($width, $height: $width) {
   width: $width;
   height: $height;
-}
-
-/// Convert the pixels to rem for in a specific resolution, usually 1440px wide
-/// @example scss Input
-///   section {
-///     height: px(200);
-///   }
-@function px($px) {
-  @return $px * 0.1rem;
 }
 
 /// Set top and left to 0
