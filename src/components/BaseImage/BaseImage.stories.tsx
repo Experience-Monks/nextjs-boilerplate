@@ -8,7 +8,7 @@ export default { title: 'components/BaseImage' }
 export const Default: StoryFn<BaseImageProps> = (args) => <BaseImage {...args} />
 
 Default.args = {
-  data: require('@/assets/images/three-logo.jpeg').default,
+  data: require('@/assets/images/x-logo.png').default,
   onLoad: action('onLoad')
 }
 

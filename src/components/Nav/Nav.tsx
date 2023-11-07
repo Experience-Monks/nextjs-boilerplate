@@ -9,7 +9,7 @@ import { Content } from '@/data/types'
 
 import BaseImage from '@/components/BaseImage/BaseImage'
 
-import SvgThreeLogo from '@/svgs/ThreeLogo.svg'
+import SvgExperienceLogo from '@/svgs/ExperienceLogo.svg'
 
 export type NavHandle = {
   animateIn: () => gsap.core.TimelineChild
@@ -44,7 +44,7 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           {content.routes.map(({ path, title }) => (
             <li key={title}>
               <Link href={path} aria-label="Home" scroll={false}>
-                {path === '/' ? <SvgThreeLogo className={css.threeLogo} /> : title}
+                {path === '/' ? <SvgExperienceLogo className={css.mainLogo} /> : title}
               </Link>
             </li>
           ))}

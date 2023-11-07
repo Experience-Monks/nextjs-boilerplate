@@ -1,4 +1,4 @@
-# BASED ON 
+# BASED ON
 # https://github.com/alexkaratarakis/gitattributes/blob/master/Web.gitattributes
 # https://gist.github.com/inikitin/7dff06ef9b776b2d9ab92983f525c256
 
@@ -251,3 +251,21 @@ Procfile          text
 
 # Ignore files (like .npmignore or .gitignore)
 *.*ignore           text
+
+# Ignore boilerplate binary files
+docs/logo.jpg                                 !filter !diff !merge binary
+public/common/assets/images/share-image.jpg   !filter !diff !merge binary
+public/common/favicons/apple-touch-icon.png   !filter !diff !merge binary
+public/common/favicons/favicon-144x144.png    !filter !diff !merge binary
+public/common/favicons/favicon-150x150.png    !filter !diff !merge binary
+public/common/favicons/favicon-16x16.png      !filter !diff !merge binary
+public/common/favicons/favicon-192x192.png    !filter !diff !merge binary
+public/common/favicons/favicon-32x32.png      !filter !diff !merge binary
+public/common/favicons/favicon-384x384.png    !filter !diff !merge binary
+public/common/favicons/favicon-512x512.png    !filter !diff !merge binary
+public/common/favicons/favicon.ico            !filter !diff !merge binary
+src/assets/images/github-icon-64.png          !filter !diff !merge binary
+src/assets/images/github-icon-64b.png         !filter !diff !merge binary
+src/assets/images/experience-logo-500.png     !filter !diff !merge binary
+src/assets/images/npm-icon-64b.png            !filter !diff !merge binary
+src/assets/images/x-logo.png                  !filter !diff !merge binary

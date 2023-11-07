@@ -11,8 +11,16 @@
         { "path": "/about/", "title": "About" }
       ],
       "links": [
-        { "href": "https://jam3.com", "label": "Jam3", "image": "@/assets/images/three-logo.jpeg" },
-        { "href": "https://github.com/jam3", "label": "GitHub", "image": "@/assets/images/github-icon-64b.png" }
+        {
+          "href": "https://media.monks.com/solutions/experience",
+          "label": "Experience.Monks",
+          "image": "@/assets/images/x-logo.png"
+        },
+        {
+          "href": "https://github.com/Experience-Monks",
+          "label": "GitHub",
+          "image": "@/assets/images/github-icon-64b.png"
+        }
       ]
     },
     "footer": {
@@ -36,13 +44,13 @@
       "description": "Some landing page description"
     },
     "body": {
-      "title": "Welcome to Jam3!",
+      "title": "Welcome to Experience.Monks!",
       "description": "To get started, edit <code>pages/index.js</code> and save to reload.",
       "cards": [
         {
           "title": "Visit out GitHub",
           "description": "See our contributions to Open Source community",
-          "href": "https://github.com/Jam3?q=&type=source"
+          "href": "https://github.com/Experience-Monks?q=&type=source"
         },
         {
           "title": "Jam3.dev",
