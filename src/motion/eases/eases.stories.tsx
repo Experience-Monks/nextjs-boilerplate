@@ -6,7 +6,7 @@ import css from './eases.module.scss'
 
 import copy from '@/utils/copy'
 
-import { customEases, defaultEases, EaseDeclaration } from './eases'
+import { customEases, EaseDeclaration, favouriteEases, standardEases } from './eases'
 
 export default { title: 'motion/Eases' }
 
@@ -123,13 +123,21 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
   )
 }
 
-export const Default: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={defaultEases} />
+export const Standard: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={standardEases} />
 
-Default.args = {
+Standard.args = {
   duration: 2
 }
 
-Default.parameters = {}
+Standard.parameters = {}
+
+export const Favourite: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={favouriteEases} />
+
+Favourite.args = {
+  duration: 2
+}
+
+Favourite.parameters = {}
 
 export const Custom: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={customEases} />
 

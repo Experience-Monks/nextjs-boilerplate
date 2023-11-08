@@ -2,12 +2,10 @@
 @import 'shared';
 
 :export {
-  // layout
-  layout-mobile: $layout-mobile;
-  layout-tablet: $layout-tablet;
-  layout-desktopSm: $layout-desktop-sm;
-  layout-desktopMd: $layout-desktop-md;
-  layout-desktopLg: $layout-desktop-lg;
+  // breakpoints
+  breakpoint-mobile: $breakpoint-mobile;
+  breakpoint-tablet: $breakpoint-tablet;
+  breakpoint-desktop: $breakpoint-desktop;
   // color
   color-white: $white;
   color-black: $black;
