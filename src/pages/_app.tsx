@@ -1,12 +1,15 @@
 import { FC, useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
 import 'normalize.css'
 
 import '@/styles/global.scss'
 
 import { PageProps } from '@/data/types'
+
+import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
@@ -24,7 +27,12 @@ gsapInit()
 
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {
+  const router = useRouter()
+
   useEffect(() => {
+    // Initialize AWS RUM
+    AWSRumService.start()
+
     // Body class names
     setBodyClasses()
 
@@ -44,6 +52,16 @@ const App: FC<AppProps<PageProps>> = (props) => {
       })
     }).observe(document.head, { subtree: true, attributeFilter: ['media'] })
   }, [])
+
+  useEffect(() => {
+    const handleRouteChange = (pathname: string) => {
+      AWSRumService.recordPageView(pathname)
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router])
 
   /** NOTE: this is where dev tools and helper modules can be placed */
   // useEffect(() => {}, [])
