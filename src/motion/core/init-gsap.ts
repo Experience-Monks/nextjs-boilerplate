@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
 
-import { customEases } from '../eases/eases'
+import { customEases, favouriteEases } from '../eases/eases'
 
 function initGsap() {
   if (typeof window === 'undefined') return
@@ -9,6 +9,10 @@ function initGsap() {
   gsap.registerPlugin(CustomEase)
 
   gsap.defaults({ ease: 'none', duration: 1 })
+
+  favouriteEases.forEach((ease) => {
+    CustomEase.create(ease.name, ease.ease)
+  })
 
   customEases.forEach((ease) => {
     CustomEase.create(ease.name, ease.ease)
