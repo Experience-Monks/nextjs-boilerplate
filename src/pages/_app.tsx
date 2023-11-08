@@ -13,8 +13,6 @@ import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
-import useCookieBanner from '@/hooks/use-cookie-banner'
-
 import Layout from '@/components/Layout/Layout'
 
 import gsapInit from '@/motion/init-gsap'
@@ -27,9 +25,11 @@ gsapInit()
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {
   const router = useRouter()
-  const { cookieConsent } = useCookieBanner()
 
   useEffect(() => {
+    // Initialize AWS RUM
+    AWSRumService.start()
+
     // Body class names
     setBodyClasses()
 
@@ -38,8 +38,6 @@ const App: FC<AppProps<PageProps>> = (props) => {
       node.removeAttribute('data-n-g')
       node.removeAttribute('data-n-p')
     })
-
-    if (process.env.NEXT_PUBLIC_ALLOW_AWS_RUM === 'true') AWSRumService.start(cookieConsent?.preference)
 
     // FOUC prevention step 2/2: Make sure the page us un-hidden once application kicks in
     gsap.set(document.documentElement, { autoAlpha: 1 })
@@ -50,7 +48,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
         if (t.nodeName === 'STYLE' && t.getAttribute('media') === 'x') t.removeAttribute('media')
       })
     }).observe(document.head, { subtree: true, attributeFilter: ['media'] })
-  }, [cookieConsent])
+  }, [])
 
   useEffect(() => {
     const handleRouteChange = (pathname: string) => {
