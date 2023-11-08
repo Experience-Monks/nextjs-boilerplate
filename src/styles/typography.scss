@@ -119,7 +119,7 @@ $generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
   @include font-family($font-work-sans, 400);
   @include font-size(12, 14, -0.04);
 
-  @include breakpoint(tablet) {
+  @include media-tablet {
     @include font-size(13, 15);
   }
 }
@@ -128,11 +128,11 @@ $generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
   @include font-family($font-work-sans, 600);
   @include font-size(26, 30, -0.04);
 
-  @include breakpoint(tablet) {
+  @include media-tablet {
     @include font-size(32);
   }
 
-  @include breakpoint(desktop-sm) {
+  @include media-desktop {
     @include font-size(42);
   }
 }

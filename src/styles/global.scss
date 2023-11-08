@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // Globals
 
 // Global styling, normalize overwritten
@@ -13,6 +15,20 @@ html {
   text-size-adjust: none;
   font-size: 10px;
   text-align: center;
+
+  @if $dynamic-responsiveness {
+    font-size: #{math.div(math.round(math.div(100, $design-width-mobile) * 10000), 1000)}vw;
+
+    @include media-tablet {
+      font-size: #{math.div(math.round(math.div(100, $design-width-tablet) * 10000), 1000)}vw;
+    }
+
+    @include media-desktop {
+      font-size: #{math.div(math.round(math.div(100, $design-width-desktop) * 10000), 1000)}vw;
+    }
+  } @else {
+    font-size: 10px;
+  }
 }
 
 body {
@@ -38,7 +54,7 @@ main {
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
 
-  @include media-desktop-sm {
+  @include media-tablet {
     padding-top: $navbar-height-desktop;
   }
 }
