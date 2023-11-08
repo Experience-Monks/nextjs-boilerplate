@@ -18,6 +18,7 @@ import { fontVariables } from '@/utils/fonts'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
 
+import ScreenIntro from '@/components/ScreenIntro/ScreenIntro'
 import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
 
 import Footer from '@/components/Footer/Footer'
@@ -26,7 +27,6 @@ import Nav, { NavHandle } from '@/components/Nav/Nav'
 
 import { setPrevRoute, useAppDispatch } from '@/redux'
 
-const ScreenIntro = dynamic(() => import('@/components/ScreenIntro/ScreenIntro'), { ssr: false })
 const ScreenRotate = dynamic(() => import('@/components/ScreenRotate/ScreenRotate'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false })
 const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false })

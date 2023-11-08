@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './ScreenIntro.module.scss'
@@ -17,12 +17,13 @@ export interface ViewProps extends ScreenIntroProps {
 
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, onComplete }) => {
-  const show = true
-  return show ? (
-    <div className={classNames('ScreenIntro', css.root, className)}>
-      <Intro riveParams={{ onStop: onComplete }} />
+  const [loaded, setLoaded] = useState(false)
+  const handleLoad = () => setLoaded(true)
+  return (
+    <div className={classNames('ScreenIntro', css.root, className, { [css.loaded]: loaded })}>
+      <Intro riveParams={{ onStop: onComplete, onLoad: handleLoad }} />
     </div>
-  ) : null
+  )
 }
 
 View.displayName = 'ScreenIntro-View'
