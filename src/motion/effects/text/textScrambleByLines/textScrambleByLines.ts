@@ -49,11 +49,7 @@ const effect: CustomEffectConfig = {
           config.wipe?.direction === 'left' ? chars.reverse() : chars,
           {
             duration,
-            scrambleText: {
-              text: config.text!,
-              chars: config.chars!,
-              speed: config.speed!
-            },
+            scrambleText: { text: config.text!, chars: config.chars!, speed: config.speed! },
             stagger: {
               each: duration * 0.01,
               onStart() {

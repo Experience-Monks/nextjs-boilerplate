@@ -4,17 +4,16 @@ import effectTimeline from '@/motion/core/effect-timeline'
 import SafeSplitText from '@/motion/core/safe-split-text'
 
 const setup = (target: Element): [element: HTMLElement, split: SafeSplitText] => {
-  const element = (target as unknown as HTMLElement[])[0]
-  const split = new SafeSplitText(element, { type: 'lines,words' })
-  gsap.set(split.lines, { opacity: 0 })
-  return [element, split]
+  const el = (target as unknown as HTMLElement[])[0]
+  const s = new SafeSplitText(el, { type: 'lines,words' })
+  gsap.set(s.lines, { opacity: 0 })
+  return [el, s]
 }
 
 const effect: CustomEffectConfig = {
   name: 'textRiseByWordsIn',
   effect: (target, config = {}) => {
     if (config.immediateRender) setup(target)
-
     return effectTimeline(config.duration!, config.reversed!, () => {
       const [element, split] = setup(target)
       return gsap

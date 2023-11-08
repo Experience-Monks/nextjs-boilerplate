@@ -19,10 +19,9 @@ const setup = (target: Element, config: Parameters<CustomEffects['textScrambleBy
       gsap.set(wipe, {
         inset: '0',
         scaleX: 1,
-        position: 'absolute',
-        // opacity: 0.2,
+        transformOrigin: config.wipe!.direction === 'left' ? 'center left' : 'center right',
         backgroundColor: 'currentColor',
-        transformOrigin: config.wipe!.direction === 'left' ? 'center left' : 'center right'
+        position: 'absolute'
       })
     })
   }
@@ -47,11 +46,7 @@ const effect: CustomEffectConfig = {
           config.wipe?.direction === 'left' ? chars.reverse() : chars,
           {
             duration,
-            scrambleText: {
-              text: config.text!,
-              chars: config.chars!,
-              speed: config.speed!
-            },
+            scrambleText: { text: config.text!, chars: config.chars!, speed: config.speed! },
             stagger: {
               each: duration * 0.01,
               onStart() {

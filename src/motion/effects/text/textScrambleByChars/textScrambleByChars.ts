@@ -23,11 +23,11 @@ const setup = (target: Element, config: Parameters<CustomEffects['textScrambleBy
       char.append(wipe)
       gsap.set(char, { position: 'relative' })
       gsap.set(wipe, {
-        inset: '0',
-        scaleX: 1,
-        position: 'absolute',
+        transformOrigin: config.wipe!.direction === 'left' ? 'center left' : 'center right',
         backgroundColor: 'currentColor',
-        transformOrigin: config.wipe!.direction === 'left' ? 'center left' : 'center right'
+        position: 'absolute',
+        scaleX: 1,
+        inset: '0'
       })
     })
   }
@@ -53,11 +53,7 @@ const effect: CustomEffectConfig = {
               char,
               {
                 duration,
-                scrambleText: {
-                  text: config.text!,
-                  chars: config.chars!,
-                  speed: config.speed!
-                },
+                scrambleText: { text: config.text!, chars: config.chars!, speed: config.speed! },
                 onStart() {
                   const el = (this as gsap.TweenVars).targets()[0]
                   gsap.set(el, { width: gsap.getProperty(el, 'width', 'rem') })
@@ -79,11 +75,7 @@ const effect: CustomEffectConfig = {
         const [split] = setup(target, config)
         timeline.to(split.chars, {
           duration,
-          scrambleText: {
-            text: config.text!,
-            chars: config.chars!,
-            speed: config.speed!
-          },
+          scrambleText: { text: config.text!, chars: config.chars!, speed: config.speed! },
           stagger: {
             each: duration * config.offset!,
             onStart() {

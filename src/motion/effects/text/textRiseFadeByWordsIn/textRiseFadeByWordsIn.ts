@@ -4,10 +4,10 @@ import effectTimeline from '@/motion/core/effect-timeline'
 import SafeSplitText from '@/motion/core/safe-split-text'
 
 const setup = (target: Element): [element: HTMLElement, split: SafeSplitText] => {
-  const element = (target as unknown as HTMLElement[])[0]
-  const split = new SafeSplitText(element, { type: 'lines,words' })
-  gsap.set(split.lines, { opacity: 0 })
-  return [element, split]
+  const textEl = (target as unknown as HTMLElement[])[0]
+  const splitTx = new SafeSplitText(textEl, { type: 'lines,words' })
+  gsap.set(splitTx.lines, { opacity: 0 })
+  return [textEl, splitTx]
 }
 
 const effect: CustomEffectConfig = {
