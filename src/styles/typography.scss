@@ -2,6 +2,7 @@
 
 @import 'vars';
 
+$font-work-sans: #{var(--font-work-sans)};
 $generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
 
 /// Check if two scss values are safe to add, subtract, or multiply.
@@ -33,17 +34,17 @@ $generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
 ///     @include font-body;
 ///   }
 @mixin font-body {
-  @include font-family('WorkSans', 400);
+  @include font-family($font-work-sans, 400);
 }
 
 /// Set Header Font as font family. This mixin's name is generic to abstract the font weight of header typography
 /// @group Fonts
 /// @example scss Input
 ///   .landing-section {
-///     @include font-header;
+///     @include font-heading;
 ///   }
-@mixin font-header {
-  @include font-family('WorkSans', 600);
+@mixin font-heading {
+  @include font-family($font-work-sans, 600);
 }
 
 // Use two pixel values to convert line-height into a unitless number
@@ -115,23 +116,23 @@ $generic-fonts: system-ui, 'helvetica', 'arial', sans-serif;
 // Also update .storybook/intro/3.Typography.stories.mdx
 
 @mixin typography-paragraph {
-  @include font-family('WorkSans', 400);
+  @include font-family($font-work-sans, 400);
   @include font-size(12, 14, -0.04);
 
-  @include breakpoint(tablet) {
+  @include media-tablet {
     @include font-size(13, 15);
   }
 }
 
 @mixin typography-h1 {
-  @include font-family('WorkSans', 600);
+  @include font-family($font-work-sans, 600);
   @include font-size(26, 30, -0.04);
 
-  @include breakpoint(tablet) {
+  @include media-tablet {
     @include font-size(32);
   }
 
-  @include breakpoint(desktop-sm) {
+  @include media-desktop {
     @include font-size(42);
   }
 }

@@ -1,7 +1,8 @@
+@use 'sass:math';
+
 // Globals
 
 // Global styling, normalize overwritten
-@import 'fonts';
 @import 'polyfills';
 @import 'shared';
 
@@ -14,10 +15,23 @@ html {
   text-size-adjust: none;
   font-size: 10px;
   text-align: center;
+
+  @if $dynamic-responsiveness {
+    font-size: #{math.div(math.round(math.div(100, $design-width-mobile) * 10000), 1000)}vw;
+
+    @include media-tablet {
+      font-size: #{math.div(math.round(math.div(100, $design-width-tablet) * 10000), 1000)}vw;
+    }
+
+    @include media-desktop {
+      font-size: #{math.div(math.round(math.div(100, $design-width-desktop) * 10000), 1000)}vw;
+    }
+  } @else {
+    font-size: 10px;
+  }
 }
 
 body {
-  @include font-body;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -28,6 +42,7 @@ body {
 *,
 *::before,
 *::after {
+  @include font-body;
   box-sizing: inherit;
 
   .mobile & {
@@ -39,7 +54,7 @@ main {
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
 
-  @include media-desktop-sm {
+  @include media-tablet {
     padding-top: $navbar-height-desktop;
   }
 }
@@ -70,6 +85,15 @@ p,
 blockquote {
   margin: 0;
   padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include font-heading;
 }
 
 button {
