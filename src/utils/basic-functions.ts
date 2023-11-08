@@ -65,10 +65,18 @@ export function rem(value: number): number {
   return parseFloat(htmlStyle) * value
 }
 
+export function safeRandom(): number {
+  // https://kemilbeltre.medium.com/why-do-not-use-math-random-a6f8b0ad38dd
+  // https://caniuse.com/cryptography
+  const arr = new Uint32Array(1)
+  crypto.getRandomValues(arr)
+  return arr[0] * Math.pow(2, -32)
+}
+
 export function randomString(length = 6): string {
   const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let result = ''
-  for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)]
+  for (let i = length; i > 0; --i) result += chars[Math.floor(safeRandom() * chars.length)]
   return result
 }
 
