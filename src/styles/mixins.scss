@@ -243,7 +243,7 @@
 ///     @include z-index(modal);
 ///   }
 @mixin z-index($id) {
-  $elements: pages, nav, modal, notification, loading, nonfunctional, cookie, noscript;
+  $elements: pages, nav, modal, notification, intro, nonfunctional, noscript;
   z-index: list.index($elements, $id);
 }
 

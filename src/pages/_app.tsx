@@ -13,15 +13,18 @@ import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
+import gsapInit from '@/motion/core/init-gsap'
+import initRive from '@/motion/core/init-rive'
+
 import useFeatureFlags from '@/hooks/use-feature-flags'
 
 import Layout from '@/components/Layout/Layout'
 
-import gsapInit from '@/motion/init-gsap'
 import { store } from '@/redux'
 
 require('default-passive-events')
 require('focus-visible')
+initRive()
 gsapInit()
 
 // This default export is required in a new `pages/_app.js` file.

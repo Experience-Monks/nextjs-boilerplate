@@ -19,6 +19,7 @@ import { fontVariables } from '@/utils/fonts'
 import useCookieBanner from '@/hooks/use-cookie-banner'
 import useFeatureFlags from '@/hooks/use-feature-flags'
 
+import ScreenIntro from '@/components/ScreenIntro/ScreenIntro'
 import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
 
 import Footer from '@/components/Footer/Footer'
@@ -37,6 +38,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   const { flags } = useFeatureFlags()
 
+  const [introComplete, setIntroComplete] = useState(false)
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
   const rootRef = useRef<HTMLDivElement>(null)
@@ -49,6 +51,10 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const scrollRestorationTimeoutRef = useRef<NodeJS.Timeout>()
 
   const { validCookie, cookieConsent, updateCookies, acceptAllCookies, rejectAllCookies } = useCookieBanner()
+
+  const handleIntroComplete = useCallback(() => {
+    setIntroComplete(true)
+  }, [])
 
   const handleRouteChange = useCallback(
     (url: string) => {
@@ -93,6 +99,8 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   // handle page transitions
   useEffect(() => {
+    if (!introComplete) return
+
     const transitionTimeline = gsap.timeline()
 
     // if the current page has an animateOut(), do it
@@ -136,7 +144,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     return () => {
       transitionTimeline.kill()
     }
-  }, [Component, flags.pageTransitions, pageProps])
+  }, [Component, flags.pageTransitions, introComplete, pageProps])
 
   // start analytics
   useEffect(() => {
@@ -165,10 +173,12 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
         />
       )}
 
-      <AppAdmin />
+      {!introComplete ? <ScreenIntro onComplete={handleIntroComplete} /> : null}
 
       <ScreenRotate content={pageProps.common.screenRotate} />
       <ScreenNoScript content={pageProps.common.screenNoScript} />
+
+      <AppAdmin />
     </div>
   )
 }

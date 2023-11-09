@@ -36,13 +36,14 @@
       "warn",
       {
         "groups": [
-          ["^react", "^next", "^@jam3", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
+          ["^react", "^next", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
           ["^.+\\.scss$", "^@/styles/.+\\.scss$"], // css & scss
           ["^@/pages"],
           ["^@/data"],
           ["^@/store"],
           ["^@/services"],
           ["^@/utils"],
+          ["^@/motion"],
           ["^@/hooks"],
           ["^@/components/Layout, ^@/components/Page", "^@/components/Screen"], // containers
           ["^@/components"],
@@ -69,6 +70,7 @@
         "@typescript-eslint/no-misused-promises": "error",
         "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/consistent-type-imports": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/naming-convention": [
           "error",
