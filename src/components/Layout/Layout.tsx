@@ -96,41 +96,41 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   // handle page transitions
   useEffect(() => {
+    if (!introComplete) return
+
     const transitionTimeline = gsap.timeline()
 
-    if (introComplete) {
-      // if the current page has an animateOut(), do it
-      if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
+    // if the current page has an animateOut(), do it
+    if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
 
-      // after the out animation, set the new page
-      transitionTimeline.add(() => {
-        gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
-        setCurrentPage(
-          <Component
-            key={isFirstPageRef.current ? 'first-page' : nanoid()}
-            {...pageProps}
-            onReady={(pageHandle?: RefObject<PageHandle>) => {
-              pageHandleRef.current = pageHandle?.current || null
-              // restore scroll
-              if (isGoingBackRef.current) {
-                const lastScrollHistory = scrollHistoryRef.current.pop()
-                if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
-                  gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
-                }
+    // after the out animation, set the new page
+    transitionTimeline.add(() => {
+      gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
+      setCurrentPage(
+        <Component
+          key={isFirstPageRef.current ? 'first-page' : nanoid()}
+          {...pageProps}
+          onReady={(pageHandle?: RefObject<PageHandle>) => {
+            pageHandleRef.current = pageHandle?.current || null
+            // restore scroll
+            if (isGoingBackRef.current) {
+              const lastScrollHistory = scrollHistoryRef.current.pop()
+              if (lastScrollHistory && lastScrollHistory.pathname === currentPathnameRef.current) {
+                gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
               }
-              clearTimeout(scrollRestorationTimeoutRef.current)
-              scrollRestorationTimeoutRef.current = setTimeout(() => {
-                isGoingBackRef.current = false
-              }, 400)
-              // animate in
-              pageHandleRef.current?.animateIn?.()
-              navHandleRef.current?.animateIn?.()
-            }}
-          />
-        )
-        isFirstPageRef.current = false
-      })
-    }
+            }
+            clearTimeout(scrollRestorationTimeoutRef.current)
+            scrollRestorationTimeoutRef.current = setTimeout(() => {
+              isGoingBackRef.current = false
+            }, 400)
+            // animate in
+            pageHandleRef.current?.animateIn?.()
+            navHandleRef.current?.animateIn?.()
+          }}
+        />
+      )
+      isFirstPageRef.current = false
+    })
 
     return () => {
       transitionTimeline.kill()
