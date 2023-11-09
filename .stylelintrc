@@ -22,7 +22,9 @@
       "return",
       "supports",
       "use",
-      "warn"
+      "warn",
+      "apply",
+      "tailwind"
     ],
     "at-rule-empty-line-before": [
       "always",
@@ -50,7 +52,9 @@
           "return",
           "supports",
           "use",
-          "warn"
+          "warn",
+          "apply",
+          "tailwind"
         ]
       }
     ],

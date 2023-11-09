@@ -1,9 +1,13 @@
 @use 'sass:math';
 
-// Globals
+// For Tailwind support, uncomment the following lines
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
 
+// Globals
 // Global styling, normalize overwritten
-@import 'polyfills';
+
 @import 'shared';
 
 html {

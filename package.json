@@ -45,10 +45,7 @@
     "url": "git+https://github.com/Experience-Monks/nextjs-boilerplate.git"
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+    ">0.2%"
   ],
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -69,12 +66,14 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
     "string-format": "^2.0.0",
+    "tailwindcss": "^3.3.5",
     "xss": "^1.0.14"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
     "@ls-lint/ls-lint": "^1.11.2",
+    "@next/bundle-analyzer": "^14.0.2",
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
     "@storybook/addon-links": "^7.5.3",
