@@ -36,7 +36,7 @@ View.displayName = 'ScreenNoScript-View'
 
 // Controller (handle global state, router, data fetching, etc. Feeds props to the view component)
 const ScreenNoScript: FC<ScreenNoScriptProps> = (props) => {
-  const [flags] = useFeatureFlags()
+  const { flags } = useFeatureFlags()
   return flags.javascriptRequired ? <View {...props} /> : null
 }
 

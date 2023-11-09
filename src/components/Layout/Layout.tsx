@@ -35,7 +35,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
 
-  const [flags] = useFeatureFlags()
+  const { flags } = useFeatureFlags()
 
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 

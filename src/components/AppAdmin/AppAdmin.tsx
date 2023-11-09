@@ -28,7 +28,7 @@ export interface ViewProps extends AppAdminProps {
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
-  const [flags, setFlag, reset] = useFeatureFlags()
+  const { flags, setFlag, resetFlags } = useFeatureFlags()
 
   const [open, setOpen] = useState(!!process.env.STORYBOOK || env !== 'local')
   const [render, setRender] = useState(false)
@@ -136,7 +136,7 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
                     })}
                   </ul>
                 )}
-                <button className={css.reset} onClick={() => reset()}>
+                <button className={css.reset} onClick={() => resetFlags()}>
                   [Reset]
                 </button>
               </div>

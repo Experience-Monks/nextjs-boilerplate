@@ -1,38 +1,27 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import config from '@/data/config.json'
+import FeatureFlagService, { FeatureFlagId, FeatureFlags } from '@/services/feature-flags'
 
-import useLocalStorage from './use-local-storage'
+function useFeatureFlags() {
+  const [flags, setFlags] = useState(FeatureFlagService.getAll())
 
-type FlagId = keyof typeof config.featureFlags
+  const setFlag = useCallback((name: FeatureFlagId, enabled: boolean) => {
+    FeatureFlagService.set(name, enabled)
+  }, [])
 
-function useFeatureFlags(): [{ [key in FlagId]: boolean }, (name: FlagId, enabled: boolean) => void, () => void] {
-  const [storedFlags, setStoredFlags] = useLocalStorage('featureFlags')
-
-  const flags = useMemo(() => {
-    const defaultFlags = Object.entries(config.featureFlags).reduce(
-      (acc, [key, val]) => ({ ...acc, [key]: val.enabled }),
-      {}
-    )
-    try {
-      return JSON.parse(storedFlags || 'null') ?? defaultFlags
-    } catch (e) {
-      return defaultFlags
+  useEffect(() => {
+    const update = (flags: FeatureFlags) => setFlags(flags)
+    FeatureFlagService.listen(update)
+    return () => {
+      FeatureFlagService.dismiss(update)
     }
-  }, [storedFlags])
+  }, [])
 
-  const setFlag = useCallback(
-    (name: FlagId, enabled: boolean) => {
-      setStoredFlags(JSON.stringify({ ...flags, [name]: enabled }))
-    },
-    [flags, setStoredFlags]
-  )
-
-  const reset = useCallback(() => {
-    setStoredFlags('')
-  }, [setStoredFlags])
-
-  return [flags, setFlag, reset]
+  return {
+    flags,
+    setFlag,
+    resetFlags: FeatureFlagService.reset
+  }
 }
 
 export default useFeatureFlags

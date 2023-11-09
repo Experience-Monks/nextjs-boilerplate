@@ -28,7 +28,7 @@ gsapInit()
 const App: FC<AppProps<PageProps>> = (props) => {
   const router = useRouter()
 
-  const [flags] = useFeatureFlags()
+  const { flags } = useFeatureFlags()
 
   useEffect(() => {
     // Initialize AWS RUM
