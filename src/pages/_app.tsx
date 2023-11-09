@@ -13,6 +13,8 @@ import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
+import useFeatureFlags from '@/hooks/use-feature-flags'
+
 import Layout from '@/components/Layout/Layout'
 
 import gsapInit from '@/motion/init-gsap'
@@ -25,6 +27,8 @@ gsapInit()
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {
   const router = useRouter()
+
+  const [flags] = useFeatureFlags()
 
   useEffect(() => {
     // Initialize AWS RUM
@@ -60,8 +64,10 @@ const App: FC<AppProps<PageProps>> = (props) => {
     }
   }, [router])
 
-  /** NOTE: this is where dev tools and helper modules can be placed */
-  // useEffect(() => {}, [])
+  useEffect(() => {
+    if (flags.dynamicResponsiveness) document.documentElement.classList.add('dynamic')
+    else document.documentElement.classList.remove('dynamic')
+  }, [flags.dynamicResponsiveness])
 
   return (
     <Provider store={store}>
