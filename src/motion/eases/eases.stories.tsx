@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { BezierCurveEditor } from 'react-bezier-curve-editor'
 import { StoryFn } from '@storybook/react'
 import { gsap } from 'gsap'
 
@@ -28,6 +29,14 @@ function generatePath(ease = '', width = size, height = size) {
 
 const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, duration }) => {
   const [selectedEase, setSelectedEase] = useState('')
+  const [bezierEditor, setBezierEditor] = useState(false)
+  const [easeBezier, setEaseBezier] = useState<{ [key: string]: EaseDeclaration['bezier'] }>(
+    eases.reduce((acc, ease) => {
+      const bezier = ease.bezier || ease.ease.split(',').map((v) => parseFloat(v))
+      acc[ease.name] = (bezier.length === 4 ? bezier : [0, 0, 1, 1]) as EaseDeclaration['bezier']
+      return acc
+    }, {} as { [key: string]: EaseDeclaration['bezier'] })
+  )
 
   useEffect(() => {
     const timeline = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 1, defaults: {} })
@@ -68,6 +77,12 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
         </select>
       </div>
 
+      <div className={css.debug}>
+        <button value={selectedEase} onClick={() => setBezierEditor((c) => !c)}>
+          Toggle bezier editor (use it to get approximate cubic bezier values)
+        </button>
+      </div>
+
       <div
         className={css.eases}
         style={
@@ -103,6 +118,25 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
                     <rect width={size} height={size} fill="url(#grid)" />
                     <path className={css.mainPath} id={`path-${copy.kebab(name)}`} d={path} />
                   </svg>
+                  {bezierEditor ? (
+                    <BezierCurveEditor
+                      className={css.editor}
+                      size={size}
+                      outerAreaSize={75}
+                      rowColor="transparent"
+                      innerAreaColor="transparent"
+                      outerAreaColor="transparent"
+                      curveLineColor="red"
+                      strokeWidth={1}
+                      value={easeBezier[name]}
+                      onChange={(value) =>
+                        setEaseBezier((c) => ({
+                          ...c,
+                          [name]: value.map((v) => Math.floor(v * 1000) / 1000) as EaseDeclaration['bezier']
+                        }))
+                      }
+                    />
+                  ) : null}
                   <div className={css.vertical}>
                     <p>Value</p>
                     <div className={`background`}></div>
@@ -115,6 +149,9 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
                     <div className={`line line-horizontal-${copy.kebab(name)}`}></div>
                   </div>
                 </div>
+                {bezierEditor ? (
+                  <div className={css.bezier}>bezier: {JSON.stringify(easeBezier[name], undefined, 2)}</div>
+                ) : null}
               </div>
             )
           })}
