@@ -2,7 +2,7 @@
 // https://tailwindcss.com/docs/theme
 
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}']
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './.storybook/**/*.{js,ts,jsx,tsx,mdx}']
   // theme: {
   //   extend: {
   //     gridTemplateColumns: {
