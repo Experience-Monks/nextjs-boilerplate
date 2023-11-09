@@ -12,7 +12,7 @@ import BaseImage from '@/components/BaseImage/BaseImage'
 import SvgExperienceLogo from '@/svgs/ExperienceLogo.svg'
 
 export type NavHandle = {
-  animateIn: () => gsap.core.TimelineChild
+  animateIn: () => gsap.core.Timeline
 }
 
 export interface NavProps {

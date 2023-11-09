@@ -26,18 +26,18 @@ class Service {
     }
   }
 
-  get = (name: string): string | null => {
+  get = (name: string): string | undefined => {
     try {
       const serializedData = localStorage.getItem(KEY)
 
       if (!serializedData) {
-        return null
+        return undefined
       }
 
-      return JSON.parse(serializedData)[name] || null
+      return JSON.parse(serializedData)[name] || undefined
     } catch (e) {
       // no local storage (ssr or incognito mode)
-      return null
+      return undefined
     }
   }
 

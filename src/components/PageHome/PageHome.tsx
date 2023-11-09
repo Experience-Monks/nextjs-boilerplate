@@ -8,8 +8,6 @@ import { Content, PageHandle, PageProps } from '@/data/types'
 
 import copy from '@/utils/copy'
 
-import useAppAdmin from '@/hooks/use-app-admin'
-
 export interface PageHomeProps extends PageProps {
   // List here all props that are public and settable by the Layout component.
   content: Content['pageHome']
@@ -27,8 +25,6 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
 
   const handleRef = useRef<PageHandle>(null)
 
-  const { options } = useAppAdmin()
-
   useEffect(() => {
     gsap.set(rootRef.current, { opacity: 0 })
     onReady?.(handleRef)
@@ -36,16 +32,12 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
 
   useImperativeHandle(handleRef, () => ({
     animateIn: () => {
-      if (options.animateInHome) {
-        return gsap
-          .timeline()
-          .to(rootRef.current, { opacity: 1 }, 0)
-          .fadeIn(titleRef.current, 0)
-          .fadeIn(descriptionRef.current, 0.2)
-          .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.4)
-      } else {
-        return gsap.set(rootRef.current, { opacity: 1 })
-      }
+      return gsap
+        .timeline()
+        .to(rootRef.current, { opacity: 1 }, 0)
+        .fadeIn(titleRef.current, 0)
+        .fadeIn(descriptionRef.current, 0.2)
+        .fadeIn(listRef.current?.childNodes, { stagger: 0.1 }, 0.4)
     },
     animateOut: () => gsap.timeline().to(rootRef.current, { opacity: 0 })
   }))
