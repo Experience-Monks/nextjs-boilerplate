@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import layout, { Breakpoints } from '@/utils/layout'
+import ResizeService from '@/services/resize'
 
-import useWindowSize from '@/hooks/use-window-size'
+import getLayout, { ssrLayout } from '@/utils/get-layout'
 
 /**
  * Layout hook
@@ -10,28 +10,25 @@ import useWindowSize from '@/hooks/use-window-size'
  * @returns {object} Current layout object
  *
  * Example:
- * import useLayout from '[path]/use-layout';
- * const { layout } = useLayout();
+ * import useLayout from '@/hooks/use-layout';
+ * const layout = useLayout();
  */
-function useLayout(): { layout: Breakpoints } {
-  const { width } = useWindowSize()
-  const [currentLayout, setCurrentLayout] = useState<Breakpoints>(layout.all)
-
-  const handleResize = useCallback(() => {
-    const breakpoints = Object.keys(layout.all) as (keyof Breakpoints)[]
-
-    if (breakpoints.filter((key) => currentLayout[key] !== layout[key]).length) {
-      setCurrentLayout(layout.all)
-    }
-  }, [currentLayout, setCurrentLayout])
+function useLayout() {
+  const [currentLayout, setCurrentLayout] = useState(ssrLayout)
 
   useEffect(() => {
+    function handleResize() {
+      const layout = getLayout()
+      if (JSON.stringify(layout) !== JSON.stringify(currentLayout)) setCurrentLayout(layout)
+    }
+    ResizeService.listen(handleResize)
     handleResize()
-  }, [handleResize, width])
+    return () => {
+      ResizeService.dismiss(handleResize)
+    }
+  }, [currentLayout])
 
-  return {
-    layout: currentLayout
-  }
+  return currentLayout
 }
 
 export default useLayout

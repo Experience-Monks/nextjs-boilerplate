@@ -1,5 +1,18 @@
 {
-  "supportsNoJs": false,
+  "featureFlags": {
+    "javascriptRequired": {
+      "label": "Javascript Required",
+      "enabled": true
+    },
+    "pageTransitions": {
+      "label": "Page Transitions",
+      "enabled": true
+    },
+    "dynamicResponsiveness": {
+      "label": "Dynamic Responsiveness",
+      "enabled": false
+    }
+  },
   "resizeDebounceTime": 10,
   "websiteUrl": "https://localhost:3000",
   "dnsPrefetch": {

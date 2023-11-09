@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // Globals
 
 // Global styling, normalize overwritten
@@ -13,6 +15,27 @@ html {
   text-size-adjust: none;
   font-size: 10px;
   text-align: center;
+
+  &.dynamic {
+    // ====================================================================
+    // Dynamic responsiveness.
+    // Keeps everything in proportion on slightly diffeent screen sizes. When enabled we will not have to worry about
+    // overlaps happening on narrow devices such as iPhone 5 (320px wide) or too much space on large devices like
+    // iPhone 8 Plus (414px wide). We just need to make sure to use the px() mixing FOR EVERYTHING (except things that
+    // are required to be 1px, like hairline borders). Just copy the value you see on Figma and everything should stay
+    // proportional at all times.
+    // ====================================================================
+
+    font-size: #{math.div(math.round(math.div(100, $design-width-mobile) * 10000), 1000)}vw;
+
+    @include media-tablet {
+      font-size: #{math.div(math.round(math.div(100, $design-width-tablet) * 10000), 1000)}vw;
+    }
+
+    @include media-desktop {
+      font-size: #{math.div(math.round(math.div(100, $design-width-desktop) * 10000), 1000)}vw;
+    }
+  }
 }
 
 body {
@@ -38,7 +61,7 @@ main {
   min-height: 100vh;
   padding-top: $navbar-height-mobile;
 
-  @include media-desktop-sm {
+  @include media-tablet {
     padding-top: $navbar-height-desktop;
   }
 }

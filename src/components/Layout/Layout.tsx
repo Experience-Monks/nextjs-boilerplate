@@ -11,11 +11,13 @@ import css from './Layout.module.scss'
 import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
+import AWSRumService from '@/services/aws-rum'
 
 import { getScrollTop } from '@/utils/basic-functions'
 import { fontVariables } from '@/utils/fonts'
 
 import useCookieBanner from '@/hooks/use-cookie-banner'
+import useFeatureFlags from '@/hooks/use-feature-flags'
 
 import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
 
@@ -32,6 +34,8 @@ const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: 
 const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
+
+  const { flags } = useFeatureFlags()
 
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
 
@@ -92,7 +96,9 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     const transitionTimeline = gsap.timeline()
 
     // if the current page has an animateOut(), do it
-    if (pageHandleRef.current?.animateOut) transitionTimeline.add(pageHandleRef.current.animateOut())
+    if (flags.pageTransitions && pageHandleRef.current?.animateOut) {
+      transitionTimeline.add(pageHandleRef.current.animateOut())
+    }
 
     // after the out animation, set the new page
     transitionTimeline.add(() => {
@@ -115,8 +121,12 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
               isGoingBackRef.current = false
             }, 400)
             // animate in
-            pageHandleRef.current?.animateIn?.()
-            navHandleRef.current?.animateIn?.()
+            const pageTransition = pageHandleRef.current?.animateIn?.()
+            const navTransition = navHandleRef.current?.animateIn?.()
+            if (!flags.pageTransitions) {
+              pageTransition?.progress(1)
+              navTransition?.progress(1)
+            }
           }}
         />
       )
@@ -126,11 +136,14 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     return () => {
       transitionTimeline.kill()
     }
-  }, [Component, pageProps])
+  }, [Component, flags.pageTransitions, pageProps])
 
   // start analytics
   useEffect(() => {
-    if (cookieConsent?.statistics) AnalyticsService.start()
+    if (cookieConsent?.statistics) {
+      AnalyticsService.start()
+      AWSRumService.allowCookies()
+    }
   }, [cookieConsent])
 
   return (

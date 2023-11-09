@@ -12,7 +12,7 @@ export interface EaseDeclaration {
   description?: string // 'For opacity' helpful description for storybook or keep empty
 }
 
-export const defaultEases: EaseDeclaration[] = [
+export const standardEases: EaseDeclaration[] = [
   // Linear
   { name: 'none', ease: 'none', description: '' },
   // Sine
@@ -57,6 +57,25 @@ export const defaultEases: EaseDeclaration[] = [
   { name: 'bounce.inOut', ease: 'bounce.inOut', description: '' }
 ]
 
+export const favouriteEases: EaseDeclaration[] = [
+  {
+    name: 'vinnie.inOut',
+    ease: 'M0,0 C0.2,0 0,1 1,1',
+    description: 'Really quick ease in, and Slow ease Out (recommended duration 0.8-1s)'
+  },
+  {
+    name: 'joris.inOut',
+    ease: 'M0,0 C0.3,0 0.25,1 1,1',
+    description:
+      'Quick ease in (more than vinnieInOut) and slow ease out (less then vinnie.inOut) (recommended duration 0.8-1s)'
+  },
+  {
+    name: 'joris.out',
+    ease: 'M0,0 C0.1,0.495 0.105,0.715 0.25,0.845 0.405,0.978 0.505,1 1,1',
+    description: 'Super Heavy easeOut (recommended duration 0.8-1s)'
+  }
+]
+
 export const customEases: EaseDeclaration[] = [
   { name: 'ease1', ease: '0.32, 0.83, 0.6, 1', description: '' },
   { name: 'ease2', ease: '0.32, 0.94, 0.6, 1', description: '' },
@@ -68,6 +87,6 @@ export const customEases: EaseDeclaration[] = [
   { name: 'ease8', ease: '0.64, 0, 0.78, 0', description: '' }
 ]
 
-export const eases: EaseDeclaration[] = [...customEases, ...defaultEases]
+export const eases: EaseDeclaration[] = [...customEases, ...favouriteEases, ...standardEases]
 
 export default eases

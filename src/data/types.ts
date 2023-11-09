@@ -20,6 +20,6 @@ export type PageProps = {
 }
 
 export type PageHandle = {
-  animateIn: () => gsap.core.TimelineChild
-  animateOut: () => gsap.core.TimelineChild
+  animateIn: () => gsap.core.Timeline
+  animateOut: () => gsap.core.Timeline
 }
