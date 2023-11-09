@@ -1,20 +1,17 @@
 import * as vars from '../styles/export-vars.module.scss'
 
-const sassVars = vars.default as unknown as { [key: string]: string }
+const sass = vars.default as unknown as { [key: string]: string }
 
-function getVariables(prefix: string) {
-  return Object.keys(sassVars)
-    .filter((key) => key.startsWith(prefix))
-    .reduce((obj, key) => {
-      obj[key.split('-')[1]] = sassVars[key]
-      return obj
-    }, {} as { [key: string]: string })
-}
-
-const sass = {
-  layout: getVariables('layout'),
-  color: getVariables('color'),
-  all: sassVars
-}
+export const colors = Object.values(sass)
+  .filter((value) => value.startsWith('#'))
+  .reduce((acc, entry) => {
+    acc[entry[1]] = entry[0]
+    return acc
+  }, {} as { [key: string]: string })
 
 export default sass
+
+// Usage:
+// sass['white']
+// sass['black']
+// etc...

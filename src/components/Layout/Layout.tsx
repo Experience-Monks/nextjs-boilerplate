@@ -11,6 +11,7 @@ import css from './Layout.module.scss'
 import { PageHandle, PageProps } from '@/data/types'
 
 import AnalyticsService from '@/services/analytics'
+import AWSRumService from '@/services/aws-rum'
 
 import { getScrollTop } from '@/utils/basic-functions'
 import { fontVariables } from '@/utils/fonts'
@@ -139,7 +140,10 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   // start analytics
   useEffect(() => {
-    if (cookieConsent?.statistics) AnalyticsService.start()
+    if (cookieConsent?.statistics) {
+      AnalyticsService.start()
+      AWSRumService.allowCookies()
+    }
   }, [cookieConsent])
 
   return (

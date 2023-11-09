@@ -67,7 +67,7 @@
       }
     ],
     "declaration-block-no-duplicate-properties": [true, { "ignore": ["consecutive-duplicates-with-different-values"] }],
-    "declaration-block-no-redundant-longhand-properties": [true, { "ignoreShorthands": ["grid-template"] }],
+    "declaration-block-no-redundant-longhand-properties": [true, { "ignoreShorthands": ["grid-template", "inset"] }],
     "declaration-block-no-shorthand-property-overrides": true,
     "declaration-block-single-line-max-declarations": 1,
     "declaration-empty-line-before": null,
@@ -82,12 +82,16 @@
     "no-empty-source": true,
     "no-descending-specificity": null,
     "no-invalid-double-slash-comments": true,
+    "value-keyword-case": null,
+    "color-function-notation": null,
+    "alpha-value-notation": null,
     "plugin/no-low-performance-animation": [
       true,
       {
         "ignore": [
           "background",
           "background-color",
+          "background-position",
           "border-color",
           "clip-path",
           "color",
@@ -108,6 +112,7 @@
     "selector-type-no-unknown": true,
     "shorthand-property-no-redundant-values": true,
     "string-no-newline": true,
-    "unit-no-unknown": true
+    "unit-no-unknown": true,
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["mask-position", "mask-size", "mask-image"] }]
   }
 }
