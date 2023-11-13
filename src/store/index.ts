@@ -2,19 +2,19 @@ import { create } from 'zustand'
 import { devtools, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { AppSlice, AppSliceState } from './slice-app'
 import { ConsentSlice, ConsentSliceState } from './slice-consent'
+import { NavigationSlice, NavigationSliceState } from './slice-navigation'
 
 export type Mutators = [['zustand/devtools', never], ['zustand/subscribeWithSelector', never], ['zustand/immer', never]]
 
-export type AppState = AppSliceState & ConsentSliceState
+export type AppState = ConsentSliceState & NavigationSliceState
 
 const localStore = create<AppState>()(
   devtools(
     subscribeWithSelector(
       immer((...props) => ({
-        ...AppSlice(...props),
-        ...ConsentSlice(...props)
+        ...ConsentSlice(...props),
+        ...NavigationSlice(...props)
       }))
     )
   )

@@ -4,8 +4,8 @@ import { noop } from '@/utils/basic-functions'
 
 import { AppState, Mutators } from '.'
 
-export type AppSliceState = {
-  app: {
+export type NavigationSliceState = {
+  navigation: {
     // getters
     pathname: string
     hasNavigated: boolean
@@ -23,8 +23,8 @@ export type AppSliceState = {
   }
 }
 
-export const AppSlice: StateCreator<AppState, Mutators, [], AppSliceState> = (set) => ({
-  app: {
+export const NavigationSlice: StateCreator<AppState, Mutators, [], NavigationSliceState> = (set) => ({
+  navigation: {
     pathname: '/',
     hasNavigated: false,
     scrollHistory: [],
@@ -34,37 +34,37 @@ export const AppSlice: StateCreator<AppState, Mutators, [], AppSliceState> = (se
 
     setPathname: (pathname) => {
       set((state) => {
-        state.app.pathname = pathname
+        state.navigation.pathname = pathname
       })
     },
 
     setHasNavigated: (hasNavigated) => {
       set((state) => {
-        state.app.hasNavigated = hasNavigated
+        state.navigation.hasNavigated = hasNavigated
       })
     },
 
     setScrollHistory: (scrollHistory) => {
       set((state) => {
-        state.app.scrollHistory = scrollHistory
+        state.navigation.scrollHistory = scrollHistory
       })
     },
 
     setIsNavigatingBack: (isNavigatingBack) => {
       set((state) => {
-        state.app.isNavigatingBack = isNavigatingBack
+        state.navigation.isNavigatingBack = isNavigatingBack
       })
     },
 
     setNavigateTo: (navigateTo) => {
       set((state) => {
-        state.app.navigateTo = navigateTo
+        state.navigation.navigateTo = navigateTo
       })
     },
 
     setNavigateBack: (navigateBack) => {
       set((state) => {
-        state.app.navigateBack = navigateBack
+        state.navigation.navigateBack = navigateBack
       })
     }
   }
