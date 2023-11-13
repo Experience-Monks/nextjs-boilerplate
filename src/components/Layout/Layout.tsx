@@ -125,7 +125,6 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     // after the out animation, set the new page
     transitionTimeline.add(() => {
       // reset scroll
-      console.log(111)
       gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
       // update app.pathname
       localState().app.setPathname(pathnameRef.current)
@@ -151,11 +150,9 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
                 const lastScrollHistory = scrollHistory.pop()
                 localState().app.setScrollHistory(scrollHistory)
                 if (lastScrollHistory && lastScrollHistory.pathname === pathnameRef.current) {
-                  console.log(222)
                   gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
                 }
               } else {
-                console.log(333)
                 gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
               }
               clearTimeout(scrollRestorationTimeoutRef.current)
