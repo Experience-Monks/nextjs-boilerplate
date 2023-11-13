@@ -29,6 +29,22 @@
         { "path": "/about/", "title": "About" }
       ]
     },
+    "cookieBanner": {
+      "description": "We use cookies on this website to improve your experience.",
+      "settings": "Ullamco deserunt dolore officia cillum ea culpa eu. Voluptate ex in commodo in dolor magna velit pariatur in nostrud enim tempor aliquip nisi.",
+      "ctas": {
+        "settings": "Cookie Settings",
+        "accept": "Accept All",
+        "reject": "Reject All",
+        "close": "close"
+      },
+      "purpose": {
+        "necessary": "necessary",
+        "preference": "preference",
+        "statistics": "statistics",
+        "marketing": "marketing"
+      }
+    },
     "screenNoScript": {
       "title": "Missing JavaScript",
       "description": "This website requires JavaScript in order to work properly.\nPlease re-enable JavaScript in your browser settings."

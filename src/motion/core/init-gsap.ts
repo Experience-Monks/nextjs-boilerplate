@@ -1,12 +1,13 @@
 import { gsap } from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
+import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 
 import { customEases, favouriteEases } from '../eases/eases'
 
 function initGsap() {
   if (typeof window === 'undefined') return
 
-  gsap.registerPlugin(CustomEase)
+  gsap.registerPlugin(CustomEase, ScrollToPlugin)
 
   gsap.defaults({ ease: 'none', duration: 1 })
 

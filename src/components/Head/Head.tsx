@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import config from '@/data/config.json'
 import { HeadProps } from '@/data/types'
 
+import { riveWASMResource } from '@/motion/core/init-rive'
+
 import MockContentSecurityPolicy from '@/components/Head/MockContentSecurityPolicy'
 import MockFeaturePolicy from '@/components/Head/MockFeaturePolicy'
 
@@ -65,6 +67,8 @@ const Head: FC<HeadProps> = ({ title, description, siteName, image }) => {
           <link rel="dns-prefetch" href={href} />
         </>
       ))}
+
+      <link rel="preload" href={riveWASMResource} as="fetch" crossOrigin="anonymous" />
 
       {process.env.NODE_ENV === 'development' && (
         <>
