@@ -1,9 +1,14 @@
 @use 'sass:math';
 
-// Globals
+// For Tailwind support, uncomment the following lines.
+// It is enabled by default on Storybook
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
 
+// Globals
 // Global styling, normalize overwritten
-@import 'polyfills';
+
 @import 'shared';
 
 html {
@@ -16,7 +21,16 @@ html {
   font-size: 10px;
   text-align: center;
 
-  @if $dynamic-responsiveness {
+  &.dynamic {
+    // ====================================================================
+    // Dynamic responsiveness.
+    // Keeps everything in proportion on slightly diffeent screen sizes. When enabled we will not have to worry about
+    // overlaps happening on narrow devices such as iPhone 5 (320px wide) or too much space on large devices like
+    // iPhone 8 Plus (414px wide). We just need to make sure to use the px() mixing FOR EVERYTHING (except things that
+    // are required to be 1px, like hairline borders). Just copy the value you see on Figma and everything should stay
+    // proportional at all times.
+    // ====================================================================
+
     font-size: #{math.div(math.round(math.div(100, $design-width-mobile) * 10000), 1000)}vw;
 
     @include media-tablet {
@@ -26,8 +40,6 @@ html {
     @include media-desktop {
       font-size: #{math.div(math.round(math.div(100, $design-width-desktop) * 10000), 1000)}vw;
     }
-  } @else {
-    font-size: 10px;
   }
 }
 

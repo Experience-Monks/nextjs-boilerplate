@@ -1,12 +1,15 @@
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, memo, useCallback, useEffect, useMemo, useReducer, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './AppAdmin.module.scss'
+
+import config from '@/data/config.json'
 
 import { browser, device, os } from '@/utils/detect'
 import { productionLog } from '@/utils/log'
 import { getRuntimeEnv, isDevEnv } from '@/utils/runtime-env'
 
+import useFeatureFlags from '@/hooks/use-feature-flags'
 import useWindowSize from '@/hooks/use-window-size'
 
 export interface AppAdminProps {
@@ -25,13 +28,17 @@ export interface ViewProps extends AppAdminProps {
 // View (pure and testable component, receives props from the controller)
 export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
+  const { flags, setFlag, resetFlags } = useFeatureFlags()
 
   const [open, setOpen] = useState(!!process.env.STORYBOOK || env !== 'local')
   const [render, setRender] = useState(false)
   const [removed, setRemoved] = useState(false)
   const [expanded, setExpanded] = useState(!!process.env.STORYBOOK)
-  const [buildOpen, buildSetOpen] = useState(true)
-  const [deviceOpen, deviceSetOpen] = useState(true)
+
+  const [sections, setSections] = useReducer(
+    (state: { [k: string]: boolean }, newState: { [k: string]: boolean }) => ({ ...state, ...newState }),
+    { device: true, build: true, flags: true }
+  )
 
   const toggleOpen = useCallback(() => {
     if (open) setExpanded(false)
@@ -75,11 +82,11 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
         {expanded ? (
           <div className={css.details}>
             <div className={css.content}>
-              <div className={classNames(css.section, { [css.closed]: deviceOpen })}>
-                <h3 className={css.title} onClick={() => deviceSetOpen(!deviceOpen)}>
+              <div className={css.section}>
+                <button className={css.title} onClick={() => setSections({ device: !sections.device })}>
                   Device info
-                </h3>
-                {deviceOpen && (
+                </button>
+                {sections.device && (
                   <ul>
                     <li>{device.type}</li>
                     <li>
@@ -95,11 +102,11 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
                 )}
               </div>
 
-              <div className={classNames(css.section, { [css.closed]: buildOpen })}>
-                <h3 className={css.title} onClick={() => buildSetOpen(!buildOpen)}>
+              <div className={css.section}>
+                <button className={css.title} onClick={() => setSections({ build: !sections.build })}>
                   Build info
-                </h3>
-                {buildOpen && (
+                </button>
+                {sections.build && (
                   <ul>
                     <li>{env}</li>
                     <li>{version}</li>
@@ -110,9 +117,34 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
               </div>
 
               <div className={css.section}>
-                <h3 className={css.title} onClick={() => setRemoved(true)}>
+                <button className={css.title} onClick={() => setSections({ flags: !sections.flags })}>
+                  Feature Flags
+                </button>
+                {sections.flags && (
+                  <ul>
+                    {Object.entries(config.featureFlags).map((entry) => {
+                      const key = entry[0] as keyof typeof config.featureFlags
+                      const value = entry[1]
+                      return (
+                        <li key={key}>
+                          <label>
+                            <input type="checkbox" onChange={() => setFlag(key, !flags[key])} checked={flags[key]} />
+                            <p>{value.label}</p>
+                          </label>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+                <button className={css.reset} onClick={() => resetFlags()}>
+                  [Reset]
+                </button>
+              </div>
+
+              <div className={css.section}>
+                <button className={css.title} onClick={() => setRemoved(true)}>
                   Remove Admin from DOM
-                </h3>
+                </button>
               </div>
             </div>
           </div>

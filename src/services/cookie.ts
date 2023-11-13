@@ -14,6 +14,10 @@ class Service {
     return Cookies.get(name)
   }
 
+  delete = (name: string) => {
+    return Cookies.remove(name)
+  }
+
   listen = (listener: CookieListener) => {
     if (!this.listeners.includes(listener)) {
       this.listeners.push(listener)

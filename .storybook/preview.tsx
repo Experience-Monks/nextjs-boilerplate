@@ -4,7 +4,9 @@ import { StoryFn } from '@storybook/react'
 
 import { store } from '@/redux'
 
+import './storybook.scss'
 import '@/styles/global.scss'
+
 import initGsap from '@/motion/core/init-gsap'
 import setBodyClasses from '@/utils/set-body-classes'
 
