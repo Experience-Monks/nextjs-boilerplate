@@ -48,7 +48,6 @@
     ">0.2%"
   ],
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.5",
     "@rive-app/react-canvas": "^4.5.0",
     "aws-rum-web": "^1.14.0",
     "bowser": "^2.11.0",
@@ -56,6 +55,7 @@
     "default-passive-events": "^2.0.0",
     "focus-visible": "^5.2.0",
     "gsap": "file:./gsap-bonus-3.11.3.tgz",
+    "immer": "^10.0.3",
     "js-cookie": "^3.0.5",
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
@@ -64,10 +64,10 @@
     "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-redux": "^8.0.5",
     "string-format": "^2.0.0",
     "tailwindcss": "^3.3.5",
-    "xss": "^1.0.14"
+    "xss": "^1.0.14",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",

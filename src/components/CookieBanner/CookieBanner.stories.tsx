@@ -1,28 +1,18 @@
+import { action } from '@storybook/addon-actions'
 import { StoryFn } from '@storybook/react'
 
-import CookieBanner, { CookieBannerProps } from './CookieBanner'
+import content from '@/data/content.json'
+
+import { View, ViewProps } from './CookieBanner'
 
 export default { title: 'components/CookieBanner' }
 
-export const Default: StoryFn<CookieBannerProps> = (args) => <CookieBanner {...args} />
-
-Default.args = {
-  onAccept: () => console.log('accept'),
-  onReject: () => console.log('reject')
-}
-
-Default.argTypes = {}
-
-export const WithChildren: StoryFn<CookieBannerProps> = (args) => (
-  <CookieBanner {...args}>
-    We use cookies on this website to improve your experience. Learn more on our{' '}
-    <a href="https://media.monks.com/privacy-policy" target="_blank'">
-      Privacy Policy
-    </a>
-    .
-  </CookieBanner>
+export const Default: StoryFn<ViewProps> = (args) => (
+  <View {...args} cookieConsent={null} setCookieConsent={action('setCookieConsent')} />
 )
 
-WithChildren.args = { ...Default.args }
+Default.args = {
+  content: content.common.cookieBanner
+}
 
 Default.argTypes = {}

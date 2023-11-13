@@ -1,8 +1,4 @@
-import { Provider } from 'react-redux'
-
 import { StoryFn } from '@storybook/react'
-
-import { store } from '@/redux'
 
 import './storybook.scss'
 import '@/styles/global.scss'
@@ -77,9 +73,7 @@ export const decorators = [
   (Story: StoryFn) => {
     return (
       <div className={fontVariables}>
-        <Provider store={store}>
-          <Story />
-        </Provider>
+        <Story />
       </div>
     )
   }

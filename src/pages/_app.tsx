@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react'
-import { Provider } from 'react-redux'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
@@ -9,6 +8,9 @@ import '@/styles/global.scss'
 
 import { PageProps } from '@/data/types'
 
+import localStore from '@/store'
+
+import AnalyticsService from '@/services/analytics'
 import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
@@ -19,8 +21,6 @@ import initRive from '@/motion/core/init-rive'
 import useFeatureFlags from '@/hooks/use-feature-flags'
 
 import Layout from '@/components/Layout/Layout'
-
-import { store } from '@/redux'
 
 require('default-passive-events')
 require('focus-visible')
@@ -33,7 +33,11 @@ const App: FC<AppProps<PageProps>> = (props) => {
 
   const { flags } = useFeatureFlags()
 
+  const cookieConsent = localStore(({ consent }) => consent.cookieConsent)
+
   useEffect(() => {
+    history.scrollRestoration = 'manual'
+
     // Initialize AWS RUM
     AWSRumService.start()
 
@@ -58,6 +62,13 @@ const App: FC<AppProps<PageProps>> = (props) => {
   }, [])
 
   useEffect(() => {
+    if (cookieConsent?.statistics) {
+      AnalyticsService.start()
+      AWSRumService.allowCookies()
+    }
+  }, [cookieConsent])
+
+  useEffect(() => {
     const handleRouteChange = (pathname: string) => {
       AWSRumService.recordPageView(pathname)
     }
@@ -72,11 +83,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
     else document.documentElement.classList.remove('dynamic')
   }, [flags.dynamicResponsiveness])
 
-  return (
-    <Provider store={store}>
-      {props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />}
-    </Provider>
-  )
+  return props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />
 }
 
 export default App

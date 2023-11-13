@@ -1,9 +1,3 @@
-<p align="center">
-  <a href="https://terminalizer.com">
-    <img src="docs/logo.jpg"/>
-  </a>
-</p>
-
 # Experience.Monks NextJS Generator
 
 ![GitHub](https://img.shields.io/github/license/Experience-Monks/nextjs-boilerplate)
