@@ -83,9 +83,9 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
           <div className={css.details}>
             <div className={css.content}>
               <div className={css.section}>
-                <h3 className={css.title} onClick={() => setSections({ device: !sections.device })}>
+                <button className={css.title} onClick={() => setSections({ device: !sections.device })}>
                   Device info
-                </h3>
+                </button>
                 {sections.device && (
                   <ul>
                     <li>{device.type}</li>
@@ -103,9 +103,9 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
               </div>
 
               <div className={css.section}>
-                <h3 className={css.title} onClick={() => setSections({ build: !sections.build })}>
+                <button className={css.title} onClick={() => setSections({ build: !sections.build })}>
                   Build info
-                </h3>
+                </button>
                 {sections.build && (
                   <ul>
                     <li>{env}</li>
@@ -117,9 +117,9 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
               </div>
 
               <div className={css.section}>
-                <h3 className={css.title} onClick={() => setSections({ flags: !sections.flags })}>
+                <button className={css.title} onClick={() => setSections({ flags: !sections.flags })}>
                   Feature Flags
-                </h3>
+                </button>
                 {sections.flags && (
                   <ul>
                     {Object.entries(config.featureFlags).map((entry) => {
@@ -142,9 +142,9 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
               </div>
 
               <div className={css.section}>
-                <h3 className={css.title} onClick={() => setRemoved(true)}>
+                <button className={css.title} onClick={() => setRemoved(true)}>
                   Remove Admin from DOM
-                </h3>
+                </button>
               </div>
             </div>
           </div>
