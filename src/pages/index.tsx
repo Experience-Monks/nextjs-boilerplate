@@ -1,10 +1,9 @@
-import { GetStaticProps } from 'next'
+import type { PageHomeProps } from '@/components/PageHome/PageHome'
+import type { GetStaticProps } from 'next'
 
 import content from '@/data/content.json'
 
 import generateHeadProps from '@/utils/generate-head-props'
-
-import PageHome, { PageHomeProps } from '@/components/PageHome/PageHome'
 
 export const getStaticProps: GetStaticProps<PageHomeProps> = async () => {
   return {
@@ -16,4 +15,4 @@ export const getStaticProps: GetStaticProps<PageHomeProps> = async () => {
   }
 }
 
-export default PageHome
+export { default } from '@/components/PageHome/PageHome'

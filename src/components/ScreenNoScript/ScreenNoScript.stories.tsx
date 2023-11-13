@@ -1,8 +1,9 @@
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './ScreenNoScript'
 
 import content from '@/data/content.json'
 
-import { View, ViewProps } from './ScreenNoScript'
+import { View } from './ScreenNoScript'
 
 export default { title: 'components/ScreenNoScript' }
 

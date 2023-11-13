@@ -35,7 +35,7 @@ class Service {
     const storedFlags = LocalStorageService.get('featureFlags')
     try {
       return JSON.parse(storedFlags || 'null') ?? defaultFlags
-    } catch (e) {
+    } catch {
       return defaultFlags
     }
   }

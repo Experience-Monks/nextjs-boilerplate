@@ -5,8 +5,8 @@ type CookieListener = (name: string, value: string | undefined) => void
 class Service {
   listeners: CookieListener[] = []
 
-  set = (name: string, value: string, options: Cookies.CookieAttributes = { expires: 30 }) => {
-    Cookies.set(name, value, options)
+  set = (name: string, value: string, options?: Cookies.CookieAttributes) => {
+    Cookies.set(name, value, { expires: 30, ...options })
     this.listeners.forEach((listener) => listener(name, value))
   }
 

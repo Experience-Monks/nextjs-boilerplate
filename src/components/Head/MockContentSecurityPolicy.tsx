@@ -49,7 +49,7 @@ export default function ContentSecurityPolicy() {
       blob:
       data:
       'unsafe-inline';
-  `.replace(/(\r\n|\n|\r)/gm, '')
+  `.replaceAll(/(\r\n|\n|\r)/gmu, '')
 
   return (
     <NextHead>

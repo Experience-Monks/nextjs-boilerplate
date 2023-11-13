@@ -8,7 +8,7 @@ class Service {
   }
 
   listen = (listener: ScrollListener) => {
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.addEventListener('scroll', this.onScroll, { passive: false })
     }
 
@@ -20,7 +20,7 @@ class Service {
   dismiss = (listener: ScrollListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.removeEventListener('scroll', this.onScroll)
     }
   }

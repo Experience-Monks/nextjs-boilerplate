@@ -1,12 +1,14 @@
-import { FC, memo, useCallback, useState } from 'react'
+import type { FC } from 'react'
+import type { Content } from '@/data/types'
+import type { AppState } from '@/store'
+import type { CookieConsent } from '@/store/slice-consent'
+
+import { memo, useCallback, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './CookieBanner.module.scss'
 
-import { Content } from '@/data/types'
-
-import localStore, { AppState } from '@/store'
-import { CookieConsent } from '@/store/slice-consent'
+import localStore from '@/store'
 
 import copy from '@/utils/copy'
 
@@ -24,7 +26,7 @@ export interface ViewProps extends CookieBannerProps {
 
 export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCookieConsent }) => {
   const [settings, setSettings] = useState(false)
-  const [consent, setContent] = useState<CookieConsent>(
+  const [consent, setConsent] = useState<CookieConsent>(
     cookieConsent ?? {
       session: false,
       persistent: false,
@@ -74,7 +76,7 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
 
   const handleUpdate = useCallback(
     (key: keyof CookieConsent, value: boolean) => {
-      setContent({ ...consent, [key]: value })
+      setConsent({ ...consent, [key]: value })
     },
     [consent]
   )
@@ -115,7 +117,9 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
                   type="checkbox"
                   id="cookie-preference"
                   checked={consent?.preference}
-                  onChange={(e) => handleUpdate('preference', e.target.checked)}
+                  onChange={(e) => {
+                    handleUpdate('preference', e.target.checked)
+                  }}
                 />
                 <label htmlFor="cookie-preference" {...copy.html(content.purpose.preference)} />
               </li>
@@ -124,7 +128,9 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
                   type="checkbox"
                   id="cookie-statistics"
                   checked={consent?.statistics}
-                  onChange={(e) => handleUpdate('statistics', e.target.checked)}
+                  onChange={(e) => {
+                    handleUpdate('statistics', e.target.checked)
+                  }}
                 />
                 <label htmlFor="cookie-statistics" {...copy.html(content.purpose.statistics)} />
               </li>
@@ -133,7 +139,9 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
                   type="checkbox"
                   id="cookie-marketing"
                   checked={consent?.marketing}
-                  onChange={(e) => handleUpdate('marketing', e.target.checked)}
+                  onChange={(e) => {
+                    handleUpdate('marketing', e.target.checked)
+                  }}
                 />
                 <label htmlFor="cookie-marketing" {...copy.html(content.purpose.marketing)} />
               </li>

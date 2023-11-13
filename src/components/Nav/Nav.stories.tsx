@@ -1,9 +1,12 @@
-import { FC, useEffect, useRef } from 'react'
-import { StoryFn } from '@storybook/react'
+import type { FC } from 'react'
+import type { StoryFn } from '@storybook/react'
+import type { NavHandle, ViewProps } from './Nav'
+
+import { useEffect, useRef } from 'react'
 
 import content from '@/data/content.json'
 
-import { NavHandle, View, ViewProps } from './Nav'
+import { View } from './Nav'
 
 export default { title: 'components/Nav' }
 

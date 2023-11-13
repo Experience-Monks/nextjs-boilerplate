@@ -42,7 +42,7 @@ export type OptmizedImageEdits = {
   webp?: { quality: number; effort: 0 | 1 | 2 | 3 | 4 | 5 | 6 }
 }
 
-function getOptimizedImageURL(src: string, edits?: OptmizedImageEdits) {
+function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
   if (
     process.env.STORYBOOK ||
     !src.startsWith('/') ||
@@ -53,8 +53,8 @@ function getOptimizedImageURL(src: string, edits?: OptmizedImageEdits) {
   }
 
   let settings = JSON.stringify({
-    key: `${src.replace(/\//, '')}`,
-    edits: { ...(edits || {}), webp: edits?.webp || { quality: 90, effort: 5 } }
+    key: `${src.replace(/\//u, '')}`,
+    edits: { ...edits, webp: edits?.webp || { quality: 90, effort: 5 } }
   })
 
   // https://stackoverflow.com/a/36941639
@@ -67,4 +67,4 @@ function getOptimizedImageURL(src: string, edits?: OptmizedImageEdits) {
   return prefix + settingsBase64
 }
 
-export default getOptimizedImageURL
+export default getOptimizedImageUrl

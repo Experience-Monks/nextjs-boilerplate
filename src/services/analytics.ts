@@ -26,7 +26,7 @@ class Service {
       this.tracking = true
 
       if (this.gtmId) {
-        window.dataLayer = window.dataLayer || []
+        window.dataLayer ||= []
         const script = document.createElement('script')
         script.id = 'gtm-container'
         script.text = `
@@ -37,7 +37,7 @@ class Service {
           f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer', '${this.gtmId}');
         `
-        document.head.appendChild(script)
+        document.head.append(script)
         log('Analytics', 'GTM initialized')
       }
     }

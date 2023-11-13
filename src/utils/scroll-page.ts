@@ -25,10 +25,10 @@ let timeoutId: NodeJS.Timeout
  * @param {function} [onComplete=noop] - On complete trigger function
  */
 export default function scrollPage(props: Partial<ScrollProps> = {}, onComplete = noop) {
-  const combinedProps = Object.assign({}, defaultProps, props)
+  const combinedProps = { ...defaultProps, ...props }
   const { x, y, duration, ease } = combinedProps
 
-  timeoutId && clearTimeout(timeoutId)
+  if (timeoutId) clearTimeout(timeoutId)
   timeoutId = setTimeout(onComplete, duration * 1000)
 
   gsap.to(window, { duration, scrollTo: { x, y, autoKill: false }, ease })

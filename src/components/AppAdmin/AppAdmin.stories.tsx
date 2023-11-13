@@ -1,12 +1,11 @@
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './AppAdmin'
 
-import { View, ViewProps } from './AppAdmin'
+import { View } from './AppAdmin'
 
 export default { title: 'components/AppAdmin' }
 
-export const Default: StoryFn<ViewProps> = (args) => {
-  return <View {...args} />
-}
+export const Default: StoryFn<ViewProps> = (args) => <View {...args} />
 
 Default.args = {
   env: 'storybook',

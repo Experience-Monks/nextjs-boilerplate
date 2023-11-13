@@ -1,6 +1,5 @@
-import { RefObject } from 'react'
-
-import content from '@/data/content.json'
+import type { RefObject } from 'react'
+import type content from '@/data/content.json'
 
 export type Content = typeof content
 export type CommonContent = typeof content.common

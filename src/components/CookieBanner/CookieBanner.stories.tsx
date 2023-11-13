@@ -1,9 +1,11 @@
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './CookieBanner'
+
 import { action } from '@storybook/addon-actions'
-import { StoryFn } from '@storybook/react'
 
 import content from '@/data/content.json'
 
-import { View, ViewProps } from './CookieBanner'
+import { View } from './CookieBanner'
 
 export default { title: 'components/CookieBanner' }
 

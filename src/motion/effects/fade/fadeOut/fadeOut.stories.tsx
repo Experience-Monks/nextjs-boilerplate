@@ -1,5 +1,6 @@
+import type { StoryFn } from '@storybook/react'
+
 import { useEffect, useRef } from 'react'
-import { StoryFn } from '@storybook/react'
 import { gsap } from 'gsap'
 
 import eases from '@/motion/eases/eases'

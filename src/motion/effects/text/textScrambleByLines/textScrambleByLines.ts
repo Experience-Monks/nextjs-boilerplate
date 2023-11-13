@@ -41,9 +41,7 @@ const effect: CustomEffectConfig = {
       for (let i = 0; i < split.lines.length; i++) {
         const line = split.lines[i] as HTMLDivElement
         const wipe = line.querySelector('.wipe')
-        const chars = Array.from(line.children)
-          .map((w) => Array.from(w.children))
-          .flat()
+        const chars = [...line.children].flatMap((w) => [...w.children])
 
         timeline.to(
           config.wipe?.direction === 'left' ? chars.reverse() : chars,

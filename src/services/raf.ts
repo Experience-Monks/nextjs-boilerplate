@@ -27,7 +27,7 @@ class Service {
   dismiss = (listener: RequestAnimationFrameListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       cancelAnimationFrame(this.frameId)
       this.frameId = 0
     }

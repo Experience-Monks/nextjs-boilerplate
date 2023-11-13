@@ -1,5 +1,6 @@
+import type { HeadProps } from '@/data/types'
+
 import content from '@/data/content.json'
-import { HeadProps } from '@/data/types'
 
 import copy from '@/utils/copy'
 
@@ -18,7 +19,7 @@ const generateHeadProps = (
               .toLowerCase()
               .trim()
               .split(' ')
-              .map((s) => s[0].toUpperCase() + s.substring(1))
+              .map((s) => s[0].toUpperCase() + s.slice(1))
               .join(' ')
           : ''
       },
@@ -30,7 +31,7 @@ const generateHeadProps = (
   return {
     ...content.head,
     image,
-    title: parsedTitle.startsWith('| ') ? parsedTitle.substring(2) : parsedTitle,
+    title: parsedTitle.startsWith('| ') ? parsedTitle.slice(2) : parsedTitle,
     description: copy.parse(
       content.head.description,
       { description: description || content.pageHome.head.description },

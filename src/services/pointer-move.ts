@@ -13,7 +13,7 @@ class Service {
   }
 
   listen = (listener: PointerMoveListener) => {
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.addEventListener(device.mobile ? 'touchmove' : 'mousemove', this.onMove)
     }
 
@@ -25,7 +25,7 @@ class Service {
   dismiss = (listener: PointerMoveListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.removeEventListener(device.mobile ? 'touchmove' : 'mousemove', this.onMove)
     }
   }

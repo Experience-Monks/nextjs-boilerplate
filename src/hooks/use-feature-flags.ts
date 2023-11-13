@@ -1,6 +1,8 @@
+import type { FeatureFlagId, FeatureFlags } from '@/services/feature-flags'
+
 import { useCallback, useEffect, useState } from 'react'
 
-import FeatureFlagService, { FeatureFlagId, FeatureFlags } from '@/services/feature-flags'
+import FeatureFlagService from '@/services/feature-flags'
 
 function useFeatureFlags() {
   const [flags, setFlags] = useState(FeatureFlagService.getAll())
@@ -10,7 +12,7 @@ function useFeatureFlags() {
   }, [])
 
   useEffect(() => {
-    const update = (flags: FeatureFlags) => setFlags(flags)
+    const update = (flgs: FeatureFlags) => setFlags(flgs)
     FeatureFlagService.listen(update)
     return () => {
       FeatureFlagService.dismiss(update)

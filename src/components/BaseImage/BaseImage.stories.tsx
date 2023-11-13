@@ -1,7 +1,9 @@
-import { action } from '@storybook/addon-actions'
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { BaseImageProps } from './BaseImage'
 
-import BaseImage, { BaseImageProps } from './BaseImage'
+import { action } from '@storybook/addon-actions'
+
+import BaseImage from './BaseImage'
 
 export default { title: 'components/BaseImage' }
 

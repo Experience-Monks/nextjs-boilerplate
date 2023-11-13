@@ -1,7 +1,5 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import sharp from 'sharp'
 
 // Mock Cloudfront Image Handler
@@ -85,4 +83,3 @@ const handler = async (req, res) => {
 }
 
 export default handler
-/* eslint-enable sonarjs/cognitive-complexity */

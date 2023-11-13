@@ -1,8 +1,9 @@
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './PageUnsupported'
 
 import content from '@/data/content.json'
 
-import { View, ViewProps } from './PageUnsupported'
+import { View } from './PageUnsupported'
 
 export default { title: 'pages/PageUnsupported' }
 

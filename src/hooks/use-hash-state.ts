@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 
 function useHashState(hashes: string[]): [boolean, () => void, () => void] {
   const router = useRouter()
-  const normalized = useMemo(() => hashes.map((h: string) => h.replace(/#/g, '')), [hashes])
+  const normalized = useMemo(() => hashes.map((h: string) => h.replace(/#/gu, '')), [hashes])
   const active = useMemo(
     () => normalized.some((hash) => router.asPath.includes(`#${hash}`)),
     [normalized, router.asPath]

@@ -1,11 +1,12 @@
-import { FC, ForwardedRef, memo, useImperativeHandle, useRef } from 'react'
+import type { FC, ForwardedRef } from 'react'
+import type { Content } from '@/data/types'
+
+import { memo, useImperativeHandle, useRef } from 'react'
 import Link from 'next/link'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
 import css from './Nav.module.scss'
-
-import { Content } from '@/data/types'
 
 import BaseImage from '@/components/BaseImage/BaseImage'
 

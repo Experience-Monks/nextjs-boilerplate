@@ -8,13 +8,13 @@ export function getRuntimeEnv(): RuntimeEnv {
 
   const prefix = window.location.hostname.split('.')[0]
 
-  if (/^(localhost|\d)/i.test(prefix)) {
+  if (/^(localhost|\d)/iu.test(prefix)) {
     result = 'local'
-  } else if (/^(uat|prd|prod|www|or-the-project-subdomain)/i.test(prefix)) {
+  } else if (/^(uat|prd|prod|www|or-the-project-subdomain)/iu.test(prefix)) {
     result = 'prod'
-  } else if (/^(stag|stg)/i.test(prefix)) {
+  } else if (/^(stag|stg)/iu.test(prefix)) {
     result = 'stage'
-  } else if (/^(dev)/i.test(prefix)) {
+  } else if (/^(dev)/iu.test(prefix)) {
     result = 'dev'
   } else {
     result = prefix as RuntimeEnv
@@ -25,5 +25,5 @@ export function getRuntimeEnv(): RuntimeEnv {
 
 export function isDevEnv(): boolean {
   const env = getRuntimeEnv()
-  return /^(preview|local|dev|stag|stg|\d)/i.test(env)
+  return /^(preview|local|dev|stag|stg|\d)/iu.test(env)
 }

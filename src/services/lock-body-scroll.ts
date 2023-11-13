@@ -24,7 +24,7 @@ class Service {
         document.body.style.position = ''
         document.body.style.overflowY = ''
         document.body.style.marginTop = ''
-        !skipPositionRestore && scrollPage({ y: this.scrollPosY, duration: 0 })
+        if (!skipPositionRestore) scrollPage({ y: this.scrollPosY, duration: 0 })
         this.isLocked = false
       }
     : noop

@@ -1,5 +1,7 @@
-import { ComponentProps, FC } from 'react'
-import { Fit, Layout, useRive, UseRiveOptions, UseRiveParameters } from '@rive-app/react-canvas'
+import type { ComponentProps, FC } from 'react'
+import type { UseRiveOptions, UseRiveParameters } from '@rive-app/react-canvas'
+
+import { Fit, Layout, useRive } from '@rive-app/react-canvas'
 
 interface Props extends ComponentProps<'canvas'> {
   riveParams?: UseRiveParameters

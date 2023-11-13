@@ -1,9 +1,10 @@
-import { FC, memo } from 'react'
+import type { FC } from 'react'
+import type { Content } from '@/data/types'
+
+import { memo } from 'react'
 import classNames from 'classnames'
 
 import css from './ScreenNoScript.module.scss'
-
-import { Content } from '@/data/types'
 
 import copy from '@/utils/copy'
 

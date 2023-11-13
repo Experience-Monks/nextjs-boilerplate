@@ -5,11 +5,11 @@ import LocalStorageService from '@/services/local-storage'
 const useLocalStorage = (name: string): [value: string | undefined, setValue: (value: string) => boolean] => {
   const [value, setValue] = useState<string | undefined>()
 
-  const setStoredValue = useCallback((value: string) => LocalStorageService.set(name, value), [name])
+  const setStoredValue = useCallback((val: string) => LocalStorageService.set(name, val), [name])
 
   useEffect(() => {
     setValue(LocalStorageService.get(name))
-    const onUpdate = (n: string, value: string | undefined) => n === name && setValue(value)
+    const onUpdate = (n: string, val: string | undefined) => n === name && setValue(val)
     LocalStorageService.listen(onUpdate)
     return () => {
       LocalStorageService.dismiss(onUpdate)

@@ -1,4 +1,6 @@
-import { FC, memo, useState } from 'react'
+import type { FC } from 'react'
+
+import { memo, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './ScreenIntro.module.scss'

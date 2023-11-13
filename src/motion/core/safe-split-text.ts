@@ -58,7 +58,7 @@ class SafeSplitText extends SplitText {
       t.removeAttribute(attrId)
     })
     ResizeService.dismiss(this.onResize)
-    delete cache[this.id]
+    cache[this.id] = null
     super.revert()
   }
 }

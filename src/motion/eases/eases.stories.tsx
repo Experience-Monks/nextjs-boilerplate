@@ -1,13 +1,17 @@
-import React, { FC, useEffect, useState } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
+import type { StoryFn } from '@storybook/react'
+import type { EaseDeclaration } from './eases'
+
+import { useEffect, useState } from 'react'
 import { BezierCurveEditor } from 'react-bezier-curve-editor'
-import { StoryFn } from '@storybook/react'
 import { gsap } from 'gsap'
 
 import css from './eases.module.scss'
 
 import copy from '@/utils/copy'
 
-import { customEases, EaseDeclaration, favouriteEases, standardEases } from './eases'
+import { customEases, favouriteEases, standardEases } from './eases'
 
 export default { title: 'motion/Eases' }
 
@@ -57,7 +61,7 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
     <div className={css.root}>
       <div className={css.instructions}>
         <p>Eases location:</p>
-        <pre>{`motion/eases.tsx`}</pre>
+        <pre>motion/eases.tsx</pre>
       </div>
 
       <div className={css.instructions}>
@@ -139,13 +143,13 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
                   ) : null}
                   <div className={css.vertical}>
                     <p>Value</p>
-                    <div className={`background`}></div>
+                    <div className="background"></div>
                     <div className={`dot dot-vertical-${copy.kebab(name)}`}></div>
                     <div className={`line line-vertical-${copy.kebab(name)}`}></div>
                   </div>
                   <div className={css.horizontal}>
                     <p>Progress</p>
-                    <div className={`background`}></div>
+                    <div className="background"></div>
                     <div className={`line line-horizontal-${copy.kebab(name)}`}></div>
                   </div>
                 </div>

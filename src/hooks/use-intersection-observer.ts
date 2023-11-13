@@ -1,11 +1,13 @@
-import { MutableRefObject, RefObject, useEffect, useState } from 'react'
+import type { MutableRefObject, RefObject } from 'react'
+
+import { useEffect, useState } from 'react'
 
 function useIntersectionObserver(
   element: Element | RefObject<Element> | null | undefined,
   triggerOnce = true,
   threshold = 0.3
 ): boolean {
-  const [isIntersecting, setIntersecting] = useState(false)
+  const [intersecting, setIntersecting] = useState(false)
 
   useEffect(() => {
     let observer: IntersectionObserver
@@ -18,7 +20,7 @@ function useIntersectionObserver(
           triggerOnce: Boolean(triggerOnce),
           rootMargin: '0px'
         }
-        observer = new IntersectionObserver(function (entries) {
+        observer = new IntersectionObserver((entries) => {
           if (options.triggerOnce) {
             if (entries.some((e) => e.isIntersecting)) {
               setIntersecting(true)
@@ -37,7 +39,7 @@ function useIntersectionObserver(
     }
   }, [element, threshold, triggerOnce])
 
-  return isIntersecting
+  return intersecting
 }
 
 export default useIntersectionObserver

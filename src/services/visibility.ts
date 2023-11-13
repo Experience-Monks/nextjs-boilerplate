@@ -8,7 +8,7 @@ class Service {
   }
 
   listen = (listener: VisibilityListener) => {
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       document.addEventListener('visibilitychange', this.onVisibility)
     }
 
@@ -20,7 +20,7 @@ class Service {
   dismiss = (listener: VisibilityListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       document.removeEventListener('visibilitychange', this.onVisibility)
     }
   }
