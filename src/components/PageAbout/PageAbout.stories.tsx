@@ -1,6 +1,6 @@
 import type { FC, RefObject } from 'react'
-import type { PageHandle } from '@/data/types'
 import type { StoryFn } from '@storybook/react'
+import type { PageHandle } from '@/data/types'
 import type { ViewProps } from './PageAbout'
 
 import { useCallback } from 'react'

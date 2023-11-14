@@ -1,3 +1,5 @@
+import 'normalize.css'
+
 import type { FC } from 'react'
 import type { AppProps } from 'next/app'
 import type { PageProps } from '@/data/types'
@@ -5,7 +7,6 @@ import type { PageProps } from '@/data/types'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
-import 'normalize.css'
 
 import '@/styles/global.scss'
 
@@ -16,10 +17,10 @@ import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
+import useFeatureFlags from '@/hooks/use-feature-flags'
+
 import gsapInit from '@/motion/core/init-gsap'
 import initRive from '@/motion/core/init-rive'
-
-import useFeatureFlags from '@/hooks/use-feature-flags'
 
 import Layout from '@/components/Layout/Layout'
 

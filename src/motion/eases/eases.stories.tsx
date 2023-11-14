@@ -35,11 +35,11 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
   const [selectedEase, setSelectedEase] = useState('')
   const [bezierEditor, setBezierEditor] = useState(false)
   const [easeBezier, setEaseBezier] = useState<{ [key: string]: EaseDeclaration['bezier'] }>(
-    eases.reduce((acc, ease) => {
+    eases.reduce<{ [key: string]: EaseDeclaration['bezier'] }>((acc, ease) => {
       const bezier = ease.bezier || ease.ease.split(',').map((v) => parseFloat(v))
       acc[ease.name] = (bezier.length === 4 ? bezier : [0, 0, 1, 1]) as EaseDeclaration['bezier']
       return acc
-    }, {} as { [key: string]: EaseDeclaration['bezier'] })
+    }, {})
   )
 
   useEffect(() => {

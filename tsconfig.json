@@ -1,35 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "jsx": "preserve",
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "target": "es2015",
     "module": "esnext",
+    "noEmit": true,
+    "allowJs": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "#/*": [".generated/*"]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "paths": { "@/*": ["src/*"], "#/*": [".generated/*"] },
+    "plugins": [{ "name": "next" }]
   },
   "include": [
-    "next-env.d.ts",
-    "types.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "types.d.ts",
+    "next-env.d.ts",
     ".storybook/**/*.ts",
     ".storybook/**/*.tsx",
     ".next/types/**/*.ts"

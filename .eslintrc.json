@@ -1,13 +1,14 @@
 {
   "extends": [
-    "plugin:@next/next/recommended",
     "eslint:recommended",
+    "plugin:@next/next/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:storybook/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:unicorn/recommended",
     "plugin:import/recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
     "prettier"
   ],
   "plugins": ["unicorn", "import", "simple-import-sort"],
@@ -179,23 +180,24 @@
       "warn",
       {
         "groups": [
-          ["^react\\u0000$", "^next.+\u0000$", "^@.+\\u0000$", "^@/.+\\u0000$", "^.+\\u0000$"], // types first
-          ["^react", "^next", "^@?\\w", "^\\u0000"], // our stack & ext library & side effect
-          ["^.+\\.scss$", "^@/styles/.+\\.scss$"], // css & scss
+          ["^\\u0000"],
+          ["^react+\u0000$", "^next.+\u0000$", "^@\\w.+\u0000$", "^@/.+\u0000$", ".+\u0000$"],
+          ["^react", "^next", "^@?\\w"],
+          ["^.+\\.scss$", "^@/styles/.+\\.scss$"],
           ["^@/pages"],
           ["^@/data"],
           ["^@/store"],
           ["^@/services"],
           ["^@/utils"],
-          ["^@/motion"],
           ["^@/hooks"],
-          ["^@/components/Layout, ^@/components/Page", "^@/components/Screen"], // containers
+          ["^@/motion"],
+          ["^@/components/Layout, ^@/components/Page", "^@/components/Screen"],
           ["^@/components"],
           ["^@/svgs"],
           ["^@/assets"],
-          ["^@/"], // other basePaths
-          ["^#/"], // generated stuff
-          ["^"] // rest
+          ["^@/"],
+          ["^#/"],
+          ["^"]
         ]
       }
     ],
@@ -224,6 +226,7 @@
     "react/prefer-es6-class": "error",
     "react/prefer-stateless-function": "error",
     "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "react/state-in-constructor": ["error", "never"],
     "react/static-property-placement": "error",
     "react/style-prop-object": "error",
@@ -279,6 +282,7 @@
          * @typescript-eslint
          */
         "@typescript-eslint/array-type": ["error", { "default": "array" }],
+        "@typescript-eslint/consistent-indexed-object-style": ["error", "index-signature"],
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/consistent-type-exports": "error",
         "@typescript-eslint/consistent-type-imports": [
