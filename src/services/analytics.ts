@@ -3,7 +3,7 @@ import config from '@/data/config.json'
 import log from '@/utils/log'
 import { getRuntimeEnv } from '@/utils/runtime-env'
 
-export type GTMPayload = {
+export type GTMEvent = {
   category: string
   action: string
   label: string
@@ -43,9 +43,9 @@ class Service {
     }
   }
 
-  trackGtm(event: string, payload: GTMPayload): void {
+  trackGtm(payload: GTMEvent): void {
     if (this.gtmId && this.tracking) {
-      const data = { event, payload }
+      const data = { event: 'gtm-event', payload }
       window.dataLayer.push(data)
       log('Analytics', `GTM: ${JSON.stringify(data)}`)
     }

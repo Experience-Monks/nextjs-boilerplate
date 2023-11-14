@@ -19,7 +19,6 @@
      * Possible Problems
      */
     "array-callback-return": "error",
-    "no-await-in-loop": "error",
     "no-constant-binary-expression": "error",
     "no-constructor-return": "error",
     "no-duplicate-imports": "error",
@@ -191,7 +190,6 @@
           ["^@/utils"],
           ["^@/hooks"],
           ["^@/motion"],
-          ["^@/components/Layout, ^@/components/Page", "^@/components/Screen"],
           ["^@/components"],
           ["^@/svgs"],
           ["^@/assets"],
@@ -220,7 +218,6 @@
     "react/no-unsafe": "error",
     "react/no-unstable-nested-components": "error",
     "react/no-unused-class-component-methods": "error",
-    "react/no-unused-prop-types": "error",
     "react/no-unused-state": "error",
     "react/no-will-update-set-state": "error",
     "react/prefer-es6-class": "error",

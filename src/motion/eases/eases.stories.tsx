@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import type React from 'react'
 import type { StoryFn } from '@storybook/react'
 import type { EaseDeclaration } from './eases'
 
