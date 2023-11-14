@@ -4,13 +4,19 @@
       "label": "Javascript Required",
       "enabled": true
     },
+    "optimizedImages": {
+      "label": "Optimized Images",
+      "enabled": false
+    },
     "pageTransitions": {
       "label": "Page Transitions",
-      "enabled": true
+      "enabled": true,
+      "hot": true
     },
     "dynamicResponsiveness": {
       "label": "Dynamic Responsiveness",
-      "enabled": false
+      "enabled": false,
+      "hot": true
     }
   },
   "resizeDebounceTime": 10,

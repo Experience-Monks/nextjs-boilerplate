@@ -1,3 +1,5 @@
+import FeatureFlagService from '@/services/feature-flags'
+
 export type OptmizedImageEdits = {
   // https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/welcome.html
   smartCrop?: boolean | { faceIndex?: number; padding?: number }
@@ -43,6 +45,7 @@ export type OptmizedImageEdits = {
 }
 
 function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
+  if (!FeatureFlagService.get('optimizedImages')) return src
   if (
     process.env.STORYBOOK ||
     !src.startsWith('/') ||

@@ -140,24 +140,26 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
               </button>
               {sections.flags && (
                 <ul>
-                  {Object.entries(config.featureFlags).map((entry) => {
-                    const key = entry[0] as keyof typeof config.featureFlags
-                    const value = entry[1]
-                    return (
-                      <li key={key}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            onChange={() => {
-                              setFlag(key, !flags[key])
-                            }}
-                            checked={flags[key]}
-                          />
-                          <p>{value.label}</p>
-                        </label>
-                      </li>
-                    )
-                  })}
+                  {Object.entries(config.featureFlags)
+                    .filter(([, f]) => 'hot' in f)
+                    .map((entry) => {
+                      const key = entry[0] as keyof typeof config.featureFlags
+                      const value = entry[1]
+                      return (
+                        <li key={key}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              onChange={() => {
+                                setFlag(key, !flags[key])
+                              }}
+                              checked={flags[key]}
+                            />
+                            <p>{value.label}</p>
+                          </label>
+                        </li>
+                      )
+                    })}
                 </ul>
               )}
               <button
