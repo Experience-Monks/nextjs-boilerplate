@@ -1,7 +1,6 @@
-import type { FC } from 'react'
-import type { Content } from '@/data/types'
+import type { ControllerProps } from './ScreenRotate.controller'
 
-import { memo, useEffect, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './ScreenRotate.module.scss'
@@ -11,17 +10,9 @@ import ResizeService from '@/services/resize'
 import copy from '@/utils/copy'
 import { device } from '@/utils/detect'
 
-export interface ScreenRotateProps {
-  // List here all props that are public and settable by the parent component.
-  className?: string
-  content: Content['common']['screenRotate']
-}
+export interface ViewProps extends ControllerProps {}
 
-export interface ViewProps extends ScreenRotateProps {
-  // List here the private props that are only settable by the controller component.
-}
-
-// View (pure and testable component, receives props from the controller)
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, content }) => {
   const [enable, setEnable] = useState(process.env.STORYBOOK || (!device.desktop && device.phone && device.landscape))
 
@@ -45,11 +36,4 @@ export const View: FC<ViewProps> = ({ className, content }) => {
   ) : null
 }
 
-View.displayName = 'ScreenRotate-View'
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const ScreenRotate: FC<ScreenRotateProps> = (props) => {
-  return <View {...props} />
-}
-
-export default memo(ScreenRotate)
+View.displayName = 'ScreenRotate_View'

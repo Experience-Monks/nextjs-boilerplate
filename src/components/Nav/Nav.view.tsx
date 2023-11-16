@@ -1,33 +1,24 @@
-import type { FC, ForwardedRef } from 'react'
-import type { Content } from '@/data/types'
+import type { FC } from 'react'
+import type { ControllerProps } from './Nav.controller'
 
-import { memo, useImperativeHandle, useRef } from 'react'
-import Link from 'next/link'
+import { useImperativeHandle, useRef } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
 import css from './Nav.module.scss'
 
-import BaseImage from '@/components/BaseImage/BaseImage'
+import { BaseButton } from '@/components/BaseButton'
+import { BaseImage } from '@/components/BaseImage'
 
 import SvgExperienceLogo from '@/svgs/ExperienceLogo.svg'
 
-export type NavHandle = {
+export type ViewHandle = {
   animateIn: () => gsap.core.Timeline
 }
 
-export interface NavProps {
-  // List here all props that are public and settable by the parent component.
-  className?: string
-  handleRef?: ForwardedRef<NavHandle>
-  content: Content['common']['nav']
-}
+export interface ViewProps extends ControllerProps {}
 
-export interface ViewProps extends NavProps {
-  // List here the private props that are only settable by the controller component.
-}
-
-// View (pure and testable component, receives props from the controller)
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
   const rootRef = useRef<HTMLElement>(null)
 
@@ -44,9 +35,9 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           </a>
           {content.routes.map(({ path, title }) => (
             <li key={title}>
-              <Link href={path} aria-label="Home" scroll={false}>
+              <BaseButton href={path} aria-label="Home">
                 {path === '/' ? <SvgExperienceLogo className={css.mainLogo} /> : title}
-              </Link>
+              </BaseButton>
             </li>
           ))}
         </ul>
@@ -66,11 +57,4 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
   )
 }
 
-View.displayName = 'Nav-View'
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const Nav: FC<NavProps> = (props) => {
-  return <View {...props} />
-}
-
-export default memo(Nav)
+View.displayName = 'Nav_View'

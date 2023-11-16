@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 
 import eases from '@/motion/eases/eases'
 
-import BaseImage from '@/components/BaseImage/BaseImage'
+import { BaseImage } from '@/components/BaseImage'
 
 import timelineFromTo from './timelineFromTo'
 

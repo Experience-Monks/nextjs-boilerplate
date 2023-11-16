@@ -1,7 +1,8 @@
 import type { FC } from 'react'
-import type { Content, PageHandle, PageProps } from '@/data/types'
+import type { PageHandle } from '@/data/types'
+import type { ControllerProps } from './PageAbout.controller'
 
-import { memo, useEffect, useImperativeHandle, useRef } from 'react'
+import { useEffect, useImperativeHandle, useRef } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -9,15 +10,9 @@ import css from './PageAbout.module.scss'
 
 import copy from '@/utils/copy'
 
-export interface PageAboutProps extends PageProps {
-  // List here all props that are public and settable by the Layout component.
-  content: Content['pageAbout']
-}
-export interface ViewProps extends PageAboutProps {
-  // List here the private props that are only settable by the controller component.
-}
+export interface ViewProps extends ControllerProps {}
 
-// View (pure and testable component, receives props from the controller)
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ content, onReady }) => {
   const rootRef = useRef<HTMLElement>(null)
   const handleRef = useRef<PageHandle>(null)
@@ -40,13 +35,4 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   )
 }
 
-View.displayName = 'PageAbout-View'
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const PageAbout: FC<PageAboutProps> = (props) => {
-  return <View {...props} />
-}
-
-PageAbout.displayName = 'PageAbout'
-
-export default memo(PageAbout)
+View.displayName = 'PageAbout_View'

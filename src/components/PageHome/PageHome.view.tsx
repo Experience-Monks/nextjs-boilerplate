@@ -1,7 +1,8 @@
 import type { FC } from 'react'
-import type { Content, PageHandle, PageProps } from '@/data/types'
+import type { PageHandle } from '@/data/types'
+import type { ControllerProps } from './PageHome.controller'
 
-import { memo, useEffect, useImperativeHandle, useRef } from 'react'
+import { useEffect, useImperativeHandle, useRef } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -9,15 +10,9 @@ import css from './PageHome.module.scss'
 
 import copy from '@/utils/copy'
 
-export interface PageHomeProps extends PageProps {
-  // List here all props that are public and settable by the Layout component.
-  content: Content['pageHome']
-}
-export interface ViewProps extends PageHomeProps {
-  // List here the private props that are only settable by the controller component.
-}
+export interface ViewProps extends ControllerProps {}
 
-// View (pure and testable component, receives props from the controller)
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ content, onReady }) => {
   const rootRef = useRef<HTMLElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
@@ -63,13 +58,4 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   )
 }
 
-View.displayName = 'PageHome-View'
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const PageHome: FC<PageHomeProps> = (props) => {
-  return <View {...props} />
-}
-
-PageHome.displayName = 'PageHome'
-
-export default memo(PageHome)
+View.displayName = 'PageHome_View'

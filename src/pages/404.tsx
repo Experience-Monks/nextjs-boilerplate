@@ -1,18 +1,15 @@
-import type { PageNotFoundProps } from '@/components/PageNotFound/PageNotFound'
+import type { PageNotFoundProps } from '@/components/PageNotFound'
 import type { GetStaticProps } from 'next'
 
-import content from '@/data/content.json'
-
-import generateHeadProps from '@/utils/generate-head-props'
+import CmsService from '@/services/cms'
 
 export const getStaticProps: GetStaticProps<PageNotFoundProps> = async () => {
   return {
     props: {
-      head: generateHeadProps(content.pageNotFound.head.title, content.pageNotFound.head.description),
-      common: content.common,
-      content: content.pageNotFound
+      content: CmsService.getPageContent('notFound'),
+      noLayout: true
     }
   }
 }
 
-export { default } from '@/components/PageNotFound/PageNotFound'
+export { PageNotFound as default } from '@/components/PageNotFound'

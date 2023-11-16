@@ -1,0 +1,39 @@
+{{#if forwardRef}}
+{{#if imperativeHandle}}
+import type { ForwardedRef } from 'react'
+import type { ViewHandle } from './{{name_pc}}.view'
+{{/if}}
+
+import { forwardRef, memo } from 'react'
+{{else}}
+{{#if imperativeHandle}}
+import type { FC, ForwardedRef } from 'react'
+import type { ViewHandle } from './{{name_pc}}.view'
+{{else}}
+import type { FC } from 'react'
+{{/if}}
+
+import { memo } from 'react'
+{{/if}}
+
+import { View } from './{{name_pc}}.view'
+
+export interface ControllerProps {
+  className?: string
+{{#if imperativeHandle}}
+  handleRef?: ForwardedRef<ViewHandle>
+{{/if}}
+}
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+{{#if forwardRef}}
+export const Controller = memo(forwardRef<HTMLDivElement, ControllerProps>((props, ref) => {
+  return <View {...props} ref={ref} />
+}))
+{{else}}
+export const Controller: FC<ControllerProps> = memo((props) => {
+  return <View {...props} />
+})
+{{/if}}
+
+Controller.displayName = '{{name_pc}}_Controller'

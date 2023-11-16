@@ -1,9 +1,9 @@
 import type { StoryFn } from '@storybook/react'
-import type { ViewProps } from './PageUnsupported'
+import type { ViewProps } from './PageUnsupported.view'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './PageUnsupported'
+import { View } from './PageUnsupported.view'
 
 export default { title: 'pages/PageUnsupported' }
 
@@ -12,8 +12,7 @@ export const Default: StoryFn<ViewProps> = (args) => {
 }
 
 Default.args = {
-  content: content.pageUnsupported,
-  common: content.common
+  content: CmsService.getPageContent('unsupported')
 }
 
 Default.argTypes = {}

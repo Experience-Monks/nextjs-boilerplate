@@ -1,20 +1,20 @@
 import type { StoryFn } from '@storybook/react'
-import type { ViewProps } from './CookieBanner'
+import type { ViewProps } from './CookieBanner.view'
 
 import { action } from '@storybook/addon-actions'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './CookieBanner'
+import { View } from './CookieBanner.view'
 
 export default { title: 'components/CookieBanner' }
 
-export const Default: StoryFn<ViewProps> = (args) => (
-  <View {...args} cookieConsent={null} setCookieConsent={action('setCookieConsent')} />
-)
+export const Default: StoryFn<ViewProps> = (args) => {
+  return <View {...args} cookieConsent={null} setCookieConsent={action('setCookieConsent')} />
+}
 
 Default.args = {
-  content: content.common.cookieBanner
+  content: CmsService.getPageContent('home').common.cookieBanner
 }
 
 Default.argTypes = {}

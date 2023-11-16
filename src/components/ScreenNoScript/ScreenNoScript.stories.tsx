@@ -1,9 +1,9 @@
 import type { StoryFn } from '@storybook/react'
-import type { ViewProps } from './ScreenNoScript'
+import type { ViewProps } from './ScreenNoScript.view'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './ScreenNoScript'
+import { View } from './ScreenNoScript.view'
 
 export default { title: 'components/ScreenNoScript' }
 
@@ -12,7 +12,7 @@ export const Default: StoryFn<ViewProps> = (args) => {
 }
 
 Default.args = {
-  content: content.common.screenNoScript
+  content: CmsService.getPageContent('home').common.screenNoScript
 }
 
 Default.argTypes = {}
