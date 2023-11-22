@@ -1,7 +1,7 @@
 import { os } from '@/utils/detect'
 
 // battery API is not supported for iOS Safari - here is the hack
-const getLowPowerMode = async () => {
+export const getLowPowerMode = async () => {
   if (window.location.host.includes('localhost')) return false
   if (!os.ios) return false
 
@@ -21,5 +21,3 @@ const getLowPowerMode = async () => {
 
   return false
 }
-
-export default getLowPowerMode

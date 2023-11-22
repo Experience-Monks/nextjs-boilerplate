@@ -1,8 +1,8 @@
 import gsap from 'gsap'
 import ScrambleTextPlugin from 'gsap/dist/ScrambleTextPlugin'
 
-import effectTimeline from '@/motion/core/effect-timeline'
-import SafeSplitText from '@/motion/core/safe-split-text'
+import { effectTimeline } from '@/motion/core/effect-timeline'
+import { SafeSplitText } from '@/motion/core/safe-split-text'
 
 gsap.registerPlugin(ScrambleTextPlugin)
 

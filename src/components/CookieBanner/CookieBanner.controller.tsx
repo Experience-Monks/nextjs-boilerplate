@@ -3,7 +3,7 @@ import type { CommonContent } from '@/services/cms'
 
 import { memo } from 'react'
 
-import localStore from '@/store'
+import { localStore } from '@/store'
 
 import { View } from './CookieBanner.view'
 

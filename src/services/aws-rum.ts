@@ -57,6 +57,4 @@ class Service {
   }
 }
 
-const AWSRumService = new Service()
-
-export default AWSRumService
+export const AWSRumService = new Service()

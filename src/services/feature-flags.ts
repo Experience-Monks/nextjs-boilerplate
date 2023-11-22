@@ -1,6 +1,6 @@
 import config from '@/data/config.json'
 
-import LocalStorageService from './local-storage'
+import { LocalStorageService } from './local-storage'
 
 export type FeatureFlagId = keyof typeof config.featureFlags
 export type FeatureFlags = { [key in FeatureFlagId]: boolean }
@@ -48,6 +48,5 @@ class Service {
     this.listeners = this.listeners.filter((l) => l !== listener)
   }
 }
-const FeatureFlagService = new Service()
 
-export default FeatureFlagService
+export const FeatureFlagService = new Service()

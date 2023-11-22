@@ -26,6 +26,4 @@ class Service {
   }
 }
 
-const ScrollService = new Service()
-
-export default ScrollService
+export const ScrollService = new Service()

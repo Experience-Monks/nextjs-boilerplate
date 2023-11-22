@@ -3,7 +3,7 @@ import type { ViewProps } from './CookieBanner.view'
 
 import { action } from '@storybook/addon-actions'
 
-import CmsService from '@/services/cms'
+import { CmsService } from '@/services/cms'
 
 import { View } from './CookieBanner.view'
 

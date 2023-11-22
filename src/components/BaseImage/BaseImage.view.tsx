@@ -1,20 +1,24 @@
 import type { StaticImageData } from 'next/image'
 import type { ControllerProps } from './BaseImage.controller'
 
-import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './BaseImage.module.scss'
 
 import { noop } from '@/utils/basic-functions'
-import getOptimizedImageURL from '@/utils/get-optimized-image-url'
+import { getOptimizedImageUrl } from '@/utils/get-optimized-image-url'
 
-import useCombinedRefs from '@/hooks/use-combined-refs'
+import { useRefs } from '@/hooks/use-refs'
 
-import imageImports from '#/image-imports'
-import publicImageSizes from '#/public-image-sizes.json'
+import { imageImports } from '#/image-imports'
+import { publicImageSizes } from '#/public-image-sizes'
 
 export interface ViewProps extends ControllerProps {}
+
+export type ViewRefs = {
+  root: HTMLImageElement
+}
 
 // View (pure and testable component, receives props exclusively from the controller)
 export const View = forwardRef<HTMLImageElement, ViewProps>(
@@ -35,11 +39,10 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
     },
     ref
   ) => {
+    const refs = useRefs<ViewRefs>({ root: ref })
+
     const [size, setSize] = useState('1px')
     const [loaded, setLoaded] = useState(false)
-
-    const rootRef = useRef<HTMLImageElement>(null)
-    const combinedRef = useCombinedRefs(ref, rootRef)
 
     const imgData = useMemo<StaticImageData | undefined>(() => {
       if (data) return data
@@ -61,7 +64,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
     )
 
     const optimizedSrc = useMemo(() => {
-      return optimize ? getOptimizedImageURL(imgSrc, options) : imgSrc
+      return optimize ? getOptimizedImageUrl(imgSrc, options) : imgSrc
     }, [imgSrc, optimize, options])
 
     const imgSrcWidths = useMemo(() => {
@@ -83,14 +86,14 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
       return imgSrcWidths
         .map((w) => {
           const o = { ...opt, resize: { ...opt.resize, width: w } }
-          const url = getOptimizedImageURL(imgSrc, o)
+          const url = getOptimizedImageUrl(imgSrc, o)
           return `${url} ${w}w`
         })
         .join(', ')
     }, [optimize, imgSrcWidths, options, imgSrc])
 
     useEffect(() => {
-      const root = rootRef.current!
+      const root = refs.root.current
       let observer: ResizeObserver
       if (imgSrcWidths.length > 0 && window.ResizeObserver) {
         observer = new ResizeObserver(() => {
@@ -105,10 +108,10 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
       return () => {
         observer?.unobserve(root)
       }
-    }, [allowRetina, imgSrc, imgSrcWidths])
+    }, [refs, allowRetina, imgSrc, imgSrcWidths])
 
     useEffect(() => {
-      const img = rootRef.current!
+      const img = refs.root.current!
       const handleLoad = () => {
         img.removeEventListener('load', handleLoad)
         img.removeEventListener('loadedmetadata', handleLoad)
@@ -129,7 +132,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
         img.removeEventListener('load', handleLoad)
         img.removeEventListener('loadedmetadata', handleLoad)
       }
-    }, [optimizedSrc, loaded, onLoad, size])
+    }, [refs, optimizedSrc, loaded, onLoad, size])
 
     return (
       <img
@@ -138,7 +141,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
         srcSet={optimizedSrcSet}
         style={style}
         src={optimizedSrc}
-        ref={combinedRef}
+        ref={refs.root}
         alt={alt}
         sizes={size}
         {...(imgData ? { width: `${imgData.width}px`, height: `${imgData.height}px` } : {})}

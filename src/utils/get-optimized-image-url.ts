@@ -1,4 +1,4 @@
-import FeatureFlagService from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags'
 
 export type OptmizedImageEdits = {
   // https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/welcome.html
@@ -44,7 +44,7 @@ export type OptmizedImageEdits = {
   webp?: { quality: number; effort: 0 | 1 | 2 | 3 | 4 | 5 | 6 }
 }
 
-function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
+export function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
   if (!FeatureFlagService.get('optimizedImages')) return src
   if (
     process.env.STORYBOOK ||
@@ -69,5 +69,3 @@ function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
   const prefix = process.env.NODE_ENV === 'development' ? '/api/images/' : '/images/'
   return prefix + settingsBase64
 }
-
-export default getOptimizedImageUrl

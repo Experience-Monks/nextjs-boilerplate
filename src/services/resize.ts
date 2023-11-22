@@ -46,6 +46,4 @@ class Service {
   }
 }
 
-const ResizeService = new Service()
-
-export default ResizeService
+export const ResizeService = new Service()

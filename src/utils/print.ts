@@ -9,7 +9,7 @@ const colors: { [key: string]: [string, string, string, string] } = {
   error: ['#e64a19', '#000', '#ff0000', '#fff']
 }
 
-export const productionLog = (label: string, ...args: string[]) => {
+export const productionPrint = (label: string, ...args: string[]) => {
   if (process.env.NODE_ENV !== 'test') {
     const c = colors[label.toLowerCase()] || colors.default
     console.log(
@@ -21,8 +21,6 @@ export const productionLog = (label: string, ...args: string[]) => {
   }
 }
 
-export const log = (label: string, ...args: string[]) => {
-  if (isDevEnv() || process.env.NODE_ENV === 'development') productionLog(label, ...args)
+export const print = (label: string, ...args: string[]) => {
+  if (isDevEnv() || process.env.NODE_ENV === 'development') productionPrint(label, ...args)
 }
-
-export default log

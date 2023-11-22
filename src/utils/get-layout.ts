@@ -1,4 +1,4 @@
-import sass from '@/utils/sass'
+import { sass } from '@/utils/sass'
 
 export const ssrLayout = {
   mobile: false,
@@ -6,7 +6,7 @@ export const ssrLayout = {
   desktop: true
 }
 
-function getLayout() {
+export function getLayout() {
   if (typeof document !== 'undefined') {
     const matchTablet = window.matchMedia(`(min-width: ${sass['breakpoint-tablet']}px)`)
     const matchDesktop = window.matchMedia(`(min-width: ${sass['breakpoint-desktop']}px)`)
@@ -23,5 +23,3 @@ function getLayout() {
   }
   return ssrLayout
 }
-
-export default getLayout

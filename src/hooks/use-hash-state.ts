@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 // Detects if a specific #hash is added to the current route. This is useful for
 // opening modals or to trigger specific animations based on the location hash.
 
-function useHashState(hashes: string[]): [boolean, () => void, () => void] {
+export function useHashState(hashes: string[]): [boolean, () => void, () => void] {
   const router = useRouter()
   const normalized = useMemo(() => hashes.map((h: string) => h.replace(/#/gu, '')), [hashes])
   const active = useMemo(
@@ -15,5 +15,3 @@ function useHashState(hashes: string[]): [boolean, () => void, () => void] {
   const disable = useCallback(() => router.back(), [router])
   return [active, enable, disable]
 }
-
-export default useHashState

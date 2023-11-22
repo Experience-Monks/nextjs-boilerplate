@@ -34,6 +34,4 @@ class Service {
   }
 }
 
-const RafService = new Service()
-
-export default RafService
+export const RafService = new Service()

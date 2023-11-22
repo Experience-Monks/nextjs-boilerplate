@@ -17,7 +17,8 @@ import { localState } from '@/store'
 import { getScrollTop } from '@/utils/basic-functions'
 import { fontVariables } from '@/utils/fonts'
 
-import useFeatureFlags from '@/hooks/use-feature-flags'
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
+import { useRefs } from '@/hooks/use-refs'
 
 import { Footer } from '@/components/Footer'
 import { Head } from '@/components/Head'
@@ -29,19 +30,26 @@ const ScreenRotate = dynamic(() => import('@/components/ScreenRotate').then((m) 
 const CookieBanner = dynamic(() => import('@/components/CookieBanner').then((m) => m.CookieBanner), { ssr: false })
 const AppAdmin = dynamic(() => import('@/components/AppAdmin').then((m) => m.AppAdmin), { ssr: false })
 
-const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
+export type LayoutRefs = {
+  pathname: string
+  navHandle: NavHandle | null
+  pageHandle: PageHandle | null
+  isFirstPage: boolean
+  scrollRestorationTimeout: NodeJS.Timeout
+}
+
+export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) => {
+  const refs = useRefs<LayoutRefs>({
+    pathname: useRef('/'),
+    isFirstPage: useRef(true)
+  })
+
   const router = useRouter()
 
   const { flags } = useFeatureFlags()
 
   const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
   const [introComplete, setIntroComplete] = useState(false)
-
-  const pathnameRef = useRef('/')
-  const navHandleRef = useRef<NavHandle | null>(null)
-  const pageHandleRef = useRef<PageHandle | null>(null)
-  const isFirstPageRef = useRef(true)
-  const scrollRestorationTimeoutRef = useRef<NodeJS.Timeout>()
 
   const handleIntroComplete = useCallback(() => {
     setIntroComplete(true)
@@ -51,11 +59,11 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   // Update pathname ref
   //
   useEffect(() => {
-    pathnameRef.current = router.asPath
+    refs.pathname.current = router.asPath
       .split('#')[0]
       .split('?')[0]
       .replace(/^\/..-..\/?/u, '')
-  }, [router.asPath])
+  }, [refs, router.asPath])
 
   //
   // Navigation utils
@@ -95,7 +103,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       if (!localState().navigation.isNavigatingBack) {
         const scrollHistory = [
           ...localState().navigation.scrollHistory,
-          { pathname: pathnameRef.current, value: getScrollTop() }
+          { pathname: refs.pathname.current, value: getScrollTop() }
         ]
         localState().navigation.setScrollHistory(scrollHistory)
       }
@@ -108,7 +116,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     return () => {
       router.events.off('beforeHistoryChange', onBeforeHistoryChange)
     }
-  }, [router])
+  }, [refs, router])
 
   //
   // Page transitions
@@ -119,8 +127,8 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     const transitionTimeline = gsap.timeline()
 
     // if the current page has an animateOut(), do it
-    if (flags.pageTransitions && pageHandleRef.current?.animateOut) {
-      transitionTimeline.add(pageHandleRef.current.animateOut())
+    if (flags.pageTransitions && refs.pageHandle.current?.animateOut) {
+      transitionTimeline.add(refs.pageHandle.current.animateOut())
     }
 
     // after the out animation, set the new page
@@ -128,55 +136,55 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       // reset scroll
       gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
       // update app.pathname
-      localState().navigation.setPathname(pathnameRef.current)
+      localState().navigation.setPathname(refs.pathname.current)
       // set new page
       setCurrentPage(
         <Component
-          key={isFirstPageRef.current ? 'first-page' : nanoid()}
+          key={refs.isFirstPage.current ? 'first-page' : nanoid()}
           {...pageProps}
           onReady={(pageHandle?: RefObject<PageHandle>) => {
-            pageHandleRef.current = pageHandle?.current || null
+            refs.pageHandle.current = pageHandle?.current || null
             // animate in
-            const pageTransition = pageHandleRef.current?.animateIn?.()
-            const navTransition = navHandleRef.current?.animateIn?.()
+            const pageTransition = refs.pageHandle.current?.animateIn?.()
+            const navTransition = refs.navHandle.current?.animateIn?.()
             if (!flags.pageTransitions) {
               pageTransition?.progress(1)
               navTransition?.progress(1)
             }
             // restore scroll
-            clearTimeout(scrollRestorationTimeoutRef.current)
-            scrollRestorationTimeoutRef.current = setTimeout(() => {
+            clearTimeout(refs.scrollRestorationTimeout.current)
+            refs.scrollRestorationTimeout.current = setTimeout(() => {
               if (localState().navigation.isNavigatingBack) {
                 const scrollHistory = [...localState().navigation.scrollHistory]
                 const lastScrollHistory = scrollHistory.pop()
                 localState().navigation.setScrollHistory(scrollHistory)
-                if (lastScrollHistory && lastScrollHistory.pathname === pathnameRef.current) {
+                if (lastScrollHistory && lastScrollHistory.pathname === refs.pathname.current) {
                   gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
                 }
               } else {
                 gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
               }
-              clearTimeout(scrollRestorationTimeoutRef.current)
-              scrollRestorationTimeoutRef.current = setTimeout(() => {
+              clearTimeout(refs.scrollRestorationTimeout.current)
+              refs.scrollRestorationTimeout.current = setTimeout(() => {
                 localState().navigation.setIsNavigatingBack(false)
               }, 400)
             }, 100)
           }}
         />
       )
-      isFirstPageRef.current = false
+      refs.isFirstPage.current = false
     })
 
     return () => {
       transitionTimeline.kill()
     }
-  }, [Component, pageProps, flags.pageTransitions, introComplete])
+  }, [refs, Component, pageProps, flags.pageTransitions, introComplete])
 
   return (
     <div className={classNames('Layout', css.root, fontVariables)}>
       <Head {...pageProps.content.head} />
 
-      <Nav content={pageProps.content.common.nav} handleRef={navHandleRef} />
+      <Nav content={pageProps.content.common.nav} handleRef={refs.navHandle} />
       <div className={css.content}>{currentPage}</div>
       <Footer content={pageProps.content.common.footer} />
 
@@ -189,6 +197,6 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
       <AppAdmin />
     </div>
   )
-}
+})
 
-export default memo(Layout)
+Layout.displayName = 'Layout'

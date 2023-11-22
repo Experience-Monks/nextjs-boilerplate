@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 // https://css-tricks.com/introduction-reduced-motion-media-query/
 
-const useReducedMotion = () => {
+export const useReducedMotion = () => {
   const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
@@ -21,5 +21,3 @@ const useReducedMotion = () => {
 
   return reducedMotion
 }
-
-export default useReducedMotion

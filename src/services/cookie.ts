@@ -29,6 +29,4 @@ class Service {
   }
 }
 
-const CookieService = new Service()
-
-export default CookieService
+export const CookieService = new Service()

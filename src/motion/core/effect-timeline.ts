@@ -1,6 +1,10 @@
 import { gsap } from 'gsap'
 
-const effectTimeline = (duration: gsap.TweenValue, reversed: boolean, timelineFactory: () => gsap.core.Timeline) => {
+export const effectTimeline = (
+  duration: gsap.TweenValue,
+  reversed: boolean,
+  timelineFactory: () => gsap.core.Timeline
+) => {
   let timeline: gsap.core.Timeline
 
   const helper = { progress: reversed ? 1 : 0, completed: false }
@@ -26,5 +30,3 @@ const effectTimeline = (duration: gsap.TweenValue, reversed: boolean, timelineFa
     })
     .to(helper, { progress: reversed ? 0 : 1, duration, ease: 'none' })
 }
-
-export default effectTimeline

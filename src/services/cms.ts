@@ -1,6 +1,6 @@
 import data from '@/data/content.json'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
 
 export type PageIdentifier = keyof typeof data.pages
 export type CommonContent = typeof data.common
@@ -38,6 +38,4 @@ class Service {
   }
 }
 
-const CmsService = new Service()
-
-export default CmsService
+export const CmsService = new Service()

@@ -2,7 +2,7 @@ import type { MutableRefObject, RefObject } from 'react'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import scroll from '@/services/scroll'
+import { ScrollService } from '@/services/scroll'
 
 import { getScrollTop } from '@/utils/basic-functions'
 
@@ -12,7 +12,11 @@ interface State {
   up: boolean
 }
 
-function useScrollDirection(target?: Element | RefObject<Element>, throttle = 100, fallbackToWindowScroll = true) {
+export function useScrollDirection(
+  target?: Element | RefObject<Element>,
+  throttle = 100,
+  fallbackToWindowScroll = true
+) {
   const [state, setState] = useState<State>({
     down: false,
     top: true,
@@ -50,7 +54,7 @@ function useScrollDirection(target?: Element | RefObject<Element>, throttle = 10
     if (element) {
       element.addEventListener('scroll', handleScroll)
     } else if (fallbackToWindowScroll) {
-      scroll.listen(handleScroll)
+      ScrollService.listen(handleScroll)
     }
 
     return () => {
@@ -58,12 +62,10 @@ function useScrollDirection(target?: Element | RefObject<Element>, throttle = 10
       if (element) {
         element.removeEventListener('scroll', handleScroll)
       } else if (fallbackToWindowScroll) {
-        scroll.dismiss(handleScroll)
+        ScrollService.dismiss(handleScroll)
       }
     }
   }, [element, throttle, fallbackToWindowScroll])
 
   return state
 }
-
-export default useScrollDirection

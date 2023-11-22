@@ -87,6 +87,4 @@ class Copy {
   }
 }
 
-const copy = new Copy()
-
-export default copy
+export const copy = new Copy()

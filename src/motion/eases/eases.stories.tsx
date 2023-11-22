@@ -8,7 +8,7 @@ import { gsap } from 'gsap'
 
 import css from './eases.module.scss'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
 
 import { customEases, favouriteEases, standardEases } from './eases'
 

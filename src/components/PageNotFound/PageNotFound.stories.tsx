@@ -5,7 +5,7 @@ import type { ViewProps } from './PageNotFound.view'
 
 import { useCallback } from 'react'
 
-import CmsService from '@/services/cms'
+import { CmsService } from '@/services/cms'
 
 import { View } from './PageNotFound.view'
 

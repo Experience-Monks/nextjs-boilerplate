@@ -222,6 +222,4 @@ class Detect {
   detector = detector
 }
 
-const detect = new Detect()
-
-export default detect
+export const detect = new Detect()

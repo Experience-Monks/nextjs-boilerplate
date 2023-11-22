@@ -7,8 +7,6 @@ import xss from 'xss'
  *
  * @param {string} [dirtyInput=''] - Input to sanitize
  */
-function sanitizer(dirtyInput: string, options?: IFilterXSSOptions): string {
+export function sanitizer(dirtyInput: string, options?: IFilterXSSOptions): string {
   return xss(dirtyInput, options)
 }
-
-export default sanitizer

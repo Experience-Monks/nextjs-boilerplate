@@ -3,7 +3,7 @@ import type { CommonContent } from '@/services/cms'
 
 import { memo } from 'react'
 
-import useFeatureFlags from '@/hooks/use-feature-flags'
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
 import { View } from './ScreenNoScript.view'
 
