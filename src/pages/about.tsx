@@ -1,18 +1,14 @@
-import type { PageAboutProps } from '@/components/PageAbout/PageAbout'
+import type { PageAboutProps } from '@/components/PageAbout'
 import type { GetStaticProps } from 'next'
 
-import content from '@/data/content.json'
-
-import generateHeadProps from '@/utils/generate-head-props'
+import CmsService from '@/services/cms'
 
 export const getStaticProps: GetStaticProps<PageAboutProps> = async () => {
   return {
     props: {
-      head: generateHeadProps(content.pageAbout.head.title, content.pageAbout.head.description),
-      common: content.common,
-      content: content.pageAbout
+      content: CmsService.getPageContent('about')
     }
   }
 }
 
-export { default } from '@/components/PageAbout/PageAbout'
+export { PageAbout as default } from '@/components/PageAbout'

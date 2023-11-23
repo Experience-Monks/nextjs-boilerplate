@@ -66,7 +66,6 @@ setBodyClasses()
 
 export const decorators = [
   (Story: StoryFn) => {
-    require('default-passive-events')
     require('focus-visible')
     return <Story />
   },

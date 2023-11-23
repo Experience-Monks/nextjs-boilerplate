@@ -1,21 +1,19 @@
-{{#if imperativeHandle}}
-import { FC, useRef } from 'react'
-{{/if}}
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { {{#if imperativeHandle}}ViewHandle, {{/if}}ViewProps } from './{{name_pc}}.view'
 
-import { {{#if imperativeHandle}}{{name_pc}}Handle, {{/if}}View, ViewProps } from './{{name_pc}}'
+{{#if imperativeHandle}}
+import { useRef } from 'react'
+
+{{/if}}
+import { View } from './{{name_pc}}.view'
 
 export default { title: 'components/{{name_pc}}' }
 
-{{#if imperativeHandle}}
-const Template: FC<ViewProps> = ({ ...args }) => {
-  const handleRef = useRef<{{name_pc}}Handle>(null)
-  return <View {...args} handleRef={handleRef} />
-}
-
-{{/if}}
 export const Default: StoryFn<ViewProps> = (args) => {
-  return <{{#if imperativeHandle}}Template{{else}}View{{/if}} {...args} />
+{{#if imperativeHandle}}
+  const handleRef = useRef<ViewHandle>(null)
+{{/if}}
+  return <View {...args} {{#if imperativeHandle}}handleRef={handleRef} {{/if}}/>
 }
 
 Default.args = {}

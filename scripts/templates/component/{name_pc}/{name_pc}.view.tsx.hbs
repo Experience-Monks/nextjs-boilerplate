@@ -1,0 +1,60 @@
+{{#if forwardRef}}
+import type { ControllerProps } from './{{name_pc}}.controller'
+
+import { forwardRef{{#if imperativeHandle}}, useImperativeHandle{{/if}} } from 'react'
+{{else}}
+import type { FC } from 'react'
+import type { ControllerProps } from './{{name_pc}}.controller'
+
+{{#if imperativeHandle}}
+import { useImperativeHandle } from 'react'
+{{/if}}
+{{/if}}
+import classNames from 'classnames'
+
+import css from './{{name_pc}}.module.scss'
+
+{{#if imperativeHandle}}
+export type ViewHandle = {
+  someMethod: () => void
+}
+
+{{/if}}
+export interface ViewProps extends ControllerProps {}
+
+// View (pure and testable component, receives props exclusively from the controller)
+{{#if forwardRef}}
+export const View = forwardRef<HTMLDivElement, ViewProps>(({ className{{#if imperativeHandle}}, handleRef{{/if}} }, ref) => {
+{{#if imperativeHandle}}
+  useImperativeHandle(handleRef, () => ({
+    someMethod: () => {
+      //
+    }
+  }))
+
+{{/if}}
+  return (
+    <div className={classNames('{{name_pc}}', css.root, className)} ref={ref}>
+      <p>&lt;{{name_pc}} /&gt;</p>
+    </div>
+  )
+})
+{{else}}
+export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleRef{{/if}} }) => {
+{{#if imperativeHandle}}
+  useImperativeHandle(handleRef, () => ({
+    someMethod: () => {
+      //
+    }
+  }))
+
+{{/if}}
+  return (
+    <div className={classNames('{{name_pc}}', css.root, className)}>
+      <p>&lt;{{name_pc}} /&gt;</p>
+    </div>
+  )
+}
+{{/if}}
+
+View.displayName = '{{name_pc}}_View'

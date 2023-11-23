@@ -1,30 +1,25 @@
-import type { FC, RefObject } from 'react'
+import type { RefObject } from 'react'
 import type { StoryFn } from '@storybook/react'
 import type { PageHandle } from '@/data/types'
-import type { ViewProps } from './PageAbout'
+import type { ViewProps } from './PageAbout.view'
 
 import { useCallback } from 'react'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './PageAbout'
+import { View } from './PageAbout.view'
 
 export default { title: 'pages/PageAbout' }
 
-const Template: FC<ViewProps> = ({ ...args }) => {
+export const Default: StoryFn<ViewProps> = (args) => {
   const handleReady = useCallback((pageHandle?: RefObject<PageHandle>) => {
     pageHandle?.current?.animateIn()
   }, [])
   return <View {...args} onReady={handleReady} />
 }
 
-export const Default: StoryFn<ViewProps> = (args) => {
-  return <Template {...args} />
-}
-
 Default.args = {
-  content: content.pageAbout,
-  common: content.common
+  content: CmsService.getPageContent('about')
 }
 
 Default.argTypes = {}

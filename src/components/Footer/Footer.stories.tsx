@@ -1,16 +1,18 @@
 import type { StoryFn } from '@storybook/react'
-import type { ViewProps } from './Footer'
+import type { ViewProps } from './Footer.view'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './Footer'
+import { View } from './Footer.view'
 
 export default { title: 'components/Footer' }
 
-export const Default: StoryFn<ViewProps> = (args) => <View {...args} />
+export const Default: StoryFn<ViewProps> = (args) => {
+  return <View {...args} />
+}
 
 Default.args = {
-  content: content.common.footer
+  content: CmsService.getPageContent('home').common.footer
 }
 
 Default.argTypes = {}

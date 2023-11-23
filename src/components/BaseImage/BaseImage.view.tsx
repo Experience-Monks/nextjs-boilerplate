@@ -1,32 +1,23 @@
-import type { ImgHTMLAttributes } from 'react'
 import type { StaticImageData } from 'next/image'
-import type { OptmizedImageEdits } from '@/utils/get-optimized-image-url'
+import type { ControllerProps } from './BaseImage.controller'
 
-import { forwardRef, memo, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './BaseImage.module.scss'
 
 import { noop } from '@/utils/basic-functions'
-import getOptimizedImageUrl from '@/utils/get-optimized-image-url'
+import getOptimizedImageURL from '@/utils/get-optimized-image-url'
 
 import useCombinedRefs from '@/hooks/use-combined-refs'
 
 import imageImports from '#/image-imports'
 import publicImageSizes from '#/public-image-sizes.json'
 
-export interface BaseImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  src?: string
-  data?: StaticImageData
-  options?: OptmizedImageEdits
-  srcWidths?: number[]
-  allowRetina?: boolean
-  fetchpriority?: 'high' | 'low' | 'auto'
-  skipOptimization?: boolean
-  onLoad?: () => void
-}
+export interface ViewProps extends ControllerProps {}
 
-const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
+// View (pure and testable component, receives props exclusively from the controller)
+export const View = forwardRef<HTMLImageElement, ViewProps>(
   (
     {
       src,
@@ -69,10 +60,9 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       [imgSrc, skipOptimization]
     )
 
-    const optimizedSrc = useMemo(
-      () => (optimize ? getOptimizedImageUrl(imgSrc, options) : imgSrc),
-      [imgSrc, optimize, options]
-    )
+    const optimizedSrc = useMemo(() => {
+      return optimize ? getOptimizedImageURL(imgSrc, options) : imgSrc
+    }, [imgSrc, optimize, options])
 
     const imgSrcWidths = useMemo(() => {
       if (!imgSrc) return []
@@ -82,7 +72,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
         const base = imgData.width > 320 ? 320 : 32
         const hops = Math.floor(imgData.width / base)
         const sizes = Array.from({ length: hops }).map((_, i) => (i + 1) * base)
-        return [imgData.width, ...sizes].sort((a, b) => (a > b ? 1 : -1))
+        return [...new Set([imgData.width, ...sizes])].sort((a, b) => (a > b ? 1 : -1))
       }
       return srcWidths || [64, 128, 320, 640, 960, 1280, 1600, 1920]
     }, [imgSrc, imgData, srcWidths])
@@ -93,7 +83,7 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
       return imgSrcWidths
         .map((w) => {
           const o = { ...opt, resize: { ...opt.resize, width: w } }
-          const url = getOptimizedImageUrl(imgSrc, o)
+          const url = getOptimizedImageURL(imgSrc, o)
           return `${url} ${w}w`
         })
         .join(', ')
@@ -158,6 +148,4 @@ const BaseImage = forwardRef<HTMLImageElement, BaseImageProps>(
   }
 )
 
-BaseImage.displayName = 'BaseImage'
-
-export default memo(BaseImage)
+View.displayName = 'BaseImage_View'

@@ -1,29 +1,20 @@
-import type { FC } from 'react'
-import type { Content } from '@/data/types'
 import type { AppState } from '@/store'
 import type { CookieConsent } from '@/store/slice-consent'
+import type { ControllerProps } from './CookieBanner.controller'
 
-import { memo, useCallback, useState } from 'react'
+import { type FC, useCallback, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './CookieBanner.module.scss'
 
-import localStore from '@/store'
-
 import copy from '@/utils/copy'
 
-export interface CookieBannerProps {
-  // List here all props that are public and settable by the parent component.
-  className?: string
-  content: Content['common']['cookieBanner']
-}
-
-export interface ViewProps extends CookieBannerProps {
-  // List here the private props that are only settable by the controller component.
+export interface ViewProps extends ControllerProps {
   cookieConsent: AppState['consent']['cookieConsent']
   setCookieConsent: AppState['consent']['setCookieConsent']
 }
 
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCookieConsent }) => {
   const [settings, setSettings] = useState(false)
   const [consent, setConsent] = useState<CookieConsent>(
@@ -153,11 +144,4 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
   )
 }
 
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const CookieBanner: FC<CookieBannerProps> = (props) => {
-  const cookieConsent = localStore((state) => state.consent.cookieConsent)
-  const setCookieConsent = localStore((state) => state.consent.setCookieConsent)
-  return !cookieConsent ? <View {...props} cookieConsent={cookieConsent} setCookieConsent={setCookieConsent} /> : null
-}
-
-export default memo(CookieBanner)
+View.displayName = 'CookieBanner_View'

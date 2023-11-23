@@ -1,6 +1,6 @@
 import type { FC, ReactNode, RefObject } from 'react'
 import type { AppProps } from 'next/app'
-import type { NavHandle } from '@/components/Nav/Nav'
+import type { NavHandle } from '@/components/Nav'
 import type { PageHandle, PageProps } from '@/data/types'
 
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
@@ -19,16 +19,15 @@ import { fontVariables } from '@/utils/fonts'
 
 import useFeatureFlags from '@/hooks/use-feature-flags'
 
-import ScreenIntro from '@/components/ScreenIntro/ScreenIntro'
-import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
+import { Footer } from '@/components/Footer'
+import { Head } from '@/components/Head'
+import { Nav } from '@/components/Nav'
+import { ScreenIntro } from '@/components/ScreenIntro'
+import { ScreenNoScript } from '@/components/ScreenNoScript'
 
-import Footer from '@/components/Footer/Footer'
-import Head from '@/components/Head/Head'
-import Nav from '@/components/Nav/Nav'
-
-const ScreenRotate = dynamic(() => import('@/components/ScreenRotate/ScreenRotate'), { ssr: false })
-const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false })
-const AppAdmin = dynamic(() => import('@/components/AppAdmin/AppAdmin'), { ssr: false })
+const ScreenRotate = dynamic(() => import('@/components/ScreenRotate').then((m) => m.ScreenRotate), { ssr: false })
+const CookieBanner = dynamic(() => import('@/components/CookieBanner').then((m) => m.CookieBanner), { ssr: false })
+const AppAdmin = dynamic(() => import('@/components/AppAdmin').then((m) => m.AppAdmin), { ssr: false })
 
 const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   const router = useRouter()
@@ -175,17 +174,17 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
 
   return (
     <div className={classNames('Layout', css.root, fontVariables)}>
-      <Head {...pageProps.head} />
+      <Head {...pageProps.content.head} />
 
-      <Nav content={pageProps.common.nav} handleRef={navHandleRef} />
+      <Nav content={pageProps.content.common.nav} handleRef={navHandleRef} />
       <div className={css.content}>{currentPage}</div>
-      <Footer content={pageProps.common.footer} />
+      <Footer content={pageProps.content.common.footer} />
 
       {!introComplete ? <ScreenIntro onComplete={handleIntroComplete} /> : null}
-      <ScreenRotate content={pageProps.common.screenRotate} />
-      <ScreenNoScript content={pageProps.common.screenNoScript} />
+      <ScreenRotate content={pageProps.content.common.screenRotate} />
+      <ScreenNoScript content={pageProps.content.common.screenNoScript} />
 
-      <CookieBanner content={pageProps.common.cookieBanner} />
+      <CookieBanner content={pageProps.content.common.cookieBanner} />
 
       <AppAdmin />
     </div>

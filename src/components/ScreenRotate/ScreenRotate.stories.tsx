@@ -1,9 +1,9 @@
 import type { StoryFn } from '@storybook/react'
-import type { ViewProps } from './ScreenRotate'
+import type { ViewProps } from './ScreenRotate.view'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './ScreenRotate'
+import { View } from './ScreenRotate.view'
 
 export default { title: 'components/ScreenRotate' }
 
@@ -12,7 +12,7 @@ export const Default: StoryFn<ViewProps> = (args) => {
 }
 
 Default.args = {
-  content: content.common.screenRotate
+  content: CmsService.getPageContent('home').common.screenRotate
 }
 
 Default.argTypes = {}

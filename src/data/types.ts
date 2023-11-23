@@ -1,19 +1,8 @@
 import type { RefObject } from 'react'
-import type content from '@/data/content.json'
+import type { PageContent, PageIdentifier } from '@/services/cms'
 
-export type Content = typeof content
-export type CommonContent = typeof content.common
-
-export type HeadProps = {
-  title: string
-  image?: string
-  siteName?: string
-  description?: string
-}
-
-export type PageProps = {
-  head: HeadProps
-  common: CommonContent
+export type PageProps<T extends PageIdentifier = 'home'> = {
+  content: PageContent<T>
   noLayout?: boolean
   onReady?: (handle: RefObject<PageHandle>) => void
 }

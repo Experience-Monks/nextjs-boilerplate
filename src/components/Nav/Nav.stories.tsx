@@ -1,31 +1,24 @@
-import type { FC } from 'react'
 import type { StoryFn } from '@storybook/react'
-import type { NavHandle, ViewProps } from './Nav'
+import type { ViewHandle, ViewProps } from './Nav.view'
 
 import { useEffect, useRef } from 'react'
 
-import content from '@/data/content.json'
+import CmsService from '@/services/cms'
 
-import { View } from './Nav'
+import { View } from './Nav.view'
 
 export default { title: 'components/Nav' }
 
-const Template: FC<ViewProps> = ({ ...args }) => {
-  const handleRef = useRef<NavHandle>(null)
-
+export const Default: StoryFn<ViewProps> = (args) => {
+  const handleRef = useRef<ViewHandle>(null)
   useEffect(() => {
     handleRef.current?.animateIn()
   }, [])
-
   return <View {...args} handleRef={handleRef} />
 }
 
-export const Default: StoryFn<ViewProps> = (args) => {
-  return <Template {...args} />
-}
-
 Default.args = {
-  content: content.common.nav
+  content: CmsService.getPageContent('home').common.nav
 }
 
 Default.argTypes = {}

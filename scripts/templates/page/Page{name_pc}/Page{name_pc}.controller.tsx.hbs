@@ -1,0 +1,15 @@
+import type { FC } from 'react'
+import type { PageProps } from '@/data/types'
+
+import { memo } from 'react'
+
+import { View } from './Page{{name_pc}}.view'
+
+export interface ControllerProps extends PageProps<'{{name_cc}}'> {}
+
+// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
+export const Controller: FC<ControllerProps> = memo((props) => {
+  return <View {...props} />
+})
+
+Controller.displayName = 'Page{{name_pc}}_Controller'

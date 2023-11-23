@@ -24,7 +24,6 @@ import initRive from '@/motion/core/init-rive'
 
 import Layout from '@/components/Layout/Layout'
 
-require('default-passive-events')
 require('focus-visible')
 
 initRive()

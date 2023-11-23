@@ -1,6 +1,6 @@
-import type { FC } from 'react'
+import type { ControllerProps } from './AppAdmin.controller'
 
-import { memo, useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import { type FC, useCallback, useEffect, useReducer, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './AppAdmin.module.scss'
@@ -9,25 +9,19 @@ import config from '@/data/config.json'
 
 import { browser, device, os } from '@/utils/detect'
 import { productionLog } from '@/utils/log'
-import { getRuntimeEnv, isDevEnv } from '@/utils/runtime-env'
+import { isDevEnv } from '@/utils/runtime-env'
 
 import useFeatureFlags from '@/hooks/use-feature-flags'
 import useWindowSize from '@/hooks/use-window-size'
 
-export interface AppAdminProps {
-  // List here all props that are public and settable by the parent component.
-  className?: string
-}
-
-export interface ViewProps extends AppAdminProps {
-  // List here the private props that are only settable by the controller component.
+export interface ViewProps extends ControllerProps {
   env: string
   date: string
   commit: string
   version: string
 }
 
-// View (pure and testable component, receives props from the controller)
+// View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
   const { width, height } = useWindowSize()
   const { flags, setFlag, resetFlags } = useFeatureFlags()
@@ -189,21 +183,4 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
   ) : null
 }
 
-View.displayName = 'AppAdmin-View'
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const AppAdmin: FC<AppAdminProps> = (props) => {
-  const env = useMemo(() => getRuntimeEnv(), [])
-
-  return (
-    <View
-      {...props}
-      env={env}
-      date={process.env.NEXT_PUBLIC_COMMIT_DATE || ''}
-      commit={process.env.NEXT_PUBLIC_COMMIT_ID || ''}
-      version={process.env.NEXT_PUBLIC_VERSION_NUMBER || ''}
-    />
-  )
-}
-
-export default memo(AppAdmin)
+View.displayName = 'AppAdmin_View'
