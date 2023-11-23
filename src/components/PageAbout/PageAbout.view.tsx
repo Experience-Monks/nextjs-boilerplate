@@ -23,15 +23,15 @@ export type ViewRefs = {
 export const View: FC<ViewProps> = ({ content, onReady }) => {
   const refs = useRefs<ViewRefs>()
 
-  useEffect(() => {
-    gsap.set(refs.root.current, { opacity: 0 })
-    onReady?.(refs.pageHandle)
-  }, [refs, onReady])
-
   useImperativeHandle(refs.pageHandle, () => ({
     animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
     animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
   }))
+
+  useEffect(() => {
+    gsap.set(refs.root.current, { opacity: 0 })
+    onReady?.(refs.pageHandle)
+  }, [refs, onReady])
 
   return (
     <main className={classNames('PageAbout', css.root)} ref={refs.root}>

@@ -24,13 +24,13 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   const refs = useRefs<ViewRefs>()
 
   useEffect(() => {
-    gsap.set(refs.root.current, { opacity: 0 })
     onReady?.(refs.pageHandle)
+    gsap.set(refs.root.current, { opacity: 0 })
   }, [refs, onReady])
 
   useImperativeHandle(refs.pageHandle, () => ({
-    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
+    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 }),
+    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 })
   }))
 
   return (
