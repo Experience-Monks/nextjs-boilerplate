@@ -6,7 +6,7 @@ type UnknownMap = { [key: string | symbol]: unknown }
 type InitialRefs<T extends UnknownMap> = {
   [key in keyof T]: RefObject<T[key]> | MutableRefObject<T[key]> | ForwardedRef<T[key]>
 }
-type ResultRefs<T extends UnknownMap> = { [key in keyof T]: MutableRefObject<T[key]> }
+type ResultRefs<T extends UnknownMap> = { [key in keyof T]: MutableRefObject<T[key] | null> }
 
 export function useRefs<T extends UnknownMap>(initialTarget?: Partial<InitialRefs<T>>): ResultRefs<T> {
   const proxyTarget = useRef<Partial<ResultRefs<T>>>((initialTarget ?? {}) as ResultRefs<T>)

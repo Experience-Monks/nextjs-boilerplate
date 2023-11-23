@@ -11,7 +11,7 @@
     "build:next": "npm run scripts && next build",
     "build:postcss": "postcss ./out/**/*.css --use css-declaration-sorter --replace --no-map",
     "build:sitemap": "next-sitemap",
-    "build:storybook": "pm run scripts && storybook build -c .storybook -o ./out-storybook",
+    "build:storybook": "npm run scripts && storybook build -c .storybook -o ./out-storybook",
     "postbuild:next": "run-p build:postcss build:sitemap",
     "release": "standard-version",
     "clean": "run-s clean:*",

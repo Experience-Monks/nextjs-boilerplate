@@ -93,7 +93,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
     }, [optimize, imgSrcWidths, options, imgSrc])
 
     useEffect(() => {
-      const root = refs.root.current
+      const root = refs.root.current!
       let observer: ResizeObserver
       if (imgSrcWidths.length > 0 && window.ResizeObserver) {
         observer = new ResizeObserver(() => {

@@ -103,7 +103,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
       if (!localState().navigation.isNavigatingBack) {
         const scrollHistory = [
           ...localState().navigation.scrollHistory,
-          { pathname: refs.pathname.current, value: getScrollTop() }
+          { pathname: refs.pathname.current || '/', value: getScrollTop() }
         ]
         localState().navigation.setScrollHistory(scrollHistory)
       }
@@ -136,7 +136,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
       // reset scroll
       gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
       // update app.pathname
-      localState().navigation.setPathname(refs.pathname.current)
+      localState().navigation.setPathname(refs.pathname.current || '/')
       // set new page
       setCurrentPage(
         <Component
@@ -152,7 +152,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
               navTransition?.progress(1)
             }
             // restore scroll
-            clearTimeout(refs.scrollRestorationTimeout.current)
+            clearTimeout(refs.scrollRestorationTimeout.current!)
             refs.scrollRestorationTimeout.current = setTimeout(() => {
               if (localState().navigation.isNavigatingBack) {
                 const scrollHistory = [...localState().navigation.scrollHistory]
@@ -164,7 +164,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
               } else {
                 gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
               }
-              clearTimeout(refs.scrollRestorationTimeout.current)
+              clearTimeout(refs.scrollRestorationTimeout.current!)
               refs.scrollRestorationTimeout.current = setTimeout(() => {
                 localState().navigation.setIsNavigatingBack(false)
               }, 400)
