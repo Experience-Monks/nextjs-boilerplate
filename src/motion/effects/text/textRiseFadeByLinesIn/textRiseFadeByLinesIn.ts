@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 
-import effectTimeline from '@/motion/core/effect-timeline'
-import SafeSplitText from '@/motion/core/safe-split-text'
+import { effectTimeline } from '@/motion/core/effect-timeline'
+import { SafeSplitText } from '@/motion/core/safe-split-text'
 
 const setup = (target: Element): [element: HTMLElement, split: SafeSplitText] => {
   const targetElement = (target as unknown as HTMLElement[])[0]

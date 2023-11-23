@@ -1,7 +1,7 @@
 import type { StoryFn } from '@storybook/react'
 import type { ViewProps } from './ScreenNoScript.view'
 
-import CmsService from '@/services/cms'
+import { CmsService } from '@/services/cms'
 
 import { View } from './ScreenNoScript.view'
 

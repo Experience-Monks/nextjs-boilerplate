@@ -14,6 +14,8 @@ import classNames from 'classnames'
 
 import css from './{{name_pc}}.module.scss'
 
+import { useRefs } from '@/hooks/use-refs'
+
 {{#if imperativeHandle}}
 export type ViewHandle = {
   someMethod: () => void
@@ -22,25 +24,19 @@ export type ViewHandle = {
 {{/if}}
 export interface ViewProps extends ControllerProps {}
 
+export type ViewRefs = {
+  root: HTMLDivElement
+}
+
 // View (pure and testable component, receives props exclusively from the controller)
 {{#if forwardRef}}
 export const View = forwardRef<HTMLDivElement, ViewProps>(({ className{{#if imperativeHandle}}, handleRef{{/if}} }, ref) => {
-{{#if imperativeHandle}}
-  useImperativeHandle(handleRef, () => ({
-    someMethod: () => {
-      //
-    }
-  }))
-
-{{/if}}
-  return (
-    <div className={classNames('{{name_pc}}', css.root, className)} ref={ref}>
-      <p>&lt;{{name_pc}} /&gt;</p>
-    </div>
-  )
-})
+  const refs = useRefs<ViewRefs>({ root: ref })
 {{else}}
 export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleRef{{/if}} }) => {
+  const refs = useRefs<ViewRefs>()
+{{/if}}
+
 {{#if imperativeHandle}}
   useImperativeHandle(handleRef, () => ({
     someMethod: () => {
@@ -50,11 +46,10 @@ export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleR
 
 {{/if}}
   return (
-    <div className={classNames('{{name_pc}}', css.root, className)}>
+    <div className={classNames('{{name_pc}}', css.root, className)} ref={refs.root}>
       <p>&lt;{{name_pc}} /&gt;</p>
     </div>
   )
-}
-{{/if}}
+}{{#if forwardRef}}){{/if}}
 
 View.displayName = '{{name_pc}}_View'

@@ -6,7 +6,7 @@ import NextHead from 'next/head'
  * The benefit of having this rules in local environment is that frontend developer can identify what problems will occur in the live environment in advance.
  * When modifying Feature Policy content below, please tell TA or Devops developer in the project to update the Security Header lambda@Edge function.
  */
-export default function FeaturePolicy() {
+export const MockFeaturePolicy = () => {
   const content = `
     sync-xhr
       'none';

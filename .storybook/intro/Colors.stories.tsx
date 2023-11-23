@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react'
 
 import css from './Colors.module.scss'
 
-import sass from '../../src/utils/sass'
+import { sass } from '../../src/utils/sass'
 
 export default { title: 'intro/Colors' }
 

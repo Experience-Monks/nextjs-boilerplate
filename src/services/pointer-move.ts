@@ -31,6 +31,4 @@ class Service {
   }
 }
 
-const PointerMoveService = new Service()
-
-export default PointerMoveService
+export const PointerMoveService = new Service()

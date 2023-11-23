@@ -10,24 +10,23 @@ import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
 
-import localStore from '@/store'
+import { localStore } from '@/store'
 
-import AnalyticsService from '@/services/analytics'
-import AWSRumService from '@/services/aws-rum'
+import { AnalyticsService } from '@/services/analytics'
+import { AWSRumService } from '@/services/aws-rum'
 
-import setBodyClasses from '@/utils/set-body-classes'
+import { setBodyClasses } from '@/utils/set-body-classes'
 
-import useFeatureFlags from '@/hooks/use-feature-flags'
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
-import gsapInit from '@/motion/core/init-gsap'
-import initRive from '@/motion/core/init-rive'
+import { initGsap, initRive } from '@/motion/core/init'
 
-import Layout from '@/components/Layout/Layout'
+import { Layout } from '@/components/Layout/Layout'
 
 require('focus-visible')
 
 initRive()
-gsapInit()
+initGsap()
 
 // This default export is required in a new `pages/_app.js` file.
 const App: FC<AppProps<PageProps>> = (props) => {

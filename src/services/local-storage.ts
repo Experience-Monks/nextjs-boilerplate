@@ -51,6 +51,5 @@ class Service {
     this.listeners = this.listeners.filter((l) => l !== listener)
   }
 }
-const LocalStorageService = new Service()
 
-export default LocalStorageService
+export const LocalStorageService = new Service()

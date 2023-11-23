@@ -1,6 +1,6 @@
 import config from '@/data/config.json'
 
-import log from '@/utils/log'
+import { print } from '@/utils/print'
 import { getRuntimeEnv } from '@/utils/runtime-env'
 
 export type GTMEvent = {
@@ -38,7 +38,7 @@ class Service {
           })(window,document,'script','dataLayer', '${this.gtmId}');
         `
         document.head.append(script)
-        log('Analytics', 'GTM initialized')
+        print('Analytics', 'GTM initialized')
       }
     }
   }
@@ -47,11 +47,9 @@ class Service {
     if (this.gtmId && this.tracking) {
       const data = { event: 'gtm-event', payload }
       window.dataLayer.push(data)
-      log('Analytics', `GTM: ${JSON.stringify(data)}`)
+      print('Analytics', `GTM: ${JSON.stringify(data)}`)
     }
   }
 }
 
-const AnalyticsService = new Service()
-
-export default AnalyticsService
+export const AnalyticsService = new Service()

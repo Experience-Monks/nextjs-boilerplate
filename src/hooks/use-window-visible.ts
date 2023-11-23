@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import visibility from '@/services/visibility'
+import { VisibilityService } from '@/services/visibility'
 
-const useWindowVisible = () => {
+export const useWindowVisible = () => {
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
@@ -14,14 +14,12 @@ const useWindowVisible = () => {
       }
     }
 
-    visibility.listen(update)
+    VisibilityService.listen(update)
 
     return () => {
-      visibility.dismiss(update)
+      VisibilityService.dismiss(update)
     }
   }, [])
 
   return visible
 }
-
-export default useWindowVisible

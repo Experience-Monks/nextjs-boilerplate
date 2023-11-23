@@ -2,7 +2,7 @@ import type { MutableRefObject, RefObject } from 'react'
 
 import { useEffect, useState } from 'react'
 
-function useIntersectionObserver(
+export function useIntersectionObserver(
   element: Element | RefObject<Element> | null | undefined,
   triggerOnce = true,
   threshold = 0.3
@@ -41,5 +41,3 @@ function useIntersectionObserver(
 
   return intersecting
 }
-
-export default useIntersectionObserver

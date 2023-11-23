@@ -12,7 +12,7 @@ export type Mutators = [['zustand/devtools', never], ['zustand/subscribeWithSele
 
 export type AppState = ConsentSliceState & NavigationSliceState
 
-const localStore = create<AppState>()(
+export const localStore = create<AppState>()(
   devtools(
     subscribeWithSelector(
       immer((...props) => ({
@@ -24,5 +24,3 @@ const localStore = create<AppState>()(
 )
 
 export const localState = () => localStore.getState()
-
-export default localStore

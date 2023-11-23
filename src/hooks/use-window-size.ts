@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react'
 
-import resize from '@/services/resize'
+import { ResizeService } from '@/services/resize'
 
 import { detector } from '@/utils/detect'
 
@@ -9,7 +9,7 @@ interface State {
   height: number
 }
 
-function useWindowSize() {
+export function useWindowSize() {
   const [state, setState] = useReducer((curState: State, newState: State) => ({ ...curState, ...newState }), {
     width: detector.window.innerWidth,
     height: detector.window.innerHeight
@@ -23,13 +23,11 @@ function useWindowSize() {
       })
     }
     update()
-    resize.listen(update)
+    ResizeService.listen(update)
     return () => {
-      resize.dismiss(update)
+      ResizeService.dismiss(update)
     }
   }, [])
 
   return state
 }
-
-export default useWindowSize

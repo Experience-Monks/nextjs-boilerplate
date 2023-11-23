@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import ResizeService from '@/services/resize'
+import { ResizeService } from '@/services/resize'
 
-import getLayout, { ssrLayout } from '@/utils/get-layout'
+import { getLayout, ssrLayout } from '@/utils/get-layout'
 
 /**
  * Layout hook
@@ -13,7 +13,7 @@ import getLayout, { ssrLayout } from '@/utils/get-layout'
  * import useLayout from '@/hooks/use-layout';
  * const layout = useLayout();
  */
-function useLayout() {
+export function useLayout() {
   const [currentLayout, setCurrentLayout] = useState(ssrLayout)
 
   useEffect(() => {
@@ -30,5 +30,3 @@ function useLayout() {
 
   return currentLayout
 }
-
-export default useLayout

@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 import SplitText from 'gsap/dist/SplitText'
 
-import ResizeService from '@/services/resize'
+import { ResizeService } from '@/services/resize'
 
 import { randomString } from '@/utils/basic-functions'
 
@@ -11,7 +11,7 @@ const cache: { [key: string]: SplitText | null } = {}
 
 const attrId = 'data-safe-split-text'
 
-class SafeSplitText extends SplitText {
+export class SafeSplitText extends SplitText {
   id: string
   targets: Element[]
 
@@ -62,5 +62,3 @@ class SafeSplitText extends SplitText {
     super.revert()
   }
 }
-
-export default SafeSplitText

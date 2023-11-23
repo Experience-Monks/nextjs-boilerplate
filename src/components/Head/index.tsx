@@ -8,10 +8,10 @@ import config from '@/data/config.json'
 
 import { fixSlashes, prefix } from '@/utils/basic-functions'
 
-import { riveWASMResource } from '@/motion/core/init-rive'
+import { riveWASMResource } from '@/motion/core/init'
 
-import MockContentSecurityPolicy from '@/components/Head/MockContentSecurityPolicy'
-import MockFeaturePolicy from '@/components/Head/MockFeaturePolicy'
+import { MockContentSecurityPolicy } from './MockContentSecurityPolicy'
+import { MockFeaturePolicy } from './MockFeaturePolicy'
 
 const dev = process.env.NODE_ENV === 'development'
 const assetPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX || ''

@@ -2,7 +2,7 @@ import type { DocumentContext } from 'next/document'
 
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {

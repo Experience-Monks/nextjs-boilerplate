@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import orientation from '@/services/orientation'
-import resize from '@/services/resize'
+import { OrientationService } from '@/services/orientation'
+import { ResizeService } from '@/services/resize'
 
 import { device } from '@/utils/detect'
 
-function useOrientation(includeDesktop = false) {
+export function useOrientation(includeDesktop = false) {
   const [current, setCurrent] = useState({ portrait: true, landscape: false }) // ssr
 
   useEffect(() => {
@@ -16,19 +16,17 @@ function useOrientation(includeDesktop = false) {
     if (device.mobile || includeDesktop) {
       update()
       if (includeDesktop) {
-        resize.listen(update)
+        ResizeService.listen(update)
       } else {
-        orientation.listen(update)
+        OrientationService.listen(update)
       }
     }
 
     return () => {
-      resize.dismiss(update)
-      orientation.dismiss(update)
+      ResizeService.dismiss(update)
+      OrientationService.dismiss(update)
     }
   }, [includeDesktop])
 
   return current
 }
-
-export default useOrientation

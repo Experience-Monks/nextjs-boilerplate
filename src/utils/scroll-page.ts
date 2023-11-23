@@ -24,7 +24,7 @@ let timeoutId: NodeJS.Timeout
  * @param {object} [props={}] - Scroll options. Refer to 'defaultProps' object
  * @param {function} [onComplete=noop] - On complete trigger function
  */
-export default function scrollPage(props: Partial<ScrollProps> = {}, onComplete = noop) {
+export function scrollPage(props: Partial<ScrollProps> = {}, onComplete = noop) {
   const combinedProps = { ...defaultProps, ...props }
   const { x, y, duration, ease } = combinedProps
 

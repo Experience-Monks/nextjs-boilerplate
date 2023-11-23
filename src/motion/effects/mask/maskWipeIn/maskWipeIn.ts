@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 
-import effectTimeline from '@/motion/core/effect-timeline'
+import { effectTimeline } from '@/motion/core/effect-timeline'
 
 type El = { tagName: string; style: { clipPath: string; webkitClipPath: string } }
 

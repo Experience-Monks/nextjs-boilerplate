@@ -26,6 +26,4 @@ class Service {
   }
 }
 
-const VisibilityService = new Service()
-
-export default VisibilityService
+export const VisibilityService = new Service()

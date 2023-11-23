@@ -134,5 +134,3 @@ export const customEases: EaseDeclaration[] = [
 ]
 
 export const eases: EaseDeclaration[] = [...customEases, ...favouriteEases, ...standardEases]
-
-export default eases

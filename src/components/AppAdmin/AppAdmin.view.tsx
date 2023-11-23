@@ -8,11 +8,12 @@ import css from './AppAdmin.module.scss'
 import config from '@/data/config.json'
 
 import { browser, device, os } from '@/utils/detect'
-import { productionLog } from '@/utils/log'
+import { productionPrint } from '@/utils/print'
 import { isDevEnv } from '@/utils/runtime-env'
 
-import useFeatureFlags from '@/hooks/use-feature-flags'
-import useWindowSize from '@/hooks/use-window-size'
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
+import { useRefs } from '@/hooks/use-refs'
+import { useWindowSize } from '@/hooks/use-window-size'
 
 export interface ViewProps extends ControllerProps {
   env: string
@@ -21,8 +22,14 @@ export interface ViewProps extends ControllerProps {
   version: string
 }
 
+export type ViewRefs = {
+  root: HTMLDivElement
+}
+
 // View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, env, date, commit, version }) => {
+  const refs = useRefs<ViewRefs>()
+
   const { width, height } = useWindowSize()
   const { flags, setFlag, resetFlags } = useFeatureFlags()
 
@@ -46,7 +53,7 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
   }, [])
 
   useEffect(() => {
-    productionLog(env, `${version}`)
+    productionPrint(env, `${version}`)
   }, [commit, env, version])
 
   useEffect(() => {
@@ -54,7 +61,7 @@ export const View: FC<ViewProps> = ({ className, env, date, commit, version }) =
   }, [env, removed])
 
   return render ? (
-    <div className={classNames('AppAdmin', css.root, className)} aria-hidden>
+    <div className={classNames('AppAdmin', css.root, className)} ref={refs.root} aria-hidden>
       <div className={classNames(css.basic, { [css.open]: open, [css.closed]: !open })}>
         {open ? (
           <>

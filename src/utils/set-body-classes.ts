@@ -1,8 +1,8 @@
-import ResizeService from '@/services/resize'
+import { ResizeService } from '@/services/resize'
 
 import { browser, device, os } from '@/utils/detect'
 
-function setBodyClasses() {
+export function setBodyClasses() {
   const classes = [
     device.mobile ? 'mobile-device' : '',
     device.touch ? 'touch-device' : '',
@@ -19,5 +19,3 @@ function setBodyClasses() {
   ResizeService.listen(calculateVh)
   calculateVh()
 }
-
-export default setBodyClasses

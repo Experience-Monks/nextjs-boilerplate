@@ -1,10 +1,18 @@
+import { RuntimeLoader } from '@rive-app/react-canvas'
 import { gsap } from 'gsap'
 import CustomEase from 'gsap/dist/CustomEase'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 
 import { customEases, favouriteEases } from '../eases/eases'
 
-function initGsap() {
+export const riveWASMResource = require('@rive-app/canvas/rive.wasm')
+
+export function initRive() {
+  if (typeof window === 'undefined') return
+  RuntimeLoader.setWasmUrl(riveWASMResource)
+}
+
+export function initGsap() {
   if (typeof window === 'undefined') return
 
   gsap.registerPlugin(CustomEase, ScrollToPlugin)
@@ -21,5 +29,3 @@ function initGsap() {
 
   gsap.registerEffect(require('@/motion/effects/fade/fadeIn/fadeIn').default)
 }
-
-export default initGsap

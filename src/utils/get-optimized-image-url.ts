@@ -1,4 +1,6 @@
-import FeatureFlagService from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags'
+
+import { prefix } from './basic-functions'
 
 export type OptmizedImageEdits = {
   // https://docs.aws.amazon.com/solutions/latest/serverless-image-handler/welcome.html
@@ -22,7 +24,7 @@ export type OptmizedImageEdits = {
   median?: number
   blur?: number
   flatten?: { background: string | { r: number; g: number; b: number } }
-  gamma?: number
+  gamma?: number // value between 1.0 and 3.0.
   negate?: boolean
   normalise?: boolean
   normalize?: boolean
@@ -44,8 +46,11 @@ export type OptmizedImageEdits = {
   webp?: { quality: number; effort: 0 | 1 | 2 | 3 | 4 | 5 | 6 }
 }
 
-function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
+const dev = process.env.NODE_ENV === 'development'
+
+export function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
   if (!FeatureFlagService.get('optimizedImages')) return src
+
   if (
     process.env.STORYBOOK ||
     !src.startsWith('/') ||
@@ -66,8 +71,6 @@ function getOptimizedImageUrl(src: string, edits?: OptmizedImageEdits) {
   if (settings.indexOf('?') % 3 === 2) settings = settings.replace('{', '{ ')
 
   const settingsBase64 = Buffer.from(settings, 'utf8').toString('base64')
-  const prefix = process.env.NODE_ENV === 'development' ? '/api/images/' : '/images/'
-  return prefix + settingsBase64
+  const url = dev ? '/api/images/' : prefix('/images/')
+  return url + settingsBase64
 }
-
-export default getOptimizedImageUrl

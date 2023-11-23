@@ -2,9 +2,9 @@ import type { FeatureFlagId, FeatureFlags } from '@/services/feature-flags'
 
 import { useCallback, useEffect, useState } from 'react'
 
-import FeatureFlagService from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags'
 
-function useFeatureFlags() {
+export function useFeatureFlags() {
   const [flags, setFlags] = useState(FeatureFlagService.getAll())
 
   const setFlag = useCallback((name: FeatureFlagId, enabled: boolean) => {
@@ -25,5 +25,3 @@ function useFeatureFlags() {
     resetFlags: FeatureFlagService.reset
   }
 }
-
-export default useFeatureFlags

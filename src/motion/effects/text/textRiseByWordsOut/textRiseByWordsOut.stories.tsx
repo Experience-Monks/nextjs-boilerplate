@@ -3,9 +3,9 @@ import type { StoryFn } from '@storybook/react'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
 
-import eases from '@/motion/eases/eases'
+import { eases } from '@/motion/eases/eases'
 
 import textRiseByWordsOut from './textRiseByWordsOut'
 

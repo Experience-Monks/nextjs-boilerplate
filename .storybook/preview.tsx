@@ -3,11 +3,10 @@ import { StoryFn } from '@storybook/react'
 import './storybook.scss'
 import '@/styles/global.scss'
 
-import initGsap from '@/motion/core/init-gsap'
-import setBodyClasses from '@/utils/set-body-classes'
+import { initGsap, initRive } from '@/motion/core/init'
 
 import { fontVariables } from '@/utils/fonts'
-import initRive from '@/motion/core/init-rive'
+import { setBodyClasses } from '@/utils/set-body-classes'
 
 export const parameters = {
   options: {

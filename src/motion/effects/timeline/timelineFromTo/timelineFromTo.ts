@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 
-import effectTimeline from '@/motion/core/effect-timeline'
+import { effectTimeline } from '@/motion/core/effect-timeline'
 
 const effect: CustomEffectConfig = {
   name: 'timelineFromTo',

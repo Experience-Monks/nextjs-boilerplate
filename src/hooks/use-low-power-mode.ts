@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import visibility from '@/services/visibility'
+import { VisibilityService } from '@/services/visibility'
 
 import { os } from '@/utils/detect'
-import getLowPowerMode from '@/utils/detect-low-power-mode'
+import { getLowPowerMode } from '@/utils/detect-low-power-mode'
 
 let cachedResult = false
 
-const useLowPowerMode = () => {
+export const useLowPowerMode = () => {
   const [lowPower, setLowPower] = useState(cachedResult)
 
   useEffect(() => {
@@ -28,17 +28,15 @@ const useLowPowerMode = () => {
 
     if (os.ios) {
       update()
-      visibility.listen(update)
+      VisibilityService.listen(update)
     }
 
     return () => {
       clearTimeout(timeout)
-      visibility.dismiss(update)
+      VisibilityService.dismiss(update)
     }
   }, [])
 
   cachedResult = lowPower
   return cachedResult
 }
-
-export default useLowPowerMode

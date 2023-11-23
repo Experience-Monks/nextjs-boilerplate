@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import CookieService from '@/services/cookie'
+import { CookieService } from '@/services/cookie'
 
-const useCookie = (name: string): [value: string | undefined, setValue: (value: string) => void] => {
+export const useCookie = (name: string): [value: string | undefined, setValue: (value: string) => void] => {
   const [value, setValue] = useState<string | undefined>()
 
   const setStoredValue = useCallback((val: string) => CookieService.set(name, val), [name])
@@ -18,5 +18,3 @@ const useCookie = (name: string): [value: string | undefined, setValue: (value: 
 
   return [value, setStoredValue]
 }
-
-export default useCookie

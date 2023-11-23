@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import css from './ScreenNoScript.module.scss'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
 
 export interface ViewProps extends ControllerProps {}
 

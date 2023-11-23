@@ -5,7 +5,7 @@ import NextHead from 'next/head'
  * The benefit is that frontend developer can identify what CSP problems will occur in the live environment in advance.
  * When modifying CSP content below, please tell TA or Devops developer in the project to update the Security Header lambda@Edge function.
  */
-export default function ContentSecurityPolicy() {
+export const MockContentSecurityPolicy = () => {
   const content = `
     default-src
       self;

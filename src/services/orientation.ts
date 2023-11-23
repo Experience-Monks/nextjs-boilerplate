@@ -26,6 +26,4 @@ class Service {
   }
 }
 
-const OrientationService = new Service()
-
-export default OrientationService
+export const OrientationService = new Service()

@@ -3,7 +3,7 @@ import type { StoryFn } from '@storybook/react'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-import eases from '@/motion/eases/eases'
+import { eases } from '@/motion/eases/eases'
 
 import { BaseImage } from '@/components/BaseImage'
 

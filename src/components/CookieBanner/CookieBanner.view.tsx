@@ -7,15 +7,23 @@ import classNames from 'classnames'
 
 import css from './CookieBanner.module.scss'
 
-import copy from '@/utils/copy'
+import { copy } from '@/utils/copy'
+
+import { useRefs } from '@/hooks/use-refs'
 
 export interface ViewProps extends ControllerProps {
   cookieConsent: AppState['consent']['cookieConsent']
   setCookieConsent: AppState['consent']['setCookieConsent']
 }
 
+export type ViewRefs = {
+  root: HTMLDivElement
+}
+
 // View (pure and testable component, receives props exclusively from the controller)
 export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCookieConsent }) => {
+  const refs = useRefs<ViewRefs>()
+
   const [settings, setSettings] = useState(false)
   const [consent, setConsent] = useState<CookieConsent>(
     cookieConsent ?? {
@@ -73,7 +81,7 @@ export const View: FC<ViewProps> = ({ className, content, cookieConsent, setCook
   )
 
   return (
-    <div className={classNames('CookieBanner', css.root, className)}>
+    <div className={classNames('CookieBanner', css.root, className)} ref={refs.root}>
       <p className={css.description} {...copy.html(content.description)} />
 
       <div className={css.buttonContainer}>

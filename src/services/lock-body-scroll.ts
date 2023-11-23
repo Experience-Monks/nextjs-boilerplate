@@ -1,6 +1,6 @@
 import { getScrollTop, noop } from '@/utils/basic-functions'
 import { device } from '@/utils/detect'
-import scrollPage from '@/utils/scroll-page'
+import { scrollPage } from '@/utils/scroll-page'
 
 /**
  * Lock and unlock body scroll with page position restoration
@@ -30,6 +30,4 @@ class Service {
     : noop
 }
 
-const LockBodyScrollService = new Service()
-
-export default LockBodyScrollService
+export const LockBodyScrollService = new Service()

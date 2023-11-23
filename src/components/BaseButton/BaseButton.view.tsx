@@ -5,16 +5,24 @@ import type { UrlObject } from 'node:url'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 
-import AnalyticsService from '@/services/analytics'
+import { AnalyticsService } from '@/services/analytics'
 
 import { fixSlashes } from '@/utils/basic-functions'
-import isRoutedHref from '@/utils/is-routed-href'
+import { isRoutedHref } from '@/utils/is-routed-href'
+
+import { useRefs } from '@/hooks/use-refs'
 
 export interface ViewProps extends ControllerProps {}
+
+export type ViewRefs = {
+  root: HTMLElement
+}
 
 // View (pure and testable component, receives props exclusively from the controller)
 export const View = forwardRef<HTMLElement, ViewProps>(
   ({ className, href: h, link: l, subject, children, gtmEvent, disabled, onClick, ...props }, ref) => {
+    const refs = useRefs<ViewRefs>({ root: ref })
+
     const href = h || l
 
     const [url, setUrl] = useState<string | UrlObject | undefined>(href)
@@ -67,7 +75,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
       routed ? (
         <Link
           {...props}
-          ref={ref as Ref<HTMLAnchorElement>}
+          ref={refs.root as Ref<HTMLAnchorElement>}
           href={url as UrlObject}
           scroll={false}
           className={className}
@@ -78,7 +86,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
       ) : (
         <a
           {...props}
-          ref={ref as Ref<HTMLAnchorElement>}
+          ref={refs.root as Ref<HTMLAnchorElement>}
           href={`${prefix}${href}${suffix}`}
           className={className}
           onClick={handleClick}
@@ -89,7 +97,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
     ) : (
       <button
         {...props}
-        ref={ref as Ref<HTMLButtonElement>}
+        ref={refs.root as Ref<HTMLButtonElement>}
         disabled={disabled}
         className={className}
         onClick={handleClick}
