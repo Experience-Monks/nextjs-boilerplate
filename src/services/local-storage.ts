@@ -20,7 +20,7 @@ class Service {
       this.listeners.forEach((listener) => listener(name, value))
 
       return true
-    } catch (e) {
+    } catch {
       // no local storage (ssr or incognito mode)
       return false
     }
@@ -35,7 +35,7 @@ class Service {
       }
 
       return JSON.parse(serializedData)[name] || undefined
-    } catch (e) {
+    } catch {
       // no local storage (ssr or incognito mode)
       return undefined
     }

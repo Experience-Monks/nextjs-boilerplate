@@ -1,10 +1,9 @@
-import { GetStaticProps } from 'next'
+import type { PageUnsupportedProps } from '@/components/PageUnsupported/PageUnsupported'
+import type { GetStaticProps } from 'next'
 
 import content from '@/data/content.json'
 
 import generateHeadProps from '@/utils/generate-head-props'
-
-import PageUnsupported, { PageUnsupportedProps } from '@/components/PageUnsupported/PageUnsupported'
 
 export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => {
   return {
@@ -17,4 +16,4 @@ export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => 
   }
 }
 
-export default PageUnsupported
+export { default } from '@/components/PageUnsupported/PageUnsupported'

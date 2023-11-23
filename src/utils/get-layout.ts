@@ -20,9 +20,8 @@ function getLayout() {
       tablet,
       desktop
     }
-  } else {
-    return ssrLayout
   }
+  return ssrLayout
 }
 
 export default getLayout

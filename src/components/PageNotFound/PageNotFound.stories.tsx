@@ -1,10 +1,13 @@
-import { FC, RefObject, useCallback } from 'react'
-import { StoryFn } from '@storybook/react'
+import type { FC, RefObject } from 'react'
+import type { StoryFn } from '@storybook/react'
+import type { PageHandle } from '@/data/types'
+import type { ViewProps } from './PageNotFound'
+
+import { useCallback } from 'react'
 
 import content from '@/data/content.json'
-import { PageHandle } from '@/data/types'
 
-import { View, ViewProps } from './PageNotFound'
+import { View } from './PageNotFound'
 
 export default { title: 'pages/PageNotFound' }
 

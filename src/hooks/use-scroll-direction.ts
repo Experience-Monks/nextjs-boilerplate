@@ -1,4 +1,6 @@
-import { MutableRefObject, RefObject, useEffect, useMemo, useRef, useState } from 'react'
+import type { MutableRefObject, RefObject } from 'react'
+
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import scroll from '@/services/scroll'
 
@@ -10,7 +12,7 @@ interface State {
   up: boolean
 }
 
-function useScrollDirection(throttle = 100, target?: Element | RefObject<Element>, fallbackToWindowScroll = true) {
+function useScrollDirection(target?: Element | RefObject<Element>, throttle = 100, fallbackToWindowScroll = true) {
   const [state, setState] = useState<State>({
     down: false,
     top: true,

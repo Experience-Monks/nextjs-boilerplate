@@ -1,4 +1,6 @@
-import { AwsRum, AwsRumConfig } from 'aws-rum-web'
+import type { AwsRumConfig } from 'aws-rum-web'
+
+import { AwsRum } from 'aws-rum-web'
 
 interface AwsRumData {
   guestRoleArn: string
@@ -17,7 +19,7 @@ class Service {
     this.awsRum = null
     try {
       this.awsRumData = process.env.NEXT_PUBLIC_AWS_RUM ? JSON.parse(process.env.NEXT_PUBLIC_AWS_RUM) : null
-    } catch (error) {
+    } catch {
       this.awsRumData = null
     }
   }
@@ -40,7 +42,7 @@ class Service {
         const APPLICATION_REGION = this.awsRumData?.region || ''
 
         this.awsRum = new AwsRum(APPLICATION_ID, APPLICATION_VERSION, APPLICATION_REGION, config)
-      } catch (error) {
+      } catch {
         // Ignore errors thrown during CloudWatch RUM web client initialization
       }
     }

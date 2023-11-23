@@ -1,9 +1,10 @@
-import { FC, memo, useRef } from 'react'
+import type { FC } from 'react'
+import type { Content, PageProps } from '@/data/types'
+
+import { memo, useRef } from 'react'
 import classNames from 'classnames'
 
 import css from './PageUnsupported.module.scss'
-
-import { Content, PageProps } from '@/data/types'
 
 import copy from '@/utils/copy'
 

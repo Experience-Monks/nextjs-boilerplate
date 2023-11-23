@@ -8,7 +8,7 @@ export const detector =
         window,
         // https://stackoverflow.com/questions/58019463/how-to-detect-device-name-in-safari-on-ios-13-while-it-doesnt-show-the-correct
         isSpoofedIpad:
-          (/iPad/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+          (/iPad/u.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
           !window.MSStream
       }
     : {
@@ -79,13 +79,13 @@ class OS {
     this.node = this.name === 'node'
   }
   get bot() {
-    return Boolean(this.supportedBots.filter((bot) => detector.ua.indexOf(bot.toLowerCase()) !== -1).length)
+    return this.supportedBots.some((bot) => detector.ua.includes(bot.toLowerCase()))
   }
   get version() {
     return detector.base.getOSVersion() || '0'
   }
   get majorVersion() {
-    return parseInt(this.version.replace(/[^0-9.]/g, ''), 10)
+    return parseInt(this.version.replace(/[^0-9.]/gu, ''), 10)
   }
 }
 
@@ -122,15 +122,15 @@ class Browser {
     this.ie = this.name === 'internet-explorer'
     this.opera = this.name === 'opera'
     this.node = this.name === 'node'
-    this.instagram = /instagram/i.test(detector.ua)
-    this.pinterest = /pinterest/i.test(detector.ua)
-    this.facebook = /fban|fbav/i.test(detector.ua)
-    this.linkedIn = /linkedin/i.test(detector.ua)
-    this.snapchat = /snapchat/i.test(detector.ua)
-    this.whatsApp = /whatsapp/i.test(detector.ua)
-    this.twitter = /twitter/i.test(detector.ua)
-    this.weChat = /wechat|micromessenger/i.test(detector.ua)
-    this.tikTok = /musical_ly/i.test(detector.ua)
+    this.instagram = /instagram/iu.test(detector.ua)
+    this.pinterest = /pinterest/iu.test(detector.ua)
+    this.facebook = /fban|fbav/iu.test(detector.ua)
+    this.linkedIn = /linkedin/iu.test(detector.ua)
+    this.snapchat = /snapchat/iu.test(detector.ua)
+    this.whatsApp = /whatsapp/iu.test(detector.ua)
+    this.twitter = /twitter/iu.test(detector.ua)
+    this.weChat = /wechat|micromessenger/iu.test(detector.ua)
+    this.tikTok = /musical_ly/iu.test(detector.ua)
     this.inApp =
       this.instagram ||
       this.pinterest ||
@@ -146,7 +146,7 @@ class Browser {
     return detector.base.getBrowserVersion() || '0'
   }
   get majorVersion() {
-    return parseInt(this.version.replace(/[^0-9.]/g, ''), 10)
+    return parseInt(this.version.replaceAll(/[^0-9.]/gu, ''), 10)
   }
 }
 

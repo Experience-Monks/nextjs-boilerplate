@@ -116,7 +116,10 @@
   pointer-events: if($value <= 0.01, none, auto);
 
   @if $time {
-    transition: opacity $time $easing, visibility $time $easing, pointer-events $time $easing;
+    transition:
+      opacity $time $easing,
+      visibility $time $easing,
+      pointer-events $time $easing;
   }
 }
 

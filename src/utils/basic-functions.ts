@@ -9,7 +9,7 @@ export function getScrollLeft() {
 }
 
 export function fixSlashes(string: string, trimEndSlash = false): string {
-  let fixed = string.replace(/\/\/{1,5}/g, '/').replace(':/', '://')
+  let fixed = string.replace(/\/\/{1,5}/gu, '/').replace(':/', '://')
   if (fixed.endsWith('/') && trimEndSlash) fixed = fixed.slice(0, -1)
   return fixed
 }
@@ -34,12 +34,16 @@ export function formatDate(date: Date | string): string {
   return formatter.format(typeof date === 'string' ? new Date(date) : date)
 }
 
-export function deepClone(obj: unknown | string) {
+export function deepClone(obj: unknown) {
   if (!obj || typeof obj === 'string') return obj
   return JSON.parse(JSON.stringify(obj))
 }
 
-export const wait = (ms: number) => new Promise((r) => setTimeout(r, ms))
+export const wait = (ms: number) => {
+  return new Promise((r) => {
+    setTimeout(r, ms)
+  })
+}
 export const halt = wait
 export const delay = wait
 export const pause = wait
@@ -70,7 +74,7 @@ export function safeRandom(): number {
   // https://caniuse.com/cryptography
   const arr = new Uint32Array(1)
   crypto.getRandomValues(arr)
-  return arr[0] * Math.pow(2, -32)
+  return arr[0] * 2 ** -32
 }
 
 export function randomString(length = 6): string {
@@ -81,18 +85,18 @@ export function randomString(length = 6): string {
 }
 
 export function hasDiacritic(str: string): boolean {
-  return /[áéíóúńâêîôûãõñàèìòùäöü]/gi.test(str)
+  return /[àáâãäèéêìíîñòóôõöùúûüń]/giu.test(str)
 }
 
 export function isImageUrl(url: string): boolean {
-  return /.(bmp|cur|dds|gif|icns|ico|jpg|jpeg|ktx|png|pnm|pam|pbm|pfm|pgm|ppm|psd|svg|tiff|webp)$/i.test(url)
+  return /.(bmp|cur|dds|gif|icns|ico|jpg|jpeg|ktx|png|pnm|pam|pbm|pfm|pgm|ppm|psd|svg|tiff|webp)$/iu.test(url)
 }
 
 export function download(blob: Blob, filename: string) {
   const link = document.createElement('a')
   link.href = URL.createObjectURL(blob)
   link.download = filename
-  document.body.appendChild(link)
+  document.body.append(link)
   link.click()
-  document.body.removeChild(link)
+  link.remove()
 }

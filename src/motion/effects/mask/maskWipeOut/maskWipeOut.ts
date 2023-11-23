@@ -7,9 +7,7 @@ type El = { tagName: string; style: { clipPath: string; webkitClipPath: string }
 const effect: CustomEffectConfig = {
   name: 'maskWipeOut',
   effect: (target, config = {}) => {
-    const elements = Array.from([target as unknown as El])
-      .flat()
-      .filter((el) => !!el.tagName)
+    const elements = [target as unknown as El].flat().filter((el) => !!el.tagName)
 
     return effectTimeline(config.duration! + elements.length * config.stagger!, config.reversed!, () => {
       const timeline = gsap.timeline({ paused: true })
@@ -18,9 +16,7 @@ const effect: CustomEffectConfig = {
         const fromBottom = config.direction === 'up'
         const poly = fromBottom ? { a: 100, b: 100 } : { a: 0, b: 0 }
 
-        for (let i = 0; i < elements.length; i++) {
-          const el = elements[i]
-
+        for (const [i, el] of elements.entries()) {
           el.style.clipPath = el.style.webkitClipPath = `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)`
 
           timeline
@@ -57,9 +53,7 @@ const effect: CustomEffectConfig = {
         const fromRight = config.direction === 'left'
         const poly = fromRight ? { a: 100, b: 100 } : { a: 0, b: 0 }
 
-        for (let i = 0; i < elements.length; i++) {
-          const el = elements[i]
-
+        for (const [i, el] of elements.entries()) {
           el.style.clipPath = el.style.webkitClipPath = `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)`
 
           timeline

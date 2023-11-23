@@ -1,9 +1,11 @@
-import { FC, memo } from 'react'
+import type { FC } from 'react'
+import type { HeadProps } from '@/data/types'
+
+import { memo } from 'react'
 import NextHead from 'next/head'
 import { useRouter } from 'next/router'
 
 import config from '@/data/config.json'
-import { HeadProps } from '@/data/types'
 
 import { riveWASMResource } from '@/motion/core/init-rive'
 

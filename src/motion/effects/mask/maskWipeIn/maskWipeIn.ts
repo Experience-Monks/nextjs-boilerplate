@@ -25,9 +25,7 @@ const setup = (elements: El[], direction: string) => {
 const effect: CustomEffectConfig = {
   name: 'maskWipeIn',
   effect: (target, config = {}) => {
-    const elements = Array.from([target as unknown as El])
-      .flat()
-      .filter((el) => !!el.tagName)
+    const elements = [target as unknown as El].flat().filter((el) => !!el.tagName)
 
     if (config.immediateRender) setup(elements, config.direction!)
 
@@ -40,9 +38,7 @@ const effect: CustomEffectConfig = {
         const fromBottom = config.direction === 'up'
         const poly = fromBottom ? { a: 100, b: 100 } : { a: 0, b: 0 }
 
-        for (let i = 0; i < elements.length; i++) {
-          const el = elements[i]
-
+        for (const [i, el] of elements.entries()) {
           timeline
             .to(
               poly,
@@ -77,8 +73,7 @@ const effect: CustomEffectConfig = {
         const fromRight = config.direction === 'left'
         const poly = fromRight ? { a: 100, b: 100 } : { a: 0, b: 0 }
 
-        for (let i = 0; i < elements.length; i++) {
-          const el = elements[i]
+        for (const [i, el] of elements.entries()) {
           timeline
             .to(
               poly,

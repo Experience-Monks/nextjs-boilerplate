@@ -1,5 +1,9 @@
-import { FC, memo, ReactNode, RefObject, useCallback, useEffect, useRef, useState } from 'react'
-import { AppProps } from 'next/app'
+import type { FC, ReactNode, RefObject } from 'react'
+import type { AppProps } from 'next/app'
+import type { NavHandle } from '@/components/Nav/Nav'
+import type { PageHandle, PageProps } from '@/data/types'
+
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
@@ -7,8 +11,6 @@ import { gsap } from 'gsap'
 import { nanoid } from 'nanoid'
 
 import css from './Layout.module.scss'
-
-import { PageHandle, PageProps } from '@/data/types'
 
 import { localState } from '@/store'
 
@@ -22,7 +24,7 @@ import ScreenNoScript from '@/components/ScreenNoScript/ScreenNoScript'
 
 import Footer from '@/components/Footer/Footer'
 import Head from '@/components/Head/Head'
-import Nav, { NavHandle } from '@/components/Nav/Nav'
+import Nav from '@/components/Nav/Nav'
 
 const ScreenRotate = dynamic(() => import('@/components/ScreenRotate/ScreenRotate'), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'), { ssr: false })
@@ -53,7 +55,7 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
     pathnameRef.current = router.asPath
       .split('#')[0]
       .split('?')[0]
-      .replace(/^\/..-..\/?/, '')
+      .replace(/^\/..-..\/?/u, '')
   }, [router.asPath])
 
   //
@@ -61,8 +63,8 @@ const Layout: FC<AppProps<PageProps>> = ({ Component, pageProps }) => {
   //
   useEffect(() => {
     const navigateTo = (href: string) => {
-      const to = href.split('/').filter(Boolean).join('/').replace(/\/$/, '')
-      const from = router.asPath.split('/').filter(Boolean).join('/').replace(/\/$/, '')
+      const to = href.split('/').filter(Boolean).join('/').replace(/\/$/u, '')
+      const from = router.asPath.split('/').filter(Boolean).join('/').replace(/\/$/u, '')
       if (to === from) router.replace(href, '', { scroll: false }).catch(console.log)
       else router.push(href, '', { scroll: false }).catch(console.log)
     }

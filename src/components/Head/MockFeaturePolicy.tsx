@@ -40,7 +40,7 @@ export default function FeaturePolicy() {
       'none';
     microphone
       'none';
-  `.replace(/(\r\n|\n|\r)/gm, '')
+  `.replace(/(\r\n|\n|\r)/gmu, '')
 
   return (
     <NextHead>

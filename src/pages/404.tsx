@@ -1,10 +1,9 @@
-import { GetStaticProps } from 'next'
+import type { PageNotFoundProps } from '@/components/PageNotFound/PageNotFound'
+import type { GetStaticProps } from 'next'
 
 import content from '@/data/content.json'
 
 import generateHeadProps from '@/utils/generate-head-props'
-
-import PageNotFound, { PageNotFoundProps } from '@/components/PageNotFound/PageNotFound'
 
 export const getStaticProps: GetStaticProps<PageNotFoundProps> = async () => {
   return {
@@ -16,4 +15,4 @@ export const getStaticProps: GetStaticProps<PageNotFoundProps> = async () => {
   }
 }
 
-export default PageNotFound
+export { default } from '@/components/PageNotFound/PageNotFound'

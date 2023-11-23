@@ -1,9 +1,10 @@
-import { FC, memo, useEffect, useState } from 'react'
+import type { FC } from 'react'
+import type { Content } from '@/data/types'
+
+import { memo, useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 import css from './ScreenRotate.module.scss'
-
-import { Content } from '@/data/types'
 
 import ResizeService from '@/services/resize'
 

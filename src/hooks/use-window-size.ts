@@ -10,7 +10,7 @@ interface State {
 }
 
 function useWindowSize() {
-  const [state, setState] = useReducer((state: State, newState: State) => ({ ...state, ...newState }), {
+  const [state, setState] = useReducer((curState: State, newState: State) => ({ ...curState, ...newState }), {
     width: detector.window.innerWidth,
     height: detector.window.innerHeight
   })

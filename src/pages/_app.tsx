@@ -1,12 +1,14 @@
-import { FC, useEffect } from 'react'
-import { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
-import { gsap } from 'gsap'
 import 'normalize.css'
 
-import '@/styles/global.scss'
+import type { FC } from 'react'
+import type { AppProps } from 'next/app'
+import type { PageProps } from '@/data/types'
 
-import { PageProps } from '@/data/types'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { gsap } from 'gsap'
+
+import '@/styles/global.scss'
 
 import localStore from '@/store'
 
@@ -15,15 +17,16 @@ import AWSRumService from '@/services/aws-rum'
 
 import setBodyClasses from '@/utils/set-body-classes'
 
+import useFeatureFlags from '@/hooks/use-feature-flags'
+
 import gsapInit from '@/motion/core/init-gsap'
 import initRive from '@/motion/core/init-rive'
-
-import useFeatureFlags from '@/hooks/use-feature-flags'
 
 import Layout from '@/components/Layout/Layout'
 
 require('default-passive-events')
 require('focus-visible')
+
 initRive()
 gsapInit()
 
@@ -45,9 +48,9 @@ const App: FC<AppProps<PageProps>> = (props) => {
     setBodyClasses()
 
     // Fix https://github.com/vercel/next.js/issues/17464
-    document.querySelectorAll('head > link[rel="stylesheet"]').forEach((node) => {
-      node.removeAttribute('data-n-g')
-      node.removeAttribute('data-n-p')
+    document.querySelectorAll<HTMLElement>('head > link[rel="stylesheet"]').forEach((node) => {
+      delete node.dataset.nG
+      delete node.dataset.nP
     })
 
     // FOUC prevention step 2/2: Make sure the page us un-hidden once application kicks in

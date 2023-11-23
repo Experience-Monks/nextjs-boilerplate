@@ -1,7 +1,9 @@
-import { action } from '@storybook/addon-actions'
-import { StoryFn } from '@storybook/react'
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './ScreenIntro'
 
-import { View, ViewProps } from './ScreenIntro'
+import { action } from '@storybook/addon-actions'
+
+import { View } from './ScreenIntro'
 
 export default { title: 'components/ScreenIntro' }
 

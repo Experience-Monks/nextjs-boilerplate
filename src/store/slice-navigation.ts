@@ -1,8 +1,7 @@
-import { StateCreator } from 'zustand'
+import type { AppState, Mutators } from '.'
+import type { StateCreator } from 'zustand'
 
 import { noop } from '@/utils/basic-functions'
-
-import { AppState, Mutators } from '.'
 
 export type NavigationSliceState = {
   navigation: {

@@ -20,7 +20,7 @@ class Service {
   }
 
   listen = (listener: ResizeListener) => {
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.addEventListener('resize', this.onResize)
 
       if (device.mobile) {
@@ -36,7 +36,7 @@ class Service {
   dismiss = (listener: ResizeListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.removeEventListener('resize', this.onResize)
 
       if (device.mobile) {

@@ -8,7 +8,7 @@ class Service {
   }
 
   listen = (listener: OrientationListener) => {
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.addEventListener('orientationchange', this.onOrientation)
     }
 
@@ -20,7 +20,7 @@ class Service {
   dismiss = (listener: OrientationListener) => {
     this.listeners = this.listeners.filter((l) => l !== listener)
 
-    if (!this.listeners.length) {
+    if (this.listeners.length === 0) {
       window.removeEventListener('orientationchange', this.onOrientation)
     }
   }

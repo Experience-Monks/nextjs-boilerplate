@@ -1,9 +1,12 @@
+import type { ConsentSliceState } from './slice-consent'
+import type { NavigationSliceState } from './slice-navigation'
+
 import { create } from 'zustand'
 import { devtools, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { ConsentSlice, ConsentSliceState } from './slice-consent'
-import { NavigationSlice, NavigationSliceState } from './slice-navigation'
+import { ConsentSlice } from './slice-consent'
+import { NavigationSlice } from './slice-navigation'
 
 export type Mutators = [['zustand/devtools', never], ['zustand/subscribeWithSelector', never], ['zustand/immer', never]]
 

@@ -41,7 +41,7 @@ const effect: CustomEffectConfig = {
       for (let i = 0; i < split.words.length; i++) {
         const word = split.words[i] as HTMLDivElement
         const wipe = word.querySelector('.wipe')
-        const chars = Array.from(word.children)
+        const chars = [...word.children]
         timeline.to(
           config.wipe?.direction === 'left' ? chars.reverse() : chars,
           {

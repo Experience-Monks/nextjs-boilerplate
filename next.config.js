@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const path = require('path')
+const path = require('node:path')
 
 const nextConfig = {
   output: process.env.OUTPUT,
@@ -9,9 +9,11 @@ const nextConfig = {
   reactStrictMode: false,
   sassOptions: { includePaths: [path.join(__dirname, 'src/styles')] },
   webpack(config) {
-    config.module.rules.push({ test: /\.svg$/i, use: [{ loader: '@svgr/webpack' }] })
-    config.module.rules.push({ test: /\.(glb|gltf|bin|fbx|hdr|exr|woff2|riv|wasm)$/i, type: 'asset/resource' })
-    config.module.rules.push({ test: /\.(glsl|hlsl|vert|frag)$/i, type: 'asset/source' })
+    config.module.rules.push(
+      { test: /\.svg$/iu, use: [{ loader: '@svgr/webpack' }] },
+      { test: /\.(glb|gltf|bin|fbx|hdr|exr|woff2|riv|wasm)$/iu, type: 'asset/resource' },
+      { test: /\.(glsl|hlsl|vert|frag)$/iu, type: 'asset/source' }
+    )
     return config
   }
 }
