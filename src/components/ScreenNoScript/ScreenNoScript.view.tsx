@@ -16,8 +16,8 @@ export const View: FC<ViewProps> = ({ className, content }) => {
   return (
     <Component className={classNames('ScreenNoScript', css.root, className)}>
       <div className={css.text}>
-        <h1 className={css.title} {...copy.html(content.title, {}, true)} />
-        <p className={css.description} {...copy.html(content.description, {}, true)} />
+        <h1 className={css.title} {...copy.html(content.title, {}, 10)} />
+        <p className={css.description} {...copy.html(content.description, {}, 10)} />
       </div>
     </Component>
   )

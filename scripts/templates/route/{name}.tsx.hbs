@@ -6,7 +6,7 @@ import { CmsService } from '@/services/cms'
 export const getStaticProps: GetStaticProps<Page{{name_pc}}Props> = async () => {
   return {
     props: {
-      content: CmsService.getPageContent({{name_cc}})
+      content: CmsService.getPageContent('{{name_cc}}')
     }
   }
 }

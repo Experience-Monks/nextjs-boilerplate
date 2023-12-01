@@ -38,8 +38,8 @@ export const View: FC<ViewProps> = ({ className, content }) => {
 
   return enable ? (
     <div className={classNames('ScreenRotate', css.root, className)} ref={refs.root}>
-      <p className={css.title} {...copy.html(content.title, {}, true)} />
-      <p className={css.description} {...copy.html(content.description, {}, true)} />
+      <p className={css.title} {...copy.html(content.title, {}, 10)} />
+      <p className={css.description} {...copy.html(content.description, {}, 10)} />
     </div>
   ) : null
 }

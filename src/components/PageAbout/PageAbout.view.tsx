@@ -36,7 +36,7 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   return (
     <main className={classNames('PageAbout', css.root)} ref={refs.root}>
       <h1 className={css.title} {...copy.html(content.body.title)} />
-      <div className={css.description} {...copy.html(content.body.description, {}, true)} />
+      <div className={css.description} {...copy.html(content.body.description, {}, 10)} />
     </main>
   )
 }
