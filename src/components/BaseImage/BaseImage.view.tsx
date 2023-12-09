@@ -1,5 +1,6 @@
 import type { StaticImageData } from 'next/image'
 import type { ControllerProps } from './BaseImage.controller'
+import type { ImageId } from '#/image-imports'
 
 import { forwardRef, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
@@ -47,7 +48,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
     const imgData = useMemo<StaticImageData | undefined>(() => {
       if (data) return data
       if (src) {
-        if (imageImports[src]) return imageImports[src] as unknown as StaticImageData
+        if (imageImports[src as ImageId]) return imageImports[src as ImageId]
         const s = src.split('?')[0].split('#')[0]
         const p = publicImageSizes as { [key: string]: { width: number; height: number } | undefined }
         const publicSize = p[src] || p[s]
