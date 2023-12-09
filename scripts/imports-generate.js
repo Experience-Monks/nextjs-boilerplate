@@ -38,7 +38,8 @@ function run() {
     'asset-imports.ts',
     /.(mp3|mp4|glb|gltf|fbx|bin|hdr|exr|webm|webp|riv)$/iu,
     'export const assetImports = {\n',
-    '} as { [key: string]: string }\n'
+    '}\n\nexport type AssetId = keyof typeof assetImports\n',
+    ' as string'
   )
 
   generateImportsFile(
@@ -46,8 +47,8 @@ function run() {
     'image-imports.ts',
     /.(jpg|jpeg|png|webp)$/iu,
     "import { StaticImageData } from 'next/image'\n\nexport const imageImports = {\n",
-    '} as { [key: string]: StaticImageData }\n',
-    '.default'
+    '}\n\nexport type ImageId = keyof typeof imageImports\n',
+    '.default as StaticImageData'
   )
 
   generateImportsFile(
