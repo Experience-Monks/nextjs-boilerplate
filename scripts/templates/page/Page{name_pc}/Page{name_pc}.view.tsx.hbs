@@ -24,7 +24,7 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
   const refs = useRefs<ViewRefs>()
 
   useEffect(() => {
-    gsap.set(rootRef.current, { opacity: 0 })
+    gsap.set(refs.root.current, { opacity: 0 })
     onReady?.(refs.pageHandle)
   }, [refs, onReady])
 

@@ -3,7 +3,7 @@ interface Window {
   CustomEase: any
   trustedTypes: any
   fbAsyncInit: any
-  dataLayer: Array<object>
+  dataLayer: object[]
   MSStream: any
   safari: any
   fbq: any
