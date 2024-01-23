@@ -50,6 +50,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
 
   const handleIntroComplete = useCallback(() => {
     setIntroComplete(true)
+    storeState().animations.setAnimationsEnabled(true)
   }, [])
 
   //
@@ -178,8 +179,6 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
   // }, [refs, Component, pageProps, flags.pageTransitions, introComplete])
 
   const { asPath, isReady } = router
-
-  console.log(asPath, isReady)
 
   return (
     <div className={classNames('Layout', css.root, fontVariables)}>

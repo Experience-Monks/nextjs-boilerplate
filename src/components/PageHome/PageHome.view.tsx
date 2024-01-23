@@ -9,8 +9,8 @@ import css from './PageHome.module.scss'
 
 import { copy } from '@/utils/copy'
 
-import { useGsapTransitions } from '@/hooks/use-gsap-transitions'
 import { useRefs } from '@/hooks/use-refs'
+import { useTransitionPresence } from '@/hooks/use-transition-presence'
 
 export interface ViewProps extends ControllerProps {}
 
@@ -26,10 +26,15 @@ export const View: FC<ViewProps> = ({ content }) => {
   const refs = useRefs<ViewRefs>()
 
   useEffect(() => {
-    gsap.set(refs.root.current, { opacity: 0 })
+    gsap
+      .timeline()
+      .set(refs.root.current, { opacity: 0 })
+      .set(refs.title.current, { opacity: 0 })
+      .set(refs.description.current, { opacity: 0 })
+      .set(refs.list.current!.childNodes, { opacity: 0 })
   }, [refs])
 
-  useGsapTransitions({
+  useTransitionPresence({
     animateIn: () => {
       return gsap
         .timeline()

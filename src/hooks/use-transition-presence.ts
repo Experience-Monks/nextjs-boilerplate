@@ -3,10 +3,10 @@ import { useBeforeUnmount } from '@mediamonks/react-transition-presence'
 
 import { store } from '@/store'
 
-export function useGsapTransitions(
-  animations: { animateIn?: () => gsap.core.Animation; animateOut?: () => gsap.core.Animation },
-  dependencies: readonly unknown[] = []
-) {
+export function useTransitionPresence(animations: {
+  animateIn?: () => gsap.core.Animation
+  animateOut?: () => gsap.core.Animation
+}) {
   const animationsEnabled = store((state) => state.animations.animationsEnabled)
 
   useEffect(() => {
@@ -15,8 +15,7 @@ export function useGsapTransitions(
     return () => {
       anim?.kill()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...dependencies, animations, animationsEnabled])
+  }, [animations, animationsEnabled])
 
   useBeforeUnmount(async (abortSignal) => {
     if (!animations.animateOut) return

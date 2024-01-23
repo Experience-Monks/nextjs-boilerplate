@@ -9,8 +9,8 @@ import css from './PageNotFound.module.scss'
 
 import { copy } from '@/utils/copy'
 
-import { useGsapTransitions } from '@/hooks/use-gsap-transitions'
 import { useRefs } from '@/hooks/use-refs'
+import { useTransitionPresence } from '@/hooks/use-transition-presence'
 
 export interface ViewProps extends ControllerProps {}
 
@@ -26,7 +26,7 @@ export const View: FC<ViewProps> = ({ content }) => {
     gsap.set(refs.root.current, { opacity: 0 })
   }, [refs])
 
-  useGsapTransitions({
+  useTransitionPresence({
     animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
     animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
   })

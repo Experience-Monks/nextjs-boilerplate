@@ -12,7 +12,7 @@ export type AnimationstSliceState = {
 
 export const AnimationsSlice: StateCreator<AppState, Mutators, [], AnimationstSliceState> = (set) => ({
   animations: {
-    animationsEnabled: true,
+    animationsEnabled: false,
 
     setAnimationsEnabled: (animationsEnabled) => {
       set((state) => {
