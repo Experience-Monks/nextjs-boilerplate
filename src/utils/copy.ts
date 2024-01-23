@@ -47,7 +47,7 @@ class Copy {
     return result
   }
 
-  html(string: string | undefined, values = {}, killWidows = false, removeLineBreaks = false) {
+  html(string: string | undefined, values = {}, killWidows = 0, removeLineBreaks = false) {
     if (!string) return ''
 
     let html = this.parse(string, values, removeLineBreaks) || ''
@@ -55,7 +55,7 @@ class Copy {
     if (killWidows) {
       const texts = html.split(/<[^<>]{1,255}>/gu) // note: increase range if needed
       texts.forEach((text) => {
-        const n = 10 // minimum character count for the final word
+        const n = killWidows // minimum character count for the final word
         const line = text.replace(/\s/gu, ' ')
         const chunk = line.substr(-n)
         const fixed =
