@@ -10,7 +10,7 @@ import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
 
-import { localStore } from '@/store'
+import { store } from '@/store'
 
 import { AnalyticsService } from '@/services/analytics'
 import { AWSRumService } from '@/services/aws-rum'
@@ -34,7 +34,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
 
   const { flags } = useFeatureFlags()
 
-  const cookieConsent = localStore(({ consent }) => consent.cookieConsent)
+  const cookieConsent = store(({ consent }) => consent.cookieConsent)
 
   useEffect(() => {
     history.scrollRestoration = 'manual'

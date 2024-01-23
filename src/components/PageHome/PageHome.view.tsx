@@ -1,8 +1,7 @@
 import type { FC } from 'react'
-import type { PageHandle } from '@/data/types'
 import type { ControllerProps } from './PageHome.controller'
 
-import { useEffect, useImperativeHandle } from 'react'
+import { useEffect } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -10,28 +9,27 @@ import css from './PageHome.module.scss'
 
 import { copy } from '@/utils/copy'
 
+import { useGsapTransitions } from '@/hooks/use-gsap-transitions'
 import { useRefs } from '@/hooks/use-refs'
 
 export interface ViewProps extends ControllerProps {}
 
 export type ViewRefs = {
   root: HTMLImageElement
-  pageHandle: PageHandle
   list: HTMLUListElement
   title: HTMLHeadingElement
   description: HTMLHeadingElement
 }
 
 // View (pure and testable component, receives props exclusively from the controller)
-export const View: FC<ViewProps> = ({ content, onReady }) => {
+export const View: FC<ViewProps> = ({ content }) => {
   const refs = useRefs<ViewRefs>()
 
   useEffect(() => {
     gsap.set(refs.root.current, { opacity: 0 })
-    onReady?.(refs.pageHandle)
-  }, [refs, onReady])
+  }, [refs])
 
-  useImperativeHandle(refs.pageHandle, () => ({
+  useGsapTransitions({
     animateIn: () => {
       return gsap
         .timeline()
@@ -41,7 +39,7 @@ export const View: FC<ViewProps> = ({ content, onReady }) => {
         .fadeIn(refs.list.current!.childNodes, { stagger: 0.1 }, 0.4)
     },
     animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  }))
+  })
 
   return (
     <main className={classNames('PageHome', css.root)} ref={refs.root}>
