@@ -30,7 +30,7 @@
     "adviser:ci": "adviser --tags ci --verbose --quiet",
     "generate": "cross-env NODE_NO_WARNINGS=1 sg wizard",
     "preinstall": "npm i -g husky@8.0.3",
-    "prepare": "husky install && sh scripts/fix-lfs-hooks.sh",
+    "prepare": "husky install && if [ \"$(uname)\" = \"Linux\" ] || [ \"$(uname)\" = \"Darwin\" ]; then sh scripts/fix-lfs-hooks.sh; else powershell -File scripts/fix-lfs-hooks.ps1; fi",
     "tsc": "tsc"
   },
   "engines": {
