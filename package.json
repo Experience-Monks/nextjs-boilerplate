@@ -18,7 +18,7 @@
     "clean:next": "rimraf .next",
     "clean:generated": "rimraf .generated",
     "scripts": "run-p scripts:*",
-    "scripts:imports": "node -e 'require(\"./scripts/imports-generate.js\").default()'",
+    "scripts:imports": "node scripts/imports-generate.js",
     "scripts:public-image-sizes": "node scripts/public-image-sizes.js",
     "lint-ci": "npm run scripts && npm run adviser:ci && run-p lint:* tsc",
     "lint-dev": "npm run scripts && npm run adviser:dev && run-p lint:* tsc",
