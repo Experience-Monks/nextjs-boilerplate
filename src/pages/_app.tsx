@@ -6,6 +6,7 @@ import type { PageProps } from '@/data/types'
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { TransitionPresence } from '@mediamonks/react-transition-presence'
 import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
@@ -84,7 +85,13 @@ const App: FC<AppProps<PageProps>> = (props) => {
     else document.documentElement.classList.remove('dynamic')
   }, [flags.dynamicResponsiveness])
 
-  return props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />
+  return props.pageProps.noLayout ? (
+    <TransitionPresence>
+      <props.Component {...props.pageProps} />
+    </TransitionPresence>
+  ) : (
+    <Layout {...props} />
+  )
 }
 
 export default App
