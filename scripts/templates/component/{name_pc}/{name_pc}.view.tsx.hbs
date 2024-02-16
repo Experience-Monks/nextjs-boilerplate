@@ -11,10 +11,16 @@ import { useImperativeHandle } from 'react'
 {{/if}}
 {{/if}}
 import classNames from 'classnames'
+{{#if transitionPresence}}
+import { gsap } from 'gsap'
+{{/if}}
 
 import css from './{{name_pc}}.module.scss'
 
 import { useRefs } from '@/hooks/use-refs'
+{{#if transitionPresence}}
+import { useTransitionPresence } from '@/hooks/use-transition-presence'
+{{/if}}
 
 {{#if imperativeHandle}}
 export type ViewHandle = {
@@ -43,6 +49,13 @@ export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleR
       //
     }
   }))
+
+{{/if}}
+{{#if transitionPresence}}
+  useTransitionPresence({
+    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
+    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
+  })
 
 {{/if}}
   return (

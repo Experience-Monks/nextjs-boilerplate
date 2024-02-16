@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { StoryContext, StoryFn } from '@storybook/react'
+
+import { useEffect } from 'react'
+import { TransitionPresence } from '@mediamonks/react-transition-presence'
+import { gsap } from 'gsap'
+
 import './storybook.scss'
 import '@/styles/global.scss'
 
-import { useEffect } from 'react'
-import { StoryContext, StoryFn } from '@storybook/react'
-import { gsap } from 'gsap'
-
-import { initGsap, initRive } from '@/motion/core/init'
-
 import { FeatureFlagService } from '@/services/feature-flags'
-
-import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
 import { fontVariables } from '@/utils/fonts'
 import { setBodyClasses } from '@/utils/set-body-classes'
+
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
+
+import { initGsap, initRive } from '@/motion/core/init'
 
 export const parameters = {
   options: {
@@ -102,6 +105,8 @@ export const globalTypes = {
     )
 }
 
+document.querySelector('#storybook-root')?.classList.add(fontVariables)
+
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
     require('focus-visible')
@@ -123,9 +128,9 @@ export const decorators = [
   },
   (Story: StoryFn) => {
     return (
-      <div className={fontVariables}>
+      <TransitionPresence>
         <Story />
-      </div>
+      </TransitionPresence>
     )
   }
 ]
