@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { TransitionPresence } from '@mediamonks/react-transition-presence'
 import classNames from 'classnames'
+import { gsap } from 'gsap'
 
 import css from './Layout.module.scss'
 
@@ -43,15 +44,34 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
 
   const router = useRouter()
 
-  // const { flags } = useFeatureFlags()
-
-  // const [currentPage, setCurrentPage] = useState<ReactNode>(<Component key="first-page" {...pageProps} />)
   const [introComplete, setIntroComplete] = useState(false)
 
   const handleIntroComplete = useCallback(() => {
     setIntroComplete(true)
     storeState().animations.setAnimationsEnabled(true)
   }, [])
+
+  const handlePageMounted = useCallback(() => {
+    storeState().navigation.setPathname(refs.pathname.current || '/')
+    // restore scroll
+    clearTimeout(refs.scrollRestorationTimeout.current!)
+    refs.scrollRestorationTimeout.current = setTimeout(() => {
+      if (storeState().navigation.isNavigatingBack) {
+        const scrollHistory = [...storeState().navigation.scrollHistory]
+        const lastScrollHistory = scrollHistory.pop()
+        storeState().navigation.setScrollHistory(scrollHistory)
+        if (lastScrollHistory && lastScrollHistory.pathname === refs.pathname.current) {
+          gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
+        }
+      } else {
+        gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
+      }
+      clearTimeout(refs.scrollRestorationTimeout.current!)
+      refs.scrollRestorationTimeout.current = setTimeout(() => {
+        storeState().navigation.setIsNavigatingBack(false)
+      }, 400)
+    }, 100)
+  }, [refs])
 
   //
   // Update pathname ref
@@ -116,68 +136,6 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
     }
   }, [refs, router])
 
-  //
-  // Page transitions
-  //
-  // useEffect(() => {
-  //   if (!introComplete) return
-
-  //   const transitionTimeline = gsap.timeline()
-
-  //   // if the current page has an animateOut(), do it
-  //   if (flags.pageTransitions && refs.pageHandle.current?.animateOut) {
-  //     transitionTimeline.add(refs.pageHandle.current.animateOut())
-  //   }
-
-  //   // after the out animation, set the new page
-  //   transitionTimeline.add(() => {
-  //     // reset scroll
-  //     gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
-  //     // update app.pathname
-  //     storeState().navigation.setPathname(refs.pathname.current || '/')
-  //     // set new page
-  //     setCurrentPage(
-  //       <Component
-  //         key={refs.isFirstPage.current ? 'first-page' : nanoid()}
-  //         {...pageProps}
-  //         onReady={(pageHandle?: RefObject<PageHandle>) => {
-  //           refs.pageHandle.current = pageHandle?.current || null
-  //           // animate in
-  //           const pageTransition = refs.pageHandle.current?.animateIn?.()
-  //           const navTransition = refs.navHandle.current?.animateIn?.()
-  //           if (!flags.pageTransitions) {
-  //             pageTransition?.progress(1)
-  //             navTransition?.progress(1)
-  //           }
-  //           // restore scroll
-  //           clearTimeout(refs.scrollRestorationTimeout.current!)
-  //           refs.scrollRestorationTimeout.current = setTimeout(() => {
-  //             if (storeState().navigation.isNavigatingBack) {
-  //               const scrollHistory = [...storeState().navigation.scrollHistory]
-  //               const lastScrollHistory = scrollHistory.pop()
-  //               storeState().navigation.setScrollHistory(scrollHistory)
-  //               if (lastScrollHistory && lastScrollHistory.pathname === refs.pathname.current) {
-  //                 gsap.set(window, { scrollTo: { x: 0, y: lastScrollHistory.value, autoKill: false } })
-  //               }
-  //             } else {
-  //               gsap.set(window, { scrollTo: { x: 0, y: 0, autoKill: false } })
-  //             }
-  //             clearTimeout(refs.scrollRestorationTimeout.current!)
-  //             refs.scrollRestorationTimeout.current = setTimeout(() => {
-  //               storeState().navigation.setIsNavigatingBack(false)
-  //             }, 400)
-  //           }, 100)
-  //         }}
-  //       />
-  //     )
-  //     refs.isFirstPage.current = false
-  //   })
-
-  //   return () => {
-  //     transitionTimeline.kill()
-  //   }
-  // }, [refs, Component, pageProps, flags.pageTransitions, introComplete])
-
   const { asPath, isReady } = router
 
   return (
@@ -186,7 +144,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
 
       <Nav content={pageProps.content.common.nav} handleRef={refs.navHandle} />
 
-      <TransitionPresence>
+      <TransitionPresence onChildrenMounted={handlePageMounted}>
         <Component {...pageProps} key={`${asPath}_${isReady}`} />
       </TransitionPresence>
 

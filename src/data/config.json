@@ -8,11 +8,6 @@
       "label": "Optimized Images",
       "enabled": false
     },
-    "pageTransitions": {
-      "label": "Page Transitions",
-      "enabled": true,
-      "hot": true
-    },
     "dynamicResponsiveness": {
       "label": "Dynamic Responsiveness",
       "enabled": false,
