@@ -6,7 +6,6 @@ import type { PageProps } from '@/data/types'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { TransitionPresence } from '@mediamonks/react-transition-presence'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -24,6 +23,7 @@ import { Head } from '@/components/Head'
 import { Nav } from '@/components/Nav'
 import { ScreenIntro } from '@/components/ScreenIntro'
 import { ScreenNoScript } from '@/components/ScreenNoScript'
+import { TransitionPresence } from '@/components/Transition/Transition.presence'
 
 const ScreenRotate = dynamic(() => import('@/components/ScreenRotate').then((m) => m.ScreenRotate), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner').then((m) => m.CookieBanner), { ssr: false })
@@ -136,8 +136,6 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
     }
   }, [refs, router])
 
-  const { asPath, isReady } = router
-
   return (
     <div className={classNames('Layout', css.root, fontVariables)}>
       <Head {...pageProps.content.head} />
@@ -145,7 +143,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
       <Nav content={pageProps.content.common.nav} handleRef={refs.navHandle} />
 
       <TransitionPresence onChildrenMounted={handlePageMounted}>
-        <Component {...pageProps} key={`${asPath}_${isReady}`} />
+        <Component {...pageProps} key={router.asPath} />
       </TransitionPresence>
 
       <Footer content={pageProps.content.common.footer} />

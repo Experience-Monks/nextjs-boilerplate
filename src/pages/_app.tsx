@@ -6,7 +6,6 @@ import type { PageProps } from '@/data/types'
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { TransitionPresence } from '@mediamonks/react-transition-presence'
 import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
@@ -23,6 +22,7 @@ import { useFeatureFlags } from '@/hooks/use-feature-flags'
 import { initGsap, initRive } from '@/motion/core/init'
 
 import { Layout } from '@/components/Layout/Layout'
+import { TransitionPresence } from '@/components/Transition/Transition.presence'
 
 require('focus-visible')
 
@@ -85,12 +85,10 @@ const App: FC<AppProps<PageProps>> = (props) => {
     else document.documentElement.classList.remove('dynamic')
   }, [flags.dynamicResponsiveness])
 
-  return props.pageProps.noLayout ? (
+  return (
     <TransitionPresence>
-      <props.Component {...props.pageProps} />
+      {props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />}
     </TransitionPresence>
-  ) : (
-    <Layout {...props} />
   )
 }
 

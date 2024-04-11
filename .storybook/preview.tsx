@@ -2,7 +2,6 @@
 import type { StoryContext, StoryFn } from '@storybook/react'
 
 import { useEffect } from 'react'
-import { TransitionPresence } from '@mediamonks/react-transition-presence'
 import { gsap } from 'gsap'
 
 import './storybook.scss'
@@ -17,6 +16,8 @@ import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
 import { initGsap, initRive } from '@/motion/core/init'
 
+import { TransitionPresence } from '@/components/Transition/Transition.presence'
+
 export const parameters = {
   options: {
     storySort: {
@@ -26,8 +27,8 @@ export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/
+      color: /(background|color)$/iu,
+      date: /Date$/u
     }
   },
   backgrounds: {
@@ -73,7 +74,7 @@ initRive()
 setBodyClasses()
 
 // register all gsap effects
-const req = require.context('../src/motion/effects', true, /^.\/.*ts$/)
+const req = require.context('../src/motion/effects', true, /^.\/.*ts$/u)
 req
   .keys()
   .filter((key) => !key.includes('.d.ts'))
@@ -117,7 +118,7 @@ export const decorators = [
       Object.keys(flags).forEach((key) => {
         if (context.globals[key]) setFlag(key as keyof typeof flags, context.globals[key])
       })
-    }, [context.globals])
+    }, [flags, setFlag, context.globals])
 
     useEffect(() => {
       if (context.globals.dynamicResponsiveness) document.documentElement.classList.add('dynamic')

@@ -22,6 +22,9 @@ ls:
       .stories.js: PascalCase
       .stories.tsx: PascalCase
       .controller.tsx: PascalCase
+      .crossflow.tsx: PascalCase
+      .presence.tsx: PascalCase
+      .context.ts: PascalCase
     data:
       .js: kebab-case
       .ts: kebab-case
