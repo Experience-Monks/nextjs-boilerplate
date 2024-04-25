@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import type { ControllerProps } from './PageHome.controller'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -34,17 +34,22 @@ export const View: FC<ViewProps> = ({ content }) => {
       .set(refs.list.current!.childNodes, { opacity: 0 })
   }, [refs])
 
-  useTransitionPresence({
-    animateIn: () => {
-      return gsap
-        .timeline()
-        .to(refs.root.current, { opacity: 1 }, 0)
-        .fadeIn(refs.title.current, {}, 0)
-        .fadeIn(refs.description.current, {}, 0.2)
-        .fadeIn(refs.list.current!.childNodes, { stagger: 0.1 }, 0.4)
-    },
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  })
+  useTransitionPresence(
+    useMemo(
+      () => ({
+        animateIn: () => {
+          return gsap
+            .timeline()
+            .to(refs.root.current, { opacity: 1 }, 0)
+            .fadeIn(refs.title.current, {}, 0)
+            .fadeIn(refs.description.current, {}, 0.2)
+            .fadeIn(refs.list.current!.childNodes, { stagger: 0.1 }, 0.4)
+        },
+        animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
+      }),
+      [refs]
+    )
+  )
 
   return (
     <main className={classNames('PageHome', css.root)} ref={refs.root}>

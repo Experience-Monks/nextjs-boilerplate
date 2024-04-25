@@ -16,6 +16,7 @@ class Service {
 
   set = (name: FeatureFlagId, enabled: boolean) => {
     const flags = this.getAll()
+    if (flags[name] === enabled) return
     const newFlags = { ...flags, [name]: enabled }
     LocalStorageService.set('featureFlags', JSON.stringify(newFlags))
     this.listeners.forEach((listener) => listener(newFlags))

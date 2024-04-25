@@ -11,7 +11,7 @@
 		"type": "confirm",
 		"message": "Do you want to add a transitionPresence animations?",
 		"isBoolean": true,
-		"default": true
+		"default": false
 	},{
 		"name": "imperativeHandle",
 		"type": "confirm",

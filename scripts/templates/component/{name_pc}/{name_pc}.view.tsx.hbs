@@ -1,13 +1,17 @@
 {{#if forwardRef}}
 import type { ControllerProps } from './{{name_pc}}.controller'
 
-import { forwardRef{{#if imperativeHandle}}, useImperativeHandle{{/if}} } from 'react'
+import { forwardRef{{#if imperativeHandle}}, useImperativeHandle{{/if}}{{#if transitionPresence}}, useMemo{{/if}} } from 'react'
 {{else}}
 import type { FC } from 'react'
 import type { ControllerProps } from './{{name_pc}}.controller'
 
 {{#if imperativeHandle}}
-import { useImperativeHandle } from 'react'
+import { useImperativeHandle{{#if transitionPresence}}, useMemo{{/if}} } from 'react'
+{{else}}
+{{#if transitionPresence}}
+import { useMemo } from 'react'
+{{/if}}
 {{/if}}
 {{/if}}
 import classNames from 'classnames'
@@ -17,6 +21,10 @@ import { gsap } from 'gsap'
 
 import css from './{{name_pc}}.module.scss'
 
+{{#if forwardRef}}
+import { multiRef } from '@/utils/multi-ref'
+
+{{/if}}
 import { useRefs } from '@/hooks/use-refs'
 {{#if transitionPresence}}
 import { useTransitionPresence } from '@/hooks/use-transition-presence'
@@ -37,7 +45,7 @@ export type ViewRefs = {
 // View (pure and testable component, receives props exclusively from the controller)
 {{#if forwardRef}}
 export const View = forwardRef<HTMLDivElement, ViewProps>(({ className{{#if imperativeHandle}}, handleRef{{/if}} }, ref) => {
-  const refs = useRefs<ViewRefs>({ root: ref })
+  const refs = useRefs<ViewRefs>()
 {{else}}
 export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleRef{{/if}} }) => {
   const refs = useRefs<ViewRefs>()
@@ -52,14 +60,19 @@ export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleR
 
 {{/if}}
 {{#if transitionPresence}}
-  useTransitionPresence({
-    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  })
+  useTransitionPresence(
+    useMemo(
+      () => ({
+        animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
+        animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
+      }),
+      [refs]
+    )
+  )
 
 {{/if}}
   return (
-    <div className={classNames('{{name_pc}}', css.root, className)} ref={refs.root}>
+    <div className={classNames('{{name_pc}}', css.root, className)} {{#if forwardRef}}ref={multiRef(refs.root, ref)}{{else}}ref={refs.root}{{/if}}>
       <p>&lt;{{name_pc}} /&gt;</p>
     </div>
   )

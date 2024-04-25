@@ -1,12 +1,13 @@
 import type { FC } from 'react'
 import type { ControllerProps } from './Page{{name_pc}}.controller'
 
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
 import css from './Page{{name_pc}}.module.scss'
 
+import { noop } from '@/utils/basic-functions'
 import { copy } from '@/utils/copy'
 
 import { useRefs } from '@/hooks/use-refs'
@@ -22,14 +23,15 @@ export type ViewRefs = {
 export const View: FC<ViewProps> = ({ content }) => {
   const refs = useRefs<ViewRefs>()
 
-  useEffect(() => {
-    gsap.set(refs.root.current, { opacity: 0 })
-  }, [refs])
-
-  useTransitionPresence({
-    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  })
+  useTransitionPresence(
+    useMemo(
+      () => ({
+        animateIn: () => gsap.timeline().add(noop, 0.701),
+        animateOut: () => gsap.timeline().add(noop, 0.701)
+      }),
+      []
+    )
+  )
 
   return (
     <main className={classNames('Page{{name_pc}}', css.root)} ref={refs.root}>

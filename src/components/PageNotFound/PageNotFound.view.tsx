@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import type { ControllerProps } from './PageNotFound.controller'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
@@ -26,10 +26,15 @@ export const View: FC<ViewProps> = ({ content }) => {
     gsap.set(refs.root.current, { opacity: 0 })
   }, [refs])
 
-  useTransitionPresence({
-    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  })
+  useTransitionPresence(
+    useMemo(
+      () => ({
+        animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
+        animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
+      }),
+      [refs]
+    )
+  )
 
   return (
     <main className={classNames('PageNotFound', css.root)} ref={refs.root}>

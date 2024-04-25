@@ -1,4 +1,4 @@
-import type { MouseEvent, Ref } from 'react'
+import type { MouseEvent } from 'react'
 import type { ControllerProps } from './BaseButton.controller'
 import type { UrlObject } from 'node:url'
 
@@ -9,6 +9,7 @@ import { AnalyticsService } from '@/services/analytics'
 
 import { fixSlashes } from '@/utils/basic-functions'
 import { isRoutedHref } from '@/utils/is-routed-href'
+import { multiRef } from '@/utils/multi-ref'
 
 import { useRefs } from '@/hooks/use-refs'
 
@@ -21,7 +22,7 @@ export type ViewRefs = {
 // View (pure and testable component, receives props exclusively from the controller)
 export const View = forwardRef<HTMLElement, ViewProps>(
   ({ className, href: h, link: l, subject, children, gtmEvent, disabled, onClick, ...props }, ref) => {
-    const refs = useRefs<ViewRefs>({ root: ref })
+    const refs = useRefs<ViewRefs>()
 
     const href = h || l
 
@@ -75,7 +76,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
       routed ? (
         <Link
           {...props}
-          ref={refs.root as Ref<HTMLAnchorElement>}
+          ref={multiRef(refs.root, ref)}
           href={url as UrlObject}
           scroll={false}
           className={className}
@@ -86,7 +87,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
       ) : (
         <a
           {...props}
-          ref={refs.root as Ref<HTMLAnchorElement>}
+          ref={multiRef(refs.root, ref)}
           href={`${prefix}${href}${suffix}`}
           className={className}
           onClick={handleClick}
@@ -95,13 +96,7 @@ export const View = forwardRef<HTMLElement, ViewProps>(
         </a>
       )
     ) : (
-      <button
-        {...props}
-        ref={refs.root as Ref<HTMLButtonElement>}
-        disabled={disabled}
-        className={className}
-        onClick={handleClick}
-      >
+      <button {...props} ref={multiRef(refs.root, ref)} disabled={disabled} className={className} onClick={handleClick}>
         {children}
       </button>
     )
