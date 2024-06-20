@@ -37,7 +37,7 @@ commands:
             npm set-script preinstall ""
             npm set-script prepare ""
             npm set cache .npm
-            npm install --prefer-offline --no-audit
+            npm install --prefer-offline --no-audit --no-save
 
   generate-preview-hash:
     steps:
