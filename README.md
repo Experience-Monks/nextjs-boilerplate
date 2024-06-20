@@ -96,7 +96,7 @@ In order to save time developing it is highly recommended to have proper linters
     },
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": "explicit"
     },
     "stylelint.validate": ["css", "scss"]
   }
