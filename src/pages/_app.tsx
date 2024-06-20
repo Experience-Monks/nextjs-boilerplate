@@ -10,7 +10,7 @@ import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
 
-import { localStore } from '@/store'
+import { store } from '@/store'
 
 import { AnalyticsService } from '@/services/analytics'
 import { AWSRumService } from '@/services/aws-rum'
@@ -22,6 +22,7 @@ import { useFeatureFlags } from '@/hooks/use-feature-flags'
 import { initGsap, initRive } from '@/motion/core/init'
 
 import { Layout } from '@/components/Layout/Layout'
+import { TransitionPresence } from '@/components/Transition/Transition.presence'
 
 require('focus-visible')
 
@@ -34,7 +35,7 @@ const App: FC<AppProps<PageProps>> = (props) => {
 
   const { flags } = useFeatureFlags()
 
-  const cookieConsent = localStore(({ consent }) => consent.cookieConsent)
+  const cookieConsent = store(({ consent }) => consent.cookieConsent)
 
   useEffect(() => {
     history.scrollRestoration = 'manual'
@@ -84,7 +85,11 @@ const App: FC<AppProps<PageProps>> = (props) => {
     else document.documentElement.classList.remove('dynamic')
   }, [flags.dynamicResponsiveness])
 
-  return props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />
+  return (
+    <TransitionPresence>
+      {props.pageProps.noLayout ? <props.Component {...props.pageProps} /> : <Layout {...props} />}
+    </TransitionPresence>
+  )
 }
 
 export default App

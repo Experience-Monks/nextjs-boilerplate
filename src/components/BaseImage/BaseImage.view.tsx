@@ -9,6 +9,7 @@ import css from './BaseImage.module.scss'
 
 import { noop } from '@/utils/basic-functions'
 import { getOptimizedImageUrl } from '@/utils/get-optimized-image-url'
+import { multiRef } from '@/utils/multi-ref'
 
 import { useRefs } from '@/hooks/use-refs'
 
@@ -40,7 +41,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
     },
     ref
   ) => {
-    const refs = useRefs<ViewRefs>({ root: ref })
+    const refs = useRefs<ViewRefs>()
 
     const [size, setSize] = useState('1px')
     const [loaded, setLoaded] = useState(false)
@@ -142,7 +143,7 @@ export const View = forwardRef<HTMLImageElement, ViewProps>(
         srcSet={optimizedSrcSet}
         style={style}
         src={optimizedSrc}
-        ref={refs.root}
+        ref={multiRef(refs.root, ref)}
         alt={alt}
         sizes={size}
         {...(imgData ? { width: `${imgData.width}px`, height: `${imgData.height}px` } : {})}

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "strict": true,
-    "target": "es2015",
+    "target": "es2022",
     "module": "esnext",
     "noEmit": true,
     "allowJs": true,

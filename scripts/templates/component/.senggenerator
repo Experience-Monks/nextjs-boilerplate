@@ -5,6 +5,12 @@
 		"type": "confirm",
 		"message": "Do you want to add forwardRef?",
 		"isBoolean": true,
+		"default": true
+	},{
+		"name": "transitionPresence",
+		"type": "confirm",
+		"message": "Do you want to add a transitionPresence animations?",
+		"isBoolean": true,
 		"default": false
 	},{
 		"name": "imperativeHandle",

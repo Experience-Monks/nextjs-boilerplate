@@ -3,7 +3,7 @@ import type { CommonContent } from '@/services/cms'
 
 import { memo } from 'react'
 
-import { localStore } from '@/store'
+import { store } from '@/store'
 
 import { View } from './CookieBanner.view'
 
@@ -14,8 +14,8 @@ export interface ControllerProps {
 
 // Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
 export const Controller: FC<ControllerProps> = memo((props) => {
-  const cookieConsent = localStore((state) => state.consent.cookieConsent)
-  const setCookieConsent = localStore((state) => state.consent.setCookieConsent)
+  const cookieConsent = store((state) => state.consent.cookieConsent)
+  const setCookieConsent = store((state) => state.consent.setCookieConsent)
   return !cookieConsent ? <View {...props} cookieConsent={cookieConsent} setCookieConsent={setCookieConsent} /> : null
 })
 

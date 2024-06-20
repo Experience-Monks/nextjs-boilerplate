@@ -1,13 +1,15 @@
-import { StoryFn } from '@storybook/react'
-import React, { FC, ReactElement, SVGProps } from 'react'
+import type { FC, ReactElement, SVGProps } from 'react'
+import type { StoryFn } from '@storybook/react'
+
+import React from 'react'
 
 export default { title: 'intro/SVG' }
 
-type SvgComponent = (props: SVGProps<SVGElement>) => ReactElement<{}, string>
+type SvgComponent = (props: SVGProps<SVGElement>) => ReactElement<object, string>
 
 let icons: { class: SvgComponent; name: string }[] = []
 
-const req = require.context('../../src/svgs', false, /^.\/.*svg$/)
+const req = require.context('../../src/svgs', false, /^.\/.*svg$/iu)
 
 req.keys().forEach((key) => {
   const name = key.replace('./', '')
@@ -27,7 +29,7 @@ interface SvgCatalogProps {
 const SvgCatalog: FC<SvgCatalogProps> = ({ viewbox, color }) => {
   return (
     <div style={{ width: '100%', padding: '10px', textAlign: 'center' }}>
-      {icons.map((icon, i) => {
+      {icons.map((icon) => {
         return (
           <div
             key={icon.name}
