@@ -1,6 +1,7 @@
 {
   "name": "experience-monks-dev",
   "version": "9.0.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "npm run clean && npm run scripts && run-p dev:*",
@@ -54,7 +55,7 @@
     "bowser": "^2.11.0",
     "classnames": "^2.3.2",
     "focus-visible": "^5.2.0",
-    "gsap": "file:./gsap-bonus-3.12.2.tgz",
+    "gsap": "npm:@gsap/business@3.12.5",
     "immer": "^10.0.3",
     "js-cookie": "^3.0.5",
     "lodash.camelcase": "^4.3.0",

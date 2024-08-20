@@ -11,6 +11,7 @@
 - [Template Generator](./docs/template-generator.md)
 - [File Structure And Organization](./docs/file-structure-and-organization.md)
 - [Copy Management](./docs/copy-management.md)
+- [License](#license)
 
 ## &nbsp;
 
@@ -52,6 +53,43 @@ Download git-lfs by following the steps based on your operating system.
 
 ### &nbsp;
 
+## GSAP token
+
+In order to install npm packages you will need a valid GSAP token set on your environment. You can get it from your project lead.
+
+- **MacOS / Linux:**  
+  Add the following to your shell profile (e.g. `~/.bash_profile`, `~/.zshrc`, etc.):
+
+  ```properties
+  export GSAP_NPM_TOKEN=<valid-gsap-auth-token>
+  ```
+
+- **Windows**  
+  Here are three ways you can set the environment variable on windows.
+
+  1. **Using the command prompt:**
+
+  ```properties
+  setx GSAP_NPM_TOKEN "<valid-gsap-auth-token>"
+  ```
+
+  2. **Using powershell:**
+
+  ```properties
+  [Environment]::SetEnvironmentVariable("GSAP_NPM_TOKEN", "<valid-gsap-auth-token>", [System.EnvironmentVariableTarget]::User)
+  ```
+
+  3. **Using the windows GUI.**
+
+  - Open the start menu.
+  - Search for the "Advanced System Settings" control panel and click on it.
+  - Click on the "Environment Variables" button toward the bottom of the screen.
+  - Follow the prompts to add the variable to the user table.
+
+Remember to restart your terminal after setting the environment variable.
+
+### &nbsp;
+
 ## Set up your linters
 
 In order to save time developing it is highly recommended to have proper linters set up. Below are instructions for VSCode (if you use other editor configure it in a similar way).
@@ -59,10 +97,10 @@ In order to save time developing it is highly recommended to have proper linters
 - **Install Extensions:**
   - Eslint: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
   - Prettier: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
-  - Stylelint: https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint  
+  - Stylelint: https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint
     &nbsp;
-- **Configuration:**  
-  On MacOS do `cmd + shift + p` > `Open Settings (JSON)`. This will open VSCode's settings.json.  
+- **Configuration:**
+  On MacOS do `cmd + shift + p` > `Open Settings (JSON)`. This will open VSCode's settings.json.
   Make sure you have the following settings in your settings.json:
 
   ```json
@@ -126,3 +164,9 @@ The command above will start the development servers on different ports:
 
 - Frontend (https): https://localhost:3000
 - Storybook: http://localhost:9001
+
+## &nbsp;
+
+# License
+
+[MIT](LICENSE)
