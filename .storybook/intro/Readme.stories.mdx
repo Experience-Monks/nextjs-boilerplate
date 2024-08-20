@@ -5,4 +5,6 @@ import Readme from '../../README.md?raw'
 
 <Meta title="intro/Readme" />
 
-<Markdown>{Readme}</Markdown>
+<Markdown>
+  {Readme.replaceAll('./docs/', 'https://github.com/Experience-Monks/nextjs-boilerplate/blob/main/docs/')}
+</Markdown>
