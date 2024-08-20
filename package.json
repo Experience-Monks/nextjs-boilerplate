@@ -30,6 +30,7 @@
     "generate": "plop",
     "preinstall": "npm i -g husky@8.0.3",
     "prepare": "husky install && node scripts/prepare.js",
+    "autofix": "next lint --ignore-path .eslintignore --max-warnings=0 --fix",
     "tsc": "tsc"
   },
   "engines": {

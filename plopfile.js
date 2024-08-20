@@ -1,3 +1,5 @@
+const { execSync } = require('node:child_process')
+
 function addComponentFiles(name, templatePrefix) {
   const path = `src/components/${name}`
   const templ = `scripts/templates/${templatePrefix}`
@@ -16,6 +18,7 @@ module.exports = function (
 ) {
   const pascalCase = plop.getHelper('pascalCase')
   const camelCase = plop.getHelper('camelCase')
+  const kebabCase = plop.getHelper('kebabCase')
 
   plop.setGenerator('component', {
     description: 'create an src/component/{name}/{name}.* component files',
@@ -85,6 +88,46 @@ module.exports = function (
     description: 'create a src/pages route',
     prompts: [{ type: 'input', name: 'name', message: 'Type the route name:' }],
     actions: [{ type: 'add', path: 'src/pages/{{kebabCase name}}.ts', templateFile: 'scripts/templates/route.ts.hbs' }]
+  })
+
+  plop.setGenerator('slice', {
+    description: 'create a src/store slice',
+    prompts: [{ type: 'input', name: 'name', message: 'Type the slice name:' }],
+    actions: [
+      { type: 'add', path: 'src/store/{{kebabCase name}}.slice.ts', templateFile: 'scripts/templates/slice.ts.hbs' },
+      {
+        type: 'modify',
+        path: 'src/store/store.ts',
+        transform: (template, data) => {
+          const lines = template.split('\n').map((line) => {
+            if (line.startsWith('export type AppState =')) {
+              return line.replace(
+                'export type AppState =',
+                `export type AppState = ${pascalCase(data.name)}SliceState & `
+              )
+            }
+            if (line.startsWith('      }))')) {
+              return line.replace('      }))', `,       ...${pascalCase(data.name)}Slice(...props)\n      }))`)
+            }
+            return line
+          })
+
+          lines.splice(
+            lines.findIndex((line) => line.startsWith('export')),
+            0,
+            `import type { ${pascalCase(data.name)}SliceState } from './${kebabCase(
+              data.name
+            )}.slice'\nimport { ${pascalCase(data.name)}Slice } from './${kebabCase(data.name)}.slice'\n`
+          )
+
+          return lines.join('\n')
+        }
+      },
+      function customAction() {
+        execSync('npm run autofix', { stdio: 'inherit' })
+        return ''
+      }
+    ]
   })
 
   plop.setGenerator('api', {

@@ -8,7 +8,7 @@
 
 - [Installation](#installation)
 - [Development](#development)
-- [Template Scripts](./docs/template-scripts.md)
+- [Template Generator](./docs/template-generator.md)
 - [File Structure And Organization](./docs/file-structure-and-organization.md)
 - [Copy Management](./docs/copy-management.md)
 

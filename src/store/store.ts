@@ -1,4 +1,4 @@
-import type { AnimationstSliceState } from './animations.slice'
+import type { AnimationsSliceState } from './animations.slice'
 import type { ConsentSliceState } from './consent.slice'
 import type { NavigationSliceState } from './navigation.slice'
 
@@ -12,7 +12,7 @@ import { NavigationSlice } from './navigation.slice'
 
 export type Mutators = [['zustand/devtools', never], ['zustand/subscribeWithSelector', never], ['zustand/immer', never]]
 
-export type AppState = AnimationstSliceState & ConsentSliceState & NavigationSliceState
+export type AppState = AnimationsSliceState & ConsentSliceState & NavigationSliceState
 
 export const store = create<AppState>()(
   devtools(

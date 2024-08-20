@@ -1,0 +1,23 @@
+import type { AppState, Mutators } from './store'
+import type { StateCreator } from 'zustand'
+
+export type {{titleCase name}}SliceState = {
+  {{camelCase name}}: {
+    // getters
+    {{camelCase name}}Enabled: boolean
+    // setters
+    set{{titleCase name}}Enabled: ({{camelCase name}}Enabled: boolean) => void
+  }
+}
+
+export const {{titleCase name}}Slice: StateCreator<AppState, Mutators, [], {{titleCase name}}SliceState> = (set) => ({
+  {{camelCase name}}: {
+    {{camelCase name}}Enabled: false,
+
+    set{{titleCase name}}Enabled: ({{camelCase name}}Enabled) => {
+      set((state) => {
+        state.{{camelCase name}}.{{camelCase name}}Enabled = {{camelCase name}}Enabled
+      })
+    }
+  }
+})

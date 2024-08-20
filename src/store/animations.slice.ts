@@ -1,7 +1,7 @@
 import type { AppState, Mutators } from './store'
 import type { StateCreator } from 'zustand'
 
-export type AnimationstSliceState = {
+export type AnimationsSliceState = {
   animations: {
     // getters
     animationsEnabled: boolean
@@ -10,7 +10,7 @@ export type AnimationstSliceState = {
   }
 }
 
-export const AnimationsSlice: StateCreator<AppState, Mutators, [], AnimationstSliceState> = (set) => ({
+export const AnimationsSlice: StateCreator<AppState, Mutators, [], AnimationsSliceState> = (set) => ({
   animations: {
     animationsEnabled: !!process.env.STORYBOOK,
 
