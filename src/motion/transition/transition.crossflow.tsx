@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import type { TransitionPresenceProps } from './Transition.presence'
+import type { TransitionPresenceProps } from './transition.presence'
 
 import { cloneElement, useCallback, useEffect, useRef, useState } from 'react'
 import { useIsMounted } from '@mediamonks/react-hooks'
@@ -7,7 +7,7 @@ import { useIsMounted } from '@mediamonks/react-hooks'
 import { childrenAreEqual } from '@/utils/children-are-equal'
 import { getId } from '@/utils/get-id'
 
-import { TransitionPresence } from './Transition.presence'
+import { TransitionPresence } from './transition.presence'
 
 type TransitionCrossFlowQueue = { [key: string]: TransitionPresenceProps['children'] }
 

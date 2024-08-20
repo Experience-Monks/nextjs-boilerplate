@@ -20,9 +20,9 @@ import { setBodyClasses } from '@/utils/set-body-classes'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
 import { initGsap, initRive } from '@/motion/core/init'
+import { TransitionPresence } from '@/motion/transition/transition.presence'
 
 import { Layout } from '@/components/Layout/Layout'
-import { TransitionPresence } from '@/components/Transition/Transition.presence'
 
 require('focus-visible')
 

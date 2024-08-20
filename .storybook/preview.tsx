@@ -15,8 +15,7 @@ import { setBodyClasses } from '@/utils/set-body-classes'
 import { useFeatureFlags } from '@/hooks/use-feature-flags'
 
 import { initGsap, initRive } from '@/motion/core/init'
-
-import { TransitionPresence } from '@/components/Transition/Transition.presence'
+import { TransitionPresence } from '@/motion/transition/transition.presence'
 
 export const parameters = {
   options: {

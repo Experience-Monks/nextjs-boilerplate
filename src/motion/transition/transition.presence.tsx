@@ -9,7 +9,7 @@ import { tick } from '@/utils/tick'
 
 import { useTransitionPresenceBeforeUnmount } from '@/hooks/use-before-unmount'
 
-import { TransitionContext } from './Transition.context'
+import { TransitionContext } from './transition.context'
 
 export type TransitionPresenceProps = {
   children: ReactElement | null

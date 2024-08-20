@@ -1,7 +1,6 @@
 {
   "name": "experience-monks-dev",
   "version": "9.0.0",
-  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "npm run clean && npm run scripts && run-p dev:*",

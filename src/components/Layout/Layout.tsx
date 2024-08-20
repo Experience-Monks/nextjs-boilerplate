@@ -18,12 +18,13 @@ import { fontVariables } from '@/utils/fonts'
 
 import { useRefs } from '@/hooks/use-refs'
 
+import { TransitionPresence } from '@/motion/transition/transition.presence'
+
 import { Footer } from '@/components/Footer'
 import { Head } from '@/components/Head'
 import { Nav } from '@/components/Nav'
 import { ScreenIntro } from '@/components/ScreenIntro'
 import { ScreenNoScript } from '@/components/ScreenNoScript'
-import { TransitionPresence } from '@/components/Transition/Transition.presence'
 
 const ScreenRotate = dynamic(() => import('@/components/ScreenRotate').then((m) => m.ScreenRotate), { ssr: false })
 const CookieBanner = dynamic(() => import('@/components/CookieBanner').then((m) => m.CookieBanner), { ssr: false })

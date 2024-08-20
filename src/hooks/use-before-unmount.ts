@@ -3,7 +3,7 @@ import type { RefObject } from 'react'
 import { useContext, useEffect } from 'react'
 import { useRefValue } from '@mediamonks/react-hooks'
 
-import { TransitionContext } from '@/components/Transition/Transition.context'
+import { TransitionContext } from '@/motion/transition/transition.context'
 
 export type BeforeUnmountCallback = (
   abortSignal: AbortSignal
