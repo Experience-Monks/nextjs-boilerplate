@@ -3,7 +3,7 @@ import type { ViewHandle, ViewProps } from './Nav.view'
 
 import { useEffect, useRef } from 'react'
 
-import { CmsService } from '@/services/cms'
+import { CmsService } from '@/services/cms.service'
 
 import { View } from './Nav.view'
 

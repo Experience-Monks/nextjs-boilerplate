@@ -1,5 +1,5 @@
-import type { AppState } from '@/store'
-import type { CookieConsent } from '@/store/slice-consent'
+import type { CookieConsent } from '@/store/consent.slice'
+import type { AppState } from '@/store/store'
 import type { ControllerProps } from './CookieBanner.controller'
 
 import { type FC, useCallback, useState } from 'react'

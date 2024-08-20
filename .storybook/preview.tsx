@@ -7,7 +7,7 @@ import { gsap } from 'gsap'
 import './storybook.scss'
 import '@/styles/global.scss'
 
-import { FeatureFlagService } from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags.service'
 
 import { fontVariables } from '@/utils/fonts'
 import { setBodyClasses } from '@/utils/set-body-classes'

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { VisibilityService } from '@/services/visibility'
+import { VisibilityService } from '@/services/visibility.service'
 
 export const useWindowVisible = () => {
   const [visible, setVisible] = useState(true)

@@ -1,7 +1,7 @@
 import type { PageNotFoundProps } from '@/components/PageNotFound'
 import type { GetStaticProps } from 'next'
 
-import { CmsService } from '@/services/cms'
+import { CmsService } from '@/services/cms.service'
 
 export const getStaticProps: GetStaticProps<PageNotFoundProps> = async () => {
   return {

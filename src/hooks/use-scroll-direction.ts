@@ -2,7 +2,7 @@ import type { MutableRefObject, RefObject } from 'react'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { ScrollService } from '@/services/scroll'
+import { ScrollService } from '@/services/scroll.service'
 
 import { getScrollTop } from '@/utils/basic-functions'
 

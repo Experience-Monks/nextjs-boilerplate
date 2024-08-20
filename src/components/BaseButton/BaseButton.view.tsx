@@ -5,7 +5,7 @@ import type { UrlObject } from 'node:url'
 import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 
-import { AnalyticsService } from '@/services/analytics'
+import { AnalyticsService } from '@/services/analytics.service'
 
 import { fixSlashes } from '@/utils/basic-functions'
 import { isRoutedHref } from '@/utils/is-routed-href'

@@ -10,10 +10,10 @@ import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
 
-import { store } from '@/store'
+import { store } from '@/store/store'
 
-import { AnalyticsService } from '@/services/analytics'
-import { AWSRumService } from '@/services/aws-rum'
+import { AnalyticsService } from '@/services/analytics.service'
+import { AWSRumService } from '@/services/aws-rum.service'
 
 import { setBodyClasses } from '@/utils/set-body-classes'
 

@@ -1,7 +1,7 @@
 import type { StoryFn } from '@storybook/react'
 import type { ViewProps } from './PageNotFound.view'
 
-import { CmsService } from '@/services/cms'
+import { CmsService } from '@/services/cms.service'
 
 import { View } from './PageNotFound.view'
 

@@ -1,4 +1,4 @@
-import type { AppState, Mutators } from '.'
+import type { AppState, Mutators } from './store'
 import type { StateCreator } from 'zustand'
 
 import { noop } from '@/utils/basic-functions'

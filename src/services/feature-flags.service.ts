@@ -1,6 +1,6 @@
 import config from '@/data/config.json'
 
-import { LocalStorageService } from './local-storage'
+import { LocalStorageService } from './local-storage.service'
 
 export type FeatureFlagId = keyof typeof config.featureFlags
 export type FeatureFlags = { [key in FeatureFlagId]: boolean }

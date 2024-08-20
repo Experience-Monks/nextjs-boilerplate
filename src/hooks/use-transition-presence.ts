@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { store } from '@/store'
+import { store } from '@/store/store'
 
 import { useBeforeUnmount } from '@/hooks/use-before-unmount'
 

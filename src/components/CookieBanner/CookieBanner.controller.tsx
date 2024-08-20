@@ -1,9 +1,9 @@
 import type { FC } from 'react'
-import type { CommonContent } from '@/services/cms'
+import type { CommonContent } from '@/services/cms.service'
 
 import { memo } from 'react'
 
-import { store } from '@/store'
+import { store } from '@/store/store'
 
 import { View } from './CookieBanner.view'
 

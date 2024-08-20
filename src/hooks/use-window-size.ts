@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from 'react'
 
-import { ResizeService } from '@/services/resize'
+import { ResizeService } from '@/services/resize.service'
 
 import { detector } from '@/utils/detect'
 

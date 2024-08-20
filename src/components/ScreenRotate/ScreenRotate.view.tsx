@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import css from './ScreenRotate.module.scss'
 
-import { ResizeService } from '@/services/resize'
+import { ResizeService } from '@/services/resize.service'
 
 import { copy } from '@/utils/copy'
 import { device } from '@/utils/detect'

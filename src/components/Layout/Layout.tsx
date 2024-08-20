@@ -11,7 +11,7 @@ import { gsap } from 'gsap'
 
 import css from './Layout.module.scss'
 
-import { storeState } from '@/store'
+import { storeState } from '@/store/store'
 
 import { getScrollTop } from '@/utils/basic-functions'
 import { fontVariables } from '@/utils/fonts'

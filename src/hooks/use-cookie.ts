@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { CookieService } from '@/services/cookie'
+import { CookieService } from '@/services/cookie.service'
 
 export const useCookie = (name: string): [value: string | undefined, setValue: (value: string) => void] => {
   const [value, setValue] = useState<string | undefined>()

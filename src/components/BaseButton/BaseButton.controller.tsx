@@ -1,5 +1,5 @@
 import type { FocusEvent, KeyboardEvent, MouseEvent, ReactNode } from 'react'
-import type { GTMEvent } from '@/services/analytics'
+import type { GTMEvent } from '@/services/analytics.service'
 import type { UrlObject } from 'node:url'
 
 import { forwardRef, memo } from 'react'

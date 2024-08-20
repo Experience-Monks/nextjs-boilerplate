@@ -1,4 +1,4 @@
-import { FeatureFlagService } from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags.service'
 
 import { prefix } from './basic-functions'
 
