@@ -1,8 +1,8 @@
-import type { FeatureFlagId, FeatureFlags } from '@/services/feature-flags'
+import type { FeatureFlagId, FeatureFlags } from '@/services/feature-flags.service'
 
 import { useCallback, useEffect, useState } from 'react'
 
-import { FeatureFlagService } from '@/services/feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags.service'
 
 export function useFeatureFlags() {
   const [flags, setFlags] = useState(FeatureFlagService.getAll())

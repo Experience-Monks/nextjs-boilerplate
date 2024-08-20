@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 import SplitText from 'gsap/dist/SplitText'
 
-import { ResizeService } from '@/services/resize'
+import { ResizeService } from '@/services/resize.service'
 
 import { randomString } from '@/utils/basic-functions'
 

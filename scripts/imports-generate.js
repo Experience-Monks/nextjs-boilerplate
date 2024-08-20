@@ -16,7 +16,8 @@ function readRecursively(directory, base, regex, append = '', filenameKey = fals
       } else if (regex.test(item)) {
         const k = filenameKey ? item.replace(base, '').replace(/\.[^/.]+$/iu, '') : item.replace(base, '@/assets/')
         const p = item.replace(srcPath, '@/')
-        l += `  '${k}': require('${p}')${append},\n`
+        const entry = `'${k}': require('${p}')${append}`.replace(/\\/gu, '/')
+        l += `  ${entry},\n`
       }
     }
   }
@@ -62,6 +63,6 @@ function run() {
   )
 }
 
-module.exports = {
-  default: run
-}
+run()
+
+exports.default = run

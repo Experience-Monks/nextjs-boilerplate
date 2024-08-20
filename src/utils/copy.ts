@@ -9,7 +9,9 @@ class Copy {
     return xss(string, {
       whiteList: {
         ...getDefaultWhiteList(),
-        a: ['href', 'title', 'target', 'rel']
+        a: ['href', 'title', 'target', 'rel'],
+        div: ['data-replace'],
+        span: ['class']
       },
       onTag(tag) {
         if (tag === 'br') {

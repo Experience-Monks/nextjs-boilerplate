@@ -22,6 +22,9 @@ ls:
       .stories.js: PascalCase
       .stories.tsx: PascalCase
       .controller.tsx: PascalCase
+      .crossflow.tsx: PascalCase
+      .presence.tsx: PascalCase
+      .context.ts: PascalCase
     data:
       .js: kebab-case
       .ts: kebab-case
@@ -33,8 +36,8 @@ ls:
       .js: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
       .tsx: kebab-case | regex:^_[a-z-.]* | regex:^\[\w*\] #regex for kebab-case with preceeding underscore or [] for dynamic routing
     services:
-      .js: kebab-case
-      .ts: kebab-case
+      .service.js: kebab-case
+      .service.ts: kebab-case
     styles:
       .scss: kebab-case
       .module.scss: kebab-case

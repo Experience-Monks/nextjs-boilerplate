@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { CommonContent } from '@/services/cms'
+import type { CommonContent } from '@/services/cms.service'
 
 import { memo } from 'react'
 

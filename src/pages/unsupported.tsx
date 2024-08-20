@@ -1,7 +1,7 @@
 import type { PageUnsupportedProps } from '@/components/PageUnsupported'
 import type { GetStaticProps } from 'next'
 
-import { CmsService } from '@/services/cms'
+import { CmsService } from '@/services/cms.service'
 
 export const getStaticProps: GetStaticProps<PageUnsupportedProps> = async () => {
   return {

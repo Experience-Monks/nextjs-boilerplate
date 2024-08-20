@@ -16,7 +16,6 @@
 - [Usage](#usage)
 - [File Structure And Organization](#file-structure-and-organization)
 - [Copy Management](#copy-management)
-- [License](#license)
 
 ## &nbsp;
 
@@ -575,9 +574,3 @@ It would result in something like:
 ```
 
 Check the `./src/utils/copy.ts` implementation for more details.
-
-## &nbsp;
-
-# License
-
-[MIT](LICENSE)

@@ -1,7 +1,7 @@
-import type { AppState, Mutators } from '.'
+import type { AppState, Mutators } from './store'
 import type { StateCreator } from 'zustand'
 
-import { CookieService } from '@/services/cookie'
+import { CookieService } from '@/services/cookie.service'
 
 export type CookieConsent = {
   necessary: boolean

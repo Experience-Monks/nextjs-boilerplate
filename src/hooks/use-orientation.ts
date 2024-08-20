@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { OrientationService } from '@/services/orientation'
-import { ResizeService } from '@/services/resize'
+import { OrientationService } from '@/services/orientation.service'
+import { ResizeService } from '@/services/resize.service'
 
 import { device } from '@/utils/detect'
 

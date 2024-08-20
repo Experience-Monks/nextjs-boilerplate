@@ -1,37 +1,37 @@
 import type { FC } from 'react'
-import type { PageHandle } from '@/data/types'
 import type { ControllerProps } from './Page{{name_pc}}.controller'
 
-import { useEffect, useImperativeHandle } from 'react'
+import { useMemo } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
 import css from './Page{{name_pc}}.module.scss'
 
+import { noop } from '@/utils/basic-functions'
 import { copy } from '@/utils/copy'
 
 import { useRefs } from '@/hooks/use-refs'
+import { useTransitionPresence } from '@/hooks/use-transition-presence'
 
 export interface ViewProps extends ControllerProps {}
 
 export type ViewRefs = {
   root: HTMLElement
-  pageHandle: PageHandle
 }
 
 // View (pure and testable component, receives props exclusively from the controller)
-export const View: FC<ViewProps> = ({ content, onReady }) => {
+export const View: FC<ViewProps> = ({ content }) => {
   const refs = useRefs<ViewRefs>()
 
-  useEffect(() => {
-    gsap.set(refs.root.current, { opacity: 0 })
-    onReady?.(refs.pageHandle)
-  }, [refs, onReady])
-
-  useImperativeHandle(refs.pageHandle, () => ({
-    animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }),
-    animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 })
-  }))
+  useTransitionPresence(
+    useMemo(
+      () => ({
+        animateIn: () => gsap.timeline().add(noop, 0.701),
+        animateOut: () => gsap.timeline().add(noop, 0.701)
+      }),
+      []
+    )
+  )
 
   return (
     <main className={classNames('Page{{name_pc}}', css.root)} ref={refs.root}>

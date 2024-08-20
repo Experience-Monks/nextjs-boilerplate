@@ -1,5 +1,7 @@
-import React, { FC } from 'react'
-import { StoryFn } from '@storybook/react'
+import type { FC } from 'react'
+import type { StoryFn } from '@storybook/react'
+
+import React from 'react'
 
 import css from './Colors.module.scss'
 
@@ -7,11 +9,11 @@ import { sass } from '../../src/utils/sass'
 
 export default { title: 'intro/Colors' }
 
-const Colors: FC<{}> = () => {
+const Colors: FC = () => {
   return (
     <div className={css.root} style={{ width: '90%', padding: '30px' }}>
       {Object.entries(sass)
-        .filter(([key, value]) => value.startsWith('#'))
+        .filter(([, value]) => value.startsWith('#'))
         .map(([key, value]) => (
           <div key={key} className={css.item}>
             <div className={css.color} style={{ background: value }} />
@@ -24,6 +26,6 @@ const Colors: FC<{}> = () => {
   )
 }
 
-export const Default: StoryFn<{}> = (args) => <Colors {...args} />
+export const Default: StoryFn = (args) => <Colors {...args} />
 
 Default.args = {}

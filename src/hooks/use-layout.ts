@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { ResizeService } from '@/services/resize'
+import { ResizeService } from '@/services/resize.service'
 
 import { getLayout, ssrLayout } from '@/utils/get-layout'
 

@@ -1,6 +1,6 @@
 import config from '@/data/config.json'
 
-import { LocalStorageService } from './local-storage'
+import { LocalStorageService } from './local-storage.service'
 
 export type FeatureFlagId = keyof typeof config.featureFlags
 export type FeatureFlags = { [key in FeatureFlagId]: boolean }
@@ -16,6 +16,7 @@ class Service {
 
   set = (name: FeatureFlagId, enabled: boolean) => {
     const flags = this.getAll()
+    if (flags[name] === enabled) return
     const newFlags = { ...flags, [name]: enabled }
     LocalStorageService.set('featureFlags', JSON.stringify(newFlags))
     this.listeners.forEach((listener) => listener(newFlags))

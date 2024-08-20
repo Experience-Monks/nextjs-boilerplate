@@ -1,7 +1,6 @@
 {
   "name": "experience-monks-dev",
   "version": "9.0.0",
-  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "npm run clean && npm run scripts && run-p dev:*",
@@ -18,7 +17,7 @@
     "clean:next": "rimraf .next",
     "clean:generated": "rimraf .generated",
     "scripts": "run-p scripts:*",
-    "scripts:imports": "node -e 'require(\"./scripts/imports-generate.js\").default()'",
+    "scripts:imports": "node scripts/imports-generate.js",
     "scripts:public-image-sizes": "node scripts/public-image-sizes.js",
     "lint-ci": "npm run scripts && npm run adviser:ci && run-p lint:* tsc",
     "lint-dev": "npm run scripts && npm run adviser:dev && run-p lint:* tsc",
@@ -48,12 +47,13 @@
     ">0.2%"
   ],
   "dependencies": {
+    "@mediamonks/react-hooks": "^1.4.0",
     "@rive-app/react-canvas": "^4.5.0",
     "aws-rum-web": "^1.14.0",
     "bowser": "^2.11.0",
     "classnames": "^2.3.2",
     "focus-visible": "^5.2.0",
-    "gsap": "file:./gsap-bonus-3.11.3.tgz",
+    "gsap": "file:./gsap-bonus-3.12.2.tgz",
     "immer": "^10.0.3",
     "js-cookie": "^3.0.5",
     "lodash.camelcase": "^4.3.0",

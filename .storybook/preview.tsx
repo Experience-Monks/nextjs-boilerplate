@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { StoryContext, StoryFn } from '@storybook/react'
+
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
+
 import './storybook.scss'
 import '@/styles/global.scss'
 
-import { useEffect } from 'react'
-import { StoryContext, StoryFn } from '@storybook/react'
-import { gsap } from 'gsap'
-
-import { initGsap, initRive } from '@/motion/core/init'
-
-import { FeatureFlagService } from '@/services/feature-flags'
-
-import { useFeatureFlags } from '@/hooks/use-feature-flags'
+import { FeatureFlagService } from '@/services/feature-flags.service'
 
 import { fontVariables } from '@/utils/fonts'
 import { setBodyClasses } from '@/utils/set-body-classes'
+
+import { useFeatureFlags } from '@/hooks/use-feature-flags'
+
+import { initGsap, initRive } from '@/motion/core/init'
+import { TransitionPresence } from '@/motion/transition/transition.presence'
 
 export const parameters = {
   options: {
@@ -23,8 +26,8 @@ export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/
+      color: /(background|color)$/iu,
+      date: /Date$/u
     }
   },
   backgrounds: {
@@ -70,7 +73,7 @@ initRive()
 setBodyClasses()
 
 // register all gsap effects
-const req = require.context('../src/motion/effects', true, /^.\/.*ts$/)
+const req = require.context('../src/motion/effects', true, /^.\/.*ts$/u)
 req
   .keys()
   .filter((key) => !key.includes('.d.ts'))
@@ -102,6 +105,8 @@ export const globalTypes = {
     )
 }
 
+document.querySelector('#storybook-root')?.classList.add(fontVariables)
+
 export const decorators = [
   (Story: StoryFn, context: StoryContext) => {
     require('focus-visible')
@@ -112,7 +117,7 @@ export const decorators = [
       Object.keys(flags).forEach((key) => {
         if (context.globals[key]) setFlag(key as keyof typeof flags, context.globals[key])
       })
-    }, [context.globals])
+    }, [flags, setFlag, context.globals])
 
     useEffect(() => {
       if (context.globals.dynamicResponsiveness) document.documentElement.classList.add('dynamic')
@@ -123,9 +128,9 @@ export const decorators = [
   },
   (Story: StoryFn) => {
     return (
-      <div className={fontVariables}>
+      <TransitionPresence>
         <Story />
-      </div>
+      </TransitionPresence>
     )
   }
 ]

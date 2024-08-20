@@ -1,4 +1,4 @@
-import { ResizeService } from '@/services/resize'
+import { ResizeService } from '@/services/resize.service'
 
 import { browser, device, os } from '@/utils/detect'
 

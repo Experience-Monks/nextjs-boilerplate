@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { VisibilityService } from '@/services/visibility'
+import { VisibilityService } from '@/services/visibility.service'
 
 import { os } from '@/utils/detect'
 import { getLowPowerMode } from '@/utils/detect-low-power-mode'

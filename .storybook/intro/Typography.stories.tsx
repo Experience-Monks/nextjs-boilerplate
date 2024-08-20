@@ -1,5 +1,7 @@
-import React, { FC, Fragment } from 'react'
-import { StoryFn } from '@storybook/react'
+import type { FC } from 'react'
+import type { StoryFn } from '@storybook/react'
+
+import React, { Fragment } from 'react'
 
 import css from './Typography.module.scss'
 
