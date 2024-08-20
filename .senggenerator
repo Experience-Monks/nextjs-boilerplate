@@ -1,8 +1,0 @@
-{
-  "templatePath": "./scripts/templates",
-  "templateExtensions": [
-    ".sg",
-    ".hbs",
-    ".handlebars"
-  ]
-}

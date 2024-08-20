@@ -7,8 +7,14 @@
     },
     "nav": {
       "routes": [
-        { "path": "/", "title": "Home" },
-        { "path": "/about/", "title": "About" }
+        {
+          "path": "/",
+          "title": "Home"
+        },
+        {
+          "path": "/about/",
+          "title": "About"
+        }
       ],
       "links": [
         {
@@ -25,8 +31,14 @@
     },
     "footer": {
       "routes": [
-        { "path": "/", "title": "Home" },
-        { "path": "/about/", "title": "About" }
+        {
+          "path": "/",
+          "title": "Home"
+        },
+        {
+          "path": "/about/",
+          "title": "About"
+        }
       ]
     },
     "cookieBanner": {

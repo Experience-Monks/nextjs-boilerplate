@@ -1,13 +1,13 @@
 import type { StoryFn } from '@storybook/react'
-import type { {{#if imperativeHandle}}ViewHandle, {{/if}}ViewProps } from './{{name_pc}}.view'
+import type { {{#if imperativeHandle}}ViewHandle, {{/if}}ViewProps } from './{{titleCase name}}.view'
 
 {{#if imperativeHandle}}
 import { useRef } from 'react'
 
 {{/if}}
-import { View } from './{{name_pc}}.view'
+import { View } from './{{titleCase name}}.view'
 
-export default { title: 'components/{{name_pc}}' }
+export default { title: 'components/{{titleCase name}}' }
 
 export const Default: StoryFn<ViewProps> = (args) => {
 {{#if imperativeHandle}}

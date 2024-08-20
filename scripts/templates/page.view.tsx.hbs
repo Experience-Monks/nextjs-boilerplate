@@ -1,13 +1,12 @@
 import type { FC } from 'react'
-import type { ControllerProps } from './Page{{name_pc}}.controller'
+import type { ControllerProps } from './Page{{titleCase name}}.controller'
 
 import { useMemo } from 'react'
 import classNames from 'classnames'
 import { gsap } from 'gsap'
 
-import css from './Page{{name_pc}}.module.scss'
+import css from './Page{{titleCase name}}.module.scss'
 
-import { noop } from '@/utils/basic-functions'
 import { copy } from '@/utils/copy'
 
 import { useRefs } from '@/hooks/use-refs'
@@ -26,18 +25,18 @@ export const View: FC<ViewProps> = ({ content }) => {
   useTransitionPresence(
     useMemo(
       () => ({
-        animateIn: () => gsap.timeline().add(noop, 0.701),
-        animateOut: () => gsap.timeline().add(noop, 0.701)
+        animateIn: () => gsap.timeline().to(refs.root.current, { opacity: 1 }, 0),
+        animateOut: () => gsap.timeline().to(refs.root.current, { opacity: 0 }, 0)
       }),
-      []
+      [refs]
     )
   )
 
   return (
-    <main className={classNames('Page{{name_pc}}', css.root)} ref={refs.root}>
+    <main className={classNames('Page{{titleCase name}}', css.root)} ref={refs.root}>
       <h1 className={css.title} {...copy.html(content.body.title)} />
     </main>
   )
 }
 
-View.displayName = 'Page{{name_pc}}_View'
+View.displayName = 'Page{{titleCase name}}_View'

@@ -1,0 +1,14 @@
+import type { Page{{titleCase name}}Props } from '@/components/Page{{titleCase name}}'
+import type { GetStaticProps } from 'next'
+
+import { CmsService } from '@/services/cms.service'
+
+export const getStaticProps: GetStaticProps<Page{{titleCase name}}Props> = async () => {
+  return {
+    props: {
+      content: CmsService.getPageContent('{{camelCase name}}')
+    }
+  }
+}
+
+export { Page{{titleCase name}} as default } from '@/components/Page{{titleCase name}}'

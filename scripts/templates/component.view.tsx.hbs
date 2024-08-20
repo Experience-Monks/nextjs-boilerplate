@@ -1,10 +1,10 @@
 {{#if forwardRef}}
-import type { ControllerProps } from './{{name_pc}}.controller'
+import type { ControllerProps } from './{{titleCase name}}.controller'
 
 import { forwardRef{{#if imperativeHandle}}, useImperativeHandle{{/if}}{{#if transitionPresence}}, useMemo{{/if}} } from 'react'
 {{else}}
 import type { FC } from 'react'
-import type { ControllerProps } from './{{name_pc}}.controller'
+import type { ControllerProps } from './{{titleCase name}}.controller'
 
 {{#if imperativeHandle}}
 import { useImperativeHandle{{#if transitionPresence}}, useMemo{{/if}} } from 'react'
@@ -19,7 +19,7 @@ import classNames from 'classnames'
 import { gsap } from 'gsap'
 {{/if}}
 
-import css from './{{name_pc}}.module.scss'
+import css from './{{titleCase name}}.module.scss'
 
 {{#if forwardRef}}
 import { multiRef } from '@/utils/multi-ref'
@@ -72,10 +72,10 @@ export const View: FC<ViewProps> = ({ className{{#if imperativeHandle}}, handleR
 
 {{/if}}
   return (
-    <div className={classNames('{{name_pc}}', css.root, className)} {{#if forwardRef}}ref={multiRef(refs.root, ref)}{{else}}ref={refs.root}{{/if}}>
-      <p>&lt;{{name_pc}} /&gt;</p>
+    <div className={classNames('{{titleCase name}}', css.root, className)} {{#if forwardRef}}ref={multiRef(refs.root, ref)}{{else}}ref={refs.root}{{/if}}>
+      <p>&lt;{{titleCase name}} /&gt;</p>
     </div>
   )
 }{{#if forwardRef}}){{/if}}
 
-View.displayName = '{{name_pc}}_View'
+View.displayName = '{{titleCase name}}_View'

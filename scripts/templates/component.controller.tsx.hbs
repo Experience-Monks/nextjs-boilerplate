@@ -1,14 +1,14 @@
 {{#if forwardRef}}
 {{#if imperativeHandle}}
 import type { ForwardedRef } from 'react'
-import type { ViewHandle } from './{{name_pc}}.view'
+import type { ViewHandle } from './{{titleCase name}}.view'
 {{/if}}
 
 import { forwardRef, memo } from 'react'
 {{else}}
 {{#if imperativeHandle}}
 import type { FC, ForwardedRef } from 'react'
-import type { ViewHandle } from './{{name_pc}}.view'
+import type { ViewHandle } from './{{titleCase name}}.view'
 {{else}}
 import type { FC } from 'react'
 {{/if}}
@@ -16,7 +16,7 @@ import type { FC } from 'react'
 import { memo } from 'react'
 {{/if}}
 
-import { View } from './{{name_pc}}.view'
+import { View } from './{{titleCase name}}.view'
 
 export interface ControllerProps {
   className?: string
@@ -36,4 +36,4 @@ export const Controller: FC<ControllerProps> = memo((props) => {
 })
 {{/if}}
 
-Controller.displayName = '{{name_pc}}_Controller'
+Controller.displayName = '{{titleCase name}}_Controller'

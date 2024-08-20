@@ -1,14 +1,21 @@
 # Template scripts
 
-We are using [seng-generator](https://github.com/mediamonks/seng-generator) to generate templates
+We are using [plop](https://plopjs.com/) to generate files from templates.
+You can just run `npm run generate` and follow the instructions, or use the following commands:
 
-```properties
-# create a simple component
-$ npm run generate component [component-name]
+- Create a React component:
 
-# create a page component (the generated files will be automatically prefixed by "Page")
-$ npm run generate page [page-name]
+  ```bash
+  $ npm run generate component [ComponentName]
+  ```
 
-# create a new route (use the same name used for generating the page component)
-$ npm run generate route [page-name]
-```
+- Create a page component (the generated files will be automatically prefixed by "Page")
+
+  ```bash
+  $ npm run generate page [PageName]
+  ```
+
+- Create a new route (use the same name used for generating the page component)
+  ```bash
+  $ npm run generate route [PageName]
+  ```

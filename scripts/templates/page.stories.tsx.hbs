@@ -1,0 +1,16 @@
+import type { StoryFn } from '@storybook/react'
+import type { ViewProps } from './Page{{titleCase name}}.view'
+
+import { CmsService } from '@/services/cms.service'
+
+import { View } from './Page{{titleCase name}}.view'
+
+export default { title: 'pages/Page{{titleCase name}}' }
+
+export const Default: StoryFn<ViewProps> = (args) => {
+  return <View {...args} content={CmsService.getPageContent('{{camelCase name}}')} />
+}
+
+Default.args = {}
+
+Default.argTypes = {}

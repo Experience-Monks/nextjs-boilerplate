@@ -8,7 +8,7 @@ version: 2.1
 
 default-container: &node-container
   docker:
-    - image: cimg/node:16.15.1
+    - image: cimg/node:18.19.0
 
 env-suffix-parameter: &env-suffix-parameter
   env_suffix:

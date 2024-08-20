@@ -1,12 +1,6 @@
-# Experience.Monks NextJS Generator
-
-![GitHub](https://img.shields.io/github/license/Experience-Monks/nextjs-boilerplate)
+# Monks NextJS Generator
 
 > NextJS Boilerplate for static and server side rendered projects
-
-> https://generator.jam3.net
-
-> Icon made by Pixel perfect from www.flaticon.com
 
 ---
 
@@ -24,11 +18,11 @@
 
 ## Check your Node and NPM versions
 
-Make sure you are using Node 16.15.1 and NPM 8.11.0 on your development environment to match CircleCI setup. Using NVM is highly encouraged.
+Make sure you are using Node 18.19.0 and NPM 10.2.3 on your development environment to match CircleCI setup. Using NVM is highly encouraged.
 
 ```properties
-$ nvm install 16.15.1
-$ nvm use 16.15.1
+$ nvm install 18.19.0
+$ nvm use 18.19.0
 ```
 
 > TIP: You can deeply integrate into your shell to automatically invoke NVM when changing directories.: https://github.com/nvm-sh/nvm#deeper-shell-integration
