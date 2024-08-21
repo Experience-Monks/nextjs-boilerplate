@@ -34,8 +34,8 @@ commands:
       - run:
           name: Install Dependencies
           command: |
-            npm set-script preinstall ""
-            npm set-script prepare ""
+            npm pkg delete scripts.preinstall
+            npm pkg delete scripts.prepare
             npm set cache .npm
             npm install --prefer-offline --no-audit --no-save
 

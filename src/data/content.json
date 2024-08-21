@@ -73,8 +73,8 @@
         "description": "Some landing page description"
       },
       "body": {
-        "title": "Welcome to Experience.Monks!",
-        "description": "To get started, edit <code>pages/index.js</code> and save to reload.",
+        "title": "Welcome to Monks!",
+        "description": "To get started, edit <code>src/components/PageHome/PageHome.view.tsx</code> and save to reload.",
         "cards": [
           {
             "title": "Visit out GitHub",
@@ -82,9 +82,9 @@
             "href": "https://github.com/Experience-Monks?q=&type=source"
           },
           {
-            "title": "Jam3.dev",
-            "description": "Learn more about Jam3.dev",
-            "href": "https://jam3.dev"
+            "title": "Experience.Monks",
+            "description": "Learn more about Experience.Monks",
+            "href": "https://www.monks.com/solutions/experience"
           }
         ]
       }
