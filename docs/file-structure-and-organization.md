@@ -1,219 +1,217 @@
-# File Structure And Organization
+# File Structure and Organization
 
-This is the base folder structure on this project:
+Let's take a tour of our project's file structure! We've organized everything to make development smooth and intuitive.
 
-```
+## The Big Picture
+
+```properties
 public/
+scripts/
 src/
-    assets/
-    components/
-    data/
-    hooks/
-    pages/
-    services/
-    styles/
-    svgs/
-    utils/
+  assets/
+  components/
+  data/
+  hooks/
+  motion/
+  pages/
+  services/
+  store/
+  styles/
+  svgs/
+  utils/
 ```
 
-In order to make our life easier we have an import alias set up.  
-So instead of using relative imports, you can reference the `.src/` folder with an `@/`.  
-Example:
+Now, let's dive into each folder and see what magic happens inside!
 
-```tsx
-import log from '@/utils/log'
-```
+## `public/`: Your Static Asset Showcase
 
-This will import the log util from `./src/utils/log` doesn't matter from where you call it.
+This is where your static files live. They'll be copied directly to the output directory at build time. Perfect for:
 
-It also works inside SCSS files:
+- Favicons
+- robots.txt
+- Sitemaps
+- Share images
 
-```css
-src: url('~@/assets/fonts/ShopifySans/ShopifySans-Regular.woff2');
-```
-
-## &nbsp;
-
-## Here is the folder breakdown:
-
-## &nbsp;
-
-## public/
-
-```
-public/
-    favicons/
-    images/
-    ...
-```
-
-This is our static files folder.  
-All items in this folder will be copied to the output directory at build time.  
-Put here items that need to be publicly accessible and not hashed, like favicons, robots.txt, sitemap, share images, etc.  
-If you need to reference them in your code, just use a simple url, like:
+To use these files, just reference them with a simple URL:
 
 ```html
 <link rel="shortcut icon" href="/common/favicons/favicon.ico" />
 ```
 
-> **WARNING**: Never import / require files from this folder. This would result in duplicated files in the output directory.
+🚨 **Heads up!** Don't import files from here in your code. It'll create duplicates in the output directory.
 
-## &nbsp;
+## `scripts/`: Your Development Toolkit
 
-## src/assets/
+Here's where we keep all our handy development scripts:
+
+- Dev server
+- Generator templates
+- Shell scripts
+
+Feel free to add your own utility scripts here!
+
+## `src/assets/`: Binary Asset Central
+
+This folder is for all your binary assets that need to be imported in your code. During build time, these files will be:
+
+- Compiled
+- Renamed (with a hash)
+- Placed in the `/_next/static/` folder
+
+Only add binary files here, please!
+
+## `src/components/`: The Heart of Your React App
+
+This is where the magic happens! Our components are the building blocks of our application, and we've set them up to be as independent and reusable as possible.
+
+### Component Structure
+
+Each component follows this structure:
 
 ```
-src/
-    assets/
-        fonts/
-        images/
-        videos/
-        ...
+Component/
+  index.ts
+  MyComponent.controller.tsx
+  MyComponent.view.tsx
+  MyComponent.stories.tsx
+  MyComponent.module.scss
 ```
 
-Here we have all the **binary** assets to be imported / required in our code. Everything inside this folder will be compiled, renamed (hashed), and placed in `/_next/static/` folder at build time. Add here binary files only.
+Let's break it down:
 
-## &nbsp;
+- **Index:** Exports the Controller component and its props
+- **Controller:** Handles global state, router, data fetching, etc. It feeds props to the view component.
+- **View:** A pure, testable component that receives props exclusively from the controller
+- **Stories:** Storybook stories for the component view
+- **SCSS:** The component's view styles
 
-## src/components/
+### Component Example
 
-```
-src/
-    components/
-        Component/
-            MyComponent.module.scss
-            MyComponent.stories.js
-            MyComponent.tsx
-        ...
-```
+Here's a quick look at how these files work together:
 
-> ”The best way to write big applications is to never write big applications”.
-
-This saying resonates strongly with React.  
-Let’s make sure all our components are independent and isolated, in other words, as pure as possible.  
-Treat components as individual applications used to compose the final app.  
-They should be able to be imported everywhere and should be developed with reusability in mind.
-
-We know sometimes it is hard to keep everything pure. With this in mind our generator produces components that are split into View and Controller components. If you have to, implement any global dependency on the Controller component, leaving the View component pure and testable:
-
-- **View:** A pure and testable component, receives props from the controller
-- **Controller:** Handles global state, router, data fetching, etc. Feed and forward props to the view component.
+#### index.ts
 
 ```tsx
-// MyComponent.tsx
+export type { ControllerProps as MyComponentProps } from './MyComponent.controller'
+export { Controller as MyComponent } from './MyComponent.controller'
+```
 
-export interface MyComponentProps {
-  // List here all props that are public and settable by the parent component.
+#### MyComponent.controller.tsx
+
+```tsx
+import type { FC } from 'react'
+import { memo } from 'react'
+import { View } from './MyComponent.view'
+
+export interface ControllerProps {
   className?: string
 }
 
-export interface ViewProps extends MyComponentProps {
-  // List here the private props that are only settable by the controller component.
-  loggedIn: boolean
-}
+export const Controller: FC<ControllerProps> = memo((props) => {
+  return <View {...props} />
+})
+```
 
-// View (pure and testable component, receives props from the controller)
-export const View: FC<ViewProps> = ({ className, loggedIn }) => {
+#### MyComponent.view.tsx
+
+```tsx
+import type { FC } from 'react'
+import type { ControllerProps } from './MyComponent.controller'
+import classNames from 'classnames'
+import css from './MyComponent.module.scss'
+
+export interface ViewProps extends ControllerProps {}
+
+export const View: FC<ViewProps> = ({ className }) => {
   return (
     <div className={classNames('MyComponent', css.root, className)}>
-      {loggedIn ? 'You are logged in' : 'You are logged out'}
+      <p>&lt;MyComponent /&gt;</p>
     </div>
   )
 }
-
-// Controller (handles global state, router, data fetching, etc. Feeds props to the view component)
-const MyComponent: FC<MyComponentProps> = (props) => {
-  const [loggedIn] = localStore((state) => [state.loggedIn], shallow)
-  return <View {...props} loggedIn={loggedIn} />
-}
-
-export default memo(MyComponent)
 ```
 
-Let's follow some practices in order to make our life easier:
+### Best Practices
 
-- ### **Keep components as decoupled as possible.**
+To make our lives easier, let's follow these practices:
 
-  - It means to avoid global scoped dependencies like Router, Redux, Zustand, or any global state wiring in the **View** components, use the **Controller** component for that.
+1. **Keep components decoupled**
 
-  - In the **View** components everything should come in as props, and out as callbacks. Consider each component as an isolated application.
+   - Avoid global dependencies (like Router, Redux, Zustand) in the View component
+   - Use the Controller for global state wiring
+   - In View components, everything should come in as props and go out as callbacks
 
-  With this structure you will be able to create Storybook stories and test the View component with ease:
+2. **Avoid component namespacing**
 
-  ```tsx
-  // MyComponent.stories.tsx
+   - Keep all components in the `src/components` folder
+   - Instead of subfolders, use prefixes to group similar components:
 
-  import { View, ViewProps } from './MyComponent'
+     ```properties
+     # Bad
+      components/
+        buttons/
+          Accept/
+          Round/
+          Cta/
+        carousels/
+          Carousel/
+          Round/
+          Cta/
+        modals/
+          Accept/
 
-  export default { title: 'components/MyComponent' }
+     # Good
+     components/
+       ButtonAccept/
+       ButtonRound/
+       ButtonXYZ/
+       Carousel/
+       CarouselRound/
+       CarouselCta/
+       ModalAccept/
+     ```
 
-  export const LoggedIn: Story<ViewProps> = (args) => <View {...args} />
-  LoggedIn.args = { loggedIn: true }
+3. **Use a common style structure**
 
-  export const LoggedOut: Story<ViewProps> = (args) => <View {...args} />
-  LoggedOut.args = { loggedIn: false }
-  ```
+   - In your View component:
+     ```tsx
+     <div className={classNames('MyComponent', css.root, className)}>
+     ```
+   - In your SCSS module:
 
-### &nbsp;
+     ```scss
+     @import 'shared';
 
-- ### **Avoid components namespacing.**
+     .root {
+       // Your styles here
+     }
+     ```
 
-  Let’s keep all of our components in the same folder (`src/components`) and avoid creating subfolders like `src/components/buttons/Accept`, `src/components/modals/Accept`, etc. This will give us visibility of all components and prevent components with the same name to be created inadvertently.  
-  Instead, let’s group similar components by prefixing them, so they appear grouped in the `src/components`.  
-  Examples: `ButtonAccept`, `ButtonRound`, `ButtonXYZ`, `Carousel`, `CarouselItem`, `ModalAccept`, etc…
+4. **Create comprehensive Storybook stories**
 
-### &nbsp;
+   - Ensure all components have stories with proper controls
+   - They serve as documentation and make testing easier
+   - Example:
 
-- ### **Common style structure.**
+   ```tsx
+   import type { StoryFn } from '@storybook/react'
+   import type { ViewProps } from './MyComponent.view'
+   import { View } from './MyComponent.view'
 
-  Let’s make sure to always implement our component styling in a predictable way:
+   export default { title: 'components/MyComponent' }
 
-  ```tsx
-  // MyComponent.tsx
+   export const Default: StoryFn<ViewProps> = (args) => {
+     return <View {...args} />
+   }
+   ```
 
-  import css from '#/css/components/MyComponent/MyComponent.module.css'
+Remember, treating each component as an isolated mini-application will make our overall app more maintainable and easier to test.
 
-  ...
-  export const View: FC<ViewProps> = ({ className, ... }) => {
-    return (
-      <div className={classNames('MyComponent', css.root, className)}>
-        ...
-      </div>
-    );
-  };
-  ...
-  ```
+## `src/data/`: Your Content Hub
 
-  And in our MyComponent.module.scss files:
+Here's where we keep all our configuration and string content. Think of it as the brain of your app!
 
-  ```scss
-  // MyComponent.module.scss
-
-  @import 'shared';
-
-  .root {
-    ...
-  }
-  ```
-
-  This pattern give us 2 immediate advantages:
-
-  - By having a string class name with the same name of the component (`'MyComponent'`), we are able to query children components with ease. This is specially useful when we start to implement animations. This hardcoded string class name should be only used for DOM selection purposes, though, never for styling.
-  - By having the CSS module `css.root` class, we create a good standard by signaling the top-most class in every component. This will also compile nicely to something like `MyComponent__root__xyzw`, making our life easier when we have to debug.
-
-### &nbsp;
-
-- ### **Stories are important.**
-
-  Let’s make sure all components have Storybook stories with proper controls set up.  
-  It is not only important for testing but also works as documentation for other developers.  
-  This way we can easily check how components works and if they fit our needs in a particular scenario, preventing us from creating several similar components unnecessarily, and even more important, allowing us to make changes to any specific component directly without having to, for instance, launch the entire project, navigate to a specific page, add some flags or comment chunks of code, and so on just for checking how a single component works. In the end, having good stories speeds up the development (specially towards the QA/end phases of a project).
-
-## &nbsp;
-
-## src/data/
-
-```
+```properties
 src/
     data/
         content.json
@@ -222,18 +220,15 @@ src/
         ...
 ```
 
-Here we have our configuration and string content.  
-These files will be consumed at build time to populate our pages.  
-Never import content.json directly inside components as it might make it harder to switch to a CMS in the future.
-Page components should receive the required strings through Next.js `getStaticProps()` method.
+These files are the backbone of our pages, consumed at build time to populate our content.
 
-See [Copy Management](#copy-management) section below for more details.
+🚨 **Pro tip:** Never import `content.json` directly inside components. It might make switching to a CMS trickier in the future. Instead, let your page components receive the required strings through Next.js `getStaticProps()` method.
 
-## &nbsp;
+Want to know more about managing your content? Check out our [Copy Management](./copy-management.md) docs!
 
-## src/hooks/
+## `src/hooks/`: Custom React Hooks Galore
 
-```
+```properties
 src/
     hooks/
         use-layout.ts
@@ -241,13 +236,31 @@ src/
         ...
 ```
 
-Add here any custom React hook you might need. We have several useful hooks already implemented, check them out on.
+This is your toolkit of custom React hooks. We've already stocked it with several useful ones – don't forget to explore them!
 
-## &nbsp;
+Feel free to add any new hooks you create. Who knows, your next hook might become the team's new favorite tool!
 
-## src/pages/
+## `src/motion/`: Where Movement Comes to Life
 
+```properties
+src/
+    motion/
+        core/
+        eases/
+        ...
 ```
+
+Welcome to the dance floor of your app! This is where we keep all things motion-related:
+
+- GSAP initialization
+- Custom eases
+- GSAP effects
+- Rive components
+- Other motion-related utilities
+
+## `src/pages/`: The Traffic Control of Your App
+
+```properties
 src/
     pages/
         _app.tsx
@@ -256,34 +269,46 @@ src/
         ...
 ```
 
-Here we have all the Next.js routing logic.  
-It was separated from the React components logic on purpose. Here are the main reasons:
+This is where Next.js routing magic happens. We've purposely separated it from the React components logic for a few good reasons:
 
-- **A better separation of concerns.** Next.js logic will most times be executed in the NodeJS context, not the browser's. And this very often leads to confusion.
-- **Prevents route pollution.** Next.js by default looks for every file inside this folder to generate the routing logic. By separating it from the components we are now able to have proper naming convention for our pages, and have storybook stories of our pages without the risk of generating unwanted routes.
-- **Flexibility.** Depending on our needs we might have to, for instance, render different components for the same route (issue often found phased projects). By having the Next routing logic separated from the React components logic we can easily achieve this and much more.
+1. **Better separation of concerns:** Next.js logic often runs in NodeJS, not the browser. This separation helps avoid confusion.
+2. **Prevents route pollution:** By keeping it separate, we can use proper naming conventions for our pages without risking unwanted routes.
+3. **Flexibility:** Need to render different components for the same route? This structure makes it a breeze!
 
-## &nbsp;
+## `src/services/`: Your App's Utility Belt
 
-## src/services/
-
-```
+```properties
 src/
     services/
-        raf.ts
-        resize.ts
+        raf.service.ts
+        resize.service.ts
         ...
 ```
 
-If you ever worked with Angular this will be strightforward to you.  
-A service is typically a class with a narrow, well-defined purpose. It should do something specific and do it well.  
-In this project, services are [singleton](https://refactoring.guru/design-patterns/singleton) class instances that abstract, and prevent, the need of adding several event listeners for the same browser events, like resize, requestAnimationFrame, etc. Consider using services for events that are prone to be listened by many components.
+Think of services as your app's specialized task force. Each service is typically a class with a specific, well-defined purpose.
 
-## &nbsp;
+In our project, services are singleton class instances that handle common browser events like resize or requestAnimationFrame. They're great for events that many components might need to listen to, helping us avoid adding multiple event listeners for the same thing.
 
-## src/styles/
+If you're familiar with Angular, this concept will feel right at home!
 
+## `src/store/`: Global State Management HQ
+
+```properties
+src/
+    store/
+        store.ts
+        navigation.slice.ts
+        animation.slice.ts
+        ...
 ```
+
+Welcome to the brain center of your app's global state! We use [Zustand](https://github.com/pmndrs/zustand) for global state management because it's simple and performant.
+
+Need to create a new slice of state? Use our [generator](./template-generator.md) to whip one up in no time!
+
+## `src/styles/`: Global Style Central
+
+```properties
 src/
     styles/
         global.scss
@@ -291,13 +316,11 @@ src/
         ...
 ```
 
-Global [SASS](https://sass-lang.com/) stuff.
+This is where all your global [SASS](https://sass-lang.com/) styles live.
 
-## &nbsp;
+## `src/svgs/`: Your SVG Library
 
-## src/svgs/
-
-```
+```properties
 src/
     svgs/
         ArrowLeft.svg
@@ -305,19 +328,16 @@ src/
         ...
 ```
 
-Since SVGs are not binary assets, they are code that generate GIT diffs and can be used in several scenarios other than just rendering some graphics on the screen. They are like another class of application components, like hooks and services are.  
-In the end of the day they are most often compiled through [SVGR](https://react-svgr.com/) to be imported and used like regular components, but, are not able to perform imports and don't have any associated style file.  
-Also, they don't follow same file and code structure as components, and they don't require individual folders.  
-For these reasons they have this special folder instead of being placed inside `assets/` or `components/` folders.  
-Storybook-wise, we have a special file (`.storybook/intro/Svg.stories.tsx`) that automaticaly creates a catalog of all SVGs placed here.
+SVGs are special – they're not just images, they're code! We keep them in their own folder because:
 
-## &nbsp;
+- They generate GIT diffs
+- They're often compiled to React components using [SVGR](https://react-svgr.com/)
+- They don't follow the same structure as regular components
 
-## src/utils/
+Fun fact: We have a special Storybook file (`.storybook/intro/Svg.stories.tsx`) that automatically creates a catalog of all SVGs placed here.
 
-```
-src/
-    utils/
-```
+## `src/utils/`: Your Utility Belt
 
-Our beloved utility belt.
+Last but not least, this is where all your handy utility functions live.
+
+And there you have it - a tour of our project structure! Happy coding! 🚀

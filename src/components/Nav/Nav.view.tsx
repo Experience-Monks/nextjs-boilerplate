@@ -12,7 +12,7 @@ import { useRefs } from '@/hooks/use-refs'
 import { BaseButton } from '@/components/BaseButton'
 import { BaseImage } from '@/components/BaseImage'
 
-import SvgExperienceLogo from '@/svgs/ExperienceLogo.svg'
+import { Svgs } from '#/svg-imports'
 
 export type ViewHandle = {
   animateIn: () => gsap.core.Timeline
@@ -42,7 +42,7 @@ export const View: FC<ViewProps> = ({ className, content, handleRef }) => {
           {content.routes.map(({ path, title }) => (
             <li key={title}>
               <BaseButton href={path} aria-label="Home">
-                {path === '/' ? <SvgExperienceLogo className={css.mainLogo} /> : title}
+                {path === '/' ? <Svgs.ExperienceLogo className={css.mainLogo} /> : title}
               </BaseButton>
             </li>
           ))}

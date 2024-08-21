@@ -8,9 +8,7 @@
 
 - [Installation](#installation)
 - [Development](#development)
-- [Template Generator](./docs/template-generator.md)
-- [File Structure And Organization](./docs/file-structure-and-organization.md)
-- [Copy Management](./docs/copy-management.md)
+- [Documentation](#documentation)
 - [License](#license)
 
 ## &nbsp;
@@ -164,6 +162,15 @@ The command above will start the development servers on different ports:
 
 - Frontend (https): https://localhost:3000
 - Storybook: http://localhost:9001
+
+## &nbsp;
+
+# Documentation
+
+- [Template Generator](./docs/template-generator.md)
+- [File Structure And Organization](./docs/file-structure-and-organization.md)
+- [Copy Management](./docs/copy-management.md)
+- [Import Aliases](./docs/import-aliases.md)
 
 ## &nbsp;
 
