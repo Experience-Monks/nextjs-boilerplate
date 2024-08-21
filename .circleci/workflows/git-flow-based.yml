@@ -11,6 +11,7 @@ workflows:
     when: << pipeline.parameters.enable-git-flow-based >>
     jobs:
       - setup:
+          context: NEXTJS_BOILERPLATE
           filters:
             branches:
               only:

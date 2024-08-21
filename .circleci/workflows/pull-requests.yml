@@ -5,6 +5,7 @@ workflows:
   pull-requests:
     jobs:
       - setup:
+          context: NEXTJS_BOILERPLATE
           filters:
             branches:
               ignore:

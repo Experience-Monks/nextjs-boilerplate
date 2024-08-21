@@ -11,6 +11,7 @@ workflows:
     when: << pipeline.parameters.enable-trunk-based >>
     jobs:
       - setup:
+          context: NEXTJS_BOILERPLATE
           filters:
             branches:
               only: main
