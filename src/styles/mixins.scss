@@ -110,7 +110,7 @@
 ///   element {
 ///     @include auto-alpha(1);
 ///   }
-@mixin auto-alpha($value: 1, $time: null, $easing: $ease-out-expo) {
+@mixin auto-alpha($value: 1, $time: null, $easing: $ease-expo-out) {
   opacity: $value;
   visibility: if($value <= 0.01, hidden, visible);
   pointer-events: if($value <= 0.01, none, auto);

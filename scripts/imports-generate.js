@@ -10,7 +10,7 @@ function readRecursively(directory, base, regex, append = '', filenameKey = fals
   if (fs.existsSync(directory)) {
     const dirents = fs.readdirSync(directory, { withFileTypes: true })
     for (const dirent of dirents) {
-      const item = path.join(directory, dirent.name)
+      const item = path.join(directory, dirent.name).replace(/\\/gu, '/')
       if (dirent.isDirectory()) {
         l = readRecursively(item, base, regex, append, filenameKey, l)
       } else if (regex.test(item)) {
@@ -26,7 +26,8 @@ function readRecursively(directory, base, regex, append = '', filenameKey = fals
 
 function generateImportsFile(dir, file, regex, prefix, suffix, append = '', filenameKey = false) {
   let output = prefix
-  output += readRecursively(dir, dir, regex, append, filenameKey, '')
+  const forwardSlashDir = dir.replace(/\\/gu, '/')
+  output += readRecursively(forwardSlashDir, forwardSlashDir, regex, append, filenameKey, '')
   output += suffix
   fs.mkdirSync(path.join(__dirname, '../.generated'), { recursive: true })
   fs.writeFileSync(path.join(__dirname, `../.generated/${file}`), output)
