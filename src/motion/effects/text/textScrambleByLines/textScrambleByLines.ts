@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import ScrambleTextPlugin from 'gsap/dist/ScrambleTextPlugin'
 
 import { effectTimeline } from '@/motion/core/effect-timeline'

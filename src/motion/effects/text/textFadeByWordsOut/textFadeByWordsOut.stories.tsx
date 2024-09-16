@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 
 import { copy } from '@/utils/copy'
 
-import { eases } from '@/motion/eases/eases'
+import { easeNames } from '@/motion/eases/eases'
 
 import textFadeByWordsOut from './textFadeByWordsOut'
 
@@ -36,5 +36,5 @@ Default.args = {
 }
 
 Default.argTypes = {
-  ease: { options: eases.map((e) => e.name), control: { type: 'select' } }
+  ease: { options: easeNames, control: { type: 'select' } }
 }

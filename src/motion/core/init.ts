@@ -19,11 +19,11 @@ export function initGsap() {
 
   gsap.defaults({ ease: 'none', duration: 1 })
 
-  favouriteEases.forEach((ease) => {
+  Object.values(favouriteEases).forEach((ease) => {
     CustomEase.create(ease.name, ease.ease)
   })
 
-  customEases.forEach((ease) => {
+  Object.values(customEases).forEach((ease) => {
     CustomEase.create(ease.name, ease.ease)
   })
 

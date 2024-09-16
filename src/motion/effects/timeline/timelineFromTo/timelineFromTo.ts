@@ -1,4 +1,4 @@
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 
 import { effectTimeline } from '@/motion/core/effect-timeline'
 
@@ -10,7 +10,7 @@ const effect: CustomEffectConfig = {
     return effectTimeline(config.duration!, config.reversed!, () => {
       const timeline = typeof tl === 'function' ? tl() : tl
       return gsap.timeline({ paused: true }).add(
-        timeline.tweenFromTo(timeline.duration() * (config.from || 0), timeline.duration() * (config.to || 1), {
+        timeline.tweenFromTo(timeline.duration() * (config.from ?? 0), timeline.duration() * (config.to ?? 1), {
           duration: config.duration,
           ease: config.ease
         })

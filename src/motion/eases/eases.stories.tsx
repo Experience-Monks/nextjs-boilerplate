@@ -163,7 +163,9 @@ const Eases: FC<{ eases: EaseDeclaration[]; duration: number }> = ({ eases, dura
   )
 }
 
-export const Standard: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={standardEases} />
+export const Standard: StoryFn<{ duration: number }> = (args) => (
+  <Eases {...args} eases={Object.values(standardEases)} />
+)
 
 Standard.args = {
   duration: 2
@@ -171,7 +173,9 @@ Standard.args = {
 
 Standard.parameters = {}
 
-export const Favourite: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={favouriteEases} />
+export const Favourite: StoryFn<{ duration: number }> = (args) => (
+  <Eases {...args} eases={Object.values(favouriteEases)} />
+)
 
 Favourite.args = {
   duration: 2
@@ -179,7 +183,7 @@ Favourite.args = {
 
 Favourite.parameters = {}
 
-export const Custom: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={customEases} />
+export const Custom: StoryFn<{ duration: number }> = (args) => <Eases {...args} eases={Object.values(customEases)} />
 
 Custom.args = {
   duration: 2

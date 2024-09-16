@@ -3,7 +3,7 @@ import type { StoryFn } from '@storybook/react'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-import { eases } from '@/motion/eases/eases'
+import { easeNames } from '@/motion/eases/eases'
 
 import { BaseImage } from '@/components/BaseImage'
 
@@ -28,16 +28,16 @@ export const Default: StoryFn = (args) => {
 
   return (
     <div ref={ref} style={{ opacity: 0 }}>
-      <BaseImage data={require('@/assets/images/test.png').default} />
+      <BaseImage src={require('@/assets/images/test.png').default.src} />
     </div>
   )
 }
 
 Default.args = {
   duration: 1,
-  ease: eases[0].name
+  ease: easeNames[0]
 }
 
 Default.argTypes = {
-  ease: { options: eases.map((e) => e.name), control: { type: 'select' } }
+  ease: { options: easeNames, control: { type: 'select' } }
 }

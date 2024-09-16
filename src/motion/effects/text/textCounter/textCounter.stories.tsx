@@ -3,7 +3,7 @@ import type { StoryFn } from '@storybook/react'
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-import { eases } from '@/motion/eases/eases'
+import { easeNames } from '@/motion/eases/eases'
 
 import textCounter from './textCounter'
 
@@ -33,5 +33,5 @@ Default.args = {
 }
 
 Default.argTypes = {
-  ease: { options: eases.map((e) => e.name), control: { type: 'select' } }
+  ease: { options: easeNames, control: { type: 'select' } }
 }
