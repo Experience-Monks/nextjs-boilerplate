@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const path = require('node:path')
+const withVideos = require('next-videos')
 
 const nextConfig = {
   output: process.env.OUTPUT,
@@ -18,7 +19,7 @@ const nextConfig = {
   }
 }
 
-const nextPlugins = []
+const nextPlugins = [withVideos]
 
 if (process.env.BUNDLE_ANALYZE === 'true') {
   const withBundleAnalyzer = require('@next/bundle-analyzer')({ enabled: true })

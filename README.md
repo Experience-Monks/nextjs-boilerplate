@@ -152,8 +152,8 @@ This will fire up:
 
 Want to dive deeper? Check out our docs:
 
-- [Template Generator](./docs/template-generator.md)
 - [File Structure And Organization](./docs/file-structure-and-organization.md)
+- [Template Generator](./docs/template-generator.md)
 - [Copy Management](./docs/copy-management.md)
 - [Import Aliases](./docs/import-aliases.md)
 
