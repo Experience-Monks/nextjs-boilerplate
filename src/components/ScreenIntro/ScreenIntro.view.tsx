@@ -9,7 +9,9 @@ import { useRefs } from '@/hooks/use-refs'
 
 import { Intro } from '@/motion/rive/Intro'
 
-export interface ViewProps extends ControllerProps {}
+export interface ViewProps extends ControllerProps {
+  onComplete?: () => void
+}
 
 export type ViewRefs = {
   root: HTMLDivElement

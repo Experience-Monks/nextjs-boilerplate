@@ -10,7 +10,7 @@ import { gsap } from 'gsap'
 
 import '@/styles/global.scss'
 
-import { store } from '@/store/store'
+import { store, storeState } from '@/store/store'
 
 import { AnalyticsService } from '@/services/analytics.service'
 import { AWSRumService } from '@/services/aws-rum.service'
@@ -84,6 +84,10 @@ const App: FC<AppProps<PageProps>> = (props) => {
     if (flags.dynamicResponsiveness) document.documentElement.classList.add('dynamic')
     else document.documentElement.classList.remove('dynamic')
   }, [flags.dynamicResponsiveness])
+
+  useEffect(() => {
+    if (props.pageProps.noLayout) storeState().animations.setIntroComplete(true)
+  }, [props.pageProps.noLayout])
 
   return (
     <TransitionPresence>

@@ -8,15 +8,15 @@ export function useTransitionPresence(animations?: {
   animateIn?: () => gsap.core.Animation
   animateOut?: () => gsap.core.Animation
 }) {
-  const animationsEnabled = store((state) => state.animations.animationsEnabled)
+  const introComplete = store((state) => state.animations.introComplete)
 
   useEffect(() => {
-    if (!animations || !animationsEnabled) return
+    if (!animations || !introComplete) return
     const anim = animations.animateIn?.()
     return () => {
       anim?.kill()
     }
-  }, [animations, animationsEnabled])
+  }, [animations, introComplete])
 
   useBeforeUnmount(async (abortSignal) => {
     if (!animations?.animateOut) return

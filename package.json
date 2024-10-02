@@ -26,12 +26,12 @@
     "lint:ls": "npx @ls-lint/ls-lint",
     "lint:next": "next lint",
     "lint:sass": "stylelint \"./src/**/*.scss\"",
+    "autofix:store": "prettier src/store --write && eslint src/store --fix",
     "adviser:dev": "adviser --tags dev --verbose",
     "adviser:ci": "adviser --tags ci --verbose --quiet",
     "generate": "plop",
     "preinstall": "npm i -g husky@8.0.3",
     "prepare": "husky install && node scripts/prepare.js",
-    "autofix": "next lint --ignore-path .eslintignore --max-warnings=0 --fix",
     "tsc": "tsc"
   },
   "engines": {

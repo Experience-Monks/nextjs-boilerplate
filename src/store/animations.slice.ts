@@ -4,19 +4,19 @@ import type { StateCreator } from 'zustand'
 export type AnimationsSliceState = {
   animations: {
     // getters
-    animationsEnabled: boolean
+    introComplete: boolean
     // setters
-    setAnimationsEnabled: (animationsEnabled: boolean) => void
+    setIntroComplete: (introComplete: boolean) => void
   }
 }
 
 export const AnimationsSlice: StateCreator<AppState, Mutators, [], AnimationsSliceState> = (set) => ({
   animations: {
-    animationsEnabled: !!process.env.STORYBOOK,
+    introComplete: !!process.env.STORYBOOK,
 
-    setAnimationsEnabled: (animationsEnabled) => {
+    setIntroComplete: (introComplete) => {
       set((state) => {
-        state.animations.animationsEnabled = animationsEnabled
+        state.animations.introComplete = introComplete
       })
     }
   }

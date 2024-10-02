@@ -124,7 +124,7 @@ module.exports = function (
         }
       },
       function customAction() {
-        execSync('npm run autofix', { stdio: 'inherit' })
+        execSync('npm run autofix:store', { stdio: 'inherit' })
         return ''
       }
     ]

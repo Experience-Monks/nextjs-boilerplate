@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import type { NavHandle } from '@/components/Nav'
 import type { PageProps } from '@/data/types'
 
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import classNames from 'classnames'
@@ -45,13 +45,6 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
 
   const router = useRouter()
 
-  const [introComplete, setIntroComplete] = useState(false)
-
-  const handleIntroComplete = useCallback(() => {
-    setIntroComplete(true)
-    storeState().animations.setAnimationsEnabled(true)
-  }, [])
-
   const handlePageMounted = useCallback(() => {
     storeState().navigation.setPathname(refs.pathname.current || '/')
     // restore scroll
@@ -78,10 +71,12 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
   // Update pathname ref
   //
   useEffect(() => {
-    refs.pathname.current = router.asPath
+    const fixedPath = router.asPath
       .split('#')[0]
       .split('?')[0]
       .replace(/^\/..-..\/?/u, '')
+    if (!refs.pathname.current) storeState().navigation.setPathname(fixedPath)
+    refs.pathname.current = fixedPath
   }, [refs, router.asPath])
 
   //
@@ -91,8 +86,8 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
     const navigateTo = (href: string) => {
       const to = href.split('/').filter(Boolean).join('/').replace(/\/$/u, '')
       const from = router.asPath.split('/').filter(Boolean).join('/').replace(/\/$/u, '')
-      if (to === from) router.replace(href, '', { scroll: false }).catch(console.log)
-      else router.push(href, '', { scroll: false }).catch(console.log)
+      if (to === from) router.replace(href, '', { scroll: false })
+      else router.push(href, '', { scroll: false })
     }
     const navigateBack = () => {
       if (storeState().navigation.hasNavigated) {
@@ -149,7 +144,7 @@ export const Layout: FC<AppProps<PageProps>> = memo(({ Component, pageProps }) =
 
       <Footer content={pageProps.content.common.footer} />
 
-      {!introComplete ? <ScreenIntro onComplete={handleIntroComplete} /> : null}
+      <ScreenIntro />
       <ScreenRotate content={pageProps.content.common.screenRotate} />
       <ScreenNoScript content={pageProps.content.common.screenNoScript} />
 
